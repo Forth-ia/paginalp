@@ -245,6 +245,31 @@
     form.querySelectorAll('input,select').forEach(function (i) { i.addEventListener('input', function () { var f = i.closest('.field'); if (f) f.classList.remove('is-error'); }); });
   });
 
+  /* ---------- reto: curso basado en datos ---------- */
+  var courseRoot = d.getElementById('course-player'), courseDays = w.challengeCourseDays;
+  if (courseRoot && Array.isArray(courseDays)) {
+    var selectedDay = 0, selectedLesson = 0, openDays = { 0: true };
+    var totalLessons = courseDays.reduce(function (n, day) { return n + day.lessons.length; }, 0);
+    var completedLessons = courseDays.reduce(function (n, day) { return n + day.lessons.filter(function (lesson) { return lesson.status === 'completed'; }).length; }, 0);
+    function esc(value) { var div = d.createElement('div'); div.textContent = value; return div.innerHTML; }
+    function renderCourse() {
+      var current = courseDays[selectedDay].lessons[selectedLesson];
+      var daysHtml = courseDays.map(function (day, dayIndex) {
+        var lessonsHtml = day.lessons.map(function (lesson, lessonIndex) {
+          var active = dayIndex === selectedDay && lessonIndex === selectedLesson;
+          var marker = lesson.status === 'completed' ? '<span class="course-check" aria-label="Completada">✓</span>' : '<span class="course-num">' + (lessonIndex + 1) + '</span>';
+          return '<button class="course-lesson' + (active ? ' is-active' : '') + '" type="button" data-course-lesson="' + dayIndex + ':' + lessonIndex + '">' + marker + '<span>' + esc(lesson.title) + '</span><i>' + (lesson.status === 'active' ? 'En curso' : lesson.status === 'completed' ? 'Completada' : 'Pendiente') + '</i></button>';
+        }).join('');
+        return '<section class="course-day' + (openDays[dayIndex] ? ' is-open' : '') + '"><button class="course-day__toggle" type="button" aria-expanded="' + !!openDays[dayIndex] + '" data-course-day="' + dayIndex + '"><span><b>' + esc(day.title) + '</b><small>' + day.lessons.length + ' lecciones</small></span><span class="course-chevron">⌄</span></button><div class="course-day__lessons">' + lessonsHtml + '</div></section>';
+      }).join('');
+      courseRoot.innerHTML = '<div class="course-top"><div><span class="eyebrow eyebrow--dot">Claude en 5 días</span><h2>Tu ruta de aprendizaje</h2></div><div class="course-progress"><span>' + completedLessons + '/' + totalLessons + ' lecciones completadas</span><div role="progressbar" aria-valuemin="0" aria-valuemax="' + totalLessons + '" aria-valuenow="' + completedLessons + '"><i style="width:' + (completedLessons / totalLessons * 100) + '%"></i></div></div></div><div class="course-layout"><aside class="course-sidebar" aria-label="Lecciones del curso">' + daysHtml + '</aside><article class="course-content"><span class="course-content__day">' + esc(courseDays[selectedDay].title) + ' · Lección ' + (selectedLesson + 1) + '</span><h3>' + esc(current.title) + '</h3><p>' + esc(current.content) + '</p><div class="course-content__note"><b>Tu siguiente paso</b><span>Usa esta lección con un caso real de tu trabajo. Después podrás cambiar estos contenidos directamente en <code>challengeCourseDays</code>.</span></div><div class="course-content__foot"><span class="course-status course-status--' + current.status + '">' + (current.status === 'completed' ? '✓ Completada' : current.status === 'active' ? 'En curso' : 'Pendiente') + '</span><button type="button" class="course-next" data-course-next>Siguiente lección <span>→</span></button></div></article></div>';
+      courseRoot.querySelectorAll('[data-course-day]').forEach(function (button) { button.addEventListener('click', function () { var index = Number(button.dataset.courseDay); openDays[index] = !openDays[index]; renderCourse(); }); });
+      courseRoot.querySelectorAll('[data-course-lesson]').forEach(function (button) { button.addEventListener('click', function () { var parts = button.dataset.courseLesson.split(':'); selectedDay = Number(parts[0]); selectedLesson = Number(parts[1]); openDays[selectedDay] = true; renderCourse(); track('challenge_lesson_selected', { day: selectedDay + 1, lesson: selectedLesson + 1, title: courseDays[selectedDay].lessons[selectedLesson].title }); }); });
+      courseRoot.querySelector('[data-course-next]').addEventListener('click', function () { if (selectedLesson < courseDays[selectedDay].lessons.length - 1) selectedLesson++; else if (selectedDay < courseDays.length - 1) { selectedDay++; selectedLesson = 0; openDays[selectedDay] = true; } renderCourse(); });
+    }
+    renderCourse();
+  }
+
   /* ---------- captura suave de leads ----------
      Configura la URL publicada de Apps Script una sola vez aquí. El script
      adjunto registra siempre en la pestaña "Leads" y asigna la fecha allá. */
