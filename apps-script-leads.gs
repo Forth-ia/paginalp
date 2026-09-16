@@ -1,5 +1,5 @@
 /**
- * AI Founders LATAM — Recolector de Leads → Google Sheets
+ * Luciano Musella — Recolector de Leads → Google Sheets
  * --------------------------------------------------------
  * Este script recibe los datos del formulario de la página web
  * y los agrega como una fila nueva en tu Google Sheet, ya con
@@ -11,11 +11,11 @@
  * vez la función  embellecerHoja  desde el editor (botón Ejecutar).
  */
 
-var NOMBRE_HOJA = 'Leads';
+var NOMBRE_HOJA = 'Leads'; // Primera pestaña del archivo compartido
 
 function doPost(e) {
   try {
-    // 1. Leer los datos que envía el formulario.
+    // 1. Leer los datos que envía el popup.
     var datos = {};
     if (e && e.postData && e.postData.contents) {
       datos = JSON.parse(e.postData.contents);
@@ -36,7 +36,7 @@ function doPost(e) {
       aplicarEstilo_(hoja);
     }
 
-    // 4. Agregar la fila nueva con los datos del lead.
+    // 4. Agregar la fila nueva. La fecha se asigna aquí para que sea fiable.
     hoja.appendRow([
       new Date(),
       datos.nombre   || '',
@@ -59,7 +59,7 @@ function doPost(e) {
 // Permite abrir la URL en el navegador para comprobar que está activa.
 function doGet() {
   return ContentService
-    .createTextOutput('El recolector de leads de AI Founders LATAM está activo ✅')
+    .createTextOutput('El recolector de leads de lucianomusella.com está activo ✅')
     .setMimeType(ContentService.MimeType.TEXT);
 }
 

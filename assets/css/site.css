@@ -685,6 +685,14 @@ body[data-page="tutorial"] .nav:not(.is-scrolled) .btn--ghost{--btn-fg:#fff;bord
 .pl__foot .link-arrow{font-size:14px}
 .pl__res{padding-top:10px}
 #empezar.sec--tight{padding-bottom:40px}
+.lead-pop{position:fixed;inset:0;z-index:120;display:grid;place-items:end center;padding:18px;pointer-events:none;background:rgba(25,25,24,0);transition:background .2s ease}
+.lead-pop.is-visible{pointer-events:auto;background:rgba(25,25,24,.18)}
+.lead-pop__card{position:relative;width:min(100%,440px);padding:28px;border:1px solid rgba(25,25,24,.1);border-radius:18px;background:var(--paper);box-shadow:0 22px 60px -28px rgba(25,25,24,.5);transform:translateY(20px);opacity:0;transition:transform .25s var(--ease-out),opacity .2s ease}
+.lead-pop.is-visible .lead-pop__card{transform:translateY(0);opacity:1}
+.lead-pop__close{position:absolute;right:12px;top:10px;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:var(--fg-2);font-size:25px;line-height:1;cursor:pointer}.lead-pop__close:hover{background:var(--sand);color:var(--ink)}
+.lead-pop__eyebrow{display:block;margin-bottom:9px;color:var(--accent-deep);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}.lead-pop h2{margin:0;font-family:var(--serif);font-size:28px;font-weight:500;line-height:1.1}.lead-pop p{margin:9px 0 18px;color:var(--fg-2);font-size:14px;line-height:1.5}
+.lead-pop__form{display:grid;gap:10px}.lead-pop__form label{display:grid;gap:5px;font-size:12px;font-weight:600;color:var(--fg-2)}.lead-pop__form input{width:100%;min-height:42px;padding:10px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:inherit;font-size:14px;outline:none}.lead-pop__form input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(217,119,87,.14)}.lead-pop__form .btn{justify-content:center;margin-top:4px}.lead-pop__form small{color:var(--fg-3);font-size:11px;text-align:center}.lead-pop__form.is-invalid input:invalid{border-color:#bd4f43}.lead-pop__form.is-error::after{content:'No pudimos registrar tus datos. Inténtalo de nuevo.';color:#bd4f43;font-size:12px}.lead-pop__success{display:grid;gap:4px;padding:15px 0;text-align:center;color:var(--fg-2)}.lead-pop__success b{font-family:var(--serif);font-size:24px;color:var(--ink)}
+@media (max-width:520px){.lead-pop{padding:10px}.lead-pop__card{padding:24px 20px}.lead-pop h2{font-size:25px}}
 .tut-topics.sec--tight{padding-top:36px}
 .tut-topics .tut-sec{margin-top:0}
 .tv-head .wrap{max-width:1040px}

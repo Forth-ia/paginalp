@@ -9,9 +9,9 @@ Tiempo aproximado: 10 minutos. No necesitas saber programar.
 
 ## Paso 1 — Crear la hoja de cálculo
 
-1. Entra a https://sheets.google.com y crea una hoja nueva.
-2. Ponle un nombre, por ejemplo **"Leads AI Founders LATAM"**.
-3. (No hace falta crear columnas; el script las crea solo la primera vez.)
+1. Abre el archivo de Google Sheets compartido para esta web.
+2. Conserva la primera pestaña con el nombre **"Leads"**.
+3. Ya tiene las columnas correctas: Fecha y hora, Nombre, Email, Teléfono y Fuente.
 
 ## Paso 2 — Abrir el editor de Apps Script
 
@@ -49,14 +49,14 @@ Tiempo aproximado: 10 minutos. No necesitas saber programar.
 
 Pásame la URL y yo la coloco en la página (o, si prefieres hacerlo tú mismo):
 
-1. Abre `extracted/paginalp-main/index.html`.
+1. Abre `assets/js/site.js`.
 2. Busca la línea que dice:
    ```js
-   const APPS_SCRIPT_URL = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
+   var LEADS_ENDPOINT = 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
    ```
 3. Reemplaza `PASTE_YOUR_APPS_SCRIPT_URL_HERE` por tu URL (deja las comillas):
    ```js
-   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycb.../exec';
+   var LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycb.../exec';
    ```
 4. Guarda el archivo.
 
@@ -70,7 +70,7 @@ Pásame la URL y yo la coloco en la página (o, si prefieres hacerlo tú mismo):
 ---
 
 ### Notas
-- La hoja se llena en una pestaña llamada **"Leads"** (se crea automáticamente).
+- La hoja se llena en la primera pestaña llamada **"Leads"**.
 - Si cambias el código del script más adelante, recuerda hacer
   **Implementar → Gestionar implementaciones → editar → Nueva versión** para
   que los cambios surtan efecto (o la URL seguirá usando la versión vieja).

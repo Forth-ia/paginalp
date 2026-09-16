@@ -245,6 +245,81 @@
     form.querySelectorAll('input,select').forEach(function (i) { i.addEventListener('input', function () { var f = i.closest('.field'); if (f) f.classList.remove('is-error'); }); });
   });
 
+  /* ---------- captura suave de leads ----------
+     Configura la URL publicada de Apps Script una sola vez aquí. El script
+     adjunto registra siempre en la pestaña "Leads" y asigna la fecha allá. */
+  var LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
+  var resourcePath = /^\/recursos(?:\/|$)/.test(location.pathname);
+  var popupDelay = resourcePath ? 8000 : 10000;
+  var popupKey = 'lm_lead_popup_closed:' + location.pathname;
+  var capturedKey = 'lm_lead_captured';
+  var hasInteracted = false, popupShown = false, delayDone = false;
+
+  function leadSource() {
+    if (location.pathname === '/recursos/' || location.pathname === '/recursos/index.html') return 'Recursos';
+    if (resourcePath) return 'Recurso: ' + location.pathname.split('/').filter(Boolean).pop();
+    return 'Página Web';
+  }
+  function removeLeadPopup(reason) {
+    var modal = d.getElementById('lead-popup');
+    if (!modal) return;
+    modal.classList.remove('is-visible');
+    setTimeout(function () { if (modal.parentNode) modal.parentNode.removeChild(modal); }, reduce ? 0 : 180);
+    if (reason) track('lead_popup_' + reason, { source: leadSource() });
+  }
+  function sendLead(data) {
+    if (!LEADS_ENDPOINT || LEADS_ENDPOINT.indexOf('PASTE_YOUR') !== -1) return false;
+    // Apps Script acepta este POST sin requerir CORS; la respuesta no contiene datos sensibles.
+    try {
+      fetch(LEADS_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data), keepalive: true });
+      return true;
+    } catch (err) { return false; }
+  }
+  function showLeadPopup() {
+    if (popupShown || !hasInteracted || !delayDone) return;
+    try { if (sessionStorage.getItem(popupKey) || localStorage.getItem(capturedKey)) return; } catch (err) {}
+    popupShown = true;
+    var modal = d.createElement('section');
+    modal.id = 'lead-popup'; modal.className = 'lead-pop'; modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-labelledby', 'lead-popup-title');
+    modal.innerHTML = '<div class="lead-pop__card">' +
+      '<button class="lead-pop__close" type="button" aria-label="Cerrar">×</button>' +
+      '<span class="lead-pop__eyebrow">Recursos prácticos de IA</span>' +
+      '<h2 id="lead-popup-title">¿Te mando más ideas como esta?</h2>' +
+      '<p>Déjame tus datos y te comparto recursos para aplicar IA en tu trabajo.</p>' +
+      '<form class="lead-pop__form" novalidate>' +
+      '<label>Nombre<input name="nombre" autocomplete="name" required placeholder="Tu nombre"></label>' +
+      '<label>Email<input name="email" type="email" autocomplete="email" required placeholder="tu@email.com"></label>' +
+      '<label>Celular<input name="telefono" type="tel" autocomplete="tel" required placeholder="300 000 0000"></label>' +
+      '<button class="btn btn--accent" type="submit"><span class="btn__t">Quiero recibirlos</span></button>' +
+      '<small>Sin spam. Puedes salir cuando quieras.</small></form></div>';
+    d.body.appendChild(modal);
+    w.requestAnimationFrame(function () { modal.classList.add('is-visible'); });
+    modal.querySelector('.lead-pop__close').addEventListener('click', function () {
+      try { sessionStorage.setItem(popupKey, '1'); } catch (err) {}
+      removeLeadPopup('closed');
+    });
+    modal.addEventListener('click', function (e) { if (e.target === modal) modal.querySelector('.lead-pop__close').click(); });
+    modal.querySelector('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var form = e.currentTarget, nombre = form.elements.nombre.value.trim(), email = form.elements.email.value.trim(), telefono = form.elements.telefono.value.trim(), telefonoDigits = telefono.replace(/\D/g, '');
+      if (!nombre || !telefonoDigits || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { form.classList.add('is-invalid'); return; }
+      var submitted = sendLead({ nombre: nombre, email: email, telefono: telefonoDigits, fuente: leadSource() });
+      if (!submitted) { form.classList.add('is-error'); return; }
+      try { localStorage.setItem(capturedKey, '1'); } catch (err) {}
+      track('lead_popup_submitted', { source: leadSource() });
+      form.innerHTML = '<div class="lead-pop__success"><b>¡Listo!</b><span>Muy pronto tendrás noticias mías.</span></div>';
+      setTimeout(function () { removeLeadPopup('completed'); }, 1600);
+    });
+    modal.querySelector('input').focus();
+    track('lead_popup_shown', { source: leadSource(), delay_seconds: popupDelay / 1000 });
+  }
+  ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (eventName) {
+    w.addEventListener(eventName, function () { hasInteracted = true; showLeadPopup(); }, { passive: true, once: true });
+  });
+  setTimeout(function () { delayDone = true; showLeadPopup(); }, popupDelay);
+  d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && d.getElementById('lead-popup')) d.querySelector('.lead-pop__close').click(); });
+
   /* ---------- feedback físico en tap ---------- */
   d.addEventListener('pointerdown', function (e) { var b = e.target.closest('.btn,.chip,.card,.res,.route,.vitem,.coll__i,.show__i'); if (b) b.classList.add('is-pressed'); }, { passive: true });
   ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { d.addEventListener(ev, function () { d.querySelectorAll('.is-pressed').forEach(function (b) { b.classList.remove('is-pressed'); }); }, { passive: true }); });
