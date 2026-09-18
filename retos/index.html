@@ -55,7 +55,68 @@
 <script>
 window.challengeCourseDays = [
   { title: 'Día 1', subtitle: 'Empieza con una base que sí te sirva.', lessons: [
-    { title: 'Introducción', status: 'active', content: 'Bienvenido al reto. Hoy vas a entender cómo usar Claude como un espacio de trabajo que conoce tu contexto, no como otro chat que empieza de cero.', videoId: 'T9vEbo-sql4' },
+    { title: 'Introducción', status: 'active', content: 'Bienvenido al reto. Hoy vas a entender cómo usar Claude como un espacio de trabajo que conoce tu contexto, no como otro chat que empieza de cero.', videoId: 'T9vEbo-sql4', detailHtml: `<section class="lesson-detail" aria-label="Domina cualquier AI">
+      <h4>Domina cualquier AI</h4>
+      <section class="lesson-detail__section">
+        <h5>1. Descarga las aplicaciones</h5>
+        <p>Instala <strong>ChatGPT</strong> y <strong>Claude</strong> en tu computador.</p>
+        <p>Tener las aplicaciones de escritorio te permitirá trabajar con funciones más avanzadas como <strong>Cowork, archivos, proyectos y código</strong>.</p>
+        <h6>Para Claude</h6>
+        <a class="lesson-detail__link" href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download <span aria-hidden="true">↗</span></a>
+        <img class="lesson-detail__image" src="/assets/img/retos/descarga-claude.png" alt="Página de descarga de Claude para macOS">
+        <h6>Para ChatGPT</h6>
+        <a class="lesson-detail__link" href="https://chatgpt.com/es-419/download/" target="_blank" rel="noopener">chatgpt.com/es-419/download <span aria-hidden="true">↗</span></a>
+        <img class="lesson-detail__image" src="/assets/img/retos/descarga-chatgpt.png" alt="Página de descarga de ChatGPT para computadora">
+      </section>
+      <section class="lesson-detail__section">
+        <h5>2. Entiende las 3 partes de una AI</h5>
+        <p>Antes de aprender herramientas específicas, entiende esta estructura:</p>
+        <p class="lesson-detail__formula">Modelo <span>→</span> Arnés <span>→</span> Herramientas</p>
+        <ul>
+          <li><strong>Modelo:</strong> es el “cerebro” que procesa y genera respuestas.</li>
+          <li><strong>Arnés:</strong> es la aplicación que permite interactuar con ese modelo y darle capacidades adicionales.</li>
+          <li><strong>Herramientas:</strong> son funciones como archivos, conectores, Skills, proyectos, código, etc.</li>
+        </ul>
+        <p class="lesson-detail__key"><strong>Idea clave:</strong> no necesitas aprender cada nueva AI desde cero si entiendes cómo está construida.</p>
+      </section>
+      <section class="lesson-detail__section">
+        <h5>3. Usa Chat para preguntas y respuestas</h5>
+        <p>Usa <strong>Chat</strong> cuando necesites:</p>
+        <ul><li>Resolver una duda</li><li>Analizar algo rápidamente</li><li>Generar ideas</li><li>Escribir o modificar un texto</li><li>Tener una conversación sobre un tema</li></ul>
+        <p>Pero recuerda: una conversación no necesariamente conserva todo el contexto para siempre.</p>
+        <blockquote><strong>Regla:</strong><br>Preguntas y respuestas → Chat</blockquote>
+      </section>
+      <section class="lesson-detail__section">
+        <h5>4. Usa Cowork para trabajar con proyectos</h5>
+        <div class="lesson-detail__views"><span>Vista en GPT</span><span>Vista en Claude</span></div>
+        <p>Cuando tengas que <strong>hacer una tarea completa</strong>, pasa de Chat a <strong>Cowork</strong>.</p>
+        <div class="lesson-detail__examples"><div><strong>Proyecto de finanzas</strong><span>→ Agrega tus Excel y PDFs<br>→ Dale instrucciones<br>→ AI analiza la información<br>→ Genera nuevos archivos y resultados</span></div><div><strong>Proyecto de contenido</strong><span>→ Agrega referencias y documentos<br>→ Dale contexto sobre tu marca<br>→ AI crea nuevos contenidos</span></div></div>
+        <blockquote><strong>Regla:</strong><br>Trabajo + archivos + contexto + resultados → <strong>Cowork</strong></blockquote>
+      </section>
+      <section class="lesson-detail__section">
+        <h5>5. Empieza a pensar en objetivos, no en preguntas</h5>
+        <p>En lugar de pensar:</p><blockquote>“¿Qué puedo preguntarle a la AI?”</blockquote>
+        <p>Empieza a pensar:</p><blockquote><strong>“¿Qué quiero que la AI haga por mí?”</strong></blockquote>
+        <p>Ejemplos:</p><ul><li>“Quiero organizar estos datos.”</li><li>“Quiero analizar estos documentos.”</li><li>“Quiero crear mi contenido de LinkedIn.”</li><li>“Quiero automatizar este proceso.”</li></ul>
+        <p>Esto te lleva naturalmente hacia los <strong>agentes de AI</strong>, que pueden ejecutar tareas para alcanzar un objetivo.</p>
+      </section>
+      <section class="lesson-detail__section">
+        <h5>6. Usa Code para crear cosas</h5>
+        <p>No necesitas ser programador para aprovechar el código.</p><p>Puedes utilizarlo para crear rápidamente:</p>
+        <ul><li>Páginas web sencillas</li><li>Dashboards</li><li>Herramientas internas</li><li>Prototipos</li></ul>
+        <blockquote><strong>Regla:</strong><br>Quiero construir algo → <strong>Code</strong></blockquote>
+      </section>
+      <section class="lesson-detail__section lesson-detail__decision">
+        <h5>Tu mapa de decisión</h5>
+        <div><p><strong>¿Tengo una pregunta?</strong><br><span>→ Chat</span></p><p><strong>¿Tengo una tarea que completar con archivos y contexto?</strong><br><span>→ Cowork</span></p><p><strong>¿Quiero construir una herramienta o aplicación?</strong><br><span>→ Code</span></p></div>
+      </section>
+      <section class="lesson-detail__section lesson-detail__exercise">
+        <h5>El ejercicio de hoy</h5>
+        <p>Piensa en <strong>3 tareas que haces todas las semanas</strong>.</p><p>Para cada una, responde:</p>
+        <ol><li>¿Podría hacerla con AI?</li><li>¿Necesita archivos o contexto?</li><li>¿Necesita que AI construya algo?</li></ol>
+        <p>Después clasifícala: <strong>Chat / Cowork / Code</strong>.</p><p>Ese es el primer paso para dejar de usar AI solo para hacer preguntas y empezar a <strong>trabajar con ella</strong>.</p>
+      </section>
+    </section>` },
     { title: 'Primera lección', status: 'completed', content: 'Define el problema real que quieres resolver esta semana y conviértelo en una instrucción clara para Claude.' },
     { title: 'Segunda lección', status: 'pending', content: 'Organiza tu contexto: rol, empresa, prioridades y la forma en que quieres trabajar.' },
     { title: 'Ejercicio del día', status: 'pending', content: 'Escribe tu primer contexto de trabajo y pruébalo con una tarea que hoy haces manualmente.' },
