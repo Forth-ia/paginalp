@@ -2,6 +2,8 @@
   'use strict';
   var form = document.getElementById('resource-access-form');
   if (!form) return;
+  var resource = form.elements.resource ? form.elements.resource.value : 'claude-productivity';
+  if (['claude-productivity', 'claude-for-legal'].indexOf(resource) === -1) return;
   var button = form.querySelector('button[type="submit"]');
   var label = button.querySelector('.btn__t');
   var status = document.getElementById('access-status');
@@ -10,7 +12,7 @@
   // Keep keyboard focus inside the required form. Background links are inert.
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Tab') return;
-    var fields = Array.prototype.slice.call(form.querySelectorAll('input, button:not(:disabled)'));
+    var fields = Array.prototype.slice.call(form.querySelectorAll('input:not([type="hidden"]), button:not(:disabled)'));
     var first = fields[0], last = fields[fields.length - 1];
     if (event.shiftKey && (document.activeElement === first || !form.contains(document.activeElement))) {
       event.preventDefault(); last.focus();
@@ -43,7 +45,7 @@
       var response = await fetch('/api/resource-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre: nombre, email: email, telefono: telefono })
+        body: JSON.stringify({ nombre: nombre, email: email, telefono: telefono, resource: resource })
       });
       var result = await response.json();
       if (!response.ok || result.ok !== true) {
@@ -54,7 +56,7 @@
       // This flag only suppresses the existing optional popup after registration.
       // It never skips the required form when opening the ManyChat link again.
       try { localStorage.setItem('lm_lead_captured', '1'); } catch (_) {}
-      window.location.replace('/recursos/claude-productivity/');
+      window.location.replace('/recursos/' + resource + '/');
     } catch (error) {
       status.textContent = error.code === 'collector_timeout'
         ? 'El registro está tardando más de lo esperado. Inténtalo de nuevo en unos segundos.'

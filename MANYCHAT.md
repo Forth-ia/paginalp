@@ -1,4 +1,17 @@
-# Acceso a Claude Productivity desde ManyChat
+# Acceso a recursos desde ManyChat
+
+## Claude for Legal
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/claude-for-legal/
+
+Muestra la guía Legal de fondo con el mismo formulario obligatorio. Los datos
+se guardan con la fuente `ManyChat · Claude for Legal` y, después de confirmar
+el guardado, abre `/recursos/claude-for-legal/`. El catálogo mantiene ese enlace
+público, sin registro obligatorio.
+
+## Claude Productivity
 
 Enlace para el botón o mensaje de ManyChat:
 

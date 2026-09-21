@@ -1,4 +1,8 @@
 const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
+const RESOURCES = new Map([
+  ['claude-productivity', 'Claude Productivity'],
+  ['claude-for-legal', 'Claude for Legal']
+]);
 
 function collectorError(code) {
   const error = new Error(code);
@@ -55,6 +59,9 @@ module.exports = async function (req, res) {
   if (!data || typeof data.nombre !== 'string' || typeof data.email !== 'string' || typeof data.telefono !== 'string') {
     return res.status(400).json({ ok: false });
   }
+  // Preserve submissions from previously cached Productivity pages.
+  const resource = data.resource === undefined ? 'claude-productivity' : data.resource;
+  if (!RESOURCES.has(resource)) return res.status(400).json({ ok: false });
   const nombre = data.nombre.trim();
   const email = data.email.trim();
   const telefono = data.telefono.replace(/\D/g, '');
@@ -64,8 +71,8 @@ module.exports = async function (req, res) {
     return res.status(400).json({ ok: false });
   }
   try {
-    await saveLead({ nombre, email, telefono, fuente: 'ManyChat · Claude Productivity' });
-    return res.status(200).json({ ok: true, redirect: '/recursos/claude-productivity/' });
+    await saveLead({ nombre, email, telefono, fuente: 'ManyChat · ' + RESOURCES.get(resource) });
+    return res.status(200).json({ ok: true, redirect: '/recursos/' + resource + '/' });
   } catch (error) {
     const code = error.code || (error.name === 'TimeoutError' ? 'collector_timeout' : 'collector_unavailable');
     console.error('resource_lead_failed', { code });

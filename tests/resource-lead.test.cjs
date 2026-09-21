@@ -102,3 +102,29 @@ test('rejects a redirect outside Google confirmation service', async () => {
     assert.equal(calls, 1);
   } finally { global.fetch = original; }
 });
+
+test('attributes Legal leads correctly and opens the Legal guide', async () => {
+  const original = global.fetch;
+  let sent;
+  global.fetch = async (_, options) => { sent = JSON.parse(options.body); return { ok: true, json: async () => ({ ok: true }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'claude-for-legal', fuente: 'spoofed' } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(sent.fuente, 'ManyChat · Claude for Legal');
+    assert.equal(res.body.redirect, '/recursos/claude-for-legal/');
+  } finally { global.fetch = original; }
+});
+test('rejects unknown resources without saving a lead', async () => {
+  const original = global.fetch;
+  let called = false;
+  global.fetch = async () => { called = true; };
+  try {
+    for (const resource of ['https://example.com', '../other', '', null, 'constructor']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...valid, resource } }, res);
+      assert.equal(res.statusCode, 400);
+    }
+    assert.equal(called, false);
+  } finally { global.fetch = original; }
+});
