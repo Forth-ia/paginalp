@@ -2098,6 +2098,65 @@
    "featured": false,
    "notion_url": null,
    "status": "preview"
+  },
+  {
+   "id": "lm-56",
+   "slug": "claude-for-legal",
+   "title": "Claude for Legal",
+   "category": "claude",
+   "secondary": [
+    "negocio",
+    "productividad"
+   ],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Convierte Claude en tu asistente legal: configura plugins, playbooks y flujos para revisar contratos, clasificar NDAs, investigar y preparar briefs.",
+   "what_you_get": [
+    "Instalación del marketplace Legal y sus plugins",
+    "Configuración inicial con el playbook y las posiciones de tu equipo",
+    "Estructura de carpetas y conexiones con herramientas de trabajo",
+    "Flujos para NDAs, contratos, investigación y litigios",
+    "Lista rápida de comandos por plugin"
+   ],
+   "ideal_for": [
+    "Abogados y equipos legales que trabajan con contratos y NDAs",
+    "Profesionales que necesitan organizar investigaciones y litigios",
+    "Equipos que quieren configurar Claude con sus playbooks y criterios"
+   ],
+   "includes": [
+    "Instalación del marketplace Legal y sus plugins",
+    "Configuración inicial con el playbook y las posiciones de tu equipo",
+    "Estructura de carpetas y conexiones con herramientas de trabajo",
+    "Flujos para NDAs, contratos, investigación y litigios",
+    "Lista rápida de comandos por plugin"
+   ],
+   "tools": [
+    "Claude",
+    "Claude Cowork",
+    "Commercial Legal",
+    "Legal",
+    "Litigation Legal",
+    "Google Drive",
+    "Microsoft 365",
+    "DocuSign",
+    "Slack",
+    "Ironclad",
+    "Bloomberg Law",
+    "CourtListener",
+    "Datasite"
+   ],
+   "words": 1344,
+   "read_min": 7,
+   "related_tutorials": [
+    "wpYDisTBlE8"
+   ],
+   "related_resources": [
+    "5-niveles-de-claude"
+   ],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
   }
  ]
 }

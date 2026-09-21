@@ -1,6 +1,7 @@
 {
   "_doc": "Relaciones curadas semánticamente (2026-09-06). st = tutoriales STRONG (siguiente paso real para aplicar el video / el video explica cómo funciona el recurso). rt = RELATED (mismo tema, ayuda parcial). sr/rr = recursos STRONG/RELATED. WEAK se omite. La UI muestra STRONG; si no hay, 1 RELATED.",
   "resources": {
+    "claude-for-legal": {"st": [], "rt": ["wpYDisTBlE8"], "sr": ["5-niveles-de-claude"], "rr": []},
     "claude-productivity": {"st": [], "rt": ["wpYDisTBlE8"], "sr": ["5-niveles-de-claude"], "rr": []},
     "skill-debrief-claude":        {"st": ["5I0naOsMtAQ"], "rt": ["sn3zkOGdfsM"], "sr": ["find-skills-claude", "5-skills-gratuitos-claude"], "rr": ["second-brain-obsidian-claude"]},
     "find-skills-claude":          {"st": ["sn3zkOGdfsM", "nNsWjShimJQ"], "rt": ["5I0naOsMtAQ"], "sr": ["5-skills-gratuitos-claude", "skill-debrief-claude"], "rr": ["4-mcps-agente-real"]},
