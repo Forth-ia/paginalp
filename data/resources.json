@@ -2043,6 +2043,61 @@
    "featured": true,
    "notion_url": "https://quiet-fiber-044.notion.site/3cfc40c66f0980568cbbf93594cedb80",
    "status": "preview"
+  },
+  {
+   "id": "lm-55",
+   "slug": "claude-productivity",
+   "title": "Claude Productivity",
+   "category": "claude",
+   "secondary": [
+    "productividad",
+    "agentes"
+   ],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Un sistema de asistencia impulsado por inteligencia artificial diseñado para actuar como un colega digital que gestiona tareas, organiza flujos de trabajo y se conecta con aplicaciones de trabajo cotidianas.",
+   "what_you_get": [
+    "Instalación e inicialización del Productivity Plugin",
+    "9 secciones paso a paso con ejemplos de uso",
+    "Contexto de trabajo, tareas y memoria persistente",
+    "Tabla de comandos para consultar"
+   ],
+   "ideal_for": [
+    "Profesionales que quieren organizar su día con Claude",
+    "Equipos que necesitan dar seguimiento a tareas y proyectos",
+    "Usuarios de Cowork que quieren conectar sus herramientas de trabajo"
+   ],
+   "includes": [
+    "Instalación e inicialización del Productivity Plugin",
+    "9 secciones paso a paso con ejemplos de uso",
+    "Contexto de trabajo, tareas y memoria persistente",
+    "Tabla de comandos para consultar"
+   ],
+   "tools": [
+    "Claude Cowork",
+    "Productivity Plugin",
+    "MCP",
+    "Notion",
+    "Slack",
+    "Asana",
+    "Linear",
+    "Jira",
+    "Monday",
+    "ClickUp",
+    "Microsoft 365"
+   ],
+   "words": 950,
+   "read_min": 5,
+   "related_tutorials": [
+    "wpYDisTBlE8"
+   ],
+   "related_resources": [
+    "5-niveles-de-claude"
+   ],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
   }
  ]
 }
