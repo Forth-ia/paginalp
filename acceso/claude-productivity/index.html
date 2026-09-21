@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accede a Claude Productivity | Luciano Musella</title>
+  <meta name="description" content="Recibe la guía paso a paso de Claude Productivity. Organiza tus tareas, proyectos y herramientas con Claude Cowork.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Claude Productivity · Guía paso a paso">
+  <meta property="og:description" content="Completa tus datos y accede gratis a la guía para organizar tu trabajo con Claude Cowork.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/resource-access.css">
+  <script src="/assets/js/resource-access.js" defer></script>
+</head>
+<body>
+  <main class="resource-access lead-pop">
+    <div class="resource-access__brand">Luciano<span>.</span>Musella</div>
+    <section class="lead-pop__card" aria-labelledby="access-title">
+      <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
+      <h1 id="access-title">Claude Productivity</h1>
+      <p>Convierte a Claude en tu asistente de trabajo. Aprende a organizar tareas, guardar contexto y conectar tus herramientas.</p>
+      <p><strong>Completa tus datos para ver la guía.</strong></p>
+      <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
+        <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
+        <label>Celular<input name="telefono" type="tel" autocomplete="tel" required maxlength="30" placeholder="+57 300 000 0000" aria-describedby="phone-help"></label>
+        <small id="phone-help">Incluye el indicativo de tu país.</small>
+        <button class="btn btn--accent" type="submit"><span class="btn__t">Ver la guía gratis</span></button>
+        <p id="access-status" class="resource-access__status" role="status" aria-live="polite"></p>
+        <small>Al enviar tus datos, recibirás recursos e ideas de IA de Luciano Musella. Sin spam. Puedes dejar de recibirlos cuando quieras.</small>
+      </form>
+      <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
+    </section>
+  </main>
+</body>
+</html>
