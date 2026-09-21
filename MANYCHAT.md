@@ -5,9 +5,13 @@ Enlace para el botón o mensaje de ManyChat:
 https://www.lucianomusella.com/acceso/claude-productivity/
 
 Esta página utiliza el diseño del formulario de leads y exige nombre, email y
-celular. No contiene la guía ni enlaces para saltar el registro. Solo redirige
+celular. Muestra la guía de fondo, con la navegación y el contenido bloqueados
+por un formulario superpuesto que no se puede cerrar. Solo redirige
 cuando `/api/resource-lead` recibe `{ "ok": true }` del recolector existente
 de Google Sheets. Si falla, conserva el formulario y permite reintentar.
+La confirmación redirigida de Google se puede consultar hasta tres veces sin
+repetir el POST que guarda el lead. La función dispone de 60 segundos y sus
+diagnósticos registran códigos de error, sin nombres, emails ni teléfonos.
 
 Los registros se guardan en la misma hoja, con la fuente
 `ManyChat · Claude Productivity`. No hace falta modificar Apps Script.

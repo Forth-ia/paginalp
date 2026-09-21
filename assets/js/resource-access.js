@@ -7,6 +7,18 @@
   var status = document.getElementById('access-status');
   var pending = false;
 
+  // Keep keyboard focus inside the required form. Background links are inert.
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Tab') return;
+    var fields = Array.prototype.slice.call(form.querySelectorAll('input, button:not(:disabled)'));
+    var first = fields[0], last = fields[fields.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !form.contains(document.activeElement))) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !form.contains(document.activeElement))) {
+      event.preventDefault(); first.focus();
+    }
+  });
+
   form.addEventListener('input', function (event) {
     if (event.target.setCustomValidity) event.target.setCustomValidity('');
     status.textContent = '';
@@ -34,13 +46,19 @@
         body: JSON.stringify({ nombre: nombre, email: email, telefono: telefono })
       });
       var result = await response.json();
-      if (!response.ok || result.ok !== true) throw new Error('Submission failed');
+      if (!response.ok || result.ok !== true) {
+        var failure = new Error('Submission failed');
+        failure.code = result.code;
+        throw failure;
+      }
       // This flag only suppresses the existing optional popup after registration.
       // It never skips the required form when opening the ManyChat link again.
       try { localStorage.setItem('lm_lead_captured', '1'); } catch (_) {}
       window.location.replace('/recursos/claude-productivity/');
-    } catch (_) {
-      status.textContent = 'No pudimos guardar tus datos. Revisa tu conexión e inténtalo de nuevo.';
+    } catch (error) {
+      status.textContent = error.code === 'collector_timeout'
+        ? 'El registro está tardando más de lo esperado. Inténtalo de nuevo en unos segundos.'
+        : 'No pudimos confirmar el registro. Inténtalo de nuevo en unos segundos.';
       pending = false;
       button.disabled = false;
       form.removeAttribute('aria-busy');

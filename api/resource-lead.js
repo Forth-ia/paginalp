@@ -1,5 +1,44 @@
 const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
 
+function collectorError(code) {
+  const error = new Error(code);
+  error.code = code;
+  return error;
+}
+
+async function readConfirmation(response) {
+  if (!response.ok) throw collectorError('collector_http_' + response.status);
+  let result;
+  try { result = await response.json(); }
+  catch (_) { throw collectorError('collector_invalid_response'); }
+  if (result.ok !== true) throw collectorError('collector_rejected');
+}
+
+async function saveLead(data) {
+  // Apps Script writes on POST, then redirects to a separate confirmation URL.
+  // Retry only the confirmation GET: repeating the POST could duplicate a lead.
+  const response = await fetch(LEADS_ENDPOINT, {
+    method: 'POST', redirect: 'manual',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(data), signal: AbortSignal.timeout(30000)
+  });
+  if (![301, 302, 303].includes(response.status)) return readConfirmation(response);
+  const location = response.headers.get('location');
+  const confirmation = location && new URL(location);
+  if (!confirmation || confirmation.protocol !== 'https:' || confirmation.hostname !== 'script.googleusercontent.com') {
+    throw collectorError('collector_unexpected_redirect');
+  }
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const result = await fetch(confirmation.href, { signal: AbortSignal.timeout(7000) });
+      await readConfirmation(result);
+      return;
+    } catch (error) {
+      if (error.code === 'collector_rejected' || attempt === 2) throw error;
+    }
+  }
+}
+
 // Only confirm access after the existing collector confirms the row was saved.
 module.exports = async function (req, res) {
   res.setHeader('Cache-Control', 'no-store');
@@ -25,15 +64,11 @@ module.exports = async function (req, res) {
     return res.status(400).json({ ok: false });
   }
   try {
-    const upstream = await fetch(LEADS_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ nombre, email, telefono, fuente: 'ManyChat · Claude Productivity' }),
-      signal: AbortSignal.timeout(20000)
-    });
-    if (!upstream.ok || (await upstream.json()).ok !== true) throw new Error('Collector did not confirm');
+    await saveLead({ nombre, email, telefono, fuente: 'ManyChat · Claude Productivity' });
     return res.status(200).json({ ok: true, redirect: '/recursos/claude-productivity/' });
-  } catch (_) {
-    return res.status(502).json({ ok: false });
+  } catch (error) {
+    const code = error.code || (error.name === 'TimeoutError' ? 'collector_timeout' : 'collector_unavailable');
+    console.error('resource_lead_failed', { code });
+    return res.status(502).json({ ok: false, code });
   }
 };

@@ -16,14 +16,154 @@
   <link rel="stylesheet" href="/assets/css/resource-access.css">
   <script src="/assets/js/resource-access.js" defer></script>
 </head>
-<body>
-  <main class="resource-access lead-pop">
-    <div class="resource-access__brand">Luciano<span>.</span>Musella</div>
+<body class="resource-access-locked">
+  <div class="resource-access__preview" inert aria-hidden="true">
+<a class="sr" href="#main">Ir al contenido</a>
+<header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="/">Luciano<span>.</span>Musella</a>
+    <ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "nav"}' ><span class="btn__t">Agenda</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a><a href="https://lucianomusella.com/aprende">Agenda<small>06</small></a></div><div class="menu__foot"><a class="btn btn--light" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "menu"}' ><span class="btn__t">Agenda una conversación</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></nav></div>
+<main id="guide-preview">
+<div class="progress" aria-hidden="true"></div>
+    <section class="ahead sec--cream" data-bg="cream"><div class="wrap">
+      <div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=claude">Claude</a></div>
+      <span class="res__type">Guía paso a paso</span>
+      <h1 class="display display--l" style="--i:1;margin-top:14px">Claude Productivity</h1>
+      <p class="lead" style="--i:2;margin-top:20px">Un sistema de asistencia impulsado por inteligencia artificial diseñado para actuar como un colega digital que gestiona tareas, organiza flujos de trabajo y se conecta con aplicaciones de trabajo cotidianas.</p>
+      <div class="ahead__meta" style="--i:3"><span>5 min de lectura</span><span class="dot"></span><span>Claude a fondo</span><span class="dot"></span><span>Claude Cowork</span><span class="dot"></span><span>Productivity Plugin</span></div>
+      <div class="boxes"><div class="box"><h5>Ideal para</h5><ul><li>Profesionales que quieren organizar su día con Claude</li><li>Equipos que necesitan dar seguimiento a tareas y proyectos</li><li>Usuarios de Cowork que quieren conectar sus herramientas de trabajo</li></ul></div><div class="box"><h5>Qué obtienes</h5><ul><li>Instalación e inicialización del Productivity Plugin</li><li>9 secciones paso a paso con ejemplos de uso</li><li>Contexto de trabajo, tareas y memoria persistente</li><li>Tabla de comandos para consultar</li></ul></div></div>
+    </div></section>
+    <section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article">
+      <article class="prose" data-resource="claude-productivity"><h2>¿Qué es el Productivity Plugin?</h2>
+<p>El <strong>Productivity Plugin</strong> convierte a Claude Cowork en algo mucho más parecido a un asistente de trabajo.</p>
+<p>En lugar de simplemente preguntarle cosas a Claude, puedes darle contexto sobre tu trabajo para que te ayude a:</p>
+<ul><li>Organizar tus tareas.</li><li>Planear tu día.</li><li>Dar seguimiento a pendientes.</li><li>Recordar información importante de tu trabajo.</li><li>Identificar tareas atrasadas.</li><li>Mantener contexto sobre tus proyectos y personas.</li><li>Conectar información de diferentes herramientas.</li></ul>
+<hr>
+<h2>1. ¿Qué necesitas?</h2>
+<p>Antes de instalarlo necesitas:</p>
+<p><strong>Claude Cowork</strong> instalado en tu computador.</p>
+<p>El Productivity Plugin está diseñado para funcionar dentro de Cowork. La página oficial de Anthropic muestra la opción de instalarlo directamente desde Claude Cowork.</p>
+<hr>
+<h2>2. Instalar el Productivity Plugin</h2>
+<p>La forma más sencilla es hacerlo directamente desde Cowork.</p>
+<h3>Paso 1</h3>
+<p>Abre <strong>Claude Cowork</strong>.</p>
+<h3>Paso 2</h3>
+<p>Ve a: <strong>Plugins → Browse</strong></p>
+<h3>Paso 3</h3>
+<p>Busca: <strong>Productivity</strong></p>
+<h3>Paso 4</h3>
+<p>Selecciona el plugin y haz clic en <strong>Install</strong>.</p>
+<div class="callout"><p>💡 El plugin aparece en el directorio oficial de Anthropic como <strong>Productivity</strong> y está marcado como <strong>Anthropic Verified</strong>.</p></div>
+<hr>
+<h2>3. Inicializa el plugin</h2>
+<p>Una vez instalado, el primer comando que debes utilizar es:</p>
+<p><code>/start</code></p>
+<p>Este comando inicializa las principales funciones del plugin: <strong>tareas, memoria y dashboard visual</strong>.</p>
+<p>Puedes empezar simplemente escribiendo:</p>
+<blockquote><p><code>/start</code></p></blockquote>
+<p>Después de esto, Claude podrá empezar a trabajar con el sistema de productividad.</p>
+<hr>
+<h2>4. Enséñale cómo trabajas</h2>
+<p>Aquí está una de las partes más importantes.</p>
+<p>No quieres que Claude simplemente sepa que eres &quot;empresario&quot; o &quot;marketing manager&quot;.</p>
+<p>Quieres darle <strong>contexto real de tu trabajo</strong>.</p>
+<p>Por ejemplo:</p>
+<blockquote><p>Soy fundador de una empresa de AI.</p>
+<p>Mis principales proyectos actualmente son:</p>
+<ul><li>Lanzamiento de mi nuevo curso.</li><li>Contenido para Instagram.</li><li>Proyectos de implementación para clientes.</li><li>Seguimiento comercial.</li></ul>
+<p>Mis prioridades esta semana son:</p>
+<ol><li>Terminar el lanzamiento.</li><li>Grabar contenido.</li><li>Hacer seguimiento a clientes.</li></ol>
+<p>Normalmente tengo reuniones en las tardes y prefiero dejar las mañanas para trabajo de concentración.</p></blockquote>
+<p>Mientras más contexto relevante tenga Claude, más útil puede ser la memoria de trabajo del plugin.</p>
+<hr>
+<h2>5. Usa Claude para organizar tus tareas</h2>
+<p>Ahora puedes empezar a darle tareas directamente en conversación.</p>
+<p>Por ejemplo:</p>
+<blockquote><p>Necesito terminar la presentación del cliente mañana, revisar los contratos pendientes y preparar el contenido de Instagram de esta semana. Organízame estas tareas por prioridad.</p></blockquote>
+<p>El plugin utiliza una lista de tareas en Markdown que Claude puede leer, escribir y ejecutar. También puede hacer seguimiento del estado de las tareas y detectar elementos que llevan tiempo pendientes.</p>
+<hr>
+<h2>6. Usa <code>/update</code></h2>
+<p>Este es uno de los comandos más útiles.</p>
+<p>Escribe: <code>/update</code></p>
+<p>Claude puede utilizarlo para hacer una revisión rápida de tus tareas pendientes, detectar elementos atrasados y revisar posibles vacíos en su memoria.</p>
+<p>También existe: <code>/update --comprehensive</code></p>
+<p>Esta versión hace una revisión más profunda de fuentes conectadas como email, calendario y chat para encontrar posibles tareas que hayas pasado por alto y sugerir nueva información para la memoria.</p>
+<hr>
+<h2>7. Conecta tus herramientas de trabajo</h2>
+<p>Productivity puede trabajar con herramientas externas mediante <strong>MCP</strong>, permitiendo conectar tu chat, email, calendario, base de conocimiento y gestor de proyectos.</p>
+<p>El tutorial que usamos como referencia menciona herramientas como:</p>
+<ul><li>Notion</li><li>Slack</li><li>Asana</li><li>Linear</li><li>Jira</li><li>Monday</li><li>ClickUp</li><li>Microsoft 365</li></ul>
+<p>Por ejemplo, si tienes tus proyectos en Notion y tus conversaciones en Slack, puedes construir un sistema donde Claude tenga mucho más contexto sobre lo que está pasando.</p>
+<div class="callout"><p><strong>Importante:</strong> las conexiones y permisos dependen de las herramientas que conectes. Revisa siempre qué acceso estás concediendo antes de permitir que Claude ejecute acciones.</p></div>
+<hr>
+<h2>8. Algunos ejemplos de uso</h2>
+<h3>Al comenzar el día</h3>
+<p>Puedes decir:</p>
+<blockquote><p>Buenos días. Revisa mis prioridades, reuniones y tareas pendientes y dime qué debería hacer hoy.</p></blockquote>
+<hr>
+<h3>Después de una reunión</h3>
+<p>Puedes decir:</p>
+<blockquote><p>Acabo de terminar una reunión con el equipo. Estas fueron las decisiones:</p>
+<ul><li>Actualizar la propuesta.</li><li>Enviar el documento al cliente.</li><li>Agendar seguimiento para el viernes.</li></ul>
+<p>Convierte esto en tareas y organiza las fechas.</p></blockquote>
+<hr>
+<h3>Cuando tienes demasiadas cosas pendientes</h3>
+<blockquote><p>Tengo estas 10 tareas pendientes. Ayúdame a identificar cuáles son realmente prioritarias y cuáles puedo mover.</p></blockquote>
+<hr>
+<h3>Cuando cambias de proyecto</h3>
+<blockquote><p>Voy a trabajar ahora en el proyecto de marketing. ¿Qué tareas están pendientes y qué debería revisar antes de empezar?</p></blockquote>
+<hr>
+<h3>Al terminar el día</h3>
+<blockquote><p>Hazme un resumen de lo que avancé hoy y dime qué debería pasar para mañana.</p></blockquote>
+<hr>
+<h2>9. La verdadera ventaja: memoria + tareas</h2>
+<p>La idea del Productivity Plugin es construir <strong>contexto persistente alrededor de tu trabajo</strong>.</p>
+<p>Por ejemplo, puedes enseñarle:</p>
+<ul><li>Quiénes son las personas de tu equipo.</li><li>En qué proyectos estás trabajando.</li><li>Cómo llamas internamente a ciertas cosas.</li><li>Cuáles son tus prioridades.</li><li>Qué tareas están pendientes.</li><li>Cómo funcionan determinados procesos.</li></ul>
+<hr>
+<h2>Comandos que debes guardar</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">Comando</th><th scope="col">Para qué sirve</th></tr></thead><tbody><tr><td><code>/start</code></td><td>Inicializar tareas, memoria y dashboard</td></tr><tr><td><code>/update</code></td><td>Revisar tareas pendientes y vacíos de memoria</td></tr><tr><td><code>/update --comprehensive</code></td><td>Hacer una revisión más profunda de email, calendario y chat</td></tr></tbody></table></div>
+<p>Estos son los comandos que aparecen actualmente en la página oficial del plugin.</p>
+<blockquote><p><strong>Nota:</strong> algunos tutoriales externos muestran comandos con el prefijo <code>/productivity:</code> como <code>/productivity:daily-plan</code> o <code>/productivity:capture</code>.</p></blockquote>
+        </article>
+      <aside class="aside">
+        <div class="aside__box"><h5>Aprende cómo funciona</h5><a class="tv" href="/tutoriales/tutorial-completo-de-claude-cowork-cmo-usar-claude-cowork-me/" data-track="tutorial_click" data-track-props='{"video_id":"wpYDisTBlE8","from":"resource"}'><div class="tv__th"><img src="https://img.youtube.com/vi/wpYDisTBlE8/mqdefault.jpg" alt="" loading="lazy"></div><div><div class="tv__t">Tutorial completo de Claude Cowork: cómo usar Claude Cowork mejor que el 99% de las personas</div><div class="tv__m">6 min · YouTube</div></div></a></div>
+
+        <div class="aside__box"><h5>Recursos relacionados</h5><ul class="aside__list"><a href="/recursos/5-niveles-de-claude/" data-track="related_resource_click" data-track-props='{"from":"claude-productivity","to":"5-niveles-de-claude"}'><span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span>Los 5 Niveles de Claude: De Chatbot a Agente que Trabaja Solo</span></a></ul></div>
+        <div class="aside__box" style="background:var(--ink);color:#fff;border-color:transparent"><h5 style="color:var(--on-dark-3)">Siguiente paso</h5><p style="margin:0;font-family:var(--serif);font-size:20px;line-height:1.2">¿Quieres hacerlo guiado, en 5 días?</p><a class="btn btn--light btn--sm" href="/retos/claude-en-5-dias/" data-track="challenge_click" data-track-props='{"from": "claude-productivity"}' ><span class="btn__t">Ver el reto</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      </aside></div></section>
+    <section class="sec sec--cream " data-bg="cream"><div class="wrap sec__head"><div><span class="eyebrow eyebrow--dot">Seguir construyendo</span><h2 class="h2" style="--i:1;margin-top:14px">Recursos <em class="serif tint">relacionados</em></h2></div>
+  <div style="--i:2;display:grid;gap:16px;justify-items:end"><a class="link-arrow" href="/recursos/">Ver todos los recursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div><div class="wrap cat__grid cat__grid--3"><a class="ci ci--feat" href="/recursos/5-niveles-de-claude/" data-cat="claude" data-coll="" data-type="guia-paso-a-paso" data-hay="los 5 niveles de claude: de chatbot a agente que trabaja solo la mayoría usa solo el chat de claude en el navegador y no sabe qué camino seguir para llegar a agentes autónomos. guía paso a paso claude claude a fondo claude code skills mcp gmail google calendar notion" data-track="resource_click" data-track-props="{&quot;resource&quot;: &quot;5-niveles-de-claude&quot;, &quot;from&quot;: &quot;catalog&quot;}" style="--i:0"><div class="ci__top"><span class="res__type">Guía paso a paso</span></div><div class="ci__t">Los 5 Niveles de Claude: De Chatbot a Agente que Trabaja Solo</div><div class="ci__d">La mayoría usa solo el chat de Claude en el navegador y no sabe qué camino seguir para llegar a agentes autónomos.</div><div class="ci__f"><span>Empieza aquí · Claude</span><span>6 min · con tutorial</span></div></a></div></section>
+    <section class="sec sec--tight sec--ink" data-bg="ink"><div class="wrap next">
+      <div><span class="eyebrow" style="color:var(--on-dark-3)">Siguiente paso</span><h2 class="h3" style="color:#fff;margin-top:12px">¿Quieres hacerlo guiado, <em class="serif tint">en 5 días</em>?</h2>
+      <p style="color:var(--on-dark-2);max-width:52ch;margin:12px 0 0">El reto "Claude en 5 días" toma recursos como este y los convierte en una práctica diaria de 20 minutos. Gratis, a tu ritmo.</p></div>
+      <div class="next__cta"><a class="btn btn--light" href="/retos/claude-en-5-dias/" data-track="challenge_click" data-track-props='{"from": "claude-productivity:end"}' ><span class="btn__t">Ver el reto</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="next__alt" href="/programa/" data-track="program_click" data-track-props='{"from":"claude-productivity:end"}'>Y si quieres llevarlo al trabajo, mira el programa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    </div></section>
+</main>
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div>
+    <div><h6>Explora</h6><ul><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul></div>
+    <div><h6>Canales</h6><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+  </div>
+  <div class="wrap foot__legal"><span>© 2026 Luciano Musella</span><span>Preview · web-v2 · no es la versión final</span></div>
+</footer>
+<div class="preview-badge">Preview web-v2</div>
+
+</div>
+  <div class="resource-access lead-pop" role="dialog" aria-modal="true" aria-labelledby="access-title">
     <section class="lead-pop__card" aria-labelledby="access-title">
       <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
-      <h1 id="access-title">Claude Productivity</h1>
-      <p>Convierte a Claude en tu asistente de trabajo. Aprende a organizar tareas, guardar contexto y conectar tus herramientas.</p>
-      <p><strong>Completa tus datos para ver la guía.</strong></p>
+      <h2 id="access-title">Desbloquea la guía</h2>
+      <p>Déjame tus datos para acceder gratis a <strong>Claude Productivity</strong> y organizar tu trabajo con IA.</p>
       <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
         <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
         <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
@@ -35,6 +175,6 @@
       </form>
       <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
     </section>
-  </main>
+  </div>
 </body>
 </html>

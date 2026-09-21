@@ -47,3 +47,58 @@ test('does not grant access on collector, network or malformed-response failures
     }
   } finally { global.fetch = original; }
 });
+
+test('retries the Google confirmation without sending the lead twice', async () => {
+  const original = global.fetch;
+  let posts = 0, gets = 0;
+  global.fetch = async (url, options) => {
+    if (options.method === 'POST') {
+      posts++;
+      assert.equal(options.redirect, 'manual');
+      return { status: 302, headers: new Headers({ location: 'https://script.googleusercontent.com/macros/echo?test=1' }) };
+    }
+    gets++;
+    assert.equal(url, 'https://script.googleusercontent.com/macros/echo?test=1');
+    if (gets === 1) throw new Error('Transient connection failure');
+    return { ok: true, json: async () => ({ ok: true }) };
+  };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: valid }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(posts, 1);
+    assert.equal(gets, 2);
+  } finally { global.fetch = original; }
+});
+test('keeps the guide locked after exhausted confirmation retries', async () => {
+  const original = global.fetch;
+  let posts = 0, gets = 0;
+  global.fetch = async (_, options) => {
+    if (options.method === 'POST') {
+      posts++;
+      return { status: 302, headers: new Headers({ location: 'https://script.googleusercontent.com/macros/echo?test=1' }) };
+    }
+    gets++;
+    return { ok: false, status: 503 };
+  };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: valid }, res);
+    assert.equal(res.statusCode, 502);
+    assert.equal(res.body.code, 'collector_http_503');
+    assert.equal(posts, 1);
+    assert.equal(gets, 3);
+  } finally { global.fetch = original; }
+});
+test('rejects a redirect outside Google confirmation service', async () => {
+  const original = global.fetch;
+  let calls = 0;
+  global.fetch = async () => { calls++; return { status: 302, headers: new Headers({ location: 'https://accounts.google.com/login' }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: valid }, res);
+    assert.equal(res.statusCode, 502);
+    assert.equal(res.body.code, 'collector_unexpected_redirect');
+    assert.equal(calls, 1);
+  } finally { global.fetch = original; }
+});

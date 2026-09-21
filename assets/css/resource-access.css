@@ -1,9 +1,22 @@
-.resource-access.lead-pop{position:static;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:32px 18px;pointer-events:auto;background:var(--cream)}
-.resource-access__brand{font-family:var(--serif);font-size:23px;letter-spacing:-.04em}
-.resource-access__brand span{color:var(--accent)}
-.resource-access .lead-pop__card{opacity:1;transform:none;width:min(100%,440px)}
-.resource-access h1{margin:0;font-family:var(--serif);font-size:34px;font-weight:500;line-height:1.12;letter-spacing:-.035em}
+.resource-access-locked{height:100vh;height:100dvh;overflow:hidden}
+.resource-access__preview{height:100vh;height:100dvh;overflow:hidden;pointer-events:none;user-select:none}
+.resource-access__preview .ahead{padding-top:120px}
+.resource-access__preview .ahead .wrap{padding-right:480px}
+.resource-access__preview .ahead .boxes{display:none}
+.resource-access__preview .display--l{font-size:clamp(40px,5vw,72px)}
+.resource-access.lead-pop{position:fixed;inset:0;display:flex;align-items:center;justify-content:flex-end;padding:28px max(24px,calc((100vw - 1200px)/2));pointer-events:auto;background:rgba(25,25,24,.22);overflow:auto;overscroll-behavior:contain}
+.resource-access .lead-pop__card{opacity:1;transform:none;flex-shrink:0;width:min(100%,440px);max-height:calc(100dvh - 56px);overflow-y:auto;box-shadow:0 24px 90px rgba(25,25,24,.28)}
+.resource-access h2{margin:0;font-family:var(--serif);font-size:32px;font-weight:500;line-height:1.12;letter-spacing:-.035em}
 .resource-access .resource-access__status{margin:0;color:#a33e32;font-size:13px}
 .resource-access__status:empty{display:none}
 .resource-access .btn:disabled{opacity:.65;cursor:wait}
-@media(max-width:520px){.resource-access.lead-pop{padding:24px 14px;gap:18px}.resource-access h1{font-size:30px}}
+@media(max-width:800px){
+  .resource-access__preview .ahead{padding-top:100px}
+  .resource-access__preview .ahead .wrap{padding-right:var(--gutter,24px)}
+  .resource-access__preview .ahead .display--l{font-size:38px;margin-top:8px!important}
+  .resource-access__preview .crumbs{display:none}
+  .resource-access.lead-pop{align-items:flex-end;justify-content:center;padding:180px 14px 16px;background:rgba(25,25,24,.2)}
+  .resource-access .lead-pop__card{max-height:calc(100dvh - 196px);padding:22px 20px}
+  .resource-access h2{font-size:28px}
+}
+@media(max-height:620px){.resource-access.lead-pop{padding:16px}.resource-access .lead-pop__card{max-height:calc(100dvh - 32px)}}
