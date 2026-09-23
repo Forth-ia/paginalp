@@ -49,3 +49,21 @@
 <script src="/assets/js/site.js" defer></script>
 </body>
 </html>
+<script>
+  (function () {
+    var grid = document.getElementById('rgrid');
+    if (!grid || document.querySelector('[data-track-props*="google-skills-claude"]')) return;
+    var card = document.createElement('a');
+    card.className = 'ci';
+    card.href = '/recursos/google-skills-claude/';
+    card.dataset.cat = 'claude';
+    card.dataset.coll = '';
+    card.dataset.type = 'guia-paso-a-paso';
+    card.dataset.hay = 'google skills para claude guía instalar usar google cloud firebase cloud run gemini bigquery';
+    card.dataset.track = 'resource_click';
+    card.dataset.trackProps = JSON.stringify({ resource: 'google-skills-claude', from: 'catalog' });
+    card.style.setProperty('--i', '0');
+    card.innerHTML = '<div class="ci__top"><span class="res__type">Guía paso a paso</span></div><div class="ci__t">Google Skills para Claude: guía para instalarlos y usarlos</div><div class="ci__d">Qué hace cada Google Skill, cuándo Claude lo activa y cómo instalar los más útiles para Google Cloud desde cero.</div><div class="ci__f"><span>Claude</span><span>8 min · con tutorial</span></div>';
+    grid.insertBefore(card, grid.firstChild);
+  }());
+</script>

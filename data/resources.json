@@ -33,6 +33,28 @@
  },
  "resources": [
   {
+   "id": "lm-38",
+   "slug": "google-skills-claude",
+   "title": "Google Skills para Claude: guía para instalarlos y usarlos",
+   "category": "claude",
+   "secondary": ["herramientas", "agentes"],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Qué hace cada Google Skill, cuándo Claude lo activa y cómo instalar los más útiles para Google Cloud desde cero.",
+   "what_you_get": ["Qué son los Google Skills y cómo Claude decide cuándo cargarlos", "3 formas de instalación: comando, plugin o manual", "Skills clave para Firebase, Cloud Run, Gemini, BigQuery y seguridad", "Los 3 Skills recomendados para empezar", "3 prompts listos y 5 errores comunes que evitar"],
+   "ideal_for": ["Personas que empiezan a usar Claude Code con Google Cloud", "Developers que construyen apps con Firebase, Cloud Run o Gemini", "Equipos que quieren seguir las prácticas oficiales de Google", "Quien quiere instalar Skills sin llenar el contexto innecesariamente"],
+   "includes": ["Qué hace un Skill y cuándo Claude lo utiliza", "Instalación por proyecto y global", "Librería de Skills de Google explicada en lenguaje simple", "Prompts para Firebase, Cloud Run y Gemini", "Errores de configuración frecuentes"],
+   "tools": ["Claude Code", "Google Skills", "Google Cloud", "Firebase", "Cloud Run", "Gemini API", "BigQuery", "gcloud CLI"],
+   "words": 1500,
+   "read_min": 8,
+   "related_tutorials": ["sn3zkOGdfsM", "5I0naOsMtAQ"],
+   "related_resources": ["find-skills-claude", "5-skills-gratuitos-claude", "skill-debrief-claude"],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
+  },
+  {
    "id": "lm-01",
    "slug": "skill-debrief-claude",
    "title": "Guía paso a paso para crear un Skill - DEBRIEF en Claude (Notion + Google Calendar)",

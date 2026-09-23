@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google Skills para Claude: guía para instalarlos y usarlos | Luciano Musella</title>
+  <meta name="description" content="Qué hace cada Google Skill, cuándo Claude lo activa y cómo instalar los más útiles para Google Cloud desde cero.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Google Skills para Claude: guía para instalarlos y usarlos">
+  <meta property="og:description" content="Qué hace cada Google Skill, cuándo Claude lo activa y cómo instalar los más útiles para Google Cloud desde cero.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body data-page="resource" data-page-props='{"resource":"google-skills-claude","category":"claude","type":"guia-paso-a-paso"}'>
+<a class="sr" href="#main">Ir al contenido</a>
+<header class="nav" id="nav"><div class="nav__in"><a class="nav__brand" href="/">Luciano<span>.</span>Musella</a><ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul><div class="nav__cta"><a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende"><span class="btn__t">Agenda</span></a><button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button></div></div></header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a></div></nav></div>
+<main id="main"><div class="progress" aria-hidden="true"></div>
+  <section class="ahead sec--cream" data-bg="cream"><div class="wrap">
+    <div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=claude">Claude</a></div>
+    <span class="res__type" data-reveal>Guía paso a paso</span>
+    <h1 class="display display--l" data-reveal style="--i:1;margin-top:14px">Google Skills para Claude: guía para instalarlos y usarlos</h1>
+    <p class="lead" data-reveal style="--i:2;margin-top:20px">Qué hace cada Google Skill, cuándo Claude lo activa y cómo instalar los más útiles para Google Cloud desde cero.</p>
+    <div class="ahead__meta" data-reveal style="--i:3"><span>8 min de lectura</span><span class="dot"></span><span>Claude a fondo</span><span class="dot"></span><span>Google Cloud</span><span class="dot"></span><span>Firebase</span><span class="dot"></span><span>Gemini API</span></div>
+    <div class="boxes"><div class="box"><h5>Ideal para</h5><ul><li>Personas que empiezan con Claude Code y Google Cloud</li><li>Developers que construyen con Firebase, Cloud Run o Gemini</li><li>Equipos que quieren seguir prácticas oficiales</li><li>Quien quiere instalar Skills sin saturar el contexto</li></ul></div><div class="box"><h5>Qué obtienes</h5><ul><li>Qué hace un Skill y cuándo Claude lo utiliza</li><li>Instalación por proyecto y global</li><li>Skills clave de Google explicados simple</li><li>Prompts para Firebase, Cloud Run y Gemini</li><li>Errores comunes de configuración</li></ul></div></div>
+  </div></section>
+  <section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="google-skills-claude">
+    <blockquote><em>Google publicó un repositorio oficial de Agent Skills. Con ellos, Claude puede cargar el playbook adecuado al trabajar con Firebase, Cloud Run, Gemini, BigQuery y otras tecnologías de Google.</em></blockquote>
+    <div class="callout"><p><strong>En resumen</strong></p><p>El repositorio está en <a href="https://github.com/google/skills" target="_blank" rel="noopener">github.com/google/skills</a>. Instala solo los Skills que realmente necesitas: Claude conoce sus descripciones y carga las instrucciones completas únicamente cuando una tarea coincide con ellas.</p></div>
+    <hr><h3>1) Qué son los Google Skills</h3>
+    <p>Un <strong>Skill</strong> es una pequeña carpeta que contiene un archivo <code>SKILL.md</code>. Incluye instrucciones oficiales, ejemplos y buenas prácticas para trabajar con una tecnología concreta.</p>
+    <p>En lugar de pegar documentación completa en cada prompt, Claude solo carga el Skill adecuado cuando hace falta. Eso mejora la precisión, reduce el contexto innecesario y hace que el equipo siga el mismo enfoque en cada proyecto.</p>
+    <hr><h3>2) Cuándo Claude utiliza un Skill</h3>
+    <ol><li><strong>Descubrimiento:</strong> al iniciar una sesión, Claude Code revisa tus carpetas de Skills y carga únicamente el nombre y la descripción de cada uno.</li><li><strong>Activación:</strong> si tu solicitud coincide con la descripción —por ejemplo, desplegar una app— carga el <code>SKILL.md</code> correspondiente.</li><li><strong>Ejecución:</strong> usa sus instrucciones, fragmentos de código y archivos de referencia durante la tarea.</li></ol>
+    <div class="callout"><p><strong>Dónde se guardan</strong></p><p>Para un proyecto: <code>.claude/skills/&lt;nombre-del-skill&gt;/SKILL.md</code>. Para todos tus proyectos: <code>~/.claude/skills/&lt;nombre-del-skill&gt;/SKILL.md</code>. Mantén en el repositorio los Skills específicos de cliente, proyecto o stack.</p></div>
+    <hr><h3>3) Configuración para principiantes</h3>
+    <p><strong>Opción A — un solo comando (recomendada)</strong></p>
+    <div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button" data-i="1">Copiar</button></div><pre>npx skills add google/skills</pre></div>
+    <p>Se abrirá un selector para elegir los Skills. Empieza con dos o tres, no instales todos de una vez.</p>
+    <p><strong>Opción B — plugins de Claude Code</strong></p>
+    <div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button" data-i="2">Copiar</button></div><pre>claude plugin marketplace add google/skills
+claude plugin install &lt;plugin&gt;@google-plugins</pre></div>
+    <p><strong>Opción C — instalación manual:</strong> entra al repositorio, busca el Skill, copia su <code>SKILL.md</code> dentro de <code>.claude/skills/&lt;nombre-del-skill&gt;/</code> y reinicia Claude Code.</p>
+    <hr><h3>4) La librería de Skills más útil</h3>
+    <p><strong>Para empezar en Google Cloud</strong></p><ul><li><strong>Onboarding to Google Cloud:</strong> configura correctamente un proyecto nuevo.</li><li><strong>Authenticating to Google Cloud:</strong> credenciales, cuentas de servicio, ADC e IAM. Configúralo antes que otros Skills de Cloud.</li><li><strong>Foundation Builder:</strong> una base de infraestructura organizada para un negocio.</li></ul>
+    <p><strong>Web y hosting</strong></p><ul><li><strong>Firebase Basics:</strong> Firestore, reglas de seguridad, autenticación y Functions. Ideal para portales y dashboards.</li><li><strong>Cloud Run Basics:</strong> contenedores, escalabilidad y tráfico. Úsalo cuando la app está lista pero falta desplegarla.</li></ul>
+    <p><strong>IA, datos y desarrollo</strong></p><ul><li><strong>Gemini API:</strong> SDKs y endpoints actuales para integrar IA dentro de tu aplicación.</li><li><strong>BigQuery:</strong> consultas, particionamiento, esquemas y control de costos para analytics.</li><li><strong>AlloyDB / Cloud SQL:</strong> buenas prácticas para PostgreSQL y MySQL administrados.</li><li><strong>gcloud CLI:</strong> le enseña a Claude a usar bien la línea de comandos de Google Cloud; suele valer la pena instalarlo globalmente.</li></ul>
+    <p><strong>Seguridad y arquitectura</strong></p><ul><li><strong>GKE + Platform / Workload Security:</strong> clusters, Workload Identity, node pools y hardening. Puedes ignorarlo si no usas Kubernetes.</li><li><strong>Well-Architected Framework:</strong> seguridad, confiabilidad, costo, rendimiento, operaciones y sostenibilidad antes de producción.</li><li><strong>Network Observability:</strong> para diagnosticar problemas de conectividad en Google Cloud.</li></ul>
+    <hr><h3>5) Los 3 Skills para empezar</h3><ol><li><strong>Firebase Basics</strong> para autenticación, base de datos y hosting.</li><li><strong>Cloud Run Basics</strong> para transformar el deployment en una tarea guiada.</li><li><strong>Gemini API</strong> para construir funciones de IA usando el SDK actual.</li></ol>
+    <hr><h3>6) Prompts para empezar</h3>
+    <p><strong>Firebase</strong></p><div class="codeblock"><div class="codeblock__bar"><span>plain text</span><button class="copy" type="button" data-i="3">Copiar</button></div><pre>Usando el Firebase Skill, créame un portal para clientes con autenticación por email, una base de datos de Firestore para almacenar proyectos y reglas de seguridad que garanticen que cada cliente solo pueda ver sus propios datos.</pre></div>
+    <p><strong>Cloud Run</strong></p><div class="codeblock"><div class="codeblock__bar"><span>plain text</span><button class="copy" type="button" data-i="4">Copiar</button></div><pre>Usando el Cloud Run Skill, convierte esta aplicación en un contenedor y despliega la aplicación en Cloud Run con configuraciones de escalabilidad razonables.
+
+Explícame cada comando de gcloud antes de ejecutarlo.</pre></div>
+    <p><strong>Gemini</strong></p><div class="codeblock"><div class="codeblock__bar"><span>plain text</span><button class="copy" type="button" data-i="5">Copiar</button></div><pre>Usando el Gemini API Skill, agrega una funcionalidad de resumen con AI a esta aplicación utilizando el SDK más reciente de Gemini.
+
+No utilices endpoints obsoletos.</pre></div>
+    <hr><h3>7) Errores que debes evitar</h3><ol><li><strong>Instalar todos los Skills de una vez:</strong> más Skills significan más descripciones en el contexto.</li><li><strong>Saltarte autenticación:</strong> muchos problemas de Google Cloud son de credenciales y permisos.</li><li><strong>Poner todo globalmente:</strong> los Skills específicos de un proyecto deben vivir en <code>.claude/skills/</code>.</li><li><strong>Olvidar reiniciar Claude Code:</strong> descubre Skills al iniciar una sesión.</li><li><strong>Pensar que el Skill lo hace todo:</strong> aporta el playbook oficial, pero todavía debes definir claramente qué quieres construir.</li></ol>
+    <div class="callout"><p><strong>Tip práctico:</strong> si usarás Google Cloud, configura primero autenticación. Después instala Firebase, Cloud Run o Gemini según el proyecto real que estés construyendo.</p></div>
+  </article>
+  <aside class="aside"><div class="aside__box"><h5>Aprende cómo funciona</h5><a class="tv" href="/tutoriales/claude-skills-plugins-y-conectores-cul-es-la-diferencia/"><div><div class="tv__t">Claude Skills, Plugins y Conectores: cuál es la diferencia?</div><div class="tv__m">6 min · YouTube</div></div></a></div><div class="aside__box"><h5>Recursos relacionados</h5><ul class="aside__list"><a href="/recursos/find-skills-claude/"><span>Find Skills: El skill que encuentra el skill correcto por ti</span></a><a href="/recursos/5-skills-gratuitos-claude/"><span>5 Skills Gratuitos que convierten Claude en otra herramienta</span></a></ul></div><div class="aside__box" style="background:var(--ink);color:#fff;border-color:transparent"><h5 style="color:var(--on-dark-3)">Siguiente paso</h5><p style="margin:0;font-family:var(--serif);font-size:20px;line-height:1.2">¿Quieres hacerlo guiado, en 5 días?</p><a class="btn btn--light btn--sm" href="/retos/claude-en-5-dias/"><span class="btn__t">Ver el reto</span></a></div></aside></div></section>
+  <section class="sec sec--tight sec--ink" data-bg="ink"><div class="wrap next"><div><span class="eyebrow" style="color:var(--on-dark-3)">Siguiente paso</span><h2 class="h3" style="color:#fff;margin-top:12px">¿Quieres hacerlo guiado, <em class="serif tint">en 5 días</em>?</h2><p style="color:var(--on-dark-2);max-width:52ch;margin:12px 0 0">El reto convierte recursos como este en práctica diaria de 20 minutos.</p></div><div class="next__cta"><a class="btn btn--light" href="/retos/claude-en-5-dias/"><span class="btn__t">Ver el reto</span></a></div></div></section>
+</main>
+<footer class="foot"><div class="wrap foot__in"><div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div><div><h6>Explora</h6><ul><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li></ul></div></div><div class="wrap foot__legal"><span>© 2026 Luciano Musella</span><span>Preview · web-v2 · no es la versión final</span></div></footer>
+<div class="preview-badge">Preview web-v2</div><script src="/assets/js/site.js" defer></script>
+</body>
+</html>
