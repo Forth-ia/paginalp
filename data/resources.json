@@ -33,6 +33,28 @@
  },
  "resources": [
   {
+   "id": "lm-40",
+   "slug": "claude-human-resources",
+   "title": "Claude for Human Resources: automatiza tus procesos de HR",
+   "category": "negocio",
+   "secondary": ["claude", "agentes"],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Configura el plugin Human Resources de Claude para ofertas, onboarding, evaluaciones, políticas y reportes de People.",
+   "what_you_get": ["Los 6 comandos especializados de Human Resources", "Instalación y conexión de herramientas en Claude Cowork", "Cómo configurar Global Instructions para tu empresa", "Casos de uso para ofertas, onboarding, evaluaciones y People Reports", "Límites de compensación y la regla human in the loop"],
+   "ideal_for": ["Equipos de Recursos Humanos y People Ops", "Founders que estructuran sus procesos de talento", "Managers que preparan onboarding y evaluaciones", "Empresas con políticas y documentación interna dispersa"],
+   "includes": ["Instalación paso a paso del plugin", "6 workflows de HR explicados", "Configuración de contexto permanente", "Flujo recomendado para empezar", "Advertencias para decisiones sensibles"],
+   "tools": ["Claude Desktop", "Claude Cowork", "Human Resources Plugin", "Google Calendar", "Gmail", "Slack", "Notion", "HRIS"],
+   "words": 1200,
+   "read_min": 6,
+   "related_tutorials": ["wpYDisTBlE8"],
+   "related_resources": ["claude-productivity", "small-business-claude", "claude-for-legal"],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
+  },
+  {
    "id": "lm-39",
    "slug": "linkedin-skills",
    "title": "11 LinkedIn Skills: guía completa para Claude, Codex y otros agentes de AI",

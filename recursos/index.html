@@ -69,7 +69,26 @@
 </script>
 <script>
   (function () {
-    var counts = { '': 41, empezar: 4, claude: 13, agentes: 13, contenido: 3, creativo: 4, negocio: 4 };
+    var grid = document.getElementById('rgrid');
+    if (!grid || document.querySelector('[data-resource-card="claude-human-resources"]')) return;
+    var card = document.createElement('a');
+    card.className = 'ci';
+    card.href = '/recursos/claude-human-resources/';
+    card.dataset.resourceCard = 'claude-human-resources';
+    card.dataset.cat = 'negocio';
+    card.dataset.coll = '';
+    card.dataset.type = 'guia-paso-a-paso';
+    card.dataset.hay = 'claude for human resources automatiza procesos hr recursos humanos ofertas onboarding evaluaciones políticas people reports claude cowork';
+    card.dataset.track = 'resource_click';
+    card.dataset.trackProps = JSON.stringify({ resource: 'claude-human-resources', from: 'catalog' });
+    card.style.setProperty('--i', '0');
+    card.innerHTML = '<div class="ci__top"><span class="res__type">Guía paso a paso</span></div><div class="ci__t">Claude for Human Resources: automatiza tus procesos de HR</div><div class="ci__d">Configura el plugin Human Resources de Claude para ofertas, onboarding, evaluaciones, políticas y reportes de People.</div><div class="ci__f"><span>Negocio</span><span>6 min · con tutorial</span></div>';
+    grid.insertBefore(card, grid.firstChild);
+  }());
+</script>
+<script>
+  (function () {
+    var counts = { '': 42, empezar: 4, claude: 13, agentes: 13, contenido: 3, creativo: 4, negocio: 5 };
     Object.keys(counts).forEach(function (category) {
       var button = document.querySelector('#rfilters [data-filter="' + category + '"] small');
       if (button) button.textContent = counts[category];
