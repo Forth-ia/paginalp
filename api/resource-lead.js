@@ -27,7 +27,9 @@ async function saveLead(data) {
   const response = await fetch(LEADS_ENDPOINT, {
     method: 'POST', redirect: 'manual',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(data), signal: AbortSignal.timeout(30000)
+    // Google Apps Script can take more than 30 seconds on a cold start.
+    // Keep enough time to confirm a saved lead while staying under Vercel's 60s limit.
+    body: JSON.stringify(data), signal: AbortSignal.timeout(45000)
   });
   if (![301, 302, 303].includes(response.status)) return readConfirmation(response);
   const location = response.headers.get('location');
@@ -37,7 +39,7 @@ async function saveLead(data) {
   }
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const result = await fetch(confirmation.href, { signal: AbortSignal.timeout(7000) });
+      const result = await fetch(confirmation.href, { signal: AbortSignal.timeout(4000) });
       await readConfirmation(result);
       return;
     } catch (error) {
@@ -77,7 +79,9 @@ module.exports = async function (req, res) {
     await saveLead({ nombre, email, telefono, fuente: 'ManyChat · ' + RESOURCES.get(resource) });
     return res.status(200).json({ ok: true, redirect: '/recursos/' + resource + '/' });
   } catch (error) {
-    const code = error.code || (error.name === 'TimeoutError' ? 'collector_timeout' : 'collector_unavailable');
+    const code = error.name === 'TimeoutError' || error.code === 23
+      ? 'collector_timeout'
+      : (error.code || 'collector_unavailable');
     console.error('resource_lead_failed', { code });
     return res.status(502).json({ ok: false, code });
   }
