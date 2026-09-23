@@ -3,7 +3,8 @@ const RESOURCES = new Map([
   ['claude-productivity', 'Claude Productivity'],
   ['claude-for-legal', 'Claude for Legal'],
   ['google-skills-claude', 'Google Skills para Claude'],
-  ['linkedin-skills', '11 LinkedIn Skills']
+  ['linkedin-skills', '11 LinkedIn Skills'],
+  ['claude-human-resources', 'Claude for Human Resources']
 ]);
 
 function collectorError(code) {

@@ -3,7 +3,7 @@
   var form = document.getElementById('resource-access-form');
   if (!form) return;
   var resource = form.elements.resource ? form.elements.resource.value : 'claude-productivity';
-  if (['claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills'].indexOf(resource) === -1) return;
+  if (['claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources'].indexOf(resource) === -1) return;
   var button = form.querySelector('button[type="submit"]');
   var label = button.querySelector('.btn__t');
   var status = document.getElementById('access-status');
