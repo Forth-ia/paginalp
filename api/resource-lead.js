@@ -1,7 +1,8 @@
 const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
 const RESOURCES = new Map([
   ['claude-productivity', 'Claude Productivity'],
-  ['claude-for-legal', 'Claude for Legal']
+  ['claude-for-legal', 'Claude for Legal'],
+  ['google-skills-claude', 'Google Skills para Claude']
 ]);
 
 function collectorError(code) {
