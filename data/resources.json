@@ -33,6 +33,28 @@
  },
  "resources": [
   {
+   "id": "lm-39",
+   "slug": "linkedin-skills",
+   "title": "11 LinkedIn Skills: guía completa para Claude, Codex y otros agentes de AI",
+   "category": "contenido",
+   "secondary": ["claude", "herramientas"],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Instala 11 Skills para escribir, humanizar, auditar, planificar y publicar contenido de LinkedIn con agentes de AI.",
+   "what_you_get": ["Los 11 Skills de LinkedIn y cuándo usar cada uno", "Instalación en Claude web, Desktop, Claude Code, Codex y OpenClaw", "Prompts para posts, auditoría, perfil y planificación", "Un flujo semanal de creación, revisión y engagement", "Configuración opcional de Apify, Publora y Pixfaro"],
+   "ideal_for": ["Founders que quieren generar conversaciones desde LinkedIn", "Equipos que crean contenido con Claude o Codex", "Personas que quieren conservar su voz al usar AI", "Quien quiere convertir contenido existente en posts nativos"],
+   "includes": ["11 Skills especializados para LinkedIn", "Guía de instalación según tu agente", "6 prompts listos para copiar", "Flujo de trabajo semanal", "Errores frecuentes y cómo resolverlos"],
+   "tools": ["Claude", "Claude Code", "Codex", "OpenClaw", "LinkedIn Skills", "Apify", "Publora", "Pixfaro"],
+   "words": 1800,
+   "read_min": 9,
+   "related_tutorials": ["loczkTaZ05g", "kJn-jDJL71s"],
+   "related_resources": ["contenido-linkedin", "skills-marketing-claude", "google-skills-claude"],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
+  },
+  {
    "id": "lm-38",
    "slug": "google-skills-claude",
    "title": "Google Skills para Claude: guía para instalarlos y usarlos",
