@@ -2275,6 +2275,56 @@
    "featured": false,
    "notion_url": null,
    "status": "preview"
+  },
+  {
+   "id": "lm-58",
+   "slug": "everything-claude-code",
+   "title": "63 agentes de AI de Everything Claude Code (ECC)",
+   "category": "claude",
+   "secondary": [
+    "agentes",
+    "herramientas"
+   ],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Instala Everything Claude Code (ECC) y aprende a usar agentes especializados para planear, construir, probar y revisar la seguridad de tus proyectos.",
+   "what_you_get": [
+    "Instalación del marketplace y plugin ECC en Claude Code",
+    "Alternativa con npm para Codex, Cursor y OpenCode",
+    "Flujo PLAN → BUILD → TEST → SECURE con ejemplos",
+    "Checklist de verificación y solución de problemas frecuentes"
+   ],
+   "ideal_for": [
+    "Usuarios de Claude Code que quieren trabajar con agentes especializados",
+    "Desarrolladores que utilizan Cursor, Codex u OpenCode",
+    "Equipos que buscan planear, construir y probar funcionalidades con IA"
+   ],
+   "includes": [
+    "Instalación del marketplace y plugin ECC en Claude Code",
+    "Alternativa con npm para Codex, Cursor y OpenCode",
+    "Flujo PLAN → BUILD → TEST → SECURE con ejemplos",
+    "Checklist de verificación y solución de problemas frecuentes"
+   ],
+   "tools": [
+    "Everything Claude Code",
+    "Claude Code",
+    "Cursor",
+    "Codex",
+    "OpenCode",
+    "npm",
+    "GitHub"
+   ],
+   "words": 1015,
+   "read_min": 6,
+   "related_tutorials": [],
+   "related_resources": [
+    "find-skills-claude",
+    "5-skills-gratuitos-claude"
+   ],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
   }
  ]
 }
