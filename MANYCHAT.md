@@ -50,3 +50,11 @@ Enlace para ManyChat: https://www.lucianomusella.com/acceso/skillspector/
 Muestra la guía de fondo y exige nombre, email y celular. Solo abre la guía
 cuando el recolector confirma el guardado, con fuente `ManyChat · SkillSpector`.
 El catálogo conserva el acceso público `/recursos/skillspector/`.
+
+## 63 agentes de AI de ECC
+
+Enlace para ManyChat: https://www.lucianomusella.com/acceso/everything-claude-code/
+
+Muestra la guía de fondo y exige nombre, email y celular. Solo abre la guía
+cuando el recolector confirma el guardado, con fuente `ManyChat · 63 agentes de AI · ECC`.
+El catálogo conserva el acceso público `/recursos/everything-claude-code/`.

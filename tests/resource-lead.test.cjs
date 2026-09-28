@@ -141,3 +141,16 @@ test('saves SkillSpector attribution and redirects to the right guide', async ()
     assert.equal(res.body.redirect, '/recursos/skillspector/');
   } finally { global.fetch = original; }
 });
+
+test('saves 63 agentes de AI · ECC attribution and redirects to the right guide', async () => {
+  const original = global.fetch;
+  let sent;
+  global.fetch = async (_, options) => { sent = JSON.parse(options.body); return { ok: true, json: async () => ({ ok: true }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'everything-claude-code' } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(sent.fuente, 'ManyChat · 63 agentes de AI · ECC');
+    assert.equal(res.body.redirect, '/recursos/everything-claude-code/');
+  } finally { global.fetch = original; }
+});
