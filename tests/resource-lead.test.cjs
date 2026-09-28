@@ -128,3 +128,16 @@ test('rejects unknown resources without saving a lead', async () => {
     assert.equal(called, false);
   } finally { global.fetch = original; }
 });
+
+test('saves SkillSpector attribution and redirects to the right guide', async () => {
+  const original = global.fetch;
+  let sent;
+  global.fetch = async (_, options) => { sent = JSON.parse(options.body); return { ok: true, json: async () => ({ ok: true }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'skillspector' } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(sent.fuente, 'ManyChat · SkillSpector');
+    assert.equal(res.body.redirect, '/recursos/skillspector/');
+  } finally { global.fetch = original; }
+});

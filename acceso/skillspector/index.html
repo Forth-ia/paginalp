@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accede a SkillSpector | Luciano Musella</title>
+  <meta name="description" content="Recibe la guía paso a paso de SkillSpector. Aprende a instalar SkillSpector y revisar la seguridad de tus skills.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="SkillSpector · Guía paso a paso">
+  <meta property="og:description" content="Completa tus datos y accede gratis a la guía para analizar tus skills con SkillSpector.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/resource-access.css">
+  <script src="/assets/js/resource-access.js?v=skillspector-1" defer></script>
+</head>
+<body class="resource-access-locked">
+  <div class="resource-access__preview" inert aria-hidden="true">
+<a class="sr" href="#main">Ir al contenido</a>
+<header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="/">Luciano<span>.</span>Musella</a>
+    <ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "nav"}' ><span class="btn__t">Agenda</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a><a href="https://lucianomusella.com/aprende">Agenda<small>06</small></a></div><div class="menu__foot"><a class="btn btn--light" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "menu"}' ><span class="btn__t">Agenda una conversación</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></nav></div>
+<main id="guide-preview">
+<div class="progress" aria-hidden="true"></div>
+    <section class="ahead sec--cream" data-bg="cream"><div class="wrap">
+      <div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=claude">Claude</a></div>
+      <span class="res__type">Guía paso a paso</span>
+      <h1 class="display display--l" style="--i:1;margin-top:14px">SkillSpector: Guía de instalación y configuración con Claude Code</h1>
+      <p class="lead" style="--i:2;margin-top:20px">Instala SkillSpector, analiza skills y repositorios antes de usarlos, genera reportes de seguridad y conecta el scanner con Claude Code como MCP.</p>
+      <div class="ahead__meta" style="--i:3"><span>8 min de lectura</span><span class="dot"></span><span>Claude a fondo</span><span class="dot"></span><span>Claude Code</span><span class="dot"></span><span>SkillSpector</span></div>
+      <div class="boxes"><div class="box"><h5>Ideal para</h5><ul><li>Usuarios de Claude Code que instalan skills de terceros</li><li>Equipos que quieren revisar skills antes de habilitarlas</li><li>Desarrolladores que necesitan reportes de seguridad y flujos de revisión</li></ul></div><div class="box"><h5>Qué obtienes</h5><ul><li>Instalación y actualización con uv</li><li>Análisis de skills locales, repositorios de GitHub y archivos ZIP</li><li>Reportes JSON, Markdown y SARIF</li><li>Configuración como MCP y ejemplos para Claude Code</li><li>Cómo interpretar riesgos, revisar hallazgos y crear un baseline</li></ul></div></div>
+    </div></section>
+    <section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article">
+      <article class="prose" data-resource="skillspector"><p><strong>SkillSpector</strong>, desarrollado por NVIDIA, analiza las skills de agentes de AI para detectar instrucciones maliciosas, código inseguro, acceso a credenciales, extracción de datos, riesgos de supply chain y otros problemas de seguridad <strong>antes de instalarlas</strong>.</p>
+<p>En esta guía aprenderás a:</p>
+<ul><li>Instalar SkillSpector.</li><li>Analizar una skill individual.</li><li>Analizar una carpeta completa de skills.</li><li>Revisar repositorios de GitHub antes de instalarlos.</li><li>Generar reportes de seguridad.</li><li>Conectar SkillSpector con Claude Code como un MCP.</li></ul>
+<div class="callout"><p>💡</p>
+<p>Repo: <a href="https://github.com/nvidia/skillspector" target="_blank" rel="noopener">https://github.com/nvidia/skillspector</a></p></div>
+<hr>
+<h2>🔎 ¿Qué hace SkillSpector?</h2>
+<p>SkillSpector puede analizar:</p>
+<ul><li>Una carpeta local con una skill.</li><li>Un archivo individual <code>SKILL.md</code>.</li><li>Un repositorio de GitHub.</li><li>Un archivo ZIP.</li><li>Una carpeta que contenga múltiples skills.</li></ul>
+<p>El análisis genera:</p>
+<ul><li><strong>Puntuación de riesgo de 0–100</strong></li><li>Nivel de severidad</li><li>Recomendación</li><li>Veredicto de seguridad</li><li>Hallazgos detallados</li></ul>
+<p>SkillSpector analiza <strong>68 patrones de vulnerabilidad en 17 categorías</strong>, incluyendo:</p>
+<ul><li>Prompt injection</li><li>Extracción de variables de entorno</li><li>Ejecución remota de código</li><li>Persistencia</li><li>Dependencias peligrosas</li><li>MCP tool poisoning</li><li>Acceso o extracción de credenciales</li><li>Exfiltración de datos</li></ul>
+<blockquote><p>⚠️ <strong>Importante:</strong> una puntuación baja no garantiza que una skill sea segura. Utiliza SkillSpector como una herramienta de revisión de seguridad, no como una autorización automática para instalar código desconocido.</p></blockquote>
+<hr>
+<h2>🧰 ¿Qué necesitas?</h2>
+<p>Antes de comenzar necesitas:</p>
+<ul><li>macOS, Linux o Windows con una terminal compatible con Unix.</li><li>Python <strong>3.12 o superior</strong>.</li><li><code>uv</code> instalado.</li><li>Claude Code instalado y autenticado si quieres configurar el MCP.</li></ul>
+<h3>Repositorio oficial</h3>
+<p><strong>NVIDIA/SkillSpector:</strong></p>
+<p><a href="https://github.com/NVIDIA/SkillSpector" target="_blank" rel="noopener">https://github.com/NVIDIA/SkillSpector</a></p>
+<hr>
+<h2>1️⃣ Instala SkillSpector</h2>
+<p>Para instalar la versión estándar del scanner mediante línea de comandos:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>uv tool install skillspector</pre></div>
+<h3>Confirma que se instaló correctamente</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector --version</pre></div>
+<h3>Para actualizarlo más adelante</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>uv tool upgrade skillspector</pre></div>
+<hr>
+<h2>2️⃣ Analiza una skill</h2>
+<p>SkillSpector puede analizar diferentes tipos de archivos y fuentes.</p>
+<h3>Analizar una carpeta local</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill</pre></div>
+<h3>Analizar un archivo <code>SKILL.md</code></h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/SKILL.md</pre></div>
+<h3>Analizar un repositorio de GitHub</h3>
+<p>Puedes analizar un repositorio antes de clonarlo o instalarlo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan https://github.com/usuario/repositorio</pre></div>
+<h3>Analizar un archivo ZIP</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan skill.zip</pre></div>
+<hr>
+<h2>3️⃣ Analiza tus skills existentes de Claude</h2>
+<p>Las skills de Claude Code normalmente se encuentran en:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Comando</span><button class="copy" type="button">Copiar</button></div><pre>.claude/skills</pre></div>
+<p>Pueden estar dentro de un proyecto específico o en la configuración general de Claude del usuario.</p>
+<h3>Desde la carpeta de un proyecto</h3>
+<p>Ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan .claude/skills</pre></div>
+<h3>Skills a nivel de usuario en macOS o Linux</h3>
+<p>Puedes probar:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan ~/.claude/skills</pre></div>
+<p>Si tus skills están almacenadas en otra ubicación, simplemente reemplaza la ruta por la carpeta correspondiente.</p>
+<p>SkillSpector detectará y analizará las skills que encuentre dentro de ella.</p>
+<hr>
+<h2>4️⃣ Haz un análisis rápido sin LLM</h2>
+<p>El análisis normal puede utilizar un LLM para realizar análisis semántico.</p>
+<p>Si quieres hacer una primera revisión más rápida y <strong>sin necesidad de una API key</strong>, puedes utilizar:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill --no-llm</pre></div>
+<h3>¿Cuándo utilizarlo?</h3>
+<p>El modo <code>--no-llm</code> es útil para hacer un <strong>primer filtro rápido</strong>.</p>
+<p>Sin embargo, el análisis completo puede detectar instrucciones sospechosas que podrían parecer normales para un análisis basado únicamente en patrones.</p>
+<p><strong>Recomendación:</strong></p>
+<p><strong>Primera revisión → <code>--no-llm</code></strong></p>
+<p><strong>Revisión completa → análisis con LLM</strong></p>
+<hr>
+<h2>5️⃣ Guarda el reporte</h2>
+<p>Puedes guardar los resultados en diferentes formatos.</p>
+<h3>JSON</h3>
+<p>Para guardar un reporte procesable por otras herramientas:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill --format json &gt; report.json</pre></div>
+<h3>Markdown</h3>
+<p>Para generar un reporte fácil de leer:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill --format markdown &gt; report.md</pre></div>
+<h3>SARIF</h3>
+<p>Para integrarlo con herramientas de seguridad o CI:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill --format sarif &gt; report.sarif</pre></div>
+<hr>
+<h2>🔌 Conecta SkillSpector con Claude Code</h2>
+<p>También puedes configurar SkillSpector como un <strong>MCP</strong>.</p>
+<p>Esto permite que Claude pueda utilizar el scanner como una herramienta directamente, en lugar de que tengas que ejecutar manualmente cada comando.</p>
+<hr>
+<h3>Paso 1 — Instala la versión MCP</h3>
+<p>Instala la versión de SkillSpector necesaria para utilizarlo como MCP:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>uv tool install skillspector</pre></div>
+<hr>
+<h3>Paso 2 — Regístralo en Claude Code</h3>
+<p>Agrega SkillSpector como servidor MCP utilizando la configuración correspondiente de Claude Code.</p>
+<p>Una vez registrado, Claude podrá acceder al scanner como una herramienta.</p>
+<hr>
+<h3>Paso 3 — Confirma la conexión</h3>
+<p>Abre Claude Code y ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Comando</span><button class="copy" type="button">Copiar</button></div><pre>/mcp</pre></div>
+<p>Busca:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Comando</span><button class="copy" type="button">Copiar</button></div><pre>skillspector</pre></div>
+<p>en la lista de servidores conectados.</p>
+<p>Si aparece allí, la conexión está activa.</p>
+<hr>
+<h3>Paso 4 — Pídele a Claude que analice una skill antes de instalarla</h3>
+<p>Una vez conectado el MCP, puedes pedirle a Claude que analice una skill antes de instalarla.</p>
+<p>Por ejemplo:</p>
+<blockquote><p><strong>Analiza esta skill de GitHub con SkillSpector antes de instalarla: [URL]</strong></p></blockquote>
+<p>También puedes indicarle una carpeta local:</p>
+<blockquote><p><strong>Analiza esta carpeta de skills con SkillSpector y dime si encuentras riesgos de seguridad: <code>/ruta/a/skills</code></strong></p></blockquote>
+<h3>⚠️ Mantén separados el análisis y la instalación</h3>
+<p>El flujo recomendado es:</p>
+<p><strong>SCAN → REVIEW → APPROVE → INSTALL</strong></p>
+<p>Claude debería:</p>
+<ol><li>Analizar la skill.</li><li>Explicarte los resultados.</li><li>Mostrarte los hallazgos relevantes.</li><li>Esperar tu aprobación.</li><li>Instalar o habilitar la skill únicamente después de tu aprobación.</li></ol>
+<hr>
+<h2>📊 ¿Cómo leer los resultados?</h2>
+<p>Presta especial atención a estos elementos:</p>
+<h3>Risk score</h3>
+<p>La puntuación general de riesgo, de <strong>0 a 100</strong>.</p>
+<h3>Severity</h3>
+<p>El nivel de severidad asignado al comportamiento detectado.</p>
+<h3>Recommendation</h3>
+<p>La recomendación que SkillSpector genera sobre qué hacer a continuación.</p>
+<h3>Safe to install</h3>
+<p>El veredicto del scanner.</p>
+<blockquote><p>⚠️ No significa que exista una garantía absoluta de seguridad.</p></blockquote>
+<h3>Findings</h3>
+<p>Los hallazgos específicos que generaron la puntuación.</p>
+<p>Aquí deberías revisar:</p>
+<ul><li>Archivo</li><li>Línea</li><li>Código</li><li>Patrón detectado</li><li>Motivo de la alerta</li></ul>
+<h3>Scan mode</h3>
+<p>Indica cómo se realizó el análisis:</p>
+<ul><li>Análisis estático</li><li>Análisis estático + LLM</li></ul>
+<hr>
+<h2>🚨 Señales de alerta</h2>
+<p>Detente y revisa cuidadosamente una skill si encuentras comportamientos como:</p>
+<h3>🔑 Acceso a información sensible</h3>
+<p>Por ejemplo:</p>
+<ul><li>Variables de entorno</li><li>SSH keys</li><li>Tokens</li><li>Archivos de contraseñas</li><li>Credenciales</li></ul>
+<h3>🌐 Envío de datos externos</h3>
+<p>Código que envía información local hacia URLs externas.</p>
+<h3>📥 Descargar y ejecutar scripts remotos</h3>
+<p>Especialmente cuando una skill descarga código de Internet y posteriormente lo ejecuta.</p>
+<h3>💻 Ejecución de código</h3>
+<p>Presta atención a:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Comando</span><button class="copy" type="button">Copiar</button></div><pre>exec
+eval
+subprocess
+os.system</pre></div>
+<p>y mecanismos similares de ejecución.</p>
+<h3>🔄 Persistencia</h3>
+<p>Por ejemplo:</p>
+<ul><li>Cron jobs</li><li>Scripts de inicio</li><li>Procesos que buscan ejecutarse automáticamente</li><li>Otros mecanismos de persistencia</li></ul>
+<h3>🧩 Código ofuscado</h3>
+<p>Por ejemplo:</p>
+<ul><li>Base64</li><li>Comandos codificados</li><li>Código deliberadamente difícil de interpretar</li></ul>
+<h3>🔓 Permisos demasiado amplios</h3>
+<p>Especialmente:</p>
+<ul><li>Wildcard permissions</li><li>Capacidades MCP no declaradas</li><li>Accesos que no parecen necesarios para el propósito de la skill</li></ul>
+<h3>👻 Instrucciones ocultas</h3>
+<p>Busca instrucciones escondidas dentro de:</p>
+<ul><li>Comentarios</li><li>Unicode</li><li>Texto invisible</li><li>Contenido aparentemente irrelevante</li></ul>
+<hr>
+<h2>🛡️ Flujo recomendado para instalar una skill de forma segura</h2>
+<p>Utiliza este proceso cada vez que encuentres una skill nueva:</p>
+<h3>1. Analiza el repositorio</h3>
+<p>Haz el scan sobre la URL de GitHub <strong>antes de clonarlo</strong>.</p>
+<h3>2. Revisa los hallazgos importantes</h3>
+<p>Lee todos los hallazgos clasificados como <strong>High</strong> o <strong>Critical</strong>.</p>
+<h3>3. Comprueba los permisos</h3>
+<p>Pregúntate:</p>
+<blockquote><p>¿Los permisos que solicita esta skill tienen sentido para lo que dice hacer?</p></blockquote>
+<h3>4. Revisa el código exacto</h3>
+<p>Mira el archivo y la línea que generaron la alerta.</p>
+<h3>5. Prueba en un entorno separado</h3>
+<p>Si no conoces la skill, pruébala primero en un proyecto desechable y <strong>sin secretos reales</strong>.</p>
+<h3>6. Instala después de entenderla</h3>
+<p>Antes de instalarla, debes saber qué información:</p>
+<ul><li>Lee</li><li>Escribe</li><li>Ejecuta</li><li>Envía externamente</li></ul>
+<h3>7. Analiza nuevamente después de actualizar</h3>
+<p>Cada actualización puede introducir cambios.</p>
+<p>Por eso, vuelve a ejecutar el scanner después de cada update.</p>
+<hr>
+<h2>📌 Opcional: Crear un baseline</h2>
+<p>Si revisaste los hallazgos existentes y decidiste aceptarlos conscientemente, puedes crear un <strong>baseline</strong>:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector baseline</pre></div>
+<p>Después puedes mostrar únicamente los hallazgos nuevos en futuros análisis.</p>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill --baseline</pre></div>
+<p>También puedes revisar los hallazgos que fueron suprimidos cuando sea necesario.</p>
+<blockquote><p>⚠️ <strong>Importante:</strong> nunca utilices un baseline para ocultar hallazgos que todavía no hayas revisado personalmente.</p></blockquote>
+<hr>
+<h2>⚡ Quick Start</h2>
+<p>Si quieres empezar rápidamente, este es el flujo:</p>
+<h3>1. Instala</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>uv tool install skillspector</pre></div>
+<h3>2. Analiza</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill</pre></div>
+<h3>3. Si quieres una revisión rápida sin LLM</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>skillspector scan /ruta/a/tu/skill --no-llm</pre></div>
+<h3>4. Revisa los findings</h3>
+<p>Presta atención a:</p>
+<p><strong>High / Critical → permisos → credenciales → ejecución de código → exfiltración de datos</strong></p>
+<h3>5. Instala únicamente después de revisar</h3>
+<p>SCAN → REVIEW → APPROVE → INSTALL</p>
+        </article>
+      <aside class="aside">
+
+
+        <div class="aside__box"><h5>Recursos relacionados</h5><ul class="aside__list"><li><a href="/recursos/find-skills-claude/">Find Skills para Claude</a></li><li><a href="/recursos/5-skills-gratuitos-claude/">5 Skills gratuitos para Claude</a></li></ul></div>
+        <div class="aside__box" style="background:var(--ink);color:#fff;border-color:transparent"><h5 style="color:var(--on-dark-3)">Siguiente paso</h5><p style="margin:0;font-family:var(--serif);font-size:20px;line-height:1.2">¿Quieres hacerlo guiado, en 5 días?</p><a class="btn btn--light btn--sm" href="/retos/claude-en-5-dias/" data-track="challenge_click" data-track-props='{"from": "skillspector"}' ><span class="btn__t">Ver el reto</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      </aside></div></section>
+    <section class="sec sec--cream " data-bg="cream"><div class="wrap sec__head"><div><span class="eyebrow eyebrow--dot">Seguir construyendo</span><h2 class="h2" style="--i:1;margin-top:14px">Recursos <em class="serif tint">relacionados</em></h2></div>
+  <div style="--i:2;display:grid;gap:16px;justify-items:end"><a class="link-arrow" href="/recursos/">Ver todos los recursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div><div class="wrap cat__grid cat__grid--3"><a class="ci" href="/recursos/find-skills-claude/" data-cat="claude" data-coll="" data-type="guia-paso-a-paso" data-hay="find skills: el skill que encuentra el skill correcto por ti encontrar e instalar de forma segura el skill correcto de claude code entre miles dispersos en github. guía paso a paso claude claude a fondo find skills cross ai tools claude code npx / node.js github vercel-labs/skills" data-track="resource_click" data-track-props="{&quot;resource&quot;: &quot;find-skills-claude&quot;, &quot;from&quot;: &quot;catalog&quot;}" style="--i:13"><div class="ci__top"><span class="res__type">Guía paso a paso</span></div><div class="ci__t">Find Skills: El skill que encuentra el skill correcto por ti</div><div class="ci__d">Encontrar e instalar de forma segura el skill correcto de Claude Code entre miles dispersos en GitHub.</div><div class="ci__f"><span>Claude</span><span>6 min · con tutorial</span></div></a><a class="ci" href="/recursos/5-skills-gratuitos-claude/" data-cat="claude" data-coll="" data-type="lista-curada" data-hay="5 skills gratuitos que convierten claude en una herramienta completamente distinta claude olvida el contexto, diseña genérico, no se conecta a herramientas y se pierde en proyectos grandes. lista curada claude claude a fondo claude code claude mem ui ux pro max n8n n8n mcp lightrag" data-track="resource_click" data-track-props="{&quot;resource&quot;: &quot;5-skills-gratuitos-claude&quot;, &quot;from&quot;: &quot;catalog&quot;}" style="--i:11"><div class="ci__top"><span class="res__type">Lista curada</span></div><div class="ci__t">5 Skills Gratuitos que Convierten Claude en una Herramienta Completamente Distinta</div><div class="ci__d">Claude olvida el contexto, diseña genérico, no se conecta a herramientas y se pierde en proyectos grandes.</div><div class="ci__f"><span>Claude</span><span>7 min · con tutorial</span></div></a></div></section>
+    <section class="sec sec--tight sec--ink" data-bg="ink"><div class="wrap next">
+      <div><span class="eyebrow" style="color:var(--on-dark-3)">Siguiente paso</span><h2 class="h3" style="color:#fff;margin-top:12px">¿Quieres hacerlo guiado, <em class="serif tint">en 5 días</em>?</h2>
+      <p style="color:var(--on-dark-2);max-width:52ch;margin:12px 0 0">El reto "Claude en 5 días" toma recursos como este y los convierte en una práctica diaria de 20 minutos. Gratis, a tu ritmo.</p></div>
+      <div class="next__cta"><a class="btn btn--light" href="/retos/claude-en-5-dias/" data-track="challenge_click" data-track-props='{"from": "skillspector:end"}' ><span class="btn__t">Ver el reto</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="next__alt" href="/programa/" data-track="program_click" data-track-props='{"from":"skillspector:end"}'>Y si quieres llevarlo al trabajo, mira el programa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    </div></section>
+</main>
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div>
+    <div><h6>Explora</h6><ul><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul></div>
+    <div><h6>Canales</h6><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+  </div>
+  <div class="wrap foot__legal"><span>© 2026 Luciano Musella</span><span>Preview · web-v2 · no es la versión final</span></div>
+</footer>
+<div class="preview-badge">Preview web-v2</div>
+
+</div>
+  <div class="resource-access lead-pop" role="dialog" aria-modal="true" aria-labelledby="access-title">
+    <section class="lead-pop__card" aria-labelledby="access-title">
+      <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
+      <h2 id="access-title">Desbloquea la guía</h2>
+      <p>Déjame tus datos para acceder gratis a <strong>SkillSpector</strong> y revisar tus skills antes de instalarlas.</p>
+      <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
+        <input type="hidden" name="resource" value="skillspector">
+        <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
+        <label>Celular<input name="telefono" type="tel" autocomplete="tel" required maxlength="30" placeholder="+57 300 000 0000" aria-describedby="phone-help"></label>
+        <small id="phone-help">Incluye el indicativo de tu país.</small>
+        <button class="btn btn--accent" type="submit"><span class="btn__t">Ver la guía gratis</span></button>
+        <p id="access-status" class="resource-access__status" role="status" aria-live="polite"></p>
+        <small>Al enviar tus datos, recibirás recursos e ideas de IA de Luciano Musella. Sin spam. Puedes dejar de recibirlos cuando quieras.</small>
+      </form>
+      <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
+    </section>
+  </div>
+</body>
+</html>

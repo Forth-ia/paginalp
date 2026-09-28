@@ -42,3 +42,11 @@ público puede leerlo directamente. No se verifica la titularidad del email o
 celular mediante códigos.
 
 Validación del servidor: `node --test tests/resource-lead.test.cjs`.
+
+## SkillSpector
+
+Enlace para ManyChat: https://www.lucianomusella.com/acceso/skillspector/
+
+Muestra la guía de fondo y exige nombre, email y celular. Solo abre la guía
+cuando el recolector confirma el guardado, con fuente `ManyChat · SkillSpector`.
+El catálogo conserva el acceso público `/recursos/skillspector/`.
