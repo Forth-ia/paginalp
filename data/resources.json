@@ -2223,6 +2223,58 @@
    "featured": false,
    "notion_url": null,
    "status": "preview"
+  },
+  {
+   "id": "lm-57",
+   "slug": "skillspector",
+   "title": "SkillSpector: Guía de instalación y configuración con Claude Code",
+   "category": "claude",
+   "secondary": [
+    "seguridad",
+    "herramientas"
+   ],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Instala SkillSpector, analiza skills y repositorios antes de usarlos, genera reportes de seguridad y conecta el scanner con Claude Code como MCP.",
+   "what_you_get": [
+    "Instalación y actualización con uv",
+    "Análisis de skills locales, repositorios de GitHub y archivos ZIP",
+    "Reportes JSON, Markdown y SARIF",
+    "Configuración como MCP y ejemplos para Claude Code",
+    "Cómo interpretar riesgos, revisar hallazgos y crear un baseline"
+   ],
+   "ideal_for": [
+    "Usuarios de Claude Code que instalan skills de terceros",
+    "Equipos que quieren revisar skills antes de habilitarlas",
+    "Desarrolladores que necesitan reportes de seguridad y flujos de revisión"
+   ],
+   "includes": [
+    "Instalación y actualización con uv",
+    "Análisis de skills locales, repositorios de GitHub y archivos ZIP",
+    "Reportes JSON, Markdown y SARIF",
+    "Configuración como MCP y ejemplos para Claude Code",
+    "Cómo interpretar riesgos, revisar hallazgos y crear un baseline"
+   ],
+   "tools": [
+    "SkillSpector",
+    "Claude Code",
+    "NVIDIA",
+    "Python",
+    "uv",
+    "GitHub",
+    "MCP"
+   ],
+   "words": 1459,
+   "read_min": 8,
+   "related_tutorials": [],
+   "related_resources": [
+    "find-skills-claude",
+    "5-skills-gratuitos-claude"
+   ],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
   }
  ]
 }
