@@ -32,6 +32,50 @@
   }
  },
  "resources": [
+{
+ "id": "sales-coach-assistant",
+ "slug": "sales-coach-assistant",
+ "title": "Sales Coach Assistant",
+ "category": "agentes",
+ "secondary": [
+  "claude",
+  "negocio"
+ ],
+ "type": "guia-paso-a-paso",
+ "type_label": "Guía paso a paso",
+ "summary": "Convierte tus llamadas de ventas en reportes automáticos con Fathom, Claude y Gmail para mejorar tu próxima llamada.",
+ "what_you_get": [
+  "Configuración en cuatro pasos",
+  "Prompt listo para copiar",
+  "Reporte de coaching comercial"
+ ],
+ "ideal_for": [
+  "Vendedores",
+  "Supervisores y gerentes de ventas"
+ ],
+ "includes": [
+  "Guía paso a paso",
+  "Capturas de Fathom",
+  "Prompt completo",
+  "Ejemplo de reporte"
+ ],
+ "tools": [
+  "Fathom",
+  "Claude Cowork",
+  "Gmail"
+ ],
+ "words": 1138,
+ "read_min": 8,
+ "related_tutorials": [],
+ "related_resources": [
+  "claude-routines",
+  "houston-preparacion-comercial"
+ ],
+ "collection": null,
+ "featured": false,
+ "notion_url": null,
+ "status": "preview"
+},
   {
    "id": "lm-40",
    "slug": "claude-human-resources",
