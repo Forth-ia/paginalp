@@ -3,6 +3,35 @@ const assert = require('node:assert/strict');
 const handler = require('../api/resource-lead.js');
 
 const valid = { nombre: 'Prueba', email: 'prueba@example.com', telefono: '+57 300 000 0000' };
+test('Sales Coach requires all fields and confirmed storage before returning the public guide', async () => {
+  const original = global.fetch;
+  const sent = [];
+  let confirmed = true;
+  global.fetch = async (_, options) => {
+    sent.push(JSON.parse(options.body));
+    return { ok: true, json: async () => ({ ok: confirmed }) };
+  };
+  try {
+    const body = { ...valid, resource: 'sales-coach-assistant' };
+    for (const field of ['nombre', 'email', 'telefono']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...body, [field]: '' } }, res);
+      assert.equal(res.statusCode, 400);
+    }
+    assert.equal(sent.length, 0);
+    const res = response();
+    await handler({ method: 'POST', body }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(sent[0].fuente, 'ManyChat · Sales Coach Assistant');
+    assert.equal(res.body.redirect, '/recursos/sales-coach-assistant/');
+    confirmed = false;
+    const failed = response();
+    await handler({ method: 'POST', body }, failed);
+    assert.equal(failed.statusCode, 502);
+    assert.equal(failed.body.ok, false);
+    assert.equal(failed.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});
 function response() {
   return { headers: {}, statusCode: 200, setHeader(key, value) { this.headers[key] = value; }, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
 }

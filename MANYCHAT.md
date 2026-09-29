@@ -58,3 +58,22 @@ Enlace para ManyChat: https://www.lucianomusella.com/acceso/everything-claude-co
 Muestra la guía de fondo y exige nombre, email y celular. Solo abre la guía
 cuando el recolector confirma el guardado, con fuente `ManyChat · 63 agentes de AI · ECC`.
 El catálogo conserva el acceso público `/recursos/everything-claude-code/`.
+
+## Sales Coach Assistant
+
+Enlace para el botón o mensaje de ManyChat:
+
+https://www.lucianomusella.com/acceso/sales-coach-assistant/
+
+Muestra la guía al fondo con el formulario existente obligatorio de nombre,
+email y celular. No se puede cerrar ni omitir por un registro anterior.
+Solo abre la guía después de confirmar el guardado en la hoja existente,
+con la fuente `ManyChat · Sales Coach Assistant`. Si el guardado falla,
+conserva el formulario y permite reintentar.
+
+El catálogo y los visitantes normales mantienen el enlace público sin bloqueo:
+
+https://www.lucianomusella.com/recursos/sales-coach-assistant/
+
+Utiliza el enlace `/acceso/` en ManyChat: no se detecta el origen automáticamente.
+El recurso público sigue abierto para quien conozca o reciba su enlace.

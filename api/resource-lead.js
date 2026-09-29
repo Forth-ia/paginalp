@@ -1,5 +1,6 @@
 const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
 const RESOURCES = new Map([
+  ['sales-coach-assistant', 'Sales Coach Assistant'],
   ['everything-claude-code', '63 agentes de AI · ECC'],
   ['skillspector', 'SkillSpector'],
   ['claude-productivity', 'Claude Productivity'],
