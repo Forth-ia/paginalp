@@ -3,7 +3,7 @@
   var form = document.getElementById('resource-access-form');
   if (!form) return;
   var resource = form.elements.resource ? form.elements.resource.value : 'claude-productivity';
-  if (['sales-coach-assistant', 'everything-claude-code', 'skillspector', 'claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources'].indexOf(resource) === -1) return;
+  if (['sales-coach-assistant', 'everything-claude-code', 'skillspector', 'claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources', 'higgsfield-codex-cli'].indexOf(resource) === -1) return;
   var button = form.querySelector('button[type="submit"]');
   var label = button.querySelector('.btn__t');
   var status = document.getElementById('access-status');

@@ -7,7 +7,8 @@ const RESOURCES = new Map([
   ['claude-for-legal', 'Claude for Legal'],
   ['google-skills-claude', 'Google Skills para Claude'],
   ['linkedin-skills', '11 LinkedIn Skills'],
-  ['claude-human-resources', 'Claude for Human Resources']
+  ['claude-human-resources', 'Claude for Human Resources'],
+  ['higgsfield-codex-cli', 'Crea contenido con Higgsfield + Codex CLI']
 ]);
 
 function collectorError(code) {
