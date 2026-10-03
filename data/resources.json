@@ -32,6 +32,28 @@
   }
  },
  "resources": [
+  {
+   "id": "lm-46",
+   "slug": "higgsfield-codex-cli",
+   "title": "Crea contenido con Higgsfield + Codex CLI",
+   "category": "creativo",
+   "secondary": ["contenido", "agentes"],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Configura Codex CLI y las Skills de Higgsfield para convertir una foto de producto en una campaña de contenido organizada.",
+   "what_you_get": ["Instalación de Higgsfield CLI y sus Skills", "Diferencia práctica entre Skills y MCP", "Estructura de proyecto para campañas", "Flujo completo desde una foto hasta los archivos finales"],
+   "ideal_for": ["Marketers y founders que crean contenido visual", "Agencias que producen campañas de producto", "Equipos que quieren organizar un pipeline creativo con IA"],
+   "includes": ["Configuración en 4 pasos", "Comandos listos para copiar", "Estructura de carpetas recomendada", "Solución para imágenes de referencia"],
+   "tools": ["Codex CLI", "Higgsfield CLI", "Higgsfield Skills", "npm"],
+   "words": 1100,
+   "read_min": 6,
+   "related_tutorials": [],
+   "related_resources": ["higgsfield-claude-video", "gpt-image-2", "linkedin-skills"],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
+  },
 {
  "id": "sales-coach-assistant",
  "slug": "sales-coach-assistant",

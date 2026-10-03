@@ -391,6 +391,9 @@ body[data-page="challenges"] #main>.hero,body[data-page="challenges"] #main>.sec
 .callout p{margin:0}
 .fig-ph{margin:1.4em 0;padding:26px;border:1px dashed var(--line-strong);border-radius:var(--r-lg);background:var(--cream);display:grid;gap:6px;color:var(--ink-3);font-size:14px}
 .fig-ph b{color:var(--ink-2);font-weight:600}
+.article-figure{margin:1.8em 0;border-radius:var(--r-lg);overflow:hidden;background:var(--sand);border:1px solid var(--line)}
+.article-figure img{display:block;width:100%;height:auto}
+.article-figure figcaption{padding:11px 15px;font-size:13px;line-height:1.45;color:var(--ink-3)}
 .embed{margin:1.6em 0;aspect-ratio:16/9;border-radius:var(--r-lg);overflow:hidden;background:var(--ink)}
 .embed iframe{width:100%;height:100%;border:0}
 .aside{position:sticky;top:calc(var(--nav-h) + 24px);display:grid;gap:22px}
