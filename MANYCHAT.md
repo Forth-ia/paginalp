@@ -23,7 +23,7 @@ por un formulario superpuesto que no se puede cerrar. Solo redirige
 cuando `/api/resource-lead` recibe `{ "ok": true }` del recolector existente
 de Google Sheets. Si falla, conserva el formulario y permite reintentar.
 La confirmación redirigida de Google se puede consultar hasta tres veces sin
-repetir el POST que guarda el lead. La función dispone de 60 segundos y sus
+repetir el POST que guarda el lead. La función dispone de 90 segundos y sus
 diagnósticos registran códigos de error, sin nombres, emails ni teléfonos.
 
 Los registros se guardan en la misma hoja, con la fuente
@@ -95,3 +95,11 @@ https://www.lucianomusella.com/recursos/claude-maquina-de-leads/
 
 La distinción depende del enlace enviado, no del navegador ni del referrer.
 Quien tenga el enlace público puede leer la guía directamente.
+
+### Diagnóstico de confirmación de Google
+
+El recolector espera hasta 60 segundos para guardar. Tras la redirección de
+Google, consulta la confirmación hasta tres veces, con 8 segundos por intento,
+pausas de 1 y 2 segundos y sin caché. No repite automáticamente el POST.
+El límite de Vercel es 90 segundos. Los errores registran fase y duración,
+sin datos de contacto. No se desbloquea la guía si Google no confirma `ok: true`.

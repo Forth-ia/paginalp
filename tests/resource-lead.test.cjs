@@ -213,3 +213,40 @@ test('Lead machine requires all fields and confirmed storage before returning th
     assert.equal(failed.body.redirect, undefined);
   } finally { global.fetch = original; }
 });
+
+test('recovers from transient Google 404 and HTML confirmation without another write', async () => {
+  const original = global.fetch;
+  let posts = 0, gets = 0;
+  global.fetch = async (_, options) => {
+    if (options.method === 'POST') {
+      posts++;
+      return { status: 302, headers: new Headers({ location: 'https://script.googleusercontent.com/macros/echo?test=1' }) };
+    }
+    gets++;
+    assert.equal(options.cache, 'no-store');
+    if (gets === 1) return { ok: false, status: 404 };
+    if (gets === 2) return { ok: true, json: async () => { throw new SyntaxError('HTML'); } };
+    return { ok: true, json: async () => ({ ok: true }) };
+  };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'claude-maquina-de-leads' } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(posts, 1);
+    assert.equal(gets, 3);
+  } finally { global.fetch = original; }
+});
+
+test('a save timeout is not retried and does not grant access', async () => {
+  const original = global.fetch;
+  let posts = 0;
+  global.fetch = async () => { posts++; throw new DOMException('Slow collector', 'TimeoutError'); };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: valid }, res);
+    assert.equal(posts, 1);
+    assert.equal(res.statusCode, 502);
+    assert.equal(res.body.code, 'collector_timeout');
+    assert.equal(res.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});
