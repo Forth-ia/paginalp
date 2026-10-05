@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script src="https://api.adpulze.io/api/v1/scripts/ghl.js?location_id=22"></script><script src="https://api.adpulze.io/api/v1/scripts/organic.js?location_id=22"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convierte Claude en una máquina de leads | Luciano Musella</title>
+<meta name="description" content="Conecta Claude con Composio, encuentra empresas, organiza tus leads en Google Sheets y prepara una campaña de llamadas con Dapta.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Convierte Claude en una máquina de leads"><meta property="og:description" content="Conecta Claude con Composio, encuentra empresas, organiza tus leads en Google Sheets y prepara una campaña de llamadas con Dapta."><meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css">
+
+</head>
+<body data-page="resource" data-page-props='{"resource": "claude-maquina-de-leads", "category": "agentes", "type": "guia-paso-a-paso"}'>
+<a class="sr" href="#main">Ir al contenido</a>
+<header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="/">Luciano<span>.</span>Musella</a>
+    <ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "nav"}' ><span class="btn__t">Agenda</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a><a href="https://lucianomusella.com/aprende">Agenda<small>06</small></a></div><div class="menu__foot"><a class="btn btn--light" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "menu"}' ><span class="btn__t">Agenda una conversación</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></nav></div>
+<main id="main"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap">
+<div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=agentes">Agentes</a></div>
+<span class="res__type" data-reveal>Guía paso a paso</span>
+<h1 class="display display--l" data-reveal style="--i:1;margin-top:14px">Convierte Claude en una máquina de leads</h1>
+<p class="lead" data-reveal style="--i:2;margin-top:20px">Conecta Claude con Composio, encuentra empresas, organiza tus leads en Google Sheets y prepara una campaña de llamadas con Dapta.</p>
+<div class="ahead__meta" data-reveal style="--i:3"><span>12 min de lectura</span><span class="dot"></span><span>Agentes y automatización</span><span class="dot"></span><span>Claude · Composio · Google Sheets · Dapta</span></div>
+<div class="boxes"><div class="box"><h5>Ideal para</h5><ul><li>Equipos de ventas y prospección</li><li>Empresas que quieren organizar y calificar leads con IA</li></ul></div><div class="box"><h5>Qué obtienes</h5><ul><li>15 partes para configurar el flujo completo</li><li>Prompts listos para copiar</li><li>Un prompt maestro para buscar y organizar leads</li></ul></div></div>
+</div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="claude-maquina-de-leads">
+<h2 id="parte-1">Parte 1 · Conectar Claude con Composio</h2>
+<h3>Paso 1. Crea tu cuenta de Composio</h3>
+<p>Entra a <a href="https://composio.dev/" target="_blank" rel="noopener">Composio</a>.</p>
+<p>Crea una cuenta e inicia sesión.</p>
+<p>Composio actualmente ofrece integraciones con más de 1.500 aplicaciones y utiliza MCP para darle acceso a esas herramientas a agentes como Claude.</p>
+<h3>Paso 2. Abre Claude</h3>
+<p>Necesitas utilizar Claude con soporte para Connectors/MCP.</p>
+<p>En Claude ve a:</p>
+<p><strong>Settings → Connectors → Add custom connector</strong></p>
+<p>Composio indica que este procedimiento funciona con Claude Web, Desktop y Cowork.</p>
+<h3>Paso 3. Agrega Composio</h3>
+<p>En el campo del servidor MCP agrega:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="1">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">https://connect.composio.dev/mcp</pre></div>
+<p>Ese es el endpoint MCP que Composio proporciona actualmente para conectarlo a herramientas compatibles.</p>
+<p>Ponle como nombre:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="2">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Composio</pre></div>
+<p>Después haz clic en <strong>Connect</strong>.</p>
+<p>Se abrirá el proceso de autorización de Composio.</p>
+<h2 id="parte-2">Parte 2 · Conectar Google Sheets</h2>
+<p>Ahora necesitamos darle a Claude un lugar donde guardar los leads.</p>
+<h3>Paso 4. Autoriza Google Sheets</h3>
+<p>Una vez conectado Composio, dile a Claude:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="3">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Conecta mi cuenta de Google Sheets mediante Composio.</pre></div>
+<p>Claude debería llevarte al proceso de autorización.</p>
+<p>Autoriza la cuenta de Google que quieras utilizar.</p>
+<p>Composio permite conectar Google Sheets y ejecutar acciones como crear hojas, actualizar filas y modificar datos.</p>
+<h2 id="parte-3">Parte 3 · Conectar Google Maps</h2>
+<p>Ahora viene la parte interesante.</p>
+<h3>Paso 5. Conecta Google Maps</h3>
+<p>En Claude escribe:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="4">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Conecta Google Maps mediante Composio.</pre></div>
+<p>Autoriza la cuenta cuando te la solicite.</p>
+<p>Composio tiene actualmente una integración específica de Google Maps para Claude.</p>
+<h2 id="parte-4">Parte 4 · Crear tu primera base de leads</h2>
+<p>Antes de pedirle 1.000 leads, haz una prueba pequeña.</p>
+<h3>Paso 6. Crea la estructura del Sheet</h3>
+<p>Puedes decirle a Claude:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="5">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Crea un Google Sheet llamado &quot;Leads Inmobiliarias Colombia&quot;.
+
+Quiero estas columnas:
+
+Empresa
+Categoría
+Ciudad
+Dirección
+Teléfono
+WhatsApp
+Sitio web
+Google Maps
+Calificación
+Fuente
+Estado
+Notas</pre></div>
+<p>Claude debería crear la estructura utilizando Google Sheets a través de Composio.</p>
+<h2 id="parte-5">Parte 5 · Hacer que Claude busque los leads</h2>
+<h3>Paso 7. Haz una búsqueda pequeña</h3>
+<p>Pídele:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="6">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Busca 20 inmobiliarias en Bogotá, Colombia.
+
+Para cada empresa intenta obtener:
+
+- Nombre
+- Teléfono
+- WhatsApp si está disponible
+- Sitio web
+- Dirección
+- Ciudad
+- Enlace de Google Maps
+
+No inventes ningún dato.
+
+Si un dato no está disponible, déjalo vacío.
+
+Cuando termines, agrega todos los resultados al Google Sheet &quot;Leads Inmobiliarias Colombia&quot;.
+
+Antes de escribir los datos, revisa que no haya duplicados.</pre></div>
+<p>Esto te permite comprobar que <strong>la conexión funciona antes de hacer una extracción grande</strong>.</p>
+<h2 id="parte-6">Parte 6 · Escalar la prospección</h2>
+<p>Cuando la prueba funcione, puedes aumentar el volumen.</p>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="7">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Ahora continúa buscando inmobiliarias en Colombia.
+
+Prioriza:
+
+Bogotá
+Medellín
+Cali
+Barranquilla
+Cartagena
+Bucaramanga
+Pereira
+
+Busca empresas diferentes a las que ya están en el Sheet.
+
+Para cada empresa intenta obtener:
+
+- Nombre
+- Teléfono
+- WhatsApp
+- Sitio web
+- Dirección
+- Ciudad
+- Google Maps
+
+No inventes información.
+
+Elimina duplicados.
+
+Agrega los resultados directamente al Google Sheet.
+
+Trabaja por lotes y continúa hasta conseguir la mayor cantidad de leads disponibles.</pre></div>
+<h2 id="parte-7">Parte 7 · Mejorar la calidad del lead</h2>
+<p>Aquí es donde deja de ser simplemente scraping.</p>
+<p>Puedes pedirle a Claude que clasifique los leads.</p>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="8">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Analiza todos los leads del Sheet.
+
+Clasifica cada empresa según:
+
+A = empresa claramente relevante y con información de contacto completa
+B = empresa relevante pero con información incompleta
+C = empresa poco relevante o con información insuficiente
+
+Además identifica:
+
+- Tiene teléfono
+- Tiene WhatsApp
+- Tiene sitio web
+- Tiene email
+- Tiene presencia digital
+
+Agrega estas columnas al Sheet.</pre></div>
+<p>Ahora tienes una base mucho más útil para ventas.</p>
+<h2 id="parte-8">Parte 8 · Preparar el Sheet para Dapta</h2>
+<p>Ahora entra <a href="https://dapta.ai/ai-calls-register-v1-gad/" target="_blank" rel="noopener">Dapta</a>.</p>
+<p>Dapta permite cargar listas de contactos mediante CSV, Excel o Google Sheets y crear campañas/secuencias de llamadas.</p>
+<h3>Paso 8. Revisa tus columnas</h3>
+<p>Para la campaña, asegúrate de tener como mínimo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="9">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Nombre
+Empresa
+Teléfono
+Ciudad
+Website</pre></div>
+<p>Y puedes añadir:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="10">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Tipo de empresa
+Servicio
+Presupuesto
+Estado
+Notas</pre></div>
+<p><strong>No necesitas que todo esté lleno.</strong></p>
+<p>Pero sí necesitas teléfonos válidos para una campaña de llamadas.</p>
+<h2 id="parte-9">Parte 9 · Crear el agente de voz</h2>
+<p>Dentro de Dapta crea un <strong>AI Voice Agent</strong>.</p>
+<p>Dale contexto sobre:</p>
+<h3>Quién eres</h3>
+<p>Ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="11">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Somos una empresa que ayuda a inmobiliarias a generar más oportunidades comerciales utilizando AI.</pre></div>
+<h3>A quién llamas</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="12">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Estamos contactando propietarios, gerentes o responsables comerciales de inmobiliarias.</pre></div>
+<h3>Objetivo</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="13">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">El objetivo de la llamada es determinar si la empresa está interesada en conocer una solución de AI para mejorar su proceso comercial y, si existe interés, agendar una reunión.</pre></div>
+<p>Dapta permite definir reglas de calificación y extraer variables como nombre, presupuesto, intención y resultado de la llamada.</p>
+<h2 id="parte-10">Parte 10 · Define las preguntas de calificación</h2>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="14">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">1. ¿Actualmente tienen un equipo comercial?
+
+2. ¿Cómo consiguen nuevos clientes actualmente?
+
+3. ¿Cuántos leads reciben aproximadamente al mes?
+
+4. ¿Cómo hacen seguimiento a esos leads?
+
+5. ¿Utilizan algún CRM?
+
+6. ¿Estarían interesados en automatizar parte de este proceso?
+
+7. ¿Quién es la persona encargada de tomar esta decisión?</pre></div>
+<p>No quieres que el agente simplemente diga:</p>
+<blockquote>“¿Quieres comprar?”</blockquote>
+<p>Quieres que <strong>diagnostique</strong>.</p>
+<h2 id="parte-11">Parte 11 · Define qué es un lead calificado</h2>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="15">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Considera un lead CALIFICADO cuando:
+
+- Es una inmobiliaria activa.
+- Tiene un equipo comercial o recibe leads.
+- Tiene interés en mejorar su proceso comercial.
+- Tiene autoridad o acceso al responsable de decisión.
+- Está dispuesto a conocer la solución.
+
+Considera NO CALIFICADO cuando:
+
+- No está interesado.
+- No corresponde al perfil.
+- El teléfono no corresponde a la empresa.
+- Solicita no volver a ser contactado.</pre></div>
+<p>Esto hace que la llamada produzca <strong>datos accionables</strong>, no solamente conversaciones.</p>
+<h2 id="parte-12">Parte 12 · Carga los leads</h2>
+<p>En Dapta puedes cargar tu lista desde Google Sheets, CSV o Excel.</p>
+<p>Selecciona tu archivo/lista.</p>
+<p>Mapea los campos:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="16">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Nombre → Nombre
+Empresa → Empresa
+Teléfono → Phone
+Ciudad → Ciudad
+Website → Website</pre></div>
+<p>Y cualquier otro campo personalizado que quieras utilizar.</p>
+<h2 id="parte-13">Parte 13 · Configura la campaña</h2>
+<p>Ahora defines:</p>
+<p><strong>Horario de llamadas</strong></p>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="17">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Lunes - Viernes
+9:00 AM - 5:00 PM</pre></div>
+<p>También puedes configurar intentos de seguimiento.</p>
+<p>Dapta permite definir ventanas de llamada y reglas de reintento para campañas/secuencias.</p>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="18">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Intento 1 → Día 1
+Intento 2 → Día 3
+Intento 3 → Día 7</pre></div>
+<h2 id="parte-14">Parte 14 · No lances 1.000 de una</h2>
+<p>Este paso es MUY importante.</p>
+<p>Empieza con:</p>
+<p><strong>10–20 leads.</strong></p>
+<p>Escucha las llamadas.</p>
+<p>Revisa:</p>
+<ul><li>¿El agente se presenta bien?</li><li>¿Pronuncia correctamente el nombre de la empresa?</li><li>¿Hace preguntas demasiado rápido?</li><li>¿Entiende las respuestas?</li><li>¿Califica correctamente?</li><li>¿Agenda reuniones?</li><li>¿Está hablando demasiado?</li><li>¿Los leads piden no ser contactados?</li></ul>
+<p>Después ajustas el agente.</p>
+<p>Luego:</p>
+<p><strong>20 → 50 → 100 → 500 → escala.</strong></p>
+<h2 id="parte-15">Parte 15 · El resultado final</h2>
+<p>Cuando esté funcionando, tienes algo así:</p>
+<h3>1. Prospección</h3>
+<p>Claude + Composio → Busca empresas → Extrae información → Guarda leads.</p>
+<h3>2. Base de datos</h3>
+<p>Google Sheets → Nombre, empresa, teléfono, website, ciudad, estado, etc.</p>
+<h3>3. Outbound</h3>
+<p>Dapta → Llama automáticamente → Conversa → Califica.</p>
+<h3>4. Resultado</h3>
+<ul><li><strong>INTERESADO</strong> → Agenda reunión.</li><li><strong>NO INTERESADO</strong> → No continúa.</li><li><strong>NO CONTESTÓ</strong> → Reintenta según la secuencia.</li></ul>
+<h2 id="prompt-maestro">El prompt maestro para Claude</h2>
+<p>Una vez tengas todo conectado, puedes incluso empezar con algo como:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Texto para copiar</span><button class="copy" type="button" data-i="19">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Quiero construir una campaña de prospección para inmobiliarias en Colombia.
+
+1. Busca empresas relevantes.
+2. Obtén nombre, teléfono, WhatsApp, sitio web, ciudad y dirección cuando estén disponibles.
+3. No inventes información.
+4. Elimina duplicados.
+5. Guarda los resultados en mi Google Sheet &quot;Leads Inmobiliarias Colombia&quot;.
+6. Clasifica cada lead según la calidad de la información.
+7. Prioriza empresas con teléfono válido y presencia digital.
+8. Trabaja por lotes y continúa hasta obtener la mayor cantidad de leads que puedas encontrar.
+9. Antes de terminar, revisa que no existan duplicados.
+
+No necesito que me expliques cómo hacerlo.
+Ejecuta las acciones utilizando las herramientas que tienes conectadas.</pre></div>
+</article>
+<aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a href="#parte-1">Parte 1 · Conectar Claude con Composio</a></li><li><a href="#parte-2">Parte 2 · Conectar Google Sheets</a></li><li><a href="#parte-3">Parte 3 · Conectar Google Maps</a></li><li><a href="#parte-4">Parte 4 · Crear tu primera base de leads</a></li><li><a href="#parte-5">Parte 5 · Hacer que Claude busque los leads</a></li><li><a href="#parte-6">Parte 6 · Escalar la prospección</a></li><li><a href="#parte-7">Parte 7 · Mejorar la calidad del lead</a></li><li><a href="#parte-8">Parte 8 · Preparar el Sheet para Dapta</a></li><li><a href="#parte-9">Parte 9 · Crear el agente de voz</a></li><li><a href="#parte-10">Parte 10 · Define las preguntas de calificación</a></li><li><a href="#parte-11">Parte 11 · Define qué es un lead calificado</a></li><li><a href="#parte-12">Parte 12 · Carga los leads</a></li><li><a href="#parte-13">Parte 13 · Configura la campaña</a></li><li><a href="#parte-14">Parte 14 · No lances 1.000 de una</a></li><li><a href="#parte-15">Parte 15 · El resultado final</a></li><li><a href="#prompt-maestro">El prompt maestro para Claude</a></li></ul></nav><div class="aside__box"><h5>Recursos relacionados</h5><ul class="aside__list"><li><a href="/recursos/sales-coach-assistant/">Sales Coach Assistant</a></li><li><a href="/recursos/houston-preparacion-comercial/">Preparación comercial con Houston</a></li></ul></div></aside>
+</div></section></main><footer class="foot">
+  <div class="wrap foot__in">
+    <div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div>
+    <div><h6>Explora</h6><ul><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul></div>
+    <div><h6>Canales</h6><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+  </div>
+  <div class="wrap foot__legal"><span>© 2026 Luciano Musella</span><span>Preview · web-v2 · no es la versión final</span></div>
+</footer>
+<div class="preview-badge">Preview web-v2</div>
+<script src="/assets/js/site.js" defer></script>
+</body>
+</html>

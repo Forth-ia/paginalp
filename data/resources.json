@@ -55,6 +55,51 @@
    "status": "preview"
   },
 {
+ "id": "claude-maquina-de-leads",
+ "slug": "claude-maquina-de-leads",
+ "title": "Convierte Claude en una máquina de leads",
+ "category": "agentes",
+ "secondary": [
+  "claude",
+  "negocio"
+ ],
+ "type": "guia-paso-a-paso",
+ "type_label": "Guía paso a paso",
+ "summary": "Conecta Claude con Composio, encuentra empresas, organiza tus leads en Google Sheets y prepara una campaña de llamadas con Dapta.",
+ "what_you_get": [
+  "Conexión de Claude con Composio",
+  "Búsqueda y clasificación de leads",
+  "Preparación de campañas de voz en Dapta"
+ ],
+ "ideal_for": [
+  "Equipos comerciales",
+  "Empresas que prospectan con IA"
+ ],
+ "includes": [
+  "15 partes paso a paso",
+  "Prompts copiables",
+  "Prompt maestro de prospección"
+ ],
+ "tools": [
+  "Claude",
+  "Composio",
+  "Google Maps",
+  "Google Sheets",
+  "Dapta"
+ ],
+ "words": 1358,
+ "read_min": 12,
+ "related_tutorials": [],
+ "related_resources": [
+  "sales-coach-assistant",
+  "houston-preparacion-comercial"
+ ],
+ "collection": null,
+ "featured": false,
+ "notion_url": null,
+ "status": "preview"
+},
+{
  "id": "sales-coach-assistant",
  "slug": "sales-coach-assistant",
  "title": "Sales Coach Assistant",
