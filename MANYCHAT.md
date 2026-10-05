@@ -77,3 +77,21 @@ https://www.lucianomusella.com/recursos/sales-coach-assistant/
 
 Utiliza el enlace `/acceso/` en ManyChat: no se detecta el origen automáticamente.
 El recurso público sigue abierto para quien conozca o reciba su enlace.
+
+## Convierte Claude en una máquina de leads
+
+Enlace para el botón de ManyChat:
+
+https://www.lucianomusella.com/acceso/claude-maquina-de-leads/
+
+El formulario existente exige nombre, correo y celular con la guía visible al
+fondo. No se puede cerrar y un registro anterior no permite saltarlo. Solo abre
+la guía tras confirmar el guardado en la hoja existente, con la fuente
+`ManyChat · Convierte Claude en una máquina de leads`. Si falla, permite reintentar.
+
+El enlace público sigue abierto y es el que utiliza el catálogo:
+
+https://www.lucianomusella.com/recursos/claude-maquina-de-leads/
+
+La distinción depende del enlace enviado, no del navegador ni del referrer.
+Quien tenga el enlace público puede leer la guía directamente.

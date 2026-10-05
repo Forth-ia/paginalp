@@ -183,3 +183,33 @@ test('saves 63 agentes de AI · ECC attribution and redirects to the right guide
     assert.equal(res.body.redirect, '/recursos/everything-claude-code/');
   } finally { global.fetch = original; }
 });
+
+test('Lead machine requires all fields and confirmed storage before returning the public guide', async () => {
+  const original = global.fetch;
+  const sent = [];
+  let confirmed = true;
+  global.fetch = async (_, options) => {
+    sent.push(JSON.parse(options.body));
+    return { ok: true, json: async () => ({ ok: confirmed }) };
+  };
+  try {
+    const body = { ...valid, resource: 'claude-maquina-de-leads' };
+    for (const field of ['nombre', 'email', 'telefono']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...body, [field]: '' } }, res);
+      assert.equal(res.statusCode, 400);
+    }
+    assert.equal(sent.length, 0);
+    const res = response();
+    await handler({ method: 'POST', body }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(sent[0].fuente, 'ManyChat · Convierte Claude en una máquina de leads');
+    assert.equal(res.body.redirect, '/recursos/claude-maquina-de-leads/');
+    confirmed = false;
+    const failed = response();
+    await handler({ method: 'POST', body }, failed);
+    assert.equal(failed.statusCode, 502);
+    assert.equal(failed.body.ok, false);
+    assert.equal(failed.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});
