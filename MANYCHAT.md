@@ -1,5 +1,22 @@
 # Acceso a recursos desde ManyChat
 
+## Claude Code + Codex: Plugin Oficial
+
+Enlace para el botón o mensaje de ManyChat:
+
+https://www.lucianomusella.com/acceso/claude-code-codex-plugin/
+
+Muestra la guía de fondo con un formulario obligatorio de nombre, email y
+celular. Solo abre la guía después de que el recolector confirma el guardado,
+con la fuente `ManyChat · Claude Code + Codex: Plugin Oficial`.
+
+El enlace público del catálogo sigue abierto, sin formulario:
+
+https://www.lucianomusella.com/recursos/claude-code-codex-plugin/
+
+Usa el enlace `/acceso/` exclusivamente en ManyChat. La distinción depende de
+la URL enviada: quien reciba el enlace público puede leer la guía normalmente.
+
 ## Claude for Legal
 
 Enlace para ManyChat:
