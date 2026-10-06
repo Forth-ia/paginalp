@@ -33,6 +33,28 @@
  },
  "resources": [
   {
+   "id": "lm-47",
+   "slug": "claude-code-codex-plugin",
+   "title": "Cómo trabaja Claude Code + Codex: Plugin Oficial",
+   "category": "claude",
+   "secondary": ["agentes"],
+   "type": "guia-paso-a-paso",
+   "type_label": "Guía paso a paso",
+   "summary": "Instala el plugin oficial de Codex en Claude Code y aprende a dividir planificación, ejecución y revisión entre ambos.",
+   "what_you_get": ["Instalación del plugin oficial paso a paso", "Reglas listas para tu CLAUDE.md", "Prompts para planear, rescatar errores y revisar", "Flujo para delegar sin perder supervisión"],
+   "ideal_for": ["Usuarios de Claude Code y Codex", "Equipos que quieren delegar sin perder control", "Developers que gastan contexto arreglando errores"],
+   "includes": ["18 secciones prácticas", "Comandos listos para copiar", "Prompts de planificación y rescate", "Guía de límites de uso"],
+   "tools": ["Claude Code", "Codex", "Codex CLI", "npm"],
+   "words": 2400,
+   "read_min": 12,
+   "related_tutorials": [],
+   "related_resources": ["everything-claude-code", "google-skills-claude", "5-niveles-de-claude"],
+   "collection": null,
+   "featured": false,
+   "notion_url": null,
+   "status": "preview"
+  },
+  {
    "id": "lm-46",
    "slug": "higgsfield-codex-cli",
    "title": "Crea contenido con Higgsfield + Codex CLI",

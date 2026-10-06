@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo trabaja Claude Code + Codex: Plugin Oficial | Luciano Musella</title>
+<meta name="description" content="Instala el plugin oficial de Codex en Claude Code y aprende a repartir planificación, ejecución y revisión entre ambos.">
+<meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/site.css">
+</head><body data-page="resource" data-page-props='{"resource":"claude-code-codex-plugin","category":"claude","type":"guia-paso-a-paso"}'>
+<a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav"><div class="nav__in"><a class="nav__brand" href="/">Luciano<span>.</span>Musella</a><ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li></ul><div class="nav__cta"><a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende"><span class="btn__t">Agenda</span></a><button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button></div></div></header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a></div></nav></div>
+<main id="main"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=claude">Claude</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo trabaja Claude Code + Codex: Plugin Oficial</h1><p class="lead" style="margin-top:20px">Instala el plugin oficial y divide el trabajo: Claude piensa, planea y revisa; Codex ejecuta el trabajo pesado.</p><div class="ahead__meta"><span>12 min de lectura</span><span class="dot"></span><span>Claude a fondo</span><span class="dot"></span><span>Claude Code</span><span class="dot"></span><span>Codex</span></div><div class="boxes"><div class="box"><h5>Ideal para</h5><ul><li>Quien usa Claude Code y Codex en el mismo proyecto</li><li>Equipos que quieren delegar sin perder supervisión</li><li>Developers que consumen mucho contexto arreglando errores</li></ul></div><div class="box"><h5>Qué obtienes</h5><ul><li>Instalación del plugin oficial, paso a paso</li><li>Reglas listas para tu CLAUDE.md</li><li>Prompts para planear, rescatar errores y revisar</li><li>Flujo para dividir consumo y mantener control</li></ul></div></div></div></section>
+<section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose">
+<p>Cuando tus tokens se acaban a media semana, casi siempre es por lo mismo: <strong>arreglar errores gasta más que construir</strong>.</p><hr>
+<h2>1. ¿Qué vas a construir?</h2><p>La idea es crear este flujo:</p><blockquote><strong>Tú → Claude → Codex → Claude → Tú</strong></blockquote><h3>Claude</h3><ul><li>Entender el problema.</li><li>Analizar el proyecto.</li><li>Crear el plan.</li><li>Decidir la arquitectura.</li><li>Dividir el trabajo.</li><li>Revisar lo que hizo Codex.</li></ul><h3>Codex</h3><ul><li>Escribir código y modificar archivos.</li><li>Hacer refactors grandes.</li><li>Investigar errores.</li><li>Ejecutar tareas repetitivas y largas.</li></ul><p>El objetivo no es reemplazar Claude: es evitar que gaste su límite haciendo trabajo que puede delegar.</p><hr>
+<h2>2. Instala el plugin oficial</h2><p>El plugin se llama <code>codex@openai-codex</code> y pertenece al repositorio oficial <code>openai/codex-plugin-cc</code>. La instalación se hace directamente desde Claude Code.</p><h3>Paso 1. Agrega el marketplace</h3><div class="codeblock"><div class="codeblock__bar"><span>texto</span><button class="copy" type="button">Copiar</button></div><pre>/plugin marketplace add openai/codex-plugin-cc</pre></div><h3>Paso 2. Instala el plugin</h3><div class="codeblock"><div class="codeblock__bar"><span>texto</span><button class="copy" type="button">Copiar</button></div><pre>/plugin install codex@openai-codex</pre></div><h3>Paso 3. Recarga los plugins</h3><div class="codeblock"><div class="codeblock__bar"><span>texto</span><button class="copy" type="button">Copiar</button></div><pre>/reload-plugins</pre></div><p>Esto hace que Claude Code cargue el nuevo plugin en la sesión.</p><h3>Paso 4. Configura Codex</h3><div class="codeblock"><div class="codeblock__bar"><span>texto</span><button class="copy" type="button">Copiar</button></div><pre>/codex:setup</pre></div><p>Este comando comprueba que Codex esté instalado y revisa el estado de la autenticación.</p><hr>
+<h2>3. Si Codex no está instalado</h2><p>Si <code>/codex:setup</code> no encuentra Codex, sal de Claude Code y abre una terminal normal.</p><div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>npm install -g @openai/codex</pre></div><p>Después inicia sesión:</p><div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>codex login</pre></div><p>Cuando termines, vuelve a Claude Code y ejecuta <code>/codex:setup</code>. La autenticación la tienes que hacer tú porque abre el flujo de inicio de sesión en el navegador.</p><hr>
+<h2>4. También puedes pedirle a Claude que haga la instalación</h2><p>Si quieres automatizar casi todo el proceso, pega este prompt en Claude Code:</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Quiero que instales el plugin oficial de Codex de OpenAI en mi Claude Code.
+
+Hazlo utilizando comandos de terminal.
+
+Primero revisa si el plugin ya está instalado.
+Ejecuta: claude plugin list
+
+Si ya aparece codex@openai-codex, no vuelvas a instalarlo.
+
+Si no aparece, agrega el marketplace:
+claude plugin marketplace add openai/codex-plugin-cc
+
+Después instala el plugin para toda mi cuenta:
+claude plugin install codex@openai-codex --scope user --yes
+
+Después vuelve a ejecutar: claude plugin list
+Comprueba que el plugin esté instalado y habilitado.
+
+Después comprueba si Codex está instalado: codex --version
+
+Si no existe, instala: npm install -g @openai/codex
+
+No utilices sudo si npm tiene problemas de permisos. En ese caso, detente y muéstrame el error.
+No intentes iniciar sesión en Codex. Esa parte la haré yo.
+
+Al terminar, dime:
+1. Si el marketplace quedó agregado.
+2. Si el plugin quedó instalado.
+3. Qué versión del plugin está instalada.
+4. Si Codex CLI está instalado.
+5. Qué pasos me faltan hacer manualmente.
+
+No edites ningún archivo de mi proyecto.
+No ejecutes nada que no esté especificado arriba.</pre></div><p>Después de que Claude termine, tú solo necesitas hacer:</p><div class="codeblock"><div class="codeblock__bar"><span>texto</span><button class="copy" type="button">Copiar</button></div><pre>/reload-plugins
+
+/codex:setup</pre></div><hr>
+<h2>5. El plugin instalado no es suficiente</h2><p>Instalar el plugin <strong>no significa automáticamente que Claude vaya a delegar trabajo en Codex</strong>. Tienes que enseñarle cómo repartirlo. La mejor forma es dejar la regla escrita en <code>CLAUDE.md</code>, para que Claude la lea cada vez que abra el proyecto.</p><h2>6. Define quién hace qué</h2><h3>Claude = cerebro</h3><ul><li>Entender el problema y hacer preguntas si falta información.</li><li>Crear el plan y decidir la arquitectura.</li><li>Decidir qué archivos hay que modificar.</li><li>Revisar el resultado de Codex.</li></ul><h3>Codex = ejecución</h3><p>Codex debe recibir construcciones largas, código repetitivo, refactors grandes, tareas que afectan muchos archivos y errores que Claude ya intentó solucionar sin éxito.</p><hr>
+<h2>7. Añade la regla a tu CLAUDE.md</h2><p>Dile a Claude:</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Quiero dejar por escrito en el CLAUDE.md de este proyecto cómo repartir el trabajo entre Claude y Codex.
+
+Primero revisa si ya existe CLAUDE.md. Si existe, léelo completo y comprueba si ya hay alguna sección relacionada con Codex o delegación de tareas. No dupliques instrucciones existentes.
+
+Si no existe una regla de reparto, agrega al final una sección llamada: "Reparto con Codex".
+
+La regla debe establecer:
+- Claude entiende el problema, crea el plan, decide la arquitectura y revisa todo lo que devuelve Codex.
+- Las tareas repetitivas y largas, los refactors grandes y los errores ya intentados se delegan a Codex.
+- Claude debe utilizar el subagente codex-rescue cuando corresponda.
+- Nada que devuelva Codex se considera automáticamente correcto.
+- Si Codex falla dos veces con la misma tarea, el problema vuelve a Claude.
+- Claude debe decirme qué delegó y qué resultado recibió.
+
+No modifiques ninguna otra parte del CLAUDE.md.
+Cuando termines, muéstrame exactamente qué agregaste.</pre></div><h3>8. Si quieres hacerlo manualmente</h3><div class="codeblock"><div class="codeblock__bar"><span>markdown</span><button class="copy" type="button">Copiar</button></div><pre>## Reparto con Codex
+
+El trabajo se divide entre Claude y Codex.
+
+### Claude
+- Entender el problema.
+- Preguntar lo que falte.
+- Crear el plan.
+- Decidir la arquitectura.
+- Revisar todo lo que vuelva de Codex.
+
+### Codex
+Delegar:
+- Construcción repetitiva y larga.
+- Refactors grandes.
+- Tareas que afectan múltiples archivos.
+- Errores que ya fueron intentados y siguen sin resolverse.
+
+### Reglas
+- Claude siempre revisa el resultado de Codex.
+- Si Codex falla dos veces en la misma tarea, la tarea vuelve a Claude.
+- Delegar no significa dejar de supervisar.
+- Claude debe informar qué se delegó y qué resultado volvió.</pre></div><hr>
+<h2>9. Los comandos que tienes disponibles</h2><div class="table-wrap"><table><thead><tr><th>Comando</th><th>Para qué sirve</th></tr></thead><tbody><tr><td><code>/codex:setup</code></td><td>Configurar y comprobar Codex</td></tr><tr><td><code>/codex:review</code></td><td>Revisar código</td></tr><tr><td><code>/codex:adversarial-review</code></td><td>Hacer una revisión crítica</td></tr><tr><td><code>/codex:rescue</code></td><td>Delegar una tarea a Codex</td></tr><tr><td><code>/codex:transfer</code></td><td>Pasar una conversación completa a Codex</td></tr><tr><td><code>/codex:status</code></td><td>Ver trabajos activos</td></tr><tr><td><code>/codex:result</code></td><td>Ver el resultado de un trabajo</td></tr><tr><td><code>/codex:cancel</code></td><td>Cancelar un trabajo</td></tr></tbody></table></div><p>El comando más importante es <code>/codex:rescue</code>: es el que realmente delega el trabajo pesado a Codex.</p><hr>
+<h2>10. El flujo que deberías usar normalmente</h2><h3>Paso 1. Pídele a Claude que haga el plan</h3><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Quiero agregar [FEATURE] a este proyecto.
+
+Primero analiza el proyecto y crea un plan. No escribas código todavía.
+
+Divide el trabajo entre:
+[PLAN] Decisiones que debes tomar tú.
+[EJECUCIÓN] Trabajo que debería hacer Codex.
+
+Para cada tarea de ejecución dime:
+- Qué archivo debe modificar.
+- Qué debe cambiar.
+- Qué no debe cambiar.
+- Cómo comprobaremos que funciona.
+
+Espera mi aprobación antes de ejecutar.</pre></div><hr>
+<h2>11. Cuando Claude se atasque</h2><p>Si Claude intenta solucionar un error dos veces y sigue fallando, <strong>no le pidas una tercera vez lo mismo</strong>. Usa <code>/codex:rescue</code> y dale contexto:</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Contexto:
+
+Estoy trabajando en [DESCRIPCIÓN DEL PROYECTO].
+
+El error es:
+[ERROR COMPLETO]
+
+Ya intentamos:
+1. [PRIMER INTENTO]
+2. [SEGUNDO INTENTO]
+
+Quiero que:
+1. Encuentres la causa raíz.
+2. Revises primero configuración y datos antes de asumir que es código.
+3. Apliques el arreglo directamente.
+4. No agregues dependencias nuevas sin avisar.
+5. Me entregues un resumen de qué lo causaba, qué modificaste y qué debería comprobar.</pre></div><hr>
+<h2>12. Usa Codex como segundo par de ojos</h2><p>Ejecuta <code>/codex:adversarial-review</code> y usa este prompt:</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Revisa los cambios actuales de forma crítica.
+
+Busca:
+1. Decisiones de arquitectura innecesariamente complejas.
+2. Casos límite que no se estén manejando.
+3. Dependencias nuevas que podrían evitarse.
+4. Código duplicado.
+5. Abstracciones innecesarias.
+6. Posibles problemas que todavía no sean evidentes.
+
+No modifiques ningún archivo.
+
+Devuélveme los problemas ordenados por prioridad. Para cada problema indica archivo, línea, problema y qué podría pasar si no se corrige.
+
+Al final dime qué está bien resuelto.</pre></div><hr>
+<h2>13. Delega trabajos largos</h2><p>Puedes dejar a Codex trabajando en una tarea grande mientras continúas con Claude. Ejecuta <code>/codex:rescue</code> y después:</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Limpia [MÓDULO/CARPETA].
+
+Objetivos:
+1. [OBJETIVO]
+2. [OBJETIVO]
+3. [OBJETIVO]
+
+Reglas:
+- No rompas las interfaces existentes.
+- No cambies funciones públicas sin avisar.
+- No agregues funcionalidades nuevas.
+- Si una prueba existente falla, detente y repórtalo.
+- Resume los cambios archivo por archivo.
+
+Trabaja en segundo plano.</pre></div><p>Revisa el estado con <code>/codex:status</code> y, cuando termine, usa <code>/codex:result</code>.</p><hr>
+<h2>14. Después de Codex, vuelve a Claude</h2><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Codex acaba de terminar este trabajo.
+
+Lee los archivos que modificó. Ahora:
+1. Escribe pruebas para los casos que solucionó.
+2. Incluye específicamente el caso que estaba fallando.
+3. Actualiza la documentación únicamente si el comportamiento cambió.
+4. No rehagas la implementación de Codex.
+5. Si encuentras algo que debería corregirse, no lo arregles todavía.
+
+Crea una sección llamada "Pendientes" y coloca ahí cualquier problema que encuentres.</pre></div><hr>
+<h2>15. Retomar una sesión de Codex</h2><div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>codex resume --last</pre></div><p>Después puedes darle este contexto:</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Continúa donde quedamos.
+
+Pendiente:
+1. [PUNTO 1]
+2. [PUNTO 2]
+3. [PUNTO 3]
+
+Antes de ejecutar nada:
+- Dime qué vas a tocar primero.
+- Si alguna decisión anterior ya no aplica, avísame.
+- Si algo ya está terminado, no lo repitas.
+
+Al finalizar dime qué cerraste, qué quedó pendiente y qué debería comprobar.</pre></div><hr>
+<h2>16. ¿Qué cuenta de uso estás gastando?</h2><h3>Claude</h3><p>Consume el límite de Claude cuando analiza el proyecto, crea el plan, decide la arquitectura, revisa el resultado, escribe pruebas y documenta.</p><h3>Codex</h3><p>Consume el límite de tu cuenta de ChatGPT cuando escribe código, modifica archivos, ejecuta tareas delegadas, hace revisiones y trabaja en tareas largas.</p><blockquote>El objetivo no es simplemente usar dos modelos: es <strong>repartir el consumo entre dos sistemas</strong>.</blockquote><p>El uso de Codex comparte la bolsa de uso correspondiente de tu cuenta de ChatGPT con otros productos o funciones que usen ese mismo límite; no asumas que todo está disponible exclusivamente para Codex.</p><h2>17. ¿Necesito pagar ChatGPT?</h2><p>Los límites concretos dependen del plan y pueden cambiar. Comprueba las condiciones actuales de tu cuenta antes de asumir una cantidad determinada de uso.</p><h2>18. Si algo no funciona</h2><p>Cuando una delegación falle, ejecuta en una terminal normal:</p><div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>codex doctor</pre></div><p>Esto revisa el estado de la instalación y de la sesión de Codex. También puedes volver a comprobar desde Claude Code con <code>/codex:setup</code>.</p>
+</article></div></section></main>
+<footer class="foot"><div class="wrap foot__in"><div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div></div></footer><div class="preview-badge">Preview web-v2</div><script src="/assets/js/site.js" defer></script></body></html>
