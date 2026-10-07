@@ -10,7 +10,8 @@ const RESOURCES = new Map([
   ['linkedin-skills', '11 LinkedIn Skills'],
   ['claude-human-resources', 'Claude for Human Resources'],
   ['higgsfield-codex-cli', 'Crea contenido con Higgsfield + Codex CLI'],
-  ['claude-code-codex-plugin', 'Claude Code + Codex: Plugin Oficial']
+  ['claude-code-codex-plugin', 'Claude Code + Codex: Plugin Oficial'],
+  ['fable-orquesta-codex-ejecuta', 'Fable orquesta, Codex ejecuta']
 ]);
 
 function collectorError(code) {
