@@ -32,6 +32,7 @@
   }
  },
  "resources": [
+  {"id":"lm-49","slug":"fable-orquesta-codex-ejecuta","title":"Fable orquesta, Codex ejecuta","category":"claude","secondary":["agentes"],"type":"guia-paso-a-paso","type_label":"Guía paso a paso","summary":"Aprende a usar Fable para planear y revisar, mientras Codex construye y ejecuta el trabajo pesado.","what_you_get":["Flujo de roles entre Fable y Codex","Prompts para planificación y proyectos grandes","Delegación, revisión y debugging","Comandos esenciales del plugin"],"ideal_for":["Usuarios de Fable y Claude Code","Proyectos que necesitan un plan antes de construir","Equipos que quieren delegar sin perder revisión"],"includes":["14 secciones prácticas","Prompts listos para copiar","Tabla de comandos","Flujo de trabajo en segundo plano"],"tools":["Fable","Claude Code","Codex","Codex CLI"],"words":2100,"read_min":10,"related_tutorials":[],"related_resources":["claude-code-codex-plugin","everything-claude-code","5-niveles-de-claude"],"collection":null,"featured":false,"notion_url":null,"status":"preview"},
   {
    "id": "lm-47",
    "slug": "claude-code-codex-plugin",

@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fable orquesta, Codex ejecuta | Luciano Musella</title><meta name="description" content="Aprende a usar Fable para planear y Codex para construir dentro de Claude Code."><meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/site.css"></head><body data-page="resource" data-page-props='{"resource":"fable-orquesta-codex-ejecuta","category":"claude","type":"guia-paso-a-paso"}'><a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav"><div class="nav__in"><a class="nav__brand" href="/">Luciano<span>.</span>Musella</a><ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li></ul><div class="nav__cta"><a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende"><span class="btn__t">Agenda</span></a><button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button></div></div></header><div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a></div></nav></div><main id="main"><div class="progress" aria-hidden="true"></div><section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=claude">Claude</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Fable orquesta, Codex ejecuta</h1><p class="lead" style="margin-top:20px">Cómo hacer que Fable piense y Codex construya sin quemar tus límites de Claude.</p><div class="ahead__meta"><span>10 min de lectura</span><span class="dot"></span><span>Claude a fondo</span><span class="dot"></span><span>Fable</span><span class="dot"></span><span>Codex</span></div><div class="boxes"><div class="box"><h5>Ideal para</h5><ul><li>Quien usa Fable en sesiones de Code</li><li>Proyectos que necesitan un plan antes de construir</li><li>Equipos que quieren delegar sin perder revisión</li></ul></div><div class="box"><h5>Qué obtienes</h5><ul><li>Flujo de roles entre Fable y Codex</li><li>Prompts para planificación y proyectos grandes</li><li>Delegación, revisión y debugging</li><li>Comandos esenciales del plugin</li></ul></div></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose"><p>Si ya conectaste Codex con Claude Code, ahora viene la parte importante: <strong>aprender a repartir el trabajo</strong>.</p><p>En lugar de pedirle a Fable que analice, diseñe, escriba, haga refactors y arregle errores, conviértelo en el <strong>orquestador</strong>. Codex se encarga de la construcción pesada.</p><hr><h2>1. La idea</h2><h3>Fable → El cerebro</h3><ul><li>Entender el proyecto y explorar el código.</li><li>Hacer preguntas, pensar la solución y crear el plan.</li><li>Dividir el trabajo y revisar lo que construyó Codex.</li></ul><h3>Codex → El constructor</h3><ul><li>Escribir código y modificar archivos.</li><li>Construir funcionalidades y hacer refactors.</li><li>Resolver tareas pesadas siguiendo el plan.</li></ul><hr><h2>2. ¿Por qué hacer esto?</h2><p>No necesitas que el mismo modelo analice el proyecto, diseñe la arquitectura, escriba 15 archivos, cree componentes, refactorice, arregle errores y haga tests.</p><div class="codeblock"><div class="codeblock__bar"><span>flujo</span></div><pre>FABLE
+Pensar · Planear · Decidir · Revisar
+   ↓
+CODEX
+Construir · Modificar · Refactorizar · Ejecutar</pre></div><p>Codex utiliza la cuenta de ChatGPT para su consumo en la construcción delegada. Los límites y condiciones concretos dependen de tu cuenta y pueden cambiar.</p><hr><h2>3. Antes de empezar</h2><ul><li>Claude Desktop o Claude Code.</li><li>Una sesión de <strong>Code</strong>.</li><li>Fable seleccionado como modelo.</li><li>El plugin oficial de Codex instalado y configurado.</li><li>Una cuenta de ChatGPT para ejecutar Codex.</li></ul><div class="callout"><p>Si todavía no tienes Codex instalado, primero completa la guía <a href="/recursos/claude-code-codex-plugin/">Cómo trabaja Claude Code + Codex: Plugin Oficial</a>.</p></div><hr><h2>4. El primer paso: pon a Fable en modo Plan</h2><blockquote>“Analiza esto y hazme el plan.”</blockquote><p>Fable debería explorar el proyecto, identificar archivos y dependencias, definir la arquitectura, dividir el trabajo y decidir cómo comprobar que funciona. <strong>Todavía no debe construir.</strong></p><h2>5. Prompt principal: Fable planea, Codex construye</h2><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Vamos a repartir el trabajo.
+
+Tú, Fable, eres el cerebro: planea, no construyas.
+
+1. Explora este proyecto y entiende qué quiero lograr.
+2. Ármame un plan claro en modo Plan:
+   - qué archivos se tocan
+   - en qué orden
+   - qué decisiones hay que tomar
+   - qué hay que probar al final
+3. Hazme las preguntas que falten antes de escribir código.
+4. Cuando yo apruebe el plan, NO lo construyas tú.
+   Pásale la construcción a Codex utilizando: /codex:rescue
+5. Cuando Codex termine, tú revisas lo que hizo utilizando: /codex:review
+6. Después dime en una línea si quedó bien o qué falta corregir.
+
+Regla: Tú piensas y revisas. Codex construye.
+Empieza por el plan. No escribas código todavía.</pre></div><hr><h2>6. Qué ocurre después</h2><p>Fable debería entregarte un plan con los archivos, cambios, validaciones, tests y build. Tú revisas el plan; si está bien, lo apruebas. Ahí comienza el trabajo de Codex.</p><h2>7. Delegar la construcción a Codex</h2><p>El comando principal es <code>/codex:rescue</code>. No digas solo “Hazlo”: dale el plan y las restricciones.</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>/codex:rescue
+
+Implementa el plan aprobado por Fable.
+
+OBJETIVO: Agregar autenticación con Google.
+PLAN:
+1. Crear el endpoint de autenticación.
+2. Integrarlo con el sistema actual.
+3. Actualizar el estado del usuario.
+4. Manejar errores.
+5. Agregar las pruebas correspondientes.
+
+REGLAS:
+- No cambies la arquitectura existente.
+- No agregues dependencias nuevas sin justificarlo.
+- No modifiques funcionalidades no relacionadas.
+- Mantén las interfaces existentes.
+- Ejecuta las pruebas al terminar.
+
+Al finalizar entrega resumen, archivos modificados, pruebas ejecutadas, problemas encontrados y decisiones que Fable deba revisar.</pre></div><hr><h2>8. Fable vuelve a entrar</h2><p>Cuando Codex termina no significa automáticamente que esté bien. Usa <code>/codex:review</code> para revisar el código sin modificarlo y deja que Fable evalúe el resultado general.</p><h2>9. Para proyectos grandes: divide el proyecto en tareas</h2><p>No le des a Codex “construye toda mi aplicación”. Divide, por ejemplo, autenticación, dashboard, pagos, notificaciones, panel administrativo y tests.</p><p>Cada tarea necesita objetivo, archivos, restricciones, criterio de terminado y pruebas. Así Fable revisa cada parte antes de pasar a la siguiente.</p><h2>10. Prompt para proyectos grandes</h2><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Quiero trabajar este proyecto con una división estricta de roles.
+
+TU ROL — FABLE
+Tú eres el cerebro: piensas, exploras, planeas, tomas decisiones de arquitectura, divides el trabajo y revisas los resultados.
+NO escribas código de producción directamente. Trabaja en modo Plan hasta que yo apruebe.
+
+Divide el proyecto en tareas pequeñas y ordenadas. Cada tarea debe tener objetivo, archivos involucrados, cambios necesarios, dependencias, criterio de "listo" y pruebas necesarias.
+
+ROL DE CODEX
+Cada tarea aprobada se la pasas a Codex utilizando /codex:rescue, con suficiente contexto.
+
+CICLO POR TAREA
+1. Fable planea.
+2. Fable muestra el plan.
+3. Yo apruebo.
+4. Codex construye.
+5. Fable revisa.
+6. Si está bien, seguimos con la siguiente tarea.
+7. Si hay problemas, corregimos antes de continuar.
+
+REGLA PRINCIPAL: Fable piensa y revisa. Codex construye.
+Empieza explorando el proyecto y proponiendo el plan completo. No escribas código todavía.</pre></div><hr><h2>11. Los comandos que más vas a utilizar</h2><div class="table-wrap"><table><thead><tr><th>Comando</th><th>Uso</th></tr></thead><tbody><tr><td><code>/codex:rescue</code></td><td>Delegar construcción, debugging, refactors e investigación.</td></tr><tr><td><code>/codex:review</code></td><td>Revisar código antes de aceptar cambios importantes.</td></tr><tr><td><code>/codex:adversarial-review</code></td><td>Buscar por qué la solución podría estar mal.</td></tr><tr><td><code>/codex:transfer</code></td><td>Continuar en una sesión persistente de Codex.</td></tr><tr><td><code>/codex:status</code></td><td>Ver trabajos activos.</td></tr><tr><td><code>/codex:result</code></td><td>Ver el resultado de un trabajo terminado.</td></tr><tr><td><code>/codex:cancel</code></td><td>Cancelar un trabajo.</td></tr></tbody></table></div><hr><h2>12. Cuando Fable se atasque</h2><p>Después de dos intentos fallidos, no sigas en el intento 3, 4 o 5: delega con <code>/codex:rescue</code>.</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Tenemos este error: [ERROR]
+
+Ya intentamos:
+1. [INTENTO 1]
+2. [INTENTO 2]
+
+Investiga la causa raíz. Antes de modificar código revisa implementación, configuración y logs. Después implementa el arreglo, ejecuta las pruebas y explica qué causaba el problema. No cambies partes no relacionadas.</pre></div><h2>13. Utiliza Codex como abogado del diablo</h2><p>Antes de hacer commit o pasar a producción, usa <code>/codex:adversarial-review</code>.</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>Haz una revisión adversarial de los cambios actuales.
+
+Busca bugs, casos límite, problemas de arquitectura, código innecesariamente complejo, dependencias innecesarias, problemas de seguridad, regresiones y problemas de producción.
+
+No modifiques ningún archivo. Devuelve los problemas ordenados por severidad e indica archivo, línea, problema, por qué importa y cómo solucionarlo.</pre></div><h2>14. Cómo trabajar en segundo plano</h2><p>Para tareas largas, delega y continúa trabajando. Consulta <code>/codex:status</code> y, cuando termine, <code>/codex:result</code>.</p><div class="codeblock"><div class="codeblock__bar"><span>prompt</span><button class="copy" type="button">Copiar</button></div><pre>/codex:rescue
+
+Refactoriza este módulo siguiendo el plan aprobado.
+
+Objetivos:
+1. Eliminar duplicación.
+2. Separar responsabilidades.
+3. Mantener exactamente el comportamiento actual.
+4. No agregar funcionalidades nuevas.
+5. Ejecutar las pruebas existentes.
+
+Si una decisión requiere arquitectura, no la improvises: detente y repórtala. Al finalizar entrega un resumen archivo por archivo.</pre></div><blockquote><strong>La regla de oro: Fable piensa y revisa. Codex construye.</strong></blockquote></article></div></section></main><footer class="foot"><div class="wrap foot__in"><div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div></div></footer><div class="preview-badge">Preview web-v2</div><script src="/assets/js/site.js" defer></script></body></html>
