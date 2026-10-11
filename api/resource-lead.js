@@ -11,7 +11,8 @@ const RESOURCES = new Map([
   ['claude-human-resources', 'Claude for Human Resources'],
   ['higgsfield-codex-cli', 'Crea contenido con Higgsfield + Codex CLI'],
   ['claude-code-codex-plugin', 'Claude Code + Codex: Plugin Oficial'],
-  ['fable-orquesta-codex-ejecuta', 'Fable orquesta, Codex ejecuta']
+  ['fable-orquesta-codex-ejecuta', 'Fable orquesta, Codex ejecuta'],
+  ['instagram-agent-skill-claude', 'Instagram Agent Skill en Claude']
 ]);
 
 function collectorError(code) {
