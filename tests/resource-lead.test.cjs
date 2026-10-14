@@ -250,3 +250,29 @@ test('a save timeout is not retried and does not grant access', async () => {
     assert.equal(res.body.redirect, undefined);
   } finally { global.fetch = original; }
 });
+
+test('Claude tricks requires every field and confirmed storage for the ManyChat route', async () => {
+  const original = global.fetch;
+  let sent, calls = 0, confirmed = true;
+  global.fetch = async (_, options) => { calls++; sent = JSON.parse(options.body); return { ok: true, json: async () => ({ ok: confirmed }) }; };
+  try {
+    const body = { ...valid, resource: '5-trucos-ocultos-claude' };
+    for (const field of ['nombre', 'email', 'telefono']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...body, [field]: '' } }, res);
+      assert.equal(res.statusCode, 400);
+      assert.equal(res.body.redirect, undefined);
+    }
+    assert.equal(calls, 0);
+    const success = response();
+    await handler({ method: 'POST', body }, success);
+    assert.equal(success.statusCode, 200);
+    assert.equal(sent.fuente, 'ManyChat · 5 trucos ocultos de Claude: los prompts');
+    assert.equal(success.body.redirect, '/recursos/5-trucos-ocultos-claude/');
+    confirmed = false;
+    const failed = response();
+    await handler({ method: 'POST', body }, failed);
+    assert.equal(failed.statusCode, 502);
+    assert.equal(failed.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});

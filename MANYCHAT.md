@@ -137,3 +137,21 @@ Google, consulta la confirmación hasta tres veces, con 8 segundos por intento,
 pausas de 1 y 2 segundos y sin caché. No repite automáticamente el POST.
 El límite de Vercel es 90 segundos. Los errores registran fase y duración,
 sin datos de contacto. No se desbloquea la guía si Google no confirma `ok: true`.
+
+## 5 trucos ocultos de Claude: los prompts
+
+Enlace para el botón de ManyChat:
+
+https://www.lucianomusella.com/acceso/5-trucos-ocultos-claude/
+
+Exige nombre, correo y celular cada vez que se abre. Muestra la guía al fondo
+y solo abre el recurso después de confirmar el guardado en el recolector existente,
+con fuente `ManyChat · 5 trucos ocultos de Claude: los prompts`. Si falla, permite reintentar.
+
+El catálogo conserva el enlace público sin formulario obligatorio:
+
+https://www.lucianomusella.com/recursos/5-trucos-ocultos-claude/
+
+La distinción depende de la URL, sin cookies ni detección del navegador de Instagram.
+El formulario utiliza el envío al servidor del mismo dominio y redirección normal,
+con campos de 16px para evitar zoom de entrada en iOS y altura vh/dvh adaptable.
