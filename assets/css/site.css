@@ -555,6 +555,7 @@ body[data-page="home"] .sec--tight{padding:clamp(44px,5.5vw,72px) 0}
 .hm-player__k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--accent)}
 .hm-player__cap a{font-weight:600;font-size:15px;line-height:1.35;letter-spacing:-.01em}
 .hm-player__cap a:hover{color:var(--accent-deep)}
+.hm-player__cap p{margin:0;font-weight:600;font-size:15px;line-height:1.35;letter-spacing:-.01em}
 @media (max-width:900px){.hm-hero__in{grid-template-columns:1fr;gap:26px}.hm-hero{padding-top:calc(var(--nav-h) + 20px)}}
 /* que quieres aprender */
 .hm-routes{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,56px);align-items:center}
