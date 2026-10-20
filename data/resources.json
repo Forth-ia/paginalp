@@ -33,6 +33,28 @@
  },
  "resources": [
 {
+ "id": "la-maquina-de-uno",
+ "slug": "la-maquina-de-uno",
+ "title": "La máquina de UNO: las 4 piezas de IA que te liberan tiempo",
+ "category": "agentes",
+ "secondary": ["negocio", "empezar"],
+ "type": "guia-paso-a-paso",
+ "type_label": "Guía paso a paso",
+ "summary": "Un sistema de cuatro piezas para convertir el conocimiento de tu negocio, tus datos comerciales y tareas repetitivas en procesos asistidos por IA.",
+ "what_you_get": ["Las 4 piezas: cerebro, memoria, rutina y empleado", "3 prompts listos para adaptar", "Un sistema de seguimiento comercial con supervisión humana", "Métricas para medir el impacto"],
+ "ideal_for": ["Founders y equipos comerciales", "Personas que quieren recuperar tiempo sin perder criterio", "Negocios que necesitan organizar seguimiento y automatización"],
+ "includes": ["Guía de implementación en 4 piezas", "Prompts copiables", "Reglas y límites para cada proceso", "Indicadores para validar resultados"],
+ "tools": ["ChatGPT", "CRM o hoja de cálculo", "Formulario", "Calendario", "Plataforma de automatización"],
+ "words": 1800,
+ "read_min": 10,
+ "related_tutorials": [],
+ "related_resources": ["claude-maquina-de-leads", "houston-memoria-clientes", "claude-routines"],
+ "collection": null,
+ "featured": false,
+ "notion_url": null,
+ "status": "preview"
+},
+{
  "id": "5-trucos-ocultos-claude",
  "slug": "5-trucos-ocultos-claude",
  "title": "5 trucos ocultos de Claude: los prompts",
