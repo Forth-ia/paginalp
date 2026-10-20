@@ -214,6 +214,19 @@ test('Lead machine requires all fields and confirmed storage before returning th
   } finally { global.fetch = original; }
 });
 
+test('La máquina de UNO requires confirmed registration before opening its public guide', async () => {
+  const original = global.fetch;
+  let sent;
+  global.fetch = async (_, options) => { sent = JSON.parse(options.body); return { ok: true, json: async () => ({ ok: true }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'la-maquina-de-uno' } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(sent.fuente, 'ManyChat · La máquina de UNO');
+    assert.equal(res.body.redirect, '/recursos/la-maquina-de-uno/');
+  } finally { global.fetch = original; }
+});
+
 test('recovers from transient Google 404 and HTML confirmation without another write', async () => {
   const original = global.fetch;
   let posts = 0, gets = 0;

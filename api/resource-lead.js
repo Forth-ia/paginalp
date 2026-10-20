@@ -14,6 +14,7 @@ const RESOURCES = new Map([
   ['claude-code-codex-plugin', 'Claude Code + Codex: Plugin Oficial'],
   ['fable-orquesta-codex-ejecuta', 'Fable orquesta, Codex ejecuta'],
   ['instagram-agent-skill-claude', 'Instagram Agent Skill en Claude']
+  ,['la-maquina-de-uno', 'La máquina de UNO']
 ]);
 
 function collectorError(code) {
