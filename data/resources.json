@@ -33,6 +33,53 @@
  },
  "resources": [
 {
+  "id": "chatgpt-dots",
+  "slug": "chatgpt-dots",
+  "title": "ChatGPT Dots",
+  "category": "agentes",
+  "secondary": [
+    "empezar",
+    "negocio"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Cómo instalar y configurar tu primer Dot de OpenAI",
+  "what_you_get": [
+    "Accede a Dots",
+    "Crea tu primer Dot",
+    "Dale instrucciones claras",
+    "Conecta tus aplicaciones",
+    "Define sus límites y permisos",
+    "Dale su primera misión",
+    "Revisa su trabajo y dale feedback",
+    "Crea tu propio equipo de Dots"
+  ],
+  "ideal_for": [
+    "Personas que quieren configurar su primer Dot",
+    "Equipos que quieren delegar tareas repetitivas"
+  ],
+  "includes": [
+    "8 pasos de configuración",
+    "Prompt de ventas listo para copiar",
+    "Enlace oficial de Dots"
+  ],
+  "tools": [
+    "ChatGPT",
+    "OpenAI Dots"
+  ],
+  "words": 616,
+  "read_min": 5,
+  "related_tutorials": [],
+  "related_resources": [
+    "claude-maquina-de-leads",
+    "sales-coach-assistant"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
  "id": "la-maquina-de-uno",
  "slug": "la-maquina-de-uno",
  "title": "La máquina de UNO: las 4 piezas de IA que te liberan tiempo",
