@@ -289,3 +289,33 @@ test('Claude tricks requires every field and confirmed storage for the ManyChat 
     assert.equal(failed.body.redirect, undefined);
   } finally { global.fetch = original; }
 });
+
+test('Dots requires all contact fields and confirmed storage before unlocking', async () => {
+  const original = global.fetch;
+  const sent = [];
+  let confirmed = true;
+  global.fetch = async (_, options) => {
+    sent.push(JSON.parse(options.body));
+    return { ok: true, json: async () => ({ ok: confirmed }) };
+  };
+  try {
+    const body = { ...valid, resource: 'chatgpt-dots', fuente: 'spoofed' };
+    for (const field of ['nombre', 'email', 'telefono']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...body, [field]: '' } }, res);
+      assert.equal(res.statusCode, 400);
+    }
+    assert.equal(sent.length, 0);
+    const success = response();
+    await handler({ method: 'POST', body }, success);
+    assert.equal(success.statusCode, 200);
+    assert.equal(sent[0].fuente, 'ManyChat · ChatGPT Dots');
+    assert.equal(success.body.redirect, '/recursos/chatgpt-dots/');
+    confirmed = false;
+    const failure = response();
+    await handler({ method: 'POST', body }, failure);
+    assert.equal(failure.statusCode, 502);
+    assert.equal(failure.body.ok, false);
+    assert.equal(failure.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});

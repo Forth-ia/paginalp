@@ -155,3 +155,24 @@ https://www.lucianomusella.com/recursos/5-trucos-ocultos-claude/
 La distinción depende de la URL, sin cookies ni detección del navegador de Instagram.
 El formulario utiliza el envío al servidor del mismo dominio y redirección normal,
 con campos de 16px para evitar zoom de entrada en iOS y altura vh/dvh adaptable.
+
+
+## ChatGPT Dots
+
+Enlace para el botón o mensaje de ManyChat:
+
+https://www.lucianomusella.com/acceso/chatgpt-dots/
+
+Muestra la guía de fondo con el formulario existente obligatorio de nombre,
+correo y celular. No se puede cerrar ni omitir por un registro anterior.
+Solo abre la guía después de confirmar el guardado en la hoja existente,
+con fuente `ManyChat · ChatGPT Dots`. Si falla, conserva el formulario y permite reintentar.
+
+El catálogo mantiene el acceso público sin formulario obligatorio:
+
+https://www.lucianomusella.com/recursos/chatgpt-dots/
+
+La distinción depende del enlace enviado. El enlace público continúa abierto
+para quien lo conozca. No se comprueba la titularidad del correo o celular.
+Reutiliza el envío al mismo dominio y los ajustes móviles existentes para iOS,
+Android y navegadores integrados: campos de 16px, altura vh/dvh y scroll del formulario.
