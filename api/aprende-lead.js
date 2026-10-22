@@ -45,7 +45,10 @@ async function sendToMeta(lead, qualified, req) {
   const response = await fetch(`https://graph.facebook.com/${GRAPH_VERSION}/${pixel}/events?access_token=${encodeURIComponent(token)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data: [event] }),
+    // META_TEST_EVENT_CODE solo se define en Vercel durante una prueba en "Probar eventos".
+    body: JSON.stringify(process.env.META_TEST_EVENT_CODE
+      ? { data: [event], test_event_code: process.env.META_TEST_EVENT_CODE }
+      : { data: [event] }),
     signal: AbortSignal.timeout(10000)
   });
   if (!response.ok) throw new Error('meta_http_' + response.status);
