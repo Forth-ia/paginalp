@@ -66,13 +66,24 @@ test('qualified lead goes to Meta as Lead with hashed data and to the Web - Apre
   assert.equal(sheet.utm_campaign, "'=HYPERLINK(\"x\")");
 });
 
-test('adds the Colombian country code to 10-digit mobiles', async () => {
-  const calls = [];
-  await run({ ...valid, telefono: '321 405 6645' }, calls);
-  assert.deepEqual(calls[0].body.data[0].user_data.ph, [sha('573214056645')]);
-  assert.equal(calls.find(c => c.url.includes('script.google.com')).body.telefono, '573214056645');
-  await run({ ...valid, telefono: '+52 55 1234 5678' }, calls);
-  assert.deepEqual(calls[2].body.data[0].user_data.ph, [sha('525512345678')]);
+test('keeps the national number for Sheets and sends Meta the country code', async () => {
+  const meta = calls => calls.find(c => c.url.includes('graph.facebook.com')).body.data[0].user_data.ph;
+  const sheet = calls => calls.find(c => c.url.includes('script.google.com')).body.telefono;
+  let calls = [];
+  await run({ ...valid, pais: 'Colombia', telefono: '321 405 6645' }, calls);
+  assert.deepEqual(meta(calls), [sha('573214056645')]);
+  assert.equal(sheet(calls), '3214056645');
+  calls = [];
+  // Si igual escriben el indicativo, no se duplica.
+  await run({ ...valid, pais: 'Colombia', telefono: '+57 321 405 6645' }, calls);
+  assert.deepEqual(meta(calls), [sha('573214056645')]);
+  assert.equal(sheet(calls), '3214056645');
+  calls = [];
+  await run({ ...valid, pais: 'México', telefono: '55 1234 5678' }, calls);
+  assert.deepEqual(meta(calls), [sha('525512345678')]);
+  calls = [];
+  const res = await run({ ...valid, pais: 'Narnia', telefono: '3214056645' }, calls);
+  assert.equal(res.statusCode, 400);
 });
 
 test('unqualified lead goes to Meta as LeadNoCalificado and never to Sheets', async () => {

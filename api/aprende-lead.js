@@ -1,5 +1,5 @@
 const crypto = require('node:crypto');
-const { QUESTIONS, qualify } = require('../assets/js/aprende-qualify.js');
+const { QUESTIONS, COUNTRIES, qualify } = require('../assets/js/aprende-qualify.js');
 
 // Apps Script "web-aprende" (apps-script-web-aprende.gs): pestaña "Web - Aprende" del Sheets de leads.
 const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwrfBvYgSH4keIFKmxavxg835g_0byNq7aqZap3_0-kfQka0G102dTNGs6C5vNGZWWW/exec';
@@ -16,7 +16,7 @@ function userData(lead, req) {
   const [first, ...rest] = lead.nombre.toLowerCase().split(/\s+/);
   const data = {
     em: [sha256(lead.email.toLowerCase())],
-    ph: [sha256(lead.telefono)],
+    ph: [sha256(lead.telefonoMeta)],
     fn: [sha256(first)],
     external_id: [sha256(lead.email.toLowerCase())],
     client_ip_address: String(headers['x-forwarded-for'] || headers['x-real-ip'] || '').split(',')[0].trim() || undefined,
@@ -91,12 +91,19 @@ function parseLead(data) {
     utm: {}
   };
   if (data.utm && typeof data.utm === 'object') UTM_KEYS.forEach(key => { lead.utm[key] = clip(data.utm[key], 200); });
-  // Celular colombiano sin indicativo (10 dígitos que empiezan por 3): Meta necesita el 57 para cruzarlo.
-  if (/^3\d{9}$/.test(lead.telefono)) lead.telefono = '57' + lead.telefono;
+  // El Sheets guarda el número sin indicativo; Meta lo necesita con el del país elegido.
+  // Sin país (página en caché de antes del selector) el número se usa tal como llegó.
+  lead.telefonoMeta = lead.telefono;
+  if (data.pais !== undefined) {
+    const country = COUNTRIES.find(c => c[0] === data.pais);
+    if (!country) return null;
+    if (lead.telefono.startsWith(country[1]) && lead.telefono.length > 10) lead.telefono = lead.telefono.slice(country[1].length);
+    lead.telefonoMeta = country[1] + lead.telefono;
+  }
   const valid = lead.nombre.length >= 2 && !/^[=+@-]/.test(lead.nombre) &&
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(lead.email) && !/^[=+@-]/.test(lead.email) &&
     typeof data.telefono === 'string' && /^[+\d\s().-]+$/.test(data.telefono) &&
-    lead.telefono.length >= 7 && lead.telefono.length <= 15 &&
+    lead.telefono.length >= 6 && lead.telefonoMeta.length <= 15 &&
     ['aplica', 'inicio', 'inversion'].every(key => Object.prototype.hasOwnProperty.call(QUESTIONS[key].options, lead[key])) &&
     lead.reto.length >= 3 && /^[\w-]{8,80}$/.test(lead.event_id);
   return valid ? lead : null;

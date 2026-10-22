@@ -277,6 +277,9 @@
     .lf textarea{resize:vertical;min-height:110px}
     .lf textarea:focus,.lf__field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
     .lf__field{display:grid;gap:6px;font-size:.85rem;font-weight:600;color:var(--ink-2);margin-bottom:14px}
+    .lf__tel{display:grid;grid-template-columns:minmax(0,172px) 1fr;gap:8px}
+    .lf__tel select{width:100%;padding:13px 10px;border:1px solid var(--line);border-radius:10px;font:400 .95rem var(--sans);color:var(--ink);background:#fff}
+    .lf__tel select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
     .lf__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
     .lf__err{display:none;color:var(--accent-deep);font-size:.87rem;margin:8px 0 0}
     .lf__step.is-invalid .lf__err{display:block}
@@ -672,9 +675,15 @@
           <legend class="lf__q">&iquest;A d&oacute;nde te enviamos la informaci&oacute;n?</legend>
           <label class="lf__field">Nombre completo<input name="nombre" autocomplete="name" maxlength="120" placeholder="Tu nombre"></label>
           <label class="lf__field">Email<input name="email" type="email" autocomplete="email" maxlength="254" placeholder="tu@email.com"></label>
-          <label class="lf__field">WhatsApp (con indicativo del pa&iacute;s)<input name="telefono" type="tel" autocomplete="tel" maxlength="24" placeholder="+57 300 000 0000"></label>
+          <div class="lf__field">
+            <label for="lfTel">WhatsApp</label>
+            <div class="lf__tel">
+              <select name="pais" aria-label="Pa&iacute;s" id="lfPais"></select>
+              <input id="lfTel" name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="20" placeholder="300 000 0000">
+            </div>
+          </div>
           <input class="lf__hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <p class="lf__err" data-err>Revisa tu nombre, email y WhatsApp (con indicativo).</p>
+          <p class="lf__err" data-err>Revisa tu nombre, email y n&uacute;mero de WhatsApp.</p>
           <button type="submit" class="btn btn--wide lf__next">Enviar mis respuestas</button>
           <small class="lf__legal">Al enviar aceptas nuestra <a href="/politica-de-privacidad/" target="_blank" rel="noopener">pol&iacute;tica de privacidad</a>.</small>
         </fieldset>

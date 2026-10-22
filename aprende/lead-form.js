@@ -29,6 +29,10 @@
     holder.insertAdjacentHTML('beforeend', html + '</div></fieldset>');
   });
 
+  form.elements.pais.innerHTML = w.aprendeQualify.COUNTRIES.map(function (c) {
+    return '<option value="' + c[0] + '">' + c[0] + ' (+' + c[1] + ')</option>';
+  }).join('');
+
   var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
   var wait = form.querySelector('[data-wait]');
   var back = d.getElementById('lfBack'), count = d.getElementById('lfCount'), bar = d.getElementById('lfBar');
@@ -75,7 +79,7 @@
     var step = steps[current];
     var el = form.elements;
     var data = {
-      nombre: el.nombre.value.trim(), email: el.email.value.trim(), telefono: el.telefono.value.trim(),
+      nombre: el.nombre.value.trim(), email: el.email.value.trim(), telefono: el.telefono.value.trim(), pais: el.pais.value,
       aplica: (form.querySelector('input[name="aplica"]:checked') || {}).value,
       inicio: (form.querySelector('input[name="inicio"]:checked') || {}).value,
       inversion: (form.querySelector('input[name="inversion"]:checked') || {}).value,
@@ -83,7 +87,7 @@
     };
     var digits = data.telefono.replace(/\D/g, '');
     if (data.nombre.length < 2 || /^[=+@-]/.test(data.nombre) || !EMAIL_RE.test(data.email) ||
-        !/^[+\d\s().-]+$/.test(data.telefono) || digits.length < 7 || digits.length > 15) return invalid(step);
+        !/^[+\d\s().-]+$/.test(data.telefono) || digits.length < 6 || digits.length > 15) return invalid(step);
     // Si falta una respuesta (no debería pasar), vuelve a esa pregunta.
     var missing = ['aplica', 'inicio', 'inversion'].findIndex(function (k) { return !data[k]; });
     if (missing !== -1) return show(missing);

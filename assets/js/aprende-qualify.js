@@ -35,6 +35,15 @@
     }
   };
 
+  // Selector de país del WhatsApp: [nombre, indicativo]. El primero es el predeterminado.
+  var COUNTRIES = [
+    ['Colombia', '57'], ['México', '52'], ['Argentina', '54'], ['Chile', '56'], ['Perú', '51'],
+    ['Ecuador', '593'], ['Venezuela', '58'], ['Uruguay', '598'], ['Paraguay', '595'], ['Bolivia', '591'],
+    ['Costa Rica', '506'], ['Panamá', '507'], ['Guatemala', '502'], ['El Salvador', '503'],
+    ['Honduras', '504'], ['Nicaragua', '505'], ['República Dominicana', '1'], ['Puerto Rico', '1'],
+    ['España', '34'], ['Estados Unidos', '1']
+  ];
+
   // Calificado = ninguna respuesta descalificante, con dos casos condicionados.
   function qualify(a) {
     if (a.aplica === 'no_claro') return false;
@@ -45,7 +54,7 @@
     return true;
   }
 
-  var api = { QUESTIONS: QUESTIONS, qualify: qualify };
+  var api = { QUESTIONS: QUESTIONS, COUNTRIES: COUNTRIES, qualify: qualify };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.aprendeQualify = api;
 })(this);
