@@ -66,6 +66,15 @@ test('qualified lead goes to Meta as Lead with hashed data and to the Web - Apre
   assert.equal(sheet.utm_campaign, "'=HYPERLINK(\"x\")");
 });
 
+test('adds the Colombian country code to 10-digit mobiles', async () => {
+  const calls = [];
+  await run({ ...valid, telefono: '321 405 6645' }, calls);
+  assert.deepEqual(calls[0].body.data[0].user_data.ph, [sha('573214056645')]);
+  assert.equal(calls.find(c => c.url.includes('script.google.com')).body.telefono, '573214056645');
+  await run({ ...valid, telefono: '+52 55 1234 5678' }, calls);
+  assert.deepEqual(calls[2].body.data[0].user_data.ph, [sha('525512345678')]);
+});
+
 test('unqualified lead goes to Meta as LeadNoCalificado and never to Sheets', async () => {
   const calls = [];
   const res = await run({ ...valid, inversion: 'no_puede' }, calls);

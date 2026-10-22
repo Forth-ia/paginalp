@@ -91,6 +91,8 @@ function parseLead(data) {
     utm: {}
   };
   if (data.utm && typeof data.utm === 'object') UTM_KEYS.forEach(key => { lead.utm[key] = clip(data.utm[key], 200); });
+  // Celular colombiano sin indicativo (10 dígitos que empiezan por 3): Meta necesita el 57 para cruzarlo.
+  if (/^3\d{9}$/.test(lead.telefono)) lead.telefono = '57' + lead.telefono;
   const valid = lead.nombre.length >= 2 && !/^[=+@-]/.test(lead.nombre) &&
     /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(lead.email) && !/^[=+@-]/.test(lead.email) &&
     typeof data.telefono === 'string' && /^[+\d\s().-]+$/.test(data.telefono) &&
