@@ -38,7 +38,7 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '950144990819131');
   fbq('track', 'PageView');
-  fbq('track', 'Lead');
+  // El Lead ya no se dispara aquí: lo envía el formulario de /aprende solo para leads calificados.
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=950144990819131&ev=PageView&noscript=1"
@@ -59,6 +59,20 @@
           id="XtCRvwWrG9s0ZLPKoCc2_booking"
           title="Agenda tu conversaci&oacute;n"
         ></iframe>
+        <script>
+        // Prellena el calendario con los datos del formulario de /aprende.
+        (function(){
+          try{
+            var lead=JSON.parse(sessionStorage.getItem('ap_lead')||'null');
+            if(!lead) return;
+            var parts=lead.nombre.split(' '), q=new URLSearchParams({
+              first_name:parts[0], last_name:parts.slice(1).join(' '), name:lead.nombre, email:lead.email, phone:lead.telefono
+            });
+            var frame=document.getElementById('XtCRvwWrG9s0ZLPKoCc2_booking');
+            frame.src=frame.src.split('?')[0]+'?'+q.toString();
+          }catch(_){}
+        })();
+        </script>
       </div>
 
       <div id="communityBlock" style="display:none">

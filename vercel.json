@@ -1,5 +1,6 @@
 {
   "functions": {
-    "api/resource-lead.js": { "maxDuration": 90 }
+    "api/resource-lead.js": { "maxDuration": 90 },
+    "api/aprende-lead.js": { "maxDuration": 60 }
   }
 }
