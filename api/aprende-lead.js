@@ -1,7 +1,8 @@
 const crypto = require('node:crypto');
 const { QUESTIONS, qualify } = require('../assets/js/aprende-qualify.js');
 
-const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
+// Apps Script "web-aprende" (apps-script-web-aprende.gs): pestaña "Web - Aprende" del Sheets de leads.
+const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwrfBvYgSH4keIFKmxavxg835g_0byNq7aqZap3_0-kfQka0G102dTNGs6C5vNGZWWW/exec';
 const GRAPH_VERSION = 'v25.0';
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
 
@@ -52,7 +53,6 @@ async function sendToMeta(lead, qualified, req) {
 
 async function saveToSheet(lead) {
   const row = {
-    hoja: 'Calificados',
     nombre: lead.nombre, email: lead.email, telefono: lead.telefono,
     fuente: 'Aprende · Lead calificado',
     aplica: QUESTIONS.aplica.options[lead.aplica],

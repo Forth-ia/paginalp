@@ -45,7 +45,7 @@ async function run(body, calls) {
 }
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 
-test('qualified lead goes to Meta as Lead with hashed data and to the Calificados sheet', async () => {
+test('qualified lead goes to Meta as Lead with hashed data and to the Web - Aprende sheet', async () => {
   const calls = [];
   const res = await run(valid, calls);
   assert.equal(res.statusCode, 200);
@@ -61,7 +61,7 @@ test('qualified lead goes to Meta as Lead with hashed data and to the Calificado
   assert.equal(event.user_data.client_ip_address, '1.2.3.4');
   assert.equal(JSON.stringify(meta.body).includes('Ana@Example.com'), false);
   const sheet = calls.find(c => c.url.includes('script.google.com')).body;
-  assert.equal(sheet.hoja, 'Calificados');
+  assert.equal(sheet.nombre, 'Ana María Pérez');
   assert.equal(sheet.inversion, 'Estoy listo para invertir');
   assert.equal(sheet.utm_campaign, "'=HYPERLINK(\"x\")");
 });
