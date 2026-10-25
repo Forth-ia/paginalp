@@ -33,6 +33,50 @@
  },
  "resources": [
 {
+  "id": "obscura-claude-code",
+  "slug": "obscura-claude-code",
+  "title": "Cómo conectar Obscura a Claude Code y automatizar el navegador con AI",
+  "category": "claude",
+  "secondary": [
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Instala Obscura, conéctalo a Claude Code mediante MCP y automatiza la navegación con comandos y prompts listos para copiar.",
+  "what_you_get": [
+    "Instalación en macOS, Linux y Windows",
+    "Conexión MCP con Claude Code",
+    "Prompts de navegación y extracción de datos",
+    "Comandos y solución de problemas"
+  ],
+  "ideal_for": [
+    "Usuarios de Claude Code",
+    "Equipos que automatizan investigación web"
+  ],
+  "includes": [
+    "8 pasos de configuración",
+    "Comandos y prompts copiables",
+    "Tablas de referencia",
+    "Enlaces oficiales"
+  ],
+  "tools": [
+    "Claude Code",
+    "Obscura",
+    "MCP"
+  ],
+  "words": 1677,
+  "read_min": 12,
+  "related_tutorials": [],
+  "related_resources": [
+    "everything-claude-code",
+    "claude-code-codex-plugin"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "chatgpt-dots",
   "slug": "chatgpt-dots",
   "title": "ChatGPT Dots",
