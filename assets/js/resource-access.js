@@ -3,7 +3,7 @@
   var form = document.getElementById('resource-access-form');
   if (!form) return;
   var resource = form.elements.resource ? form.elements.resource.value : 'claude-productivity';
-  if (['chatgpt-dots', '5-trucos-ocultos-claude', 'claude-maquina-de-leads', 'sales-coach-assistant', 'everything-claude-code', 'skillspector', 'claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources', 'higgsfield-codex-cli', 'claude-code-codex-plugin', 'fable-orquesta-codex-ejecuta', 'instagram-agent-skill-claude', 'la-maquina-de-uno'].indexOf(resource) === -1) return;
+  if (['obscura-claude-code', 'chatgpt-dots', '5-trucos-ocultos-claude', 'claude-maquina-de-leads', 'sales-coach-assistant', 'everything-claude-code', 'skillspector', 'claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources', 'higgsfield-codex-cli', 'claude-code-codex-plugin', 'fable-orquesta-codex-ejecuta', 'instagram-agent-skill-claude', 'la-maquina-de-uno'].indexOf(resource) === -1) return;
   var button = form.querySelector('button[type="submit"]');
   var label = button.querySelector('.btn__t');
   var status = document.getElementById('access-status');

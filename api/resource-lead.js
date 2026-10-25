@@ -1,5 +1,6 @@
 const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
 const RESOURCES = new Map([
+  ['obscura-claude-code', 'Obscura + Claude Code'],
   ['chatgpt-dots', 'ChatGPT Dots'],
   ['5-trucos-ocultos-claude', '5 trucos ocultos de Claude: los prompts'],
   ['claude-maquina-de-leads', 'Convierte Claude en una máquina de leads'],

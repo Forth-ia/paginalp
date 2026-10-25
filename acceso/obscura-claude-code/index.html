@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Accede a Obscura + Claude Code | Luciano Musella</title>
+  <meta name="description" content="Desbloquea gratis Obscura + Claude Code: cómo conectar Obscura a Claude Code y automatizar el navegador con AI.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Obscura + Claude Code · Guía paso a paso">
+  <meta property="og:description" content="Completa tus datos y accede gratis a la guía.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css"><link rel="stylesheet" href="/assets/css/resource-access.css"><link rel="stylesheet" href="/assets/css/leads-access.css">
+  <script src="/assets/js/resource-access.js?v=obscura-claude-code-1" defer></script>
+</head>
+<body class="resource-access-locked leads-access">
+  <div class="resource-access__preview" inert aria-hidden="true">
+    <header class="nav"><div class="nav__in"><a tabindex="-1" class="nav__brand" href="/">Luciano<span>.</span>Musella</a><ul class="nav__links"><li><a tabindex="-1" href="/">Inicio</a></li><li><a tabindex="-1" href="/tutoriales/">Tutoriales</a></li><li><a tabindex="-1" href="/recursos/">Recursos</a></li><li><a tabindex="-1" href="/retos/">Retos</a></li><li><a tabindex="-1" href="/programa/">Programa</a></li></ul></div></header>
+    <main id="guide-preview"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a tabindex="-1" href="/recursos/">Recursos</a><span>/</span><a tabindex="-1" href="/recursos/?c=claude">Claude</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo conectar Obscura a Claude Code y automatizar el navegador con AI</h1><p class="lead" style="margin-top:20px">Instala Obscura, conéctalo a Claude Code mediante MCP y automatiza la navegación con comandos y prompts listos para copiar.</p><div class="ahead__meta"><span>12 min de lectura</span><span class="dot"></span><span>Claude Code · Obscura</span><span class="dot"></span><span>8 pasos, comandos y prompts para copiar</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="obscura-claude-code"><h2 id="el-comando-exacto-para-conectar-obscura">El comando exacto para conectar Obscura</h2>
+<p>Claude Code + Obscura</p>
+<p>Ejecuta este comando en tu terminal:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>claude mcp add obscura /path/to/obscura mcp</pre></div>
+<p>Importante: reemplaza <code>/path/to/obscura</code> por la ruta real del ejecutable que descargaste.</p>
+<h2 id="que-es-obscura">¿Qué es Obscura?</h2>
+<figure class="article-figure"><img src="/assets/img/recursos/obscura-claude-code.jpeg" alt="README de Obscura en GitHub: descripción del navegador, comparación con Chrome headless e instrucciones de instalación" width="964" height="1200" loading="lazy"><figcaption>Obscura: presentación del proyecto y métricas reportadas en su README.</figcaption></figure>
+<p>Obscura es un motor de navegador headless de código abierto, escrito en Rust y diseñado para agentes de AI, automatización web y extracción de datos.</p>
+<p>Ejecuta JavaScript mediante V8, admite el protocolo Chrome DevTools (CDP) y permite integrar herramientas de navegación con clientes de AI compatibles con MCP.</p>
+<p>Una de sus principales diferencias frente a navegadores tradicionales es que no necesita Chromium. Según las cifras reportadas por el proyecto, esto puede reducir considerablemente el consumo de recursos.</p>
+<table><thead><tr><th scope="col">Métrica reportada</th><th scope="col">Obscura</th><th scope="col">Chrome headless</th></tr></thead><tbody>
+<tr><td>Memoria</td><td>~30 MB</td><td>200+ MB</td></tr>
+<tr><td>Tamaño del binario</td><td>~70 MiB</td><td>300+ MB</td></tr>
+<tr><td>Carga típica de página</td><td>~85 ms</td><td>~500 ms</td></tr>
+<tr><td>Inicio</td><td>Casi instantáneo</td><td>~2 segundos</td></tr>
+</tbody></table>
+<p>Estas cifras son estimaciones reportadas por el proyecto, no resultados de una prueba independiente. El rendimiento real depende de la página, el equipo y la configuración.</p>
+<blockquote><p>💡 Obscura puede ser especialmente útil cuando los agentes consumen demasiada memoria, los procesos de scraping tardan mucho o necesitas automatizar múltiples páginas. También ofrece un modo stealth para modificar ciertas características de detección, aunque no garantiza que un sitio permita la automatización.</p></blockquote>
+<h2 id="paso-1-comprueba-los-requisitos">Paso 1. Comprueba los requisitos</h2>
+<p>Antes de comenzar, asegúrate de tener:</p>
+<ul><li>Claude Code instalado y funcionando.</li><li>Un equipo con macOS, Linux o Windows.</li><li>Acceso a la terminal.</li><li>Permisos para descargar y ejecutar programas.</li></ul>
+<p>Importante: utiliza la automatización únicamente en sitios a los que tengas autorización para acceder. Respeta los límites de solicitudes, las condiciones del servicio, la privacidad y las restricciones de acceso.</p>
+<h2 id="paso-2-descarga-obscura">Paso 2. Descarga Obscura</h2>
+<p>Abre el repositorio oficial y descarga la versión correspondiente a tu sistema operativo.</p>
+<blockquote><p>💡 <a tabindex="-1" href="https://github.com/h4ckf0r0day/obscura" target="_blank" rel="noopener noreferrer">Repositorio oficial</a></p></blockquote>
+<blockquote><p>💡 <a tabindex="-1" href="https://github.com/h4ckf0r0day/obscura/releases/tag/v0.2.5" target="_blank" rel="noopener noreferrer">Busca el archivo compatible con tu sistema y arquitectura</a></p></blockquote>
+<h3 id="macos-apple-silicon">macOS — Apple Silicon</h3>
+<p>Para equipos con procesadores de la serie M de Apple:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>curl -LO https://github.com/h4ckf0r0day/obscura/releases/latest/download/obscura-aarch64-macos.tar.gz
+tar xzf obscura-aarch64-macos.tar.gz
+chmod +x obscura</pre></div>
+<h3 id="macos-intel">macOS — Intel</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>curl -LO https://github.com/h4ckf0r0day/obscura/releases/latest/download/obscura-x86_64-macos.tar.gz
+tar xzf obscura-x86_64-macos.tar.gz
+chmod +x obscura</pre></div>
+<h3 id="linux-x86-64">Linux — x86_64</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>curl -LO https://github.com/h4ckf0r0day/obscura/releases/latest/download/obscura-x86_64-linux.tar.gz
+tar xzf obscura-x86_64-linux.tar.gz
+chmod +x obscura</pre></div>
+<h3 id="linux-arm64">Linux — ARM64</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>curl -LO https://github.com/h4ckf0r0day/obscura/releases/latest/download/obscura-aarch64-linux.tar.gz
+tar xzf obscura-aarch64-linux.tar.gz
+chmod +x obscura</pre></div>
+<h3 id="windows">Windows</h3>
+<ol><li>Abre la página de versiones de Obscura.</li><li>Descarga el archivo ZIP correspondiente a Windows.</li><li>Descomprímelo en una carpeta permanente.</li><li>Localiza <code>obscura.exe</code> y copia su ruta completa.</li></ol>
+<blockquote><p>💡 Los archivos de distribución pueden incluir tanto <code>obscura</code> como <code>obscura-worker</code>. Si vas a utilizar scraping paralelo, conserva ambos ejecutables en el mismo directorio.</p></blockquote>
+<h2 id="paso-3-comprueba-que-obscura-funciona">Paso 3. Comprueba que Obscura funciona</h2>
+<p>Antes de conectarlo con Claude Code, verifica que el ejecutable puede abrir una página web.</p>
+<p>En macOS o Linux, desde la carpeta donde descargaste el programa, ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>./obscura fetch https://example.com --eval &quot;document.title&quot;</pre></div>
+<p>En Windows PowerShell:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>.\obscura.exe fetch https://example.com --eval &quot;document.title&quot;</pre></div>
+<p>¿Qué debería pasar?</p>
+<p>Obscura debe abrir la página y devolver su título. Si no funciona, revisa que el ejecutable sea el correcto y que tenga permisos de ejecución.</p>
+<p>Si tu sistema operativo bloquea el archivo, verifica primero que proviene del repositorio oficial antes de autorizar su ejecución.</p>
+<h2 id="paso-4-encuentra-la-ruta-completa-del-ejecutable">Paso 4. Encuentra la ruta completa del ejecutable</h2>
+<p>Claude Code necesita saber exactamente dónde está instalado Obscura.</p>
+<h3 id="en-macos-o-linux">En macOS o Linux</h3>
+<p>Desde la carpeta que contiene el ejecutable, ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>pwd</pre></div>
+<p>El comando mostrará la ruta del directorio actual. Añade <code>/obscura</code> al final.</p>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>/Users/tuusuario/tools/obscura/obscura</pre></div>
+<h3 id="en-windows">En Windows</h3>
+<p>En el Explorador de archivos, haz clic derecho sobre <code>obscura.exe</code> mientras mantienes pulsada la tecla Shift y selecciona la opción para copiar la ruta como texto. Utiliza esa ruta en la configuración de Claude Code.</p>
+<h2 id="paso-5-conecta-obscura-con-claude-code">Paso 5. Conecta Obscura con Claude Code</h2>
+<p>Ahora registra Obscura como un servidor MCP. MCP permite que Claude Code descubra y utilice herramientas externas compatibles.</p>
+<p>Ejecuta el comando reemplazando la ruta de ejemplo por la que obtuviste en el paso anterior.</p>
+<p>macOS:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>claude mcp add obscura /Users/tuusuario/tools/obscura/obscura mcp</pre></div>
+<p>Linux:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>claude mcp add obscura /home/tuusuario/tools/obscura/obscura mcp</pre></div>
+<p>Windows PowerShell:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>claude mcp add obscura C:\Tools\Obscura\obscura.exe mcp</pre></div>
+<p>Una vez registrado el servidor, reinicia Claude Code y comprueba que las herramientas de Obscura estén disponibles.</p>
+<p>Si tu ruta contiene espacios, consulta la sintaxis de argumentos de tu terminal y de la versión de Claude Code que utilizas para asegurarte de que la ruta se interpreta como un único argumento.</p>
+<h2 id="paso-6-verifica-la-conexion">Paso 6. Verifica la conexión</h2>
+<p>Abre Claude Code y envíale esta instrucción:</p>
+<p>Prompt de prueba</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Utiliza las herramientas del navegador Obscura para abrir
+https://example.com, leer el título de la página y resumir
+el texto visible.
+
+Indícame qué herramientas de Obscura utilizaste.</pre></div>
+<p>Si todo está correctamente configurado, Claude debería poder utilizar las herramientas del navegador para acceder a la página y resumir su contenido.</p>
+<h3 id="que-hacer-si-claude-no-encuentra-las-herramientas">¿Qué hacer si Claude no encuentra las herramientas?</h3>
+<ol><li>Verifica que la ruta del ejecutable sea correcta.</li><li>Repite la prueba del paso 3.</li><li>Elimina y registra de nuevo el servidor MCP con la ruta correcta.</li><li>Cierra y reinicia Claude Code por completo.</li><li>Comprueba que el sistema operativo no haya puesto el archivo en cuarentena ni haya bloqueado su ejecución.</li></ol>
+<p>Puedes consultar también la guía oficial de configuración MCP de Obscura en el repositorio.</p>
+<h2 id="paso-7-activa-el-modo-stealth-cuando-sea-necesario">Paso 7. Activa el modo stealth cuando sea necesario</h2>
+<p>Obscura incluye un modo stealth que modifica determinadas señales del navegador para reducir la detección automatizada y bloquear rastreadores.</p>
+<p>Si necesitas activarlo en la configuración del servidor MCP, el comando y sus argumentos quedan así:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>{
+  &quot;mcpServers&quot;: {
+    &quot;obscura&quot;: {
+      &quot;command&quot;: &quot;/path/to/obscura&quot;,
+      &quot;args&quot;: [&quot;mcp&quot;, &quot;--stealth&quot;]
+    }
+  }
+}</pre></div>
+<p>Reemplaza <code>/path/to/obscura</code> por la ruta real del ejecutable.</p>
+<p>Mi recomendación es empezar sin este modo y habilitarlo solo cuando exista una necesidad legítima. No garantiza acceso a una web ni autoriza a evadir sistemas de autenticación, restricciones explícitas o controles de acceso.</p>
+<h2 id="paso-8-dale-a-claude-instrucciones-precisas-para-navegar">Paso 8. Dale a Claude instrucciones precisas para navegar</h2>
+<p>Conectar el navegador es solo una parte del proceso. Para conseguir buenos resultados, debes definir qué información quieres, cuántas páginas puede revisar y cómo debe entregarte los datos.</p>
+<p>Utiliza esta plantilla como punto de partida:</p>
+<p>Plantilla de automatización web</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Utiliza Obscura para realizar esta tarea de navegación.
+
+Objetivo: [resultado exacto que necesito]
+URL inicial: [dirección de la página]
+Datos necesarios: [campos que quiero obtener]
+Máximo de páginas: [número]
+Formato de salida: [tabla Markdown / JSON / CSV]
+
+Reglas:
+- No inicies sesión ni envíes formularios sin mi autorización.
+- No modifiques información sin preguntarme primero.
+- Respeta los límites de solicitudes y detente si se deniega el acceso.
+- Incluye la URL de origen de cada resultado.
+- Indica los campos faltantes en lugar de inventar datos.
+- Guarda resultados intermedios cada [número] de páginas.</pre></div>
+<h3 id="ejemplo-practico-investigacion-de-empresas">Ejemplo práctico: investigación de empresas</h3>
+<p>Imagina que quieres analizar empresas de un directorio público y organizar la información en una tabla.</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Utiliza Obscura para revisar las primeras 25 empresas
+de este directorio público.
+
+Recopila:
+- Nombre de la empresa
+- Sitio web
+- Categoría
+- Ubicación
+- URL de la fuente
+
+Devuelve los resultados en una tabla Markdown.
+No abras páginas que requieran iniciar sesión, no envíes
+formularios ni recopiles datos personales de contacto.</pre></div>
+<p>Este enfoque permite convertir una tarea manual de investigación en un proceso estructurado y repetible, siempre que el sitio permita ese tipo de acceso.</p>
+<h2 id="comandos-utiles-de-obscura">Comandos útiles de Obscura</h2>
+<h3 id="1-extraer-texto-legible">1. Extraer texto legible</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>obscura fetch https://example.com --dump text</pre></div>
+<p>Obtiene el texto de una página para analizar su contenido.</p>
+<h3 id="2-extraer-enlaces">2. Extraer enlaces</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>obscura fetch https://example.com --dump links</pre></div>
+<p>Recopila los enlaces encontrados en la página.</p>
+<h3 id="3-esperar-a-que-cargue-una-pagina-dinamica">3. Esperar a que cargue una página dinámica</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>obscura fetch https://example.com --wait-until networkidle0</pre></div>
+<p>Espera a que la actividad de red se estabilice; en algunas webs esto puede tardar demasiado.</p>
+<h3 id="4-guardar-una-captura-de-pantalla">4. Guardar una captura de pantalla</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>obscura fetch https://example.com --screenshot page.png</pre></div>
+<p>Guarda una captura de la página en un archivo.</p>
+<h3 id="5-procesar-varias-urls-en-paralelo">5. Procesar varias URLs en paralelo</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>obscura scrape https://example.com https://example.org \
+  --concurrency 10 \
+  --format json</pre></div>
+<p>Procesa varias direcciones y devuelve los resultados en JSON. Ajusta la concurrencia a los límites del sitio.</p>
+<h3 id="6-iniciar-un-servidor-cdp-local">6. Iniciar un servidor CDP local</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>obscura serve --port 9222</pre></div>
+<p>Inicia un servidor local compatible con Chrome DevTools Protocol.</p>
+<p>Verifica las opciones disponibles en la documentación de la versión instalada, ya que los argumentos pueden cambiar entre versiones.</p>
+<h2 id="solucion-de-problemas">Solución de problemas</h2>
+<table><thead><tr><th scope="col">Problema</th><th scope="col">Qué puedes hacer</th></tr></thead><tbody>
+<tr><td><code>Command not found</code></td><td>Utiliza la ruta completa o añade el directorio al <code>PATH</code>.</td></tr>
+<tr><td><code>Permission denied</code></td><td>En macOS o Linux, ejecuta <code>chmod +x /path/to/obscura</code>.</td></tr>
+<tr><td>Una página pesada no termina de cargar</td><td>Ajusta el tiempo de espera o la condición de carga.</td></tr>
+<tr><td>La web local está bloqueada</td><td>Comprueba la protección contra SSRF y consulta las instrucciones específicas para entornos locales.</td></tr>
+<tr><td>El sitio sigue bloqueando la automatización</td><td>Reduce la concurrencia, respeta sus reglas y utiliza su API oficial si está disponible.</td></tr>
+</tbody></table>
+<h3 id="acceso-a-un-servidor-local-de-desarrollo">Acceso a un servidor local de desarrollo</h3>
+<p>Obscura bloquea por defecto determinadas direcciones IP privadas e internas como protección contra solicitudes del lado del servidor (SSRF).</p>
+<p>Si necesitas probar un servidor local de confianza, la documentación del proyecto contempla una opción para permitir la red privada:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + Obscura</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>obscura fetch http://127.0.0.1:3000 --allow-private-network --dump text</pre></div>
+<p>Utilízala únicamente en un entorno controlado. No la habilites indiscriminadamente para navegar por sitios externos.</p>
+<h2 id="recursos-oficiales">Recursos oficiales</h2>
+<ul><li><a tabindex="-1" href="https://github.com/h4ckf0r0day/obscura" target="_blank" rel="noopener noreferrer">Repositorio de Obscura en GitHub</a></li><li><a tabindex="-1" href="https://github.com/h4ckf0r0day/obscura/releases/latest" target="_blank" rel="noopener noreferrer">Últimas versiones y descargas</a></li><li><a tabindex="-1" href="https://github.com/h4ckf0r0day/obscura#readme" target="_blank" rel="noopener noreferrer">Documentación oficial para configurar MCP</a></li></ul></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a tabindex="-1" href="#el-comando-exacto-para-conectar-obscura">El comando exacto para conectar Obscura</a></li><li><a tabindex="-1" href="#que-es-obscura">¿Qué es Obscura?</a></li><li><a tabindex="-1" href="#paso-1-comprueba-los-requisitos">Paso 1. Comprueba los requisitos</a></li><li><a tabindex="-1" href="#paso-2-descarga-obscura">Paso 2. Descarga Obscura</a></li><li><a tabindex="-1" href="#paso-3-comprueba-que-obscura-funciona">Paso 3. Comprueba que Obscura funciona</a></li><li><a tabindex="-1" href="#paso-4-encuentra-la-ruta-completa-del-ejecutable">Paso 4. Encuentra la ruta completa del ejecutable</a></li><li><a tabindex="-1" href="#paso-5-conecta-obscura-con-claude-code">Paso 5. Conecta Obscura con Claude Code</a></li><li><a tabindex="-1" href="#paso-6-verifica-la-conexion">Paso 6. Verifica la conexión</a></li><li><a tabindex="-1" href="#paso-7-activa-el-modo-stealth-cuando-sea-necesario">Paso 7. Activa el modo stealth cuando sea necesario</a></li><li><a tabindex="-1" href="#paso-8-dale-a-claude-instrucciones-precisas-para-navegar">Paso 8. Dale a Claude instrucciones precisas para navegar</a></li><li><a tabindex="-1" href="#comandos-utiles-de-obscura">Comandos útiles de Obscura</a></li><li><a tabindex="-1" href="#solucion-de-problemas">Solución de problemas</a></li><li><a tabindex="-1" href="#recursos-oficiales">Recursos oficiales</a></li></ul></nav></aside></div></section></main>
+  </div>
+  <div class="resource-access lead-pop" role="dialog" aria-modal="true" aria-labelledby="access-title">
+    <section class="lead-pop__card" aria-labelledby="access-title">
+      <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
+      <h2 id="access-title">Desbloquea la guía</h2>
+      <p>Déjame tus datos para acceder gratis a <strong>Obscura + Claude Code</strong> y aprender a conectar Obscura con Claude Code y automatizar el navegador con AI.</p>
+      <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
+        <input type="hidden" name="resource" value="obscura-claude-code">
+        <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
+        <label>Email<input name="email" type="email" inputmode="email" autocapitalize="none" spellcheck="false" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
+        <label>Celular<input name="telefono" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30" placeholder="+57 300 000 0000" aria-describedby="phone-help"></label>
+        <small id="phone-help">Incluye el indicativo de tu país.</small>
+        <button class="btn btn--accent" type="submit"><span class="btn__t">Ver la guía gratis</span></button>
+        <p id="access-status" class="resource-access__status" role="status" aria-live="polite"></p>
+        <small>Al enviar tus datos, recibirás recursos e ideas de IA de Luciano Musella. Sin spam. Puedes dejar de recibirlos cuando quieras.</small>
+      </form>
+      <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
+    </section>
+  </div>
+</body>
+</html>

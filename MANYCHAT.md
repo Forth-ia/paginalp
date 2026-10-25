@@ -176,3 +176,24 @@ La distinción depende del enlace enviado. El enlace público continúa abierto
 para quien lo conozca. No se comprueba la titularidad del correo o celular.
 Reutiliza el envío al mismo dominio y los ajustes móviles existentes para iOS,
 Android y navegadores integrados: campos de 16px, altura vh/dvh y scroll del formulario.
+
+
+## Obscura + Claude Code
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/obscura-claude-code/
+
+Exige nombre, correo y celular en cada visita, incluso tras un registro anterior.
+Muestra la guía de fondo sin permitir interactuar con ella ni cerrar el formulario.
+Solo redirige después de confirmar el guardado en el recolector existente, con
+fuente `ManyChat · Obscura + Claude Code`. Si falla, permite reintentar.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/obscura-claude-code/
+
+La distinción depende de la URL enviada, no del referrer, cookies ni navegador.
+Reutiliza POST al mismo dominio, redirección normal y ajustes móviles existentes:
+campos de 16px, vh/dvh, scroll y área segura. No se verifica la titularidad de los
+contactos y quien conozca el enlace público puede acceder directamente.

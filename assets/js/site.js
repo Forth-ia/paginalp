@@ -303,7 +303,7 @@
     } catch (err) { return false; }
   }
   function showLeadPopup() {
-    if (popupShown || !hasInteracted || !delayDone) return;
+    if (d.body.getAttribute('data-lead-popup') === 'off' || popupShown || !hasInteracted || !delayDone) return;
     try { if (sessionStorage.getItem(popupKey) || localStorage.getItem(capturedKey)) return; } catch (err) {}
     popupShown = true;
     var modal = d.createElement('section');
