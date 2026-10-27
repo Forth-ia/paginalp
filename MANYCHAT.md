@@ -214,3 +214,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/mods-claude-code/
 
 La distinción depende de la URL enviada.
+
+
+## Roast Room
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/roast-room/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Roast Room`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/roast-room/
+
+La distinción depende de la URL enviada.
