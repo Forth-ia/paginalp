@@ -33,6 +33,49 @@
  },
  "resources": [
 {
+  "id": "roast-room",
+  "slug": "roast-room",
+  "title": "Crea tu propia junta directiva (Roast Room) con AI",
+  "category": "claude",
+  "secondary": [
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Construye con 5 prompts en Claude Code un consejo simulado de 4 expertos que debate tu decisión de negocio en 3 rondas y entrega un veredicto ejecutable.",
+  "what_you_get": [
+    "Mapa de las 4 capas del proyecto",
+    "5 prompts listos para copiar, uno por capa",
+    "Cómo armar tu consejo con tus propios expertos",
+    "Cómo correr un debate y ver el dashboard"
+  ],
+  "ideal_for": [
+    "Usuarios de Claude Code",
+    "Founders que deciden con datos"
+  ],
+  "includes": [
+    "Prompts copiables",
+    "Tabla de arquitectura",
+    "Consejos de uso"
+  ],
+  "tools": [
+    "Claude Code",
+    "Node.js",
+    "React"
+  ],
+  "words": 3447,
+  "read_min": 17,
+  "related_tutorials": [],
+  "related_resources": [
+    "mods-claude-code",
+    "obscura-claude-code"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "mods-claude-code",
   "slug": "mods-claude-code",
   "title": "Guía de instalación de Mods para Claude Code",
