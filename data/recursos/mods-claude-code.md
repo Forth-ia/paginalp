@@ -1,6 +1,6 @@
 # Guía de instalación de Mods para Claude Code
 
-## 1. Instalar los mods del video
+## 1. Instalar mods ya existentes
 Repositorio: AceleraTalent/Mods-Claude (https://github.com/AceleraTalent/Mods-Claude.git)
 Abre Claude Code y ejecuta estos comandos, uno por uno.
 ### Paso 1. Agrega el marketplace de mods
