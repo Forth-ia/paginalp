@@ -197,3 +197,20 @@ La distinción depende de la URL enviada, no del referrer, cookies ni navegador.
 Reutiliza POST al mismo dominio, redirección normal y ajustes móviles existentes:
 campos de 16px, vh/dvh, scroll y área segura. No se verifica la titularidad de los
 contactos y quien conozca el enlace público puede acceder directamente.
+
+
+## Mods para Claude Code
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/mods-claude-code/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Mods para Claude Code`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/mods-claude-code/
+
+La distinción depende de la URL enviada.
