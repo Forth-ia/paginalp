@@ -33,6 +33,49 @@
  },
  "resources": [
 {
+  "id": "mods-claude-code",
+  "slug": "mods-claude-code",
+  "title": "Guía de instalación de Mods para Claude Code",
+  "category": "claude",
+  "secondary": [
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Instala los mods Code Tutor y Productivity HUD, añade cualquier otro mod y crea el tuyo con un prompt técnico listo para copiar.",
+  "what_you_get": [
+    "Instalación de Code Tutor y Productivity HUD",
+    "Cómo instalar cualquier otro mod",
+    "Cómo crear tu propio mod",
+    "Prompt técnico listo para copiar"
+  ],
+  "ideal_for": [
+    "Usuarios de Claude Code",
+    "Quienes quieren personalizar su entorno"
+  ],
+  "includes": [
+    "Comandos copiables",
+    "Prompt técnico completo",
+    "Enlaces oficiales"
+  ],
+  "tools": [
+    "Claude Code",
+    "Mods",
+    "Plugins"
+  ],
+  "words": 921,
+  "read_min": 5,
+  "related_tutorials": [],
+  "related_resources": [
+    "obscura-claude-code",
+    "everything-claude-code"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "obscura-claude-code",
   "slug": "obscura-claude-code",
   "title": "Cómo conectar Obscura a Claude Code y automatizar el navegador con AI",
