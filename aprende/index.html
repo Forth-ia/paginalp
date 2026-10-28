@@ -292,6 +292,37 @@
     .lf__notfit{text-align:center;padding:24px 4px 6px;display:grid;gap:18px;justify-items:center}
     .lf__notfit[hidden]{display:none}
     .lf__link{font-weight:600;color:var(--accent-deep)}
+    .lf__link[hidden]{display:none}
+    .lf__intro{color:var(--ink-2);font-size:.95rem;margin:-8px 0 20px}
+    .lf__check{width:52px;height:52px;border-radius:50%;display:grid;place-content:center;background:var(--accent-soft);color:var(--accent-deep);font-size:1.5rem;font-weight:700}
+    /* --- calendario (paso final de calificados) --- */
+    .modal--wide{max-width:880px}
+    .cal[hidden]{display:none}
+    .cal{padding-top:6px}
+    .cal .lf__q{margin-right:40px}
+    .cal__sub{color:var(--ink-2);font-size:.92rem;margin:-10px 0 22px}
+    .cal__grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;align-items:start}
+    .cal__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:1rem}
+    .cal__nav{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1.2rem;color:var(--ink-2)}
+    .cal__nav:disabled{opacity:.35;cursor:default}
+    .cal__dow,.cal__days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+    .cal__dow span{font-size:.7rem;font-weight:700;letter-spacing:.1em;color:var(--ink-3);padding-bottom:4px}
+    .cal__days button{aspect-ratio:1;border:0;border-radius:10px;font:600 .92rem var(--sans);background:transparent;color:var(--ink-3);cursor:default}
+    .cal__days button.is-open{background:var(--accent-soft);color:var(--accent-deep);cursor:pointer}
+    .cal__days button.is-open:hover{background:rgba(217,119,87,.22)}
+    .cal__days button.is-sel{background:var(--accent);color:#fff}
+    .cal__daylabel{font-weight:600;margin-bottom:12px}
+    .cal__times{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-height:330px;overflow-y:auto;padding-right:2px}
+    .cal__times button{padding:12px 8px;border:1px solid rgba(217,119,87,.45);border-radius:10px;background:#fff;color:var(--accent-deep);font:600 .92rem var(--sans);cursor:pointer;transition:background .2s,color .2s}
+    .cal__times button:hover{background:var(--accent-soft)}
+    .cal__times button.is-sel{background:var(--accent);border-color:var(--accent);color:#fff}
+    .cal__loading{text-align:center;padding:30px 0;color:var(--ink-2)}
+    .cal__loading[hidden],.cal__confirm[hidden],.cal__err[hidden]{display:none}
+    .cal__err{color:var(--accent-deep);font-size:.9rem;margin-top:14px}
+    .cal__confirm{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .cal__confirm p{margin:0;color:var(--ink-2)}
+    .cal__confirm .btn{width:auto}
+    .cal.is-loading .cal__grid,.cal__grid[hidden]{display:none}
 
 
     /* --- Antes / Después: 2 columnas, espejo --- */
@@ -387,6 +418,9 @@
       .modal-overlay{padding:0}
       .modal{max-width:none;height:100dvh;max-height:100dvh;border-radius:0;padding:50px 6px 10px}
       .modal--form{padding:20px 18px 28px}
+      .cal__grid{grid-template-columns:1fr;gap:20px}
+      .cal__times{max-height:none;grid-template-columns:repeat(3,1fr)}
+      .cal__confirm .btn{width:100%}
       .photo{aspect-ratio:4/4.4}
     }
   </style>
@@ -652,9 +686,9 @@
     </div>
   </div>
 
-  <!-- MODAL — formulario propio de calificación (aprende/lead-form.js).
-       Las preguntas y el criterio viven en /assets/js/aprende-qualify.js.
-       Calificado -> /aprende/gracias.html (calendario FunnelUp). No calificado -> comunidad. -->
+  <!-- MODAL — formulario de calificación + agenda propia (aprende/lead-form.js).
+       Contacto (queda guardado aunque abandone) -> preguntas -> calificado: calendario aquí mismo;
+       no calificado: curso gratis. Preguntas y criterio en /assets/js/aprende-qualify.js. -->
   <div class="modal-overlay" id="waitlistModal">
     <div class="modal modal--form" role="dialog" aria-modal="true" aria-label="Agenda tu conversaci&oacute;n">
       <button class="modal__close" id="modalClose" aria-label="Cerrar">&times;</button>
@@ -664,15 +698,9 @@
           <span class="lf__count" id="lfCount"></span>
           <div class="lf__bar" aria-hidden="true"><i id="lfBar"></i></div>
         </div>
-        <div id="lfQuestions"></div>
         <fieldset class="lf__step" data-step>
-          <legend class="lf__q">&iquest;Cu&aacute;l es el principal reto o tarea que hoy te quita m&aacute;s tiempo y te gustar&iacute;a resolver con ayuda de la IA?</legend>
-          <textarea name="reto" rows="4" maxlength="1000" placeholder="Cu&eacute;ntalo con tus palabras"></textarea>
-          <p class="lf__err" data-err>Cu&eacute;ntanos un poco m&aacute;s para preparar tu conversaci&oacute;n.</p>
-          <button type="button" class="btn btn--wide lf__next" data-next>Continuar</button>
-        </fieldset>
-        <fieldset class="lf__step" data-step>
-          <legend class="lf__q">&iquest;A d&oacute;nde te enviamos la informaci&oacute;n?</legend>
+          <legend class="lf__q">Agenda tu conversaci&oacute;n con Luciano</legend>
+          <p class="lf__intro">Cu&eacute;ntanos qui&eacute;n eres y responde 4 preguntas cortas. Si el programa encaja contigo, eliges el horario aqu&iacute; mismo.</p>
           <label class="lf__field">Nombre completo<input name="nombre" autocomplete="name" maxlength="120" placeholder="Tu nombre"></label>
           <label class="lf__field">Email<input name="email" type="email" autocomplete="email" maxlength="254" placeholder="tu@email.com"></label>
           <div class="lf__field">
@@ -684,20 +712,62 @@
           </div>
           <input class="lf__hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
           <p class="lf__err" data-err>Revisa tu nombre, email y n&uacute;mero de WhatsApp.</p>
+          <button type="button" class="btn btn--wide lf__next" data-contact>Continuar</button>
+          <small class="lf__legal">Al continuar aceptas nuestra <a href="/politica-de-privacidad/" target="_blank" rel="noopener">pol&iacute;tica de privacidad</a>.</small>
+        </fieldset>
+        <div id="lfQuestions"></div>
+        <fieldset class="lf__step" data-step>
+          <legend class="lf__q">&iquest;Cu&aacute;l es el principal reto o tarea que hoy te quita m&aacute;s tiempo y te gustar&iacute;a resolver con ayuda de la IA?</legend>
+          <textarea name="reto" rows="4" maxlength="1000" placeholder="Cu&eacute;ntalo con tus palabras"></textarea>
+          <p class="lf__err" data-err>Cu&eacute;ntanos un poco m&aacute;s para preparar tu conversaci&oacute;n.</p>
           <button type="submit" class="btn btn--wide lf__next">Enviar mis respuestas</button>
-          <small class="lf__legal">Al enviar aceptas nuestra <a href="/politica-de-privacidad/" target="_blank" rel="noopener">pol&iacute;tica de privacidad</a>.</small>
         </fieldset>
         <div class="lf__step lf__wait" data-wait hidden>
           <span class="lf__spin" aria-hidden="true"></span>
           <p>Revisando tus respuestas&hellip;</p>
         </div>
       </form>
-      <div class="lf__notfit" id="lfNotFit" hidden>
-        <h2 class="h3">Gracias por tu sinceridad, <span data-name></span></h2>
-        <p class="lede">Por lo que nos cuentas, este todav&iacute;a no es el mejor momento para el programa. Para que sigas avanzando, &uacute;nete a la comunidad gratuita y empieza con los recursos que ya tenemos para ti.</p>
+
+      <section class="cal" id="lfCal" hidden aria-labelledby="lfCalTitle">
+        <h2 class="lf__q" id="lfCalTitle">&iexcl;Encajas con el programa, <span data-name></span>! Elige d&iacute;a y hora</h2>
+        <p class="cal__sub">Conversaci&oacute;n de 30 minutos por Google Meet con el equipo de Luciano. Horarios en tu hora local (<span data-tz></span>).</p>
+        <div class="cal__grid">
+          <div class="cal__month">
+            <div class="cal__head">
+              <button type="button" class="cal__nav" data-month-prev aria-label="Mes anterior">&lsaquo;</button>
+              <b data-month></b>
+              <button type="button" class="cal__nav" data-month-next aria-label="Mes siguiente">&rsaquo;</button>
+            </div>
+            <div class="cal__dow" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div class="cal__days" data-days></div>
+          </div>
+          <div class="cal__side">
+            <p class="cal__daylabel" data-day-label>Elige un d&iacute;a disponible</p>
+            <div class="cal__times" data-times></div>
+          </div>
+        </div>
+        <div class="cal__loading" data-cal-loading><span class="lf__spin" aria-hidden="true"></span><p>Buscando horarios disponibles&hellip;</p></div>
+        <p class="cal__err" data-cal-err hidden></p>
+        <div class="cal__confirm" data-confirm hidden>
+          <p>Tu llamada: <b data-pick></b></p>
+          <button type="button" class="btn btn--wide" data-book>Confirmar llamada</button>
+        </div>
+      </section>
+
+      <section class="lf__notfit" id="lfDone" hidden>
+        <span class="lf__check" aria-hidden="true">&#10003;</span>
+        <h2 class="h3">&iexcl;Listo, <span data-name></span>! Tu llamada qued&oacute; agendada</h2>
+        <p class="lede"><b data-when></b><br>Te enviamos la invitaci&oacute;n con el link de Google Meet a <b data-email></b>. Agr&eacute;gala a tu calendario para que no se te pase.</p>
+        <a href="#" class="lf__link" data-meet target="_blank" rel="noopener" hidden>Link de la reuni&oacute;n &rarr;</a>
         <a href="https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW" class="btn btn--wide" target="_blank" rel="noopener">Unirme al grupo de WhatsApp</a>
-        <a href="/recursos/" class="lf__link">Ver recursos gratuitos &rarr;</a>
-      </div>
+      </section>
+
+      <section class="lf__notfit" id="lfNotFit" hidden>
+        <h2 class="h3">Gracias por tu sinceridad, <span data-name></span></h2>
+        <p class="lede">Por lo que nos cuentas, este todav&iacute;a no es el mejor momento para el programa. Empieza gratis con nuestro curso <b>Claude en 5 d&iacute;as</b> y &uacute;nete a la comunidad: te iremos compartiendo todo para que avances.</p>
+        <a href="/retos/claude-en-5-dias/" class="btn btn--wide">Empezar el curso gratis</a>
+        <a href="https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW" class="lf__link" target="_blank" rel="noopener">Unirme al grupo de WhatsApp &rarr;</a>
+      </section>
     </div>
   </div>
 

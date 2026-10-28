@@ -2,15 +2,26 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
 const { qualify } = require('../assets/js/aprende-qualify.js');
-const handler = require('../api/aprende-lead.js');
+const leadHandler = require('../api/aprende-lead.js');
+const agendaHandler = require('../api/aprende-agenda.js');
+const adminHandler = require('../api/admin.js');
+const { hashPassword } = require('../api/_lib/auth.js');
+
+const AGENDA_URL = 'https://script.example/agenda';
+Object.assign(process.env, {
+  META_PIXEL_ID: '123', META_CAPI_TOKEN: 'token', AGENDA_SCRIPT_URL: AGENDA_URL, AGENDA_SECRET: 's3cret',
+  ADMIN_SESSION_SECRET: 'session-secret',
+  ADMIN_USERS: JSON.stringify({ 'admin@getforth.ai': { nombre: 'Luciano', hash: hashPassword('clave-larga') } })
+});
 
 const good = { aplica: 'dueno', inicio: 'ya', inversion: 'listo' };
-const valid = {
-  ...good, nombre: 'Ana María Pérez', email: 'Ana@Example.com', telefono: '+57 300 000 0000',
-  reto: 'Responder correos de clientes', event_id: 'lead-abc12345',
-  source_url: 'https://www.lucianomusella.com/aprende?utm_source=fb', fbp: 'fb.1.1700000000000.123456',
-  utm: { utm_source: 'fb', utm_campaign: '=HYPERLINK("x")' }
+const contact = {
+  nombre: 'Ana María Pérez', email: 'Ana@Example.com', telefono: '321 405 6645', pais: 'Colombia',
+  event_id: 'lead-abc12345', source_url: 'https://www.lucianomusella.com/aprende?utm_source=fb',
+  fbp: 'fb.1.1700000000000.123456', utm: { utm_source: 'fb', utm_campaign: 'oct' }
 };
+const valid = { ...contact, ...good, reto: 'Responder correos de clientes' };
+const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 
 test('qualifies only leads without disqualifying answers', () => {
   assert.equal(qualify(good), true);
@@ -30,89 +41,169 @@ test('qualifies only leads without disqualifying answers', () => {
 function response() {
   return { headers: {}, statusCode: 200, setHeader(key, value) { this.headers[key] = value; }, status(code) { this.statusCode = code; return this; }, json(body) { this.body = body; return this; } };
 }
-async function run(body, calls) {
-  const original = global.fetch;
-  process.env.META_PIXEL_ID = '123'; process.env.META_CAPI_TOKEN = 'token';
-  global.fetch = async (url, options) => {
-    calls.push({ url, body: JSON.parse(options.body) });
-    return { ok: true, json: async () => ({ ok: true }) };
-  };
-  try {
-    const res = response();
-    await handler({ method: 'POST', body, headers: { 'x-forwarded-for': '1.2.3.4, 10.0.0.1', 'user-agent': 'UA' } }, res);
-    return res;
-  } finally { global.fetch = original; }
-}
-const sha = value => crypto.createHash('sha256').update(value).digest('hex');
-
-test('qualified lead goes to Meta as Lead with hashed data and to the Web - Aprende sheet', async () => {
-  const calls = [];
-  const res = await run(valid, calls);
-  assert.equal(res.statusCode, 200);
-  assert.deepEqual(res.body, { ok: true, qualified: true });
-  const meta = calls.find(c => c.url.includes('graph.facebook.com'));
-  const event = meta.body.data[0];
-  assert.equal(event.event_name, 'Lead');
-  assert.equal(event.event_id, 'lead-abc12345');
-  assert.deepEqual(event.user_data.em, [sha('ana@example.com')]);
-  assert.deepEqual(event.user_data.ph, [sha('573000000000')]);
-  assert.deepEqual(event.user_data.fn, [sha('ana')]);
-  assert.deepEqual(event.user_data.ln, [sha('maría pérez')]);
-  assert.equal(event.user_data.client_ip_address, '1.2.3.4');
-  assert.equal(JSON.stringify(meta.body).includes('Ana@Example.com'), false);
-  const sheet = calls.find(c => c.url.includes('script.google.com')).body;
-  assert.equal(sheet.nombre, 'Ana María Pérez');
-  assert.equal(sheet.inversion, 'Estoy listo para invertir');
-  assert.equal(sheet.utm_campaign, "'=HYPERLINK(\"x\")");
-});
-
-test('keeps the national number for Sheets and sends Meta the country code', async () => {
-  const meta = calls => calls.find(c => c.url.includes('graph.facebook.com')).body.data[0].user_data.ph;
-  const sheet = calls => calls.find(c => c.url.includes('script.google.com')).body.telefono;
-  let calls = [];
-  await run({ ...valid, pais: 'Colombia', telefono: '321 405 6645' }, calls);
-  assert.deepEqual(meta(calls), [sha('573214056645')]);
-  assert.equal(sheet(calls), '3214056645');
-  calls = [];
-  // Si igual escriben el indicativo, no se duplica.
-  await run({ ...valid, pais: 'Colombia', telefono: '+57 321 405 6645' }, calls);
-  assert.deepEqual(meta(calls), [sha('573214056645')]);
-  assert.equal(sheet(calls), '3214056645');
-  calls = [];
-  await run({ ...valid, pais: 'México', telefono: '55 1234 5678' }, calls);
-  assert.deepEqual(meta(calls), [sha('525512345678')]);
-  calls = [];
-  const res = await run({ ...valid, pais: 'Narnia', telefono: '3214056645' }, calls);
-  assert.equal(res.statusCode, 400);
-});
-
-test('unqualified lead goes to Meta as LeadNoCalificado and never to Sheets', async () => {
-  const calls = [];
-  const res = await run({ ...valid, inversion: 'no_puede' }, calls);
-  assert.deepEqual(res.body, { ok: true, qualified: false });
-  assert.equal(calls.length, 1);
-  assert.equal(calls[0].body.data[0].event_name, 'LeadNoCalificado');
-});
-
-test('rejects invalid submissions and ignores bots without contacting anyone', async () => {
-  const calls = [];
-  for (const body of [null, '{', {}, { ...valid, aplica: 'otro' }, { ...valid, reto: '' }, { ...valid, email: 'x' },
-    { ...valid, telefono: '123' }, { ...valid, nombre: '=CMD()' }, { ...valid, event_id: 'bad id' }]) {
-    const res = await run(body, calls);
-    assert.equal(res.statusCode, 400);
-  }
-  const bot = await run({ ...valid, website: 'spam.com' }, calls);
-  assert.equal(bot.statusCode, 200);
-  assert.equal(calls.length, 0);
-});
-
-test('still answers the visitor when Meta or Sheets fail', async () => {
+// Simula Meta y el Apps Script. agenda(action, body) decide la respuesta del script.
+async function run(handler, req, agenda = () => ({ ok: true }), meta = () => ({ ok: true })) {
   const original = global.fetch, originalError = console.error;
-  global.fetch = async () => { throw new Error('down'); };
+  const calls = [];
+  global.fetch = async (url, options) => {
+    const body = JSON.parse(options.body);
+    calls.push({ url, body });
+    const result = url === AGENDA_URL ? agenda(body.action, body) : meta(body);
+    if (result instanceof Error) throw result;
+    return { ok: true, json: async () => result };
+  };
   console.error = () => {};
   try {
     const res = response();
-    await handler({ method: 'POST', body: valid, headers: {} }, res);
-    assert.deepEqual(res.body, { ok: true, qualified: true });
+    await handler({ headers: { 'x-forwarded-for': '1.2.3.4, 10.0.0.1', 'user-agent': 'UA', 'content-type': 'application/json' }, query: {}, ...req }, res);
+    res.calls = calls;
+    res.meta = calls.filter(c => c.url.includes('graph.facebook.com')).map(c => c.body.data[0]);
+    res.agenda = calls.filter(c => c.url === AGENDA_URL).map(c => c.body);
+    return res;
   } finally { global.fetch = original; console.error = originalError; }
+}
+
+test('contact step saves the lead and sends FormularioIniciado', async () => {
+  const res = await run(leadHandler, { method: 'POST', body: { ...contact, step: 'contacto' } });
+  assert.deepEqual(res.body, { ok: true });
+  assert.equal(res.meta[0].event_name, 'FormularioIniciado');
+  assert.deepEqual(res.meta[0].user_data.ph, [sha('573214056645')]);
+  const saved = res.agenda[0];
+  assert.equal(saved.action, 'contacto');
+  assert.equal(saved.secret, 's3cret');
+  assert.equal(saved.email, 'ana@example.com');
+  assert.equal(saved.telefono, '3214056645');
+  assert.equal(saved.pais, 'Colombia');
+});
+
+test('qualified lead goes to Meta as Lead with hashed data and is saved as calificado', async () => {
+  const res = await run(leadHandler, { method: 'POST', body: { ...valid, step: 'calificacion' } });
+  assert.deepEqual(res.body, { ok: true, qualified: true });
+  const event = res.meta[0];
+  assert.equal(event.event_name, 'Lead');
+  assert.equal(event.event_id, 'lead-abc12345');
+  assert.equal(event.action_source, 'website');
+  assert.deepEqual(event.user_data.em, [sha('ana@example.com')]);
+  assert.deepEqual(event.user_data.fn, [sha('ana')]);
+  assert.deepEqual(event.user_data.ln, [sha('maría pérez')]);
+  assert.equal(event.user_data.client_ip_address, '1.2.3.4');
+  assert.equal(JSON.stringify(res.meta).includes('Ana@Example.com'), false);
+  const saved = res.agenda[0];
+  assert.equal(saved.action, 'calificacion');
+  assert.equal(saved.calificado, true);
+  assert.equal(saved.inversion, 'Estoy listo para invertir');
+  assert.equal(saved.evento_meta, 'Lead');
+});
+
+test('unqualified lead goes to Meta as LeadNoCalificado and is saved as not qualified', async () => {
+  const res = await run(leadHandler, { method: 'POST', body: { ...valid, step: 'calificacion', inversion: 'no_puede' } });
+  assert.deepEqual(res.body, { ok: true, qualified: false });
+  assert.equal(res.meta[0].event_name, 'LeadNoCalificado');
+  assert.equal(res.agenda[0].calificado, false);
+});
+
+test('keeps the national number and sends Meta the country code', async () => {
+  let res = await run(leadHandler, { method: 'POST', body: { ...valid, telefono: '+57 321 405 6645' } });
+  assert.deepEqual(res.meta[0].user_data.ph, [sha('573214056645')]);
+  assert.equal(res.agenda[0].telefono, '3214056645');
+  res = await run(leadHandler, { method: 'POST', body: { ...valid, pais: 'México', telefono: '55 1234 5678' } });
+  assert.deepEqual(res.meta[0].user_data.ph, [sha('525512345678')]);
+});
+
+test('rejects invalid submissions and ignores bots without contacting anyone', async () => {
+  for (const body of [null, '{', {}, { ...valid, aplica: 'otro' }, { ...valid, reto: '' }, { ...valid, email: 'x' },
+    { ...valid, telefono: '123' }, { ...valid, nombre: '=CMD()' }, { ...valid, event_id: 'bad id' }, { ...valid, pais: 'Narnia' }]) {
+    const res = await run(leadHandler, { method: 'POST', body });
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.calls.length, 0);
+  }
+  const bot = await run(leadHandler, { method: 'POST', body: { ...valid, website: 'spam.com' } });
+  assert.equal(bot.statusCode, 200);
+  assert.equal(bot.calls.length, 0);
+});
+
+test('still answers the visitor when Meta and the sheet fail, without recording the event', async () => {
+  const res = await run(leadHandler, { method: 'POST', body: valid }, () => new Error('down'), () => new Error('down'));
+  assert.deepEqual(res.body, { ok: true, qualified: true });
+  assert.equal(res.agenda[0].evento_meta, undefined);
+});
+
+test('lists free slots from the agenda script with a short CDN cache', async () => {
+  const res = await run(agendaHandler, { method: 'GET' }, () => ({ ok: true, slots: ['2026-11-02T16:00:00.000Z'], duracion: 30 }));
+  assert.deepEqual(res.body, { ok: true, slots: ['2026-11-02T16:00:00.000Z'], duracion: 30 });
+  assert.match(res.headers['Cache-Control'], /s-maxage=30/);
+});
+
+test('books a qualified lead and sends Schedule with the same person data', async () => {
+  const cita = { inicio: '2026-11-02T16:00:00.000Z', meet: 'https://meet.google.com/abc', closer: 'Luciano' };
+  const res = await run(agendaHandler, { method: 'POST', body: { ...contact, event_id: 'schedule-abc123', inicio: cita.inicio } }, () => ({ ok: true, cita }));
+  assert.deepEqual(res.body, { ok: true, cita });
+  assert.equal(res.agenda[0].action, 'agendar');
+  assert.equal(res.agenda[0].email, 'ana@example.com');
+  assert.equal(res.meta[0].event_name, 'Schedule');
+  assert.equal(res.meta[0].event_id, 'schedule-abc123');
+  assert.deepEqual(res.meta[0].user_data.em, [sha('ana@example.com')]);
+});
+
+test('booking a taken slot answers 409 and sends nothing to Meta', async () => {
+  const res = await run(agendaHandler, { method: 'POST', body: { ...contact, inicio: '2026-11-02T16:00:00.000Z' } }, () => ({ ok: false, error: 'no_disponible' }));
+  assert.equal(res.statusCode, 409);
+  assert.equal(res.meta.length, 0);
+  const bad = await run(agendaHandler, { method: 'POST', body: { ...contact, inicio: 'mañana' } });
+  assert.equal(bad.statusCode, 400);
+  assert.equal(bad.calls.length, 0);
+});
+
+async function login() {
+  const res = await run(adminHandler, { method: 'POST', query: { a: 'login' }, body: { email: 'admin@getforth.ai', password: 'clave-larga' } });
+  assert.equal(res.statusCode, 200);
+  return res.headers['Set-Cookie'].split(';')[0];
+}
+
+test('admin requires a valid login and a JSON body', async () => {
+  const wrong = await run(adminHandler, { method: 'POST', query: { a: 'login' }, body: { email: 'admin@getforth.ai', password: 'otra' } });
+  assert.equal(wrong.statusCode, 401);
+  const anon = await run(adminHandler, { method: 'GET', query: { a: 'list' } });
+  assert.equal(anon.statusCode, 401);
+  const cookie = await login();
+  const forged = await run(adminHandler, { method: 'GET', query: { a: 'list' }, headers: { cookie: cookie.slice(0, -2) + 'xx' } });
+  assert.equal(forged.statusCode, 401);
+  const form = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers: { cookie, 'content-type': 'text/plain' }, body: '{}' });
+  assert.equal(form.statusCode, 415);
+  const list = await run(adminHandler, { method: 'GET', query: { a: 'list' }, headers: { cookie } },
+    () => ({ ok: true, leads: [{ email: 'ana@example.com', nombre: 'Ana', fbp: 'fb.1.1.1' }] }));
+  assert.equal(list.statusCode, 200);
+  assert.equal(list.body.leads[0].nombre, 'Ana');
+  assert.equal(list.body.leads[0].fbp, undefined);
+});
+
+const stored = { email: 'ana@example.com', nombre: 'Ana Pérez', telefono: '3214056645', pais: 'Colombia', fbp: 'fb.1.1700000000000.123456' };
+const agendaForMark = action => (action === 'lead' ? { ok: true, lead: stored } : { ok: true, lead: { ...stored, estado: 'Show' } });
+
+test('marking Show sends ShowUp from the system and records it', async () => {
+  const cookie = await login();
+  const res = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers: { cookie, 'content-type': 'application/json' }, body: { email: 'ana@example.com', asistencia: 'Show' } }, agendaForMark);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.meta, true);
+  const event = res.meta[0];
+  assert.equal(event.event_name, 'ShowUp');
+  assert.equal(event.action_source, 'system_generated');
+  assert.equal(event.user_data.client_ip_address, undefined);
+  assert.deepEqual(event.user_data.ph, [sha('573214056645')]);
+  const marked = res.agenda.find(c => c.action === 'marcar');
+  assert.deepEqual(marked.campos, { marcado_por: 'admin@getforth.ai', asistencia: 'Show', estado: 'Show' });
+  assert.equal(marked.evento_meta, 'ShowUp');
+});
+
+test('a sale needs value and currency and is sent as Purchase', async () => {
+  const cookie = await login();
+  const headers = { cookie, 'content-type': 'application/json' };
+  const missing = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers, body: { email: 'ana@example.com', venta: 'Venta', valor: 0, moneda: 'USD' } }, agendaForMark);
+  assert.equal(missing.statusCode, 400);
+  const res = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers, body: { email: 'ana@example.com', venta: 'Venta', valor: 500, moneda: 'USD' } }, agendaForMark);
+  assert.equal(res.meta[0].event_name, 'Purchase');
+  assert.deepEqual(res.meta[0].custom_data, { value: 500, currency: 'USD', content_name: 'programa-ia' });
+  const noSale = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers, body: { email: 'ana@example.com', venta: 'No venta' } }, agendaForMark);
+  assert.equal(noSale.meta.length, 0);
+  assert.equal(noSale.body.meta, null);
 });
