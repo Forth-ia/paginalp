@@ -1,6 +1,7 @@
 // Los leads de ManyChat van a "ManyChat - Orgánicos" del Sheets central, vía el
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const RESOURCES = new Map([
+  ['video-explicativo-hyperframes', 'Video explicativo con HyperFrames'],
   ['alternativa-adobe-craft', 'Alternativa a Adobe con Claude'],
   ['roast-room', 'Roast Room'],
   ['mods-claude-code', 'Mods para Claude Code'],

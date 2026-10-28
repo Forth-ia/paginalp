@@ -457,3 +457,33 @@ test('Alternativa a Adobe con Claude requires all contact fields and confirmed s
     assert.equal(failure.body.redirect, undefined);
   } finally { global.fetch = original; }
 });
+
+test('Video explicativo con HyperFrames requires all contact fields and confirmed storage before unlocking', async () => {
+  const original = global.fetch;
+  const sent = [];
+  let confirmed = true;
+  global.fetch = async (_, options) => {
+    sent.push(JSON.parse(options.body));
+    return { ok: true, json: async () => ({ ok: confirmed }) };
+  };
+  try {
+    const body = { ...valid, resource: 'video-explicativo-hyperframes', fuente: 'spoofed' };
+    for (const field of ['nombre', 'email', 'telefono']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...body, [field]: '' } }, res);
+      assert.equal(res.statusCode, 400);
+    }
+    assert.equal(sent.length, 0);
+    const success = response();
+    await handler({ method: 'POST', body }, success);
+    assert.equal(success.statusCode, 200);
+    assert.equal(sent[0].fuente, 'ManyChat · Video explicativo con HyperFrames');
+    assert.equal(success.body.redirect, '/recursos/video-explicativo-hyperframes/');
+    confirmed = false;
+    const failure = response();
+    await handler({ method: 'POST', body }, failure);
+    assert.equal(failure.statusCode, 502);
+    assert.equal(failure.body.ok, false);
+    assert.equal(failure.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});
