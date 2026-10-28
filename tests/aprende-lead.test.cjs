@@ -236,3 +236,10 @@ test('top leads are flagged as priority and get the main closer slots', async ()
   res = await run(agendaHandler, { method: 'GET' }, () => ({ ok: true, slots: [] }));
   assert.equal(res.agenda[0].prioridad, false);
 });
+
+test('the contact step records FormularioIniciado in the sheet only when Meta received it', async () => {
+  let res = await run(leadHandler, { method: 'POST', body: { ...contact, step: 'contacto' } });
+  assert.equal(res.agenda[0].evento_meta, 'FormularioIniciado');
+  res = await run(leadHandler, { method: 'POST', body: { ...contact, step: 'contacto' } }, () => ({ ok: true }), () => new Error('down'));
+  assert.equal(res.agenda[0].evento_meta, undefined);
+});

@@ -21,11 +21,13 @@ module.exports = async function (req, res) {
   const meta = { person, req, id: lead.event_id, url: lead.source_url, custom: { content_name: 'aprende' } };
 
   if (data.step === 'contacto') {
-    const [sheet, event] = await Promise.allSettled([
-      callAgenda('contacto', sheetFields(lead)).then(r => { if (!r.ok) throw new Error(r.error); }),
-      sendEvent({ ...meta, name: 'FormularioIniciado' })
+    // Meta primero, para dejar anotado en el Sheets si el evento salió.
+    const [event] = await Promise.allSettled([sendEvent({ ...meta, name: 'FormularioIniciado' })]);
+    const [sheet] = await Promise.allSettled([
+      callAgenda('contacto', { ...sheetFields(lead), evento_meta: event.status === 'fulfilled' ? 'FormularioIniciado' : undefined })
+        .then(r => { if (!r.ok) throw new Error(r.error); })
     ]);
-    logFailures('contacto', sheet, event);
+    logFailures('contacto', event, sheet);
     return res.status(200).json({ ok: true });
   }
 

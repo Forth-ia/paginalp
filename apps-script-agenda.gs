@@ -148,6 +148,7 @@ function contacto_(d) {
     var campos = camposBase_(d);
     var nuevo = !actual || !actual.estado || actual.estado === 'Orgánico';
     if (nuevo) campos.estado = 'Formulario incompleto';
+    if (d.evento_meta) campos.eventos_meta_agregar = d.evento_meta;
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
     if (nuevo) ubicarEnPagina_(d.email, HOJA_NO_AGENDADOS);
   });
