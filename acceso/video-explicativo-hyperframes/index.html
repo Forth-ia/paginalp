@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Accede a Cómo convertir cualquier tema en un video explicativo con Claude | Luciano Musella</title>
+  <meta name="description" content="Desbloquea gratis la guía para crear videos explicativos con HyperFrames y Claude Code.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Video explicativo con HyperFrames · Guía paso a paso">
+  <meta property="og:description" content="Completa tus datos y accede gratis a la guía.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css"><link rel="stylesheet" href="/assets/css/resource-access.css"><link rel="stylesheet" href="/assets/css/leads-access.css">
+  <script src="/assets/js/resource-access.js?v=video-explicativo-hyperframes-1" defer></script>
+</head>
+<body class="resource-access-locked leads-access">
+  <div class="resource-access__preview" inert aria-hidden="true">
+    <header class="nav"><div class="nav__in"><a tabindex="-1" class="nav__brand" href="/">Luciano<span>.</span>Musella</a><ul class="nav__links"><li><a tabindex="-1" href="/">Inicio</a></li><li><a tabindex="-1" href="/tutoriales/">Tutoriales</a></li><li><a tabindex="-1" href="/recursos/">Recursos</a></li><li><a tabindex="-1" href="/retos/">Retos</a></li><li><a tabindex="-1" href="/programa/">Programa</a></li></ul></div></header>
+    <main id="guide-preview"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a tabindex="-1" href="/recursos/">Recursos</a><span>/</span><a tabindex="-1" href="/recursos/?c=creativo">Creativo</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo convertir cualquier tema en un video explicativo con Claude</h1><p class="lead" style="margin-top:20px">Crea con HyperFrames y Claude Code un video explicativo con escenas, animaciones, subtítulos y narración a partir de cualquier tema, paper o documento.</p><div class="ahead__meta"><span>5 min de lectura</span><span class="dot"></span><span>Claude Code · HyperFrames</span><span class="dot"></span><span>Comandos y prompt para copiar</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="video-explicativo-hyperframes"><p>Con HyperFrames puedes usar un agente de AI para crear videos con escenas, gráficos, animaciones, subtítulos y narración a partir de una idea o una fuente de información.</p>
+<p>En esta guía te explico cómo hacerlo paso a paso.</p>
+<h2 id="1-prepara-las-herramientas">1. Prepara las herramientas</h2>
+<p>Necesitas:</p>
+<ul>
+<li><strong>Claude Code:</strong> para que la AI construya el proyecto de video.</li>
+<li><strong>HyperFrames:</strong> un framework para crear y renderizar videos mediante composiciones web y animaciones.</li>
+<li><strong>Una fuente de información:</strong> un paper, artículo, investigación, documento o tema que quieras explicar.</li>
+<li><strong>Una herramienta de voz:</strong> puedes usar ElevenLabs o Google Cloud Text-to-Speech para generar la narración.</li>
+</ul>
+<p>Enlaces oficiales:</p>
+<ul>
+<li>Claude: <a tabindex="-1" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">https://claude.ai/</a></li>
+<li>HyperFrames: <a tabindex="-1" href="https://hyperframes.app/docs/1-startup/2-quickstart" target="_blank" rel="noopener noreferrer">https://hyperframes.app/docs/1-startup/2-quickstart</a></li>
+<li>ElevenLabs: <a tabindex="-1" href="https://elevenlabs.io/docs/overview/capabilities/text-to-speech" target="_blank" rel="noopener noreferrer">https://elevenlabs.io/docs/overview/capabilities/text-to-speech</a></li>
+<li>Google Cloud Text-to-Speech: <a tabindex="-1" href="https://docs.cloud.google.com/text-to-speech/docs" target="_blank" rel="noopener noreferrer">https://docs.cloud.google.com/text-to-speech/docs</a></li>
+</ul>
+<h2 id="2-instala-hyperframes">2. Instala HyperFrames</h2>
+<p>Abre la terminal de tu computador y ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + HyperFrames</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>npx skills add heygen-com/hyperframes</pre></div>
+<p>Este comando instala las instrucciones de HyperFrames para que tu agente de programación pueda utilizarlas.</p>
+<p><strong>Importante:</strong> este procedimiento está documentado para agentes como Claude Code, Codex y Cursor. No es lo mismo que abrir un chat normal en Claude web.</p>
+<p>Si necesitas instrucciones adicionales, consulta la documentación oficial de HyperFrames antes de continuar.</p>
+<h2 id="3-prepara-el-proyecto">3. Prepara el proyecto</h2>
+<p>En tu terminal, crea un proyecto nuevo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + HyperFrames</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>npx hyperframes init mi-video</pre></div>
+<p>Después, abre la carpeta del proyecto con Claude Code.</p>
+<p>HyperFrames permite que el agente genere las composiciones del video y después las previsualice y renderice.</p>
+<h2 id="4-dale-a-claude-el-material-que-quieres-explicar">4. Dale a Claude el material que quieres explicar</h2>
+<p>Puede ser un artículo, un paper científico, un documento o una idea que quieras desarrollar.</p>
+<p>Si tienes un documento, guárdalo en la carpeta del proyecto o proporciona su contenido al agente. Si utilizas un enlace, asegúrate de que Claude pueda acceder a él.</p>
+<p>No le pidas simplemente que haga un video. Dale instrucciones sobre qué debe explicar, a quién va dirigido y cómo quieres que se vea.</p>
+<h2 id="5-copia-este-prompt">5. Copia este prompt</h2>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + HyperFrames</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Usa la skill de HyperFrames para crear un video explicativo
+a partir del siguiente material:
+
+[TEMA, ARTÍCULO, PAPER O DOCUMENTO]
+
+OBJETIVO:
+Explicar las ideas más importantes de forma visual, clara
+y entretenida, incluso para alguien que no conoce el tema.
+
+ESTRUCTURA:
+1. Empieza con una introducción que capte la atención.
+2. Explica el problema o la pregunta principal.
+3. Desarrolla las ideas en una secuencia lógica.
+4. Utiliza gráficos, diagramas, ejemplos y animaciones
+   cuando ayuden a comprender el contenido.
+5. Termina con las conclusiones más importantes.
+
+ESTILO VISUAL:
+- Diseño editorial moderno y limpio.
+- Tipografía legible y jerarquía visual clara.
+- Animaciones fluidas y transiciones bien ejecutadas.
+- Gráficos que expliquen conceptos, no elementos decorativos.
+- Evita las diapositivas estáticas y el exceso de texto.
+
+NARRACIÓN:
+- Escribe un guion natural en español.
+- Sin frases innecesarias ni afirmaciones inventadas.
+- Conserva la precisión de la fuente original.
+- Sincroniza las escenas con la narración y los subtítulos.
+
+Antes de finalizar, verifica que las escenas se rendericen
+correctamente y que el resultado tenga continuidad visual.
+
+Genera el proyecto completo, prepara una previsualización
+y exporta el video final en MP4.</pre></div>
+<h2 id="6-genera-la-voz">6. Genera la voz</h2>
+<p>Puedes utilizar ElevenLabs o Google Cloud Text-to-Speech para convertir el guion en audio.</p>
+<p>Si quieres que el proceso sea más automático, pídele al agente que integre la generación de voz en el proyecto y sincronice el audio con las escenas.</p>
+<p>Ten presente que esto puede requerir configurar una API y sus credenciales. Algunas funciones pueden tener costos adicionales.</p>
+<h2 id="7-previsualiza-y-exporta-el-video">7. Previsualiza y exporta el video</h2>
+<p>Desde la carpeta del proyecto, ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + HyperFrames</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>npx hyperframes preview</pre></div>
+<p>Esto abre una previsualización del video en el navegador.</p>
+<p>Cuando estés satisfecho con el resultado, ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Claude Code + HyperFrames</span><button disabled tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>npx hyperframes render --output video-final.mp4</pre></div>
+<p>Obtendrás el archivo MP4 si el proyecto y sus dependencias están configurados correctamente.</p>
+<h2 id="8-revisa-el-resultado-antes-de-publicarlo">8. Revisa el resultado antes de publicarlo</h2>
+<p>Antes de compartirlo, comprueba:</p>
+<ul>
+<li>Que las afirmaciones coincidan con la fuente.</li>
+<li>Que los gráficos representen correctamente los conceptos.</li>
+<li>Que la narración se escuche bien y esté sincronizada.</li>
+<li>Que los textos sean legibles.</li>
+<li>Que el video no contenga errores visuales ni información inventada.</li>
+</ul>
+<p><strong>La clave:</strong> utiliza Claude para transformar la información en una historia visual, no para llenar una pantalla de texto. Cuanto mejor sea la fuente y más claras las instrucciones, mejor será el resultado.</p>
+<h3 id="documentacion-oficial">Documentación oficial</h3>
+<ul>
+<li>Inicio rápido de HyperFrames: <a tabindex="-1" href="https://hyperframes.app/docs/1-startup/2-quickstart" target="_blank" rel="noopener noreferrer">https://hyperframes.app/docs/1-startup/2-quickstart</a></li>
+<li>Guía de HyperFrames para convertir sitios web en videos: <a tabindex="-1" href="https://hyperframes.app/docs/3-guides/1-website-to-video" target="_blank" rel="noopener noreferrer">https://hyperframes.app/docs/3-guides/1-website-to-video</a></li>
+<li>Documentación de ElevenLabs: <a tabindex="-1" href="https://elevenlabs.io/docs/overview/capabilities/text-to-speech" target="_blank" rel="noopener noreferrer">https://elevenlabs.io/docs/overview/capabilities/text-to-speech</a></li>
+<li>Documentación de Google Cloud Text-to-Speech: <a tabindex="-1" href="https://docs.cloud.google.com/text-to-speech/docs" target="_blank" rel="noopener noreferrer">https://docs.cloud.google.com/text-to-speech/docs</a></li>
+</ul></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a tabindex="-1" href="#1-prepara-las-herramientas">1. Prepara las herramientas</a></li><li><a tabindex="-1" href="#2-instala-hyperframes">2. Instala HyperFrames</a></li><li><a tabindex="-1" href="#3-prepara-el-proyecto">3. Prepara el proyecto</a></li><li><a tabindex="-1" href="#4-dale-a-claude-el-material-que-quieres-explicar">4. Dale a Claude el material que quieres explicar</a></li><li><a tabindex="-1" href="#5-copia-este-prompt">5. Copia este prompt</a></li><li><a tabindex="-1" href="#6-genera-la-voz">6. Genera la voz</a></li><li><a tabindex="-1" href="#7-previsualiza-y-exporta-el-video">7. Previsualiza y exporta el video</a></li><li><a tabindex="-1" href="#8-revisa-el-resultado-antes-de-publicarlo">8. Revisa el resultado antes de publicarlo</a></li></ul></nav></aside></div></section></main>
+  </div>
+  <div class="resource-access lead-pop" role="dialog" aria-modal="true" aria-labelledby="access-title">
+    <section class="lead-pop__card" aria-labelledby="access-title">
+      <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
+      <h2 id="access-title">Desbloquea la guía</h2>
+      <p>Déjame tus datos para acceder gratis a la guía <strong>Video explicativo con HyperFrames</strong> y aprender a crear videos con Claude Code.</p>
+      <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
+        <input type="hidden" name="resource" value="video-explicativo-hyperframes">
+        <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
+        <label>Email<input name="email" type="email" inputmode="email" autocapitalize="none" spellcheck="false" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
+        <label>Celular<input name="telefono" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30" placeholder="+57 300 000 0000" aria-describedby="phone-help"></label>
+        <small id="phone-help">Incluye el indicativo de tu país.</small>
+        <button class="btn btn--accent" type="submit"><span class="btn__t">Ver la guía gratis</span></button>
+        <p id="access-status" class="resource-access__status" role="status" aria-live="polite"></p>
+        <small>Al enviar tus datos, recibirás recursos e ideas de IA de Luciano Musella. Sin spam. Puedes dejar de recibirlos cuando quieras.</small>
+      </form>
+      <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
+    </section>
+  </div>
+</body>
+</html>
