@@ -1,5 +1,6 @@
 // Los leads de ManyChat van a "ManyChat - Orgánicos" del Sheets central, vía el
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
+const { parseUtm } = require('./_lib/lead.js');
 const RESOURCES = new Map([
   ['video-explicativo-hyperframes', 'Video explicativo con HyperFrames'],
   ['alternativa-adobe-craft', 'Alternativa a Adobe con Claude'],
@@ -111,7 +112,8 @@ module.exports = async function (req, res) {
     return res.status(400).json({ ok: false });
   }
   try {
-    await saveLead({ nombre, email, telefono, fuente: 'ManyChat · ' + RESOURCES.get(resource), recurso: RESOURCES.get(resource) });
+    // utm_content del link de ManyChat = qué reel o publicación trajo al lead.
+    await saveLead({ nombre, email, telefono, fuente: 'ManyChat · ' + RESOURCES.get(resource), recurso: RESOURCES.get(resource), utm: parseUtm(data.utm) });
     return res.status(200).json({ ok: true, redirect: '/recursos/' + resource + '/' });
   } catch (error) {
     const code = error.name === 'TimeoutError' || error.name === 'AbortError' || error.code === 23

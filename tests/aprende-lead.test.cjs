@@ -243,3 +243,9 @@ test('the contact step records FormularioIniciado in the sheet only when Meta re
   res = await run(leadHandler, { method: 'POST', body: { ...contact, step: 'contacto' } }, () => ({ ok: true }), () => new Error('down'));
   assert.equal(res.agenda[0].evento_meta, undefined);
 });
+
+test('popup leads keep the visit UTMs', async () => {
+  const popup = require('../api/popup-lead.js');
+  const res = await run(popup, { method: 'POST', body: { nombre: 'Ana', email: 'ana@example.com', telefono: '3000000000', fuente: 'Página Web', utm: { utm_source: 'ig', utm_content: 'reel-1' } } });
+  assert.deepEqual(res.agenda[0].utm, { utm_source: 'ig', utm_content: 'reel-1' });
+});

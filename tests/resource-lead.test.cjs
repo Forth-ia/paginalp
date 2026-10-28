@@ -487,3 +487,15 @@ test('Video explicativo con HyperFrames requires all contact fields and confirme
     assert.equal(failure.body.redirect, undefined);
   } finally { global.fetch = original; }
 });
+
+test('keeps the ManyChat link UTMs so we know which reel brought the lead', async () => {
+  const original = global.fetch;
+  let call;
+  global.fetch = async (url, options) => { call = JSON.parse(options.body); return { ok: true, json: async () => ({ ok: true }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'roast-room', utm: { utm_source: 'instagram', utm_content: 'reel-28oct', utm_term: '=HACK()', otro: 'x' } } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.deepEqual(call.utm, { utm_source: 'instagram', utm_content: 'reel-28oct' });
+  } finally { global.fetch = original; }
+});

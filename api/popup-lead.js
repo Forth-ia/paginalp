@@ -1,4 +1,4 @@
-const { readBody, EMAIL_RE } = require('./_lib/lead.js');
+const { readBody, parseUtm, EMAIL_RE } = require('./_lib/lead.js');
 const { callAgenda } = require('./_lib/agenda.js');
 
 // Pop-up "¿Te mando más ideas como esta?" del sitio (assets/js/site.js):
@@ -24,7 +24,7 @@ module.exports = async function (req, res) {
   }
   try {
     const result = await callAgenda('organico', {
-      nombre, email, telefono, fuente: 'Pop-up · ' + origen, recurso: origen.replace(/^Recurso: /, '')
+      nombre, email, telefono, fuente: 'Pop-up · ' + origen, recurso: origen.replace(/^Recurso: /, ''), utm: parseUtm(data.utm)
     });
     if (!result.ok) throw new Error(result.error);
     return res.status(200).json({ ok: true });

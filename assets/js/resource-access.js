@@ -4,6 +4,15 @@
   if (!form) return;
   var resource = form.elements.resource ? form.elements.resource.value : 'claude-productivity';
   if (['video-explicativo-hyperframes', 'alternativa-adobe-craft', 'roast-room', 'mods-claude-code', 'obscura-claude-code', 'chatgpt-dots', '5-trucos-ocultos-claude', 'claude-maquina-de-leads', 'sales-coach-assistant', 'everything-claude-code', 'skillspector', 'claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources', 'higgsfield-codex-cli', 'claude-code-codex-plugin', 'fable-orquesta-codex-ejecuta', 'instagram-agent-skill-claude', 'la-maquina-de-uno'].indexOf(resource) === -1) return;
+  // ManyChat puede marcar el link con ?utm_content=<reel> para saber qué contenido trajo al lead.
+  function utmFromLink() {
+    var utm = {};
+    try {
+      var q = new URLSearchParams(location.search);
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
+    } catch (_) {}
+    return utm;
+  }
   var button = form.querySelector('button[type="submit"]');
   var label = button.querySelector('.btn__t');
   var status = document.getElementById('access-status');
@@ -45,7 +54,7 @@
       var response = await fetch('/api/resource-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre: nombre, email: email, telefono: telefono, resource: resource })
+        body: JSON.stringify({ nombre: nombre, email: email, telefono: telefono, resource: resource, utm: utmFromLink() })
       });
       var result = await response.json();
       if (!response.ok || result.ok !== true) {

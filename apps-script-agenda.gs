@@ -56,7 +56,8 @@ var HOJA_MAESTRO = 'MAESTRO';
 var COLUMNAS_MAESTRO = [
   ['email', 'email'], ['Fecha de registro', 'creado'], ['Última actualización', 'actualizado'],
   ['Nombre', 'nombre'], ['WhatsApp', 'telefono'], ['País', 'pais'], ['Fuente', 'fuente'],
-  ['Recursos descargados', 'recursos'], ['Estado', 'estado'], ['Calificado', 'calificado'], ['Prioridad', 'prioridad'],
+  ['Recursos descargados', 'recursos'], ['Contenidos que lo trajeron', 'contenidos'],
+  ['Estado', 'estado'], ['Calificado', 'calificado'], ['Prioridad', 'prioridad'],
   ['¿Dónde aplicará IA?', 'aplica'], ['¿Cuándo quiere empezar?', 'inicio'], ['Inversión $500 USD', 'inversion'],
   ['Principal reto', 'reto'],
   ['Cita (hora Colombia)', 'cita'], ['cita_inicio', 'cita_inicio'], ['Closer', 'closer'],
@@ -72,7 +73,10 @@ var COLUMNAS_MAESTRO = [
 var HOJA_ORGANICOS = 'ManyChat - Orgánicos';
 var COLUMNAS_ORGANICOS = [
   ['Fecha de registro', 'creado'], ['Última actividad', 'actualizado'], ['Nombre', 'nombre'], ['Email', 'email'],
-  ['WhatsApp', 'telefono'], ['Fuente', 'fuente'], ['Recursos descargados', 'recursos'], ['Estado', 'estado']
+  ['WhatsApp', 'telefono'], ['Fuente', 'fuente'], ['Recursos descargados', 'recursos'], ['Estado', 'estado'],
+  ['Contenidos que lo trajeron', 'contenidos'],
+  ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
+  ['utm_content', 'utm_content'], ['utm_term', 'utm_term']
 ];
 var HOJA_AGENDADOS = 'Página - Agendados';
 var HOJA_NO_AGENDADOS = 'Página - No agendados';
@@ -129,15 +133,20 @@ function claveValida_(recibida) {
 // ManyChat (links /acceso/) y pop-up del sitio.
 function organico_(d) {
   if (!d.email) return { ok: false, error: 'email' };
+  // utm_content (o utm_campaign) del link = el reel o publicación que trajo al lead.
+  var utm = d.utm || {};
+  var contenido = utm.utm_content || utm.utm_campaign || '';
   conLock_(function () {
     var actual = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
-    var campos = { nombre: d.nombre, telefono: d.telefono, recursos_agregar: d.recurso };
-    if (!actual) { campos.fuente = d.fuente; campos.estado = 'Orgánico'; }
+    var campos = { nombre: d.nombre, telefono: d.telefono, recursos_agregar: d.recurso, contenidos_agregar: contenido };
+    // En MAESTRO los UTM son los del primer contacto: no se pisan los de un anuncio.
+    if (!actual) { campos.fuente = d.fuente; campos.estado = 'Orgánico'; Object.assign(campos, utm); }
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
     // Si ya está en el flujo de la página, no se le abre un segundo flujo.
     if (actual && actual.estado && actual.estado !== 'Orgánico') return;
-    escribirFila_(HOJA_ORGANICOS, COLUMNAS_ORGANICOS, d.email,
-      { nombre: d.nombre, telefono: d.telefono, fuente: d.fuente, recursos_agregar: d.recurso, estado: 'Orgánico' });
+    var organico = { nombre: d.nombre, telefono: d.telefono, fuente: d.fuente, recursos_agregar: d.recurso, contenidos_agregar: contenido, estado: 'Orgánico' };
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { organico[k] = utm[k] || ''; });
+    escribirFila_(HOJA_ORGANICOS, COLUMNAS_ORGANICOS, d.email, organico);
   });
   return { ok: true };
 }

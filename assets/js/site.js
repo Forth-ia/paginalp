@@ -327,7 +327,7 @@
       e.preventDefault();
       var form = e.currentTarget, nombre = form.elements.nombre.value.trim(), email = form.elements.email.value.trim(), telefono = form.elements.telefono.value.trim(), telefonoDigits = telefono.replace(/\D/g, '');
       if (!nombre || !telefonoDigits || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { form.classList.add('is-invalid'); return; }
-      var submitted = sendLead({ nombre: nombre, email: email, telefono: telefonoDigits, fuente: leadSource() });
+      var submitted = sendLead({ nombre: nombre, email: email, telefono: telefonoDigits, fuente: leadSource(), utm: utm });
       if (!submitted) { form.classList.add('is-error'); return; }
       try { localStorage.setItem(capturedKey, '1'); } catch (err) {}
       track('lead_popup_submitted', { source: leadSource() });

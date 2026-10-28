@@ -22,7 +22,7 @@ function parseContact(data) {
     fbc: /^fb\.\d\.\d+\.[\w-]+$/.test(data.fbc) ? clip(data.fbc, 500) : '',
     utm: {}
   };
-  if (data.utm && typeof data.utm === 'object') UTM_KEYS.forEach(key => { lead.utm[key] = clip(data.utm[key], 200); });
+  lead.utm = parseUtm(data.utm);
   // El Sheets guarda el número sin indicativo; Meta lo necesita con el del país elegido.
   // Sin país (página en caché de antes del selector) el número se usa tal como llegó.
   lead.telefonoMeta = lead.telefono;
@@ -39,6 +39,17 @@ function parseContact(data) {
     lead.telefono.length >= 6 && lead.telefonoMeta.length <= 15 &&
     /^[\w-]{8,80}$/.test(lead.event_id);
   return valid ? lead : null;
+}
+
+// UTMs que llegan del navegador (anuncios, links de ManyChat). Solo texto corto y seguro.
+function parseUtm(value) {
+  const utm = {};
+  if (!value || typeof value !== 'object') return utm;
+  UTM_KEYS.forEach(key => {
+    const v = clip(value[key], 200);
+    if (v && !/^[=+@-]/.test(v)) utm[key] = v;
+  });
+  return utm;
 }
 
 // Agrega las respuestas de calificación al lead. false si faltan o no son válidas.
@@ -61,4 +72,4 @@ const sheetFields = lead => ({
   fbp: lead.fbp, fbc: lead.fbc, utm: lead.utm
 });
 
-module.exports = { readBody, parseContact, addAnswers, answerLabels, sheetFields, COUNTRIES, EMAIL_RE };
+module.exports = { readBody, parseContact, parseUtm, addAnswers, answerLabels, sheetFields, COUNTRIES, EMAIL_RE };
