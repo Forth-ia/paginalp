@@ -220,3 +220,19 @@ test('popup leads go to the central sheet as organic leads', async () => {
   assert.equal(bad.statusCode, 400);
   assert.equal(bad.calls.length, 0);
 });
+
+test('top leads are flagged as priority and get the main closer slots', async () => {
+  const { priority } = require('../assets/js/aprende-qualify.js');
+  assert.equal(priority(good), true);
+  assert.equal(priority({ ...good, inicio: '2_3_meses' }), false);
+  assert.equal(priority({ ...good, inversion: 'organizarme' }), false);
+  assert.equal(priority({ ...good, aplica: 'no_claro' }), false);
+  let res = await run(leadHandler, { method: 'POST', body: valid });
+  assert.equal(res.agenda[0].prioridad, true);
+  res = await run(leadHandler, { method: 'POST', body: { ...valid, inversion: 'organizarme' } });
+  assert.equal(res.agenda[0].prioridad, false);
+  res = await run(agendaHandler, { method: 'GET', query: { p: '1' } }, () => ({ ok: true, slots: [] }));
+  assert.equal(res.agenda[0].prioridad, true);
+  res = await run(agendaHandler, { method: 'GET' }, () => ({ ok: true, slots: [] }));
+  assert.equal(res.agenda[0].prioridad, false);
+});

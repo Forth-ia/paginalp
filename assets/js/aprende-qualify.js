@@ -54,7 +54,13 @@
     return true;
   }
 
-  var api = { QUESTIONS: QUESTIONS, COUNTRIES: COUNTRIES, qualify: qualify };
+  // Prioritario (dentro de los calificados): listo para invertir y quiere empezar ya.
+  // Solo ve los horarios de admin@getforth.ai y le llega un aviso por correo al calificar.
+  function priority(a) {
+    return qualify(a) && a.inversion === 'listo' && (a.inicio === 'ya' || a.inicio === 'este_mes');
+  }
+
+  var api = { QUESTIONS: QUESTIONS, COUNTRIES: COUNTRIES, qualify: qualify, priority: priority };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.aprendeQualify = api;
 })(this);

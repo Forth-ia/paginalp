@@ -1,4 +1,4 @@
-const { qualify } = require('../assets/js/aprende-qualify.js');
+const { qualify, priority } = require('../assets/js/aprende-qualify.js');
 const { readBody, parseContact, addAnswers, answerLabels, sheetFields } = require('./_lib/lead.js');
 const { sendEvent } = require('./_lib/meta.js');
 const { callAgenda } = require('./_lib/agenda.js');
@@ -39,7 +39,7 @@ module.exports = async function (req, res) {
   ]);
   const [sheet] = await Promise.allSettled([
     callAgenda('calificacion', {
-      ...sheetFields(lead), ...answerLabels(lead), reto: lead.reto, calificado: qualified,
+      ...sheetFields(lead), ...answerLabels(lead), reto: lead.reto, calificado: qualified, prioridad: priority(lead),
       evento_meta: event.status === 'fulfilled' ? eventName : undefined
     }).then(r => { if (!r.ok) throw new Error(r.error); })
   ]);

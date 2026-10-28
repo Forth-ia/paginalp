@@ -6,7 +6,8 @@ const { callAgenda } = require('./_lib/agenda.js');
 module.exports = async function (req, res) {
   if (req.method === 'GET') {
     try {
-      const result = await callAgenda('horarios', {});
+      // ?p=1: lead prioritario, solo horarios del closer principal.
+      const result = await callAgenda('horarios', { prioridad: Boolean(req.query && req.query.p === '1') });
       if (!result.ok) throw new Error(result.error);
       // El CDN de Vercel la sirve unos segundos: el calendario abre más rápido.
       res.setHeader('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=60');

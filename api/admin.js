@@ -5,7 +5,7 @@ const { callAgenda } = require('./_lib/agenda.js');
 
 const CURRENCIES = ['USD', 'COP'];
 // Campos que el panel muestra; fbp/fbc se quedan en el servidor.
-const VISIBLE = ['email', 'creado', 'nombre', 'telefono', 'pais', 'estado', 'calificado', 'aplica', 'inicio', 'inversion', 'reto',
+const VISIBLE = ['email', 'creado', 'nombre', 'telefono', 'pais', 'estado', 'calificado', 'prioridad', 'aplica', 'inicio', 'inversion', 'reto',
   'cita', 'cita_inicio', 'closer', 'meet', 'asistencia', 'venta', 'valor', 'moneda', 'eventos_meta', 'marcado_por',
   'utm_source', 'utm_campaign', 'utm_content'];
 const visible = lead => Object.fromEntries(VISIBLE.map(k => [k, lead[k] || '']));

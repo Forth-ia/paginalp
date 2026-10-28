@@ -1,6 +1,7 @@
-/* /aprende — formulario de calificación + agenda del pop-up (estilo iClosed).
+/* /aprende — agenda integrada en la sección "Cómo empezar" (estilo iClosed).
    1. Contacto: queda guardado en el Sheets MAESTRO aunque abandone (FormularioIniciado).
-   2. Preguntas: calificado -> Lead y calendario aquí mismo; no calificado -> LeadNoCalificado y curso gratis.
+   2. Preguntas: calificado -> Lead y se desbloquea el calendario de la derecha;
+      no calificado -> LeadNoCalificado y curso gratis. Prioritarios: solo horarios de admin@getforth.ai.
    3. Agenda: horario libre de los closers -> Schedule. Cada evento va por pixel + API de
       Conversiones con el mismo event_id. */
 (function () {
@@ -8,10 +9,14 @@
   var d = document, w = window;
   var form = d.getElementById('leadForm');
   if (!form || !w.aprendeQualify) return;
-  var Q = w.aprendeQualify.QUESTIONS, qualify = w.aprendeQualify.qualify;
+  var Q = w.aprendeQualify.QUESTIONS, qualify = w.aprendeQualify.qualify, priority = w.aprendeQualify.priority;
   var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
   var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
-  var modal = form.closest('.modal');
+  var book = d.getElementById('agenda'), summary = d.getElementById('lfSummary');
+  // No se mueve el foco al cargar la página: solo cuando la persona ya está usando la agenda.
+  var focusOk = false;
+  book.addEventListener('pointerdown', function () { focusOk = true; });
+  book.addEventListener('keydown', function () { focusOk = true; });
 
   // UTMs de la visita: se conservan si la persona navega antes de llenar el formulario.
   var utm = {};
@@ -48,7 +53,10 @@
     bar.style.width = ((index + 1) / steps.length * 100) + '%';
     back.hidden = index === 0;
     var field = steps[index].querySelector('input:checked, textarea, input:not([type="radio"]):not(.lf__hp), input');
-    if (field && form.closest('.active')) field.focus({ preventScroll: true });
+    if (field && focusOk) field.focus({ preventScroll: true });
+  }
+  function bookStep(n) {
+    book.querySelectorAll('[data-bstep]').forEach(function (el) { el.classList.toggle('is-on', Number(el.getAttribute('data-bstep')) <= n); });
   }
   function invalid(step) { step.classList.add('is-invalid'); return false; }
   function newId(prefix) { return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
@@ -103,7 +111,7 @@
   });
   back.addEventListener('click', function () { if (current > 0 && !sending) show(current - 1); });
   form.addEventListener('input', function () { steps[current].classList.remove('is-invalid'); });
-  d.querySelectorAll('[data-open-waitlist]').forEach(function (el) { el.addEventListener('click', function () { setTimeout(function () { if (!form.hidden) show(current); }, 50); }); });
+  d.querySelectorAll('[data-open-waitlist]').forEach(function (el) { el.addEventListener('click', function () { focusOk = true; }); });
 
   /* ---------- paso 2: calificación ---------- */
   form.addEventListener('submit', function (e) {
@@ -138,9 +146,11 @@
       if (finished) return; finished = true;
       if (typeof serverQualified === 'boolean') qualified = serverQualified;
       form.hidden = true;
-      if (qualified) return openCalendar();
+      if (qualified) return openCalendar(priority(answers));
       var notFit = d.getElementById('lfNotFit');
+      cal.hidden = true; book.classList.add('book--single');
       names(notFit); notFit.hidden = false;
+      book.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     // Si el servidor tarda (arranque en frío de Sheets), la persona sigue con la regla local.
     setTimeout(finish, 9000);
@@ -160,20 +170,39 @@
   var fmtDay = function (date) { return date.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' }); };
   var fmtTime = function (date) { return date.toLocaleTimeString('es', { hour: 'numeric', minute: '2-digit' }); };
 
+  // prio: solo horarios del closer prioritario (admin@getforth.ai).
+  var prioritySlots = false;
   function loadSlots(force) {
     if (slotsPromise && !force) return slotsPromise;
-    slotsPromise = fetch('/api/aprende-agenda' + (force ? '?t=' + Date.now() : ''))
+    var qs = [prioritySlots ? 'p=1' : '', force ? 't=' + Date.now() : ''].filter(Boolean).join('&');
+    slotsPromise = fetch('/api/aprende-agenda' + (qs ? '?' + qs : ''))
       .then(function (r) { if (!r.ok) throw new Error('slots'); return r.json(); })
       .then(function (r) { return r.slots || []; });
     slotsPromise.catch(function () { slotsPromise = null; });
     return slotsPromise;
   }
 
-  function openCalendar() {
-    modal.classList.add('modal--wide');
-    names(cal); $('[data-tz]').textContent = TZ;
-    cal.hidden = false; cal.classList.add('is-loading'); $('[data-cal-loading]').hidden = false;
-    loadSlots().catch(function () { return loadSlots(true); }).then(renderSlots, function () {
+  // El calendario se ve (bloqueado) desde que la sección se acerca a la pantalla.
+  $('[data-tz]').textContent = TZ;
+  monthCursor = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+  firstMonth = lastMonth = monthCursor;
+  renderMonth();
+  $('[data-cal-loading]').hidden = true;
+  var preload = function () { loadSlots().then(function (s) { if (cal.classList.contains('is-locked')) renderSlots(s); }, function () {}); };
+  if ('IntersectionObserver' in w) {
+    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); preload(); } }, { rootMargin: '600px 0px' });
+    io.observe(book);
+  } else preload();
+
+  function openCalendar(prio) {
+    names(cal); names(summary);
+    $('[data-cal-closed]').hidden = true; $('[data-cal-open]').hidden = false;
+    summary.querySelector('[data-summary-who]').textContent = contact.nombre + ' · ' + contact.email;
+    summary.hidden = false; bookStep(2);
+    cal.classList.remove('is-locked'); cal.classList.add('is-loading'); $('[data-cal-loading]').hidden = false;
+    if (w.matchMedia('(max-width: 900px)').matches) cal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var request = prio ? (prioritySlots = true, loadSlots(true)) : loadSlots();
+    request.catch(function () { return loadSlots(true); }).then(renderSlots, function () {
       showError('No pudimos cargar los horarios. Recarga la página o escríbenos por WhatsApp para agendar.');
     });
   }
@@ -184,6 +213,7 @@
     slots.forEach(function (iso) { var t = new Date(iso); (byDay[dayKey(t)] = byDay[dayKey(t)] || []).push(t); });
     var days = Object.keys(byDay).sort();
     if (!days.length) {
+      if (cal.classList.contains('is-locked')) return;
       cal.querySelector('.cal__grid').hidden = true;
       return showError('En este momento no hay horarios libres en los próximos días. Te escribiremos por WhatsApp para agendar tu llamada.');
     }
@@ -269,7 +299,9 @@
     panel.querySelector('[data-email]').textContent = contact.email;
     var meet = panel.querySelector('[data-meet]');
     if (cita.meet) { meet.href = cita.meet; meet.hidden = false; }
-    cal.hidden = true; modal.classList.remove('modal--wide'); panel.hidden = false;
+    summary.querySelector('[data-summary-who]').textContent = fmtDay(start) + ' · ' + fmtTime(start);
+    cal.hidden = true; panel.hidden = false;
+    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   show(0);

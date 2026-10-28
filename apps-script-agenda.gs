@@ -44,6 +44,9 @@ var AG = {
     { email: 'admin@getforth.ai', nombre: 'Luciano', bloques: [['11:00', '19:00']] },
     { email: 'info@getforth.ai', nombre: 'Andrea', bloques: [['07:30', '11:30'], ['13:00', '15:00']] }
   ],
+  // Leads prioritarios (assets/js/aprende-qualify.js → priority): solo ven sus horarios,
+  // y le llega un aviso por correo apenas califican.
+  prioritario: 'admin@getforth.ai',
   titulo: 'Conversación con Luciano Musella · Programa de IA',
   remitente: 'Luciano Musella',
   whatsappComunidad: 'https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW'
@@ -53,7 +56,7 @@ var HOJA_MAESTRO = 'MAESTRO';
 var COLUMNAS_MAESTRO = [
   ['email', 'email'], ['Fecha de registro', 'creado'], ['Última actualización', 'actualizado'],
   ['Nombre', 'nombre'], ['WhatsApp', 'telefono'], ['País', 'pais'], ['Fuente', 'fuente'],
-  ['Recursos descargados', 'recursos'], ['Estado', 'estado'], ['Calificado', 'calificado'],
+  ['Recursos descargados', 'recursos'], ['Estado', 'estado'], ['Calificado', 'calificado'], ['Prioridad', 'prioridad'],
   ['¿Dónde aplicará IA?', 'aplica'], ['¿Cuándo quiere empezar?', 'inicio'], ['Inversión $500 USD', 'inversion'],
   ['Principal reto', 'reto'],
   ['Cita (hora Colombia)', 'cita'], ['cita_inicio', 'cita_inicio'], ['Closer', 'closer'],
@@ -77,7 +80,7 @@ var HOJA_NO_CALIFICADOS = 'Página - No calificados';
 var HOJAS_PAGINA = [HOJA_NO_AGENDADOS, HOJA_AGENDADOS, HOJA_NO_CALIFICADOS];
 var COLUMNAS_PAGINA = [
   ['Fecha de registro', 'creado'], ['Última actualización', 'actualizado'], ['Nombre', 'nombre'], ['Email', 'email'],
-  ['WhatsApp', 'telefono'], ['País', 'pais'], ['Estado', 'estado'],
+  ['WhatsApp', 'telefono'], ['País', 'pais'], ['Estado', 'estado'], ['Prioridad', 'prioridad'],
   ['¿Dónde aplicará IA?', 'aplica'], ['¿Cuándo quiere empezar?', 'inicio'], ['Inversión $500 USD', 'inversion'],
   ['Principal reto', 'reto'], ['Cita (hora Colombia)', 'cita'], ['Closer', 'closer'], ['Link de Meet', 'meet'],
   ['Asistencia', 'asistencia'], ['Venta', 'venta'], ['Valor venta', 'valor'], ['Moneda', 'moneda'],
@@ -91,7 +94,11 @@ var ESTADOS_AVANZADOS = ['Agendado', 'Show', 'No show', 'Venta', 'No venta'];
 function doPost(e) {
   var datos;
   try { datos = JSON.parse(e.postData.contents); } catch (err) { return respuesta_({ ok: false, error: 'json' }); }
-  if (!datos.secret || datos.secret !== PropertiesService.getScriptProperties().getProperty('AGENDA_SECRET')) {
+  // La clave va en Propiedades del script o en un archivo secreto.gs que solo existe en
+  // Apps Script (var AGENDA_SECRET_ARCHIVO = '...'): nunca en el repo, que es público.
+  var clave = PropertiesService.getScriptProperties().getProperty('AGENDA_SECRET') ||
+    (typeof AGENDA_SECRET_ARCHIVO !== 'undefined' ? AGENDA_SECRET_ARCHIVO : '');
+  if (!datos.secret || !clave || datos.secret !== clave) {
     return respuesta_({ ok: false, error: 'no_autorizado' });
   }
   try {
@@ -144,6 +151,7 @@ function calificacion_(d) {
     var campos = camposBase_(d);
     campos.aplica = d.aplica; campos.inicio = d.inicio; campos.inversion = d.inversion; campos.reto = d.reto;
     campos.calificado = d.calificado ? 'Sí' : 'No';
+    campos.prioridad = d.prioridad ? 'Alta' : '';
     var avanzado = actual && ESTADOS_AVANZADOS.indexOf(actual.estado) !== -1;
     if (!avanzado) campos.estado = d.calificado ? 'No agendado' : 'No calificado';
     if (d.evento_meta) campos.eventos_meta_agregar = d.evento_meta;
@@ -151,6 +159,9 @@ function calificacion_(d) {
     // Con cita ya agendada se queda en "Agendados"; solo se actualizan sus respuestas.
     if (avanzado) escribirFila_(HOJA_AGENDADOS, COLUMNAS_PAGINA, d.email, campos, true);
     else ubicarEnPagina_(d.email, d.calificado ? HOJA_NO_AGENDADOS : HOJA_NO_CALIFICADOS);
+    if (d.prioridad && !avanzado) {
+      try { avisarPrioritario_(leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email)); } catch (err) { console.error('correo prioritario', err); }
+    }
   });
   return { ok: true };
 }
@@ -208,17 +219,21 @@ function listar_() {
 
 /* ---------------------------- horarios ---------------------------- */
 
-function horarios_() {
+function horarios_(d) {
+  var prioridad = Boolean(d && d.prioridad);
+  var clave = prioridad ? 'horarios_prioridad' : 'horarios';
   var cache = CacheService.getScriptCache();
-  var guardado = cache.get('horarios');
+  var guardado = cache.get(clave);
   if (guardado) return JSON.parse(guardado);
   var ahora = new Date();
   var desde = new Date(ahora.getTime() + AG.avisoMinimoMin * 60000);
   var hasta = new Date(ahora.getTime() + AG.diasAdelante * 86400000);
   var libres = libresPorSlot_(ahora, hasta, desde);
-  var slots = Object.keys(libres).sort();
+  var slots = Object.keys(libres).filter(function (s) { return !prioridad || libres[s].indexOf(AG.prioritario) !== -1; }).sort();
+  // Si el closer principal no tiene ningún espacio, el prioritario ve los de todos.
+  if (prioridad && !slots.length) slots = Object.keys(libres).sort();
   var resultado = { ok: true, zona: AG.zona, duracion: AG.duracionMin, slots: slots };
-  cache.put('horarios', JSON.stringify(resultado), 60);
+  cache.put(clave, JSON.stringify(resultado), 60);
   return resultado;
 }
 
@@ -279,7 +294,9 @@ function agendar_(d) {
     var libres = libresPorSlot_(new Date(inicio.getTime() - 60000), new Date(inicio.getTime() + AG.duracionMin * 60000 + 60000), new Date(minimo))[inicio.toISOString()] || [];
     if (!libres.length) { resultado = { ok: false, error: 'no_disponible' }; return; }
 
-    var closer = elegirCloser_(libres);
+    var closer = lead.prioridad === 'Alta' && libres.indexOf(AG.prioritario) !== -1
+      ? AG.closers.filter(function (c) { return c.email === AG.prioritario; })[0]
+      : elegirCloser_(libres);
     var fin = new Date(inicio.getTime() + AG.duracionMin * 60000);
     var evento = Calendar.Events.insert({
       summary: AG.titulo + ' · ' + lead.nombre,
@@ -299,7 +316,7 @@ function agendar_(d) {
     if (d.evento_meta) campos.eventos_meta_agregar = d.evento_meta;
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
     ubicarEnPagina_(d.email, HOJA_AGENDADOS);
-    CacheService.getScriptCache().remove('horarios');
+    CacheService.getScriptCache().removeAll(['horarios', 'horarios_prioridad']);
     lead = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
     resultado = { ok: true, cita: citaDe_(lead) };
     try { avisarCloser_(closer, lead); avisarLead_(lead, closer); } catch (err) { console.error('correo cita', err); }
@@ -346,6 +363,18 @@ function avisarCloser_(closer, lead) {
   });
 }
 
+// Lead prioritario recién calificado (aún sin cita): aviso inmediato al closer principal.
+function avisarPrioritario_(lead) {
+  var wa = String(lead.telefono || '').replace(/\D/g, '');
+  MailApp.sendEmail({
+    to: AG.prioritario,
+    subject: '🔥 Lead prioritario: ' + lead.nombre + ' (listo para invertir)',
+    htmlBody: '<p><b>' + esc_(lead.nombre) + '</b> acaba de calificar como prioritario en la página. Puede agendar contigo ahora mismo; si no lo hace, escríbele.</p>' +
+      '<p>Email: ' + esc_(lead.email) + '<br>WhatsApp: ' + esc_(lead.telefono) + (lead.pais ? ' (' + esc_(lead.pais) + ')' : '') + '</p>' +
+      '<pre style="font-family:inherit">' + esc_(descripcionCita_(lead)) + '</pre>'
+  });
+}
+
 function avisarLead_(lead, closer) {
   var nombre = String(lead.nombre).split(' ')[0];
   MailApp.sendEmail({
@@ -388,6 +417,14 @@ function enviarRecordatorios() {
 function activarRecordatorios() {
   ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'enviarRecordatorios') ScriptApp.deleteTrigger(t); });
   ScriptApp.newTrigger('enviarRecordatorios').timeBased().everyMinutes(15).create();
+}
+
+// Instalación en un clic: autoriza el script, revisa calendarios, activa recordatorios
+// e importa los históricos. Ejecútala una vez desde el editor.
+function instalar() {
+  probarCalendarios();
+  activarRecordatorios();
+  console.log('Importados: ' + JSON.stringify(importarHistoricos()));
 }
 
 // Ejecútala desde el editor para comprobar el acceso a los calendarios.

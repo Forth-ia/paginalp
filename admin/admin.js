@@ -95,7 +95,8 @@
 
   function chip(l) {
     var map = { 'Venta': 'ok', 'Show': 'ok', 'Agendado': 'accent', 'No show': 'bad', 'No venta': 'bad' };
-    return '<span class="chip chip--' + (map[l.estado] || '') + '">' + esc(l.estado || '—') + '</span>';
+    return '<span class="chip chip--' + (map[l.estado] || '') + '">' + esc(l.estado || '—') + '</span>' +
+      (l.prioridad === 'Alta' ? '<span class="chip chip--accent">Prioritario</span>' : '');
   }
 
   function card(l) {
