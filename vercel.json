@@ -15,5 +15,22 @@
     "api/popup-lead.js": {
       "maxDuration": 30
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/aprende-iclosed",
+      "destination": "/aprende",
+      "permanent": false
+    },
+    {
+      "source": "/aprende-iclosed/",
+      "destination": "/aprende",
+      "permanent": false
+    },
+    {
+      "source": "/aprende-iclosed/index.html",
+      "destination": "/aprende",
+      "permanent": false
+    }
+  ]
 }
