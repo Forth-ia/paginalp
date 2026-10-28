@@ -94,13 +94,7 @@ var ESTADOS_AVANZADOS = ['Agendado', 'Show', 'No show', 'Venta', 'No venta'];
 function doPost(e) {
   var datos;
   try { datos = JSON.parse(e.postData.contents); } catch (err) { return respuesta_({ ok: false, error: 'json' }); }
-  // La clave va en Propiedades del script o en un archivo secreto.gs que solo existe en
-  // Apps Script (var AGENDA_SECRET_ARCHIVO = '...'): nunca en el repo, que es público.
-  var clave = PropertiesService.getScriptProperties().getProperty('AGENDA_SECRET') ||
-    (typeof AGENDA_SECRET_ARCHIVO !== 'undefined' ? AGENDA_SECRET_ARCHIVO : '');
-  if (!datos.secret || !clave || datos.secret !== clave) {
-    return respuesta_({ ok: false, error: 'no_autorizado' });
-  }
+  if (!claveValida_(datos.secret)) return respuesta_({ ok: false, error: 'no_autorizado' });
   try {
     var acciones = { organico: organico_, contacto: contacto_, calificacion: calificacion_, horarios: horarios_, agendar: agendar_, listar: listar_, lead: leadPorEmail_, marcar: marcar_ };
     if (!acciones[datos.action]) return respuesta_({ ok: false, error: 'accion' });
@@ -111,8 +105,23 @@ function doPost(e) {
   }
 }
 
-function doGet() {
+// ?accion=instalar&clave=<AGENDA_SECRET>: corre instalar() sin abrir el editor.
+function doGet(e) {
+  var p = (e && e.parameter) || {};
+  if (p.accion === 'instalar') {
+    if (!claveValida_(p.clave)) return respuesta_({ ok: false, error: 'no_autorizado' });
+    try { return respuesta_({ ok: true, resultado: instalar() }); }
+    catch (err) { return respuesta_({ ok: false, error: String(err && err.message || err) }); }
+  }
   return ContentService.createTextOutput('Agenda Acelera activa ✅');
+}
+
+// La clave va en Propiedades del script o en un archivo Secreto.gs que solo existe en
+// Apps Script (var AGENDA_SECRET_ARCHIVO = '...'): nunca en el repo, que es público.
+function claveValida_(recibida) {
+  var clave = PropertiesService.getScriptProperties().getProperty('AGENDA_SECRET') ||
+    (typeof AGENDA_SECRET_ARCHIVO !== 'undefined' ? AGENDA_SECRET_ARCHIVO : '');
+  return Boolean(recibida && clave && recibida === clave);
 }
 
 /* ----------------------------- leads ----------------------------- */
@@ -422,16 +431,24 @@ function activarRecordatorios() {
 // Instalación en un clic: autoriza el script, revisa calendarios, activa recordatorios
 // e importa los históricos. Ejecútala una vez desde el editor.
 function instalar() {
-  probarCalendarios();
+  var calendarios = probarCalendarios();
   activarRecordatorios();
-  console.log('Importados: ' + JSON.stringify(importarHistoricos()));
+  var importados = importarHistoricos();
+  console.log('Importados: ' + JSON.stringify(importados));
+  return { calendarios: calendarios, recordatorios: 'activos', importados: importados };
 }
 
 // Ejecútala desde el editor para comprobar el acceso a los calendarios.
 function probarCalendarios() {
   var ocupado = ocupadoPorCloser_(new Date(), new Date(Date.now() + 7 * 86400000));
-  AG.closers.forEach(function (c) { console.log(c.email + ': ' + (ocupado[c.email] ? 'OK, ' + ocupado[c.email].length + ' bloques ocupados' : 'SIN ACCESO')); });
-  console.log('Horarios libres próximos 14 días: ' + horarios_().slots.length);
+  var estado = {};
+  AG.closers.forEach(function (c) {
+    estado[c.email] = ocupado[c.email] ? 'OK, ' + ocupado[c.email].length + ' bloques ocupados' : 'SIN ACCESO';
+    console.log(c.email + ': ' + estado[c.email]);
+  });
+  estado.horarios_libres_14_dias = horarios_().slots.length;
+  console.log('Horarios libres próximos 14 días: ' + estado.horarios_libres_14_dias);
+  return estado;
 }
 
 /* ------------------------- importar históricos ------------------------- */
