@@ -1,5 +1,6 @@
 const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
 const RESOURCES = new Map([
+  ['alternativa-adobe-craft', 'Alternativa a Adobe con Claude'],
   ['roast-room', 'Roast Room'],
   ['mods-claude-code', 'Mods para Claude Code'],
   ['obscura-claude-code', 'Obscura + Claude Code'],

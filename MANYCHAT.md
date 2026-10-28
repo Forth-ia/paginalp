@@ -231,3 +231,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/roast-room/
 
 La distinción depende de la URL enviada.
+
+
+## Alternativa a Adobe con Claude
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/alternativa-adobe-craft/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Alternativa a Adobe con Claude`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/alternativa-adobe-craft/
+
+La distinción depende de la URL enviada.
