@@ -2,6 +2,9 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const handler = require('../api/resource-lead.js');
 
+process.env.AGENDA_SCRIPT_URL = 'https://script.example/agenda';
+process.env.AGENDA_SECRET = 's3cret';
+
 const valid = { nombre: 'Prueba', email: 'prueba@example.com', telefono: '+57 300 000 0000' };
 test('Sales Coach requires all fields and confirmed storage before returning the public guide', async () => {
   const original = global.fetch;
@@ -407,5 +410,20 @@ test('Roast Room requires all contact fields and confirmed storage before unlock
     assert.equal(failure.statusCode, 502);
     assert.equal(failure.body.ok, false);
     assert.equal(failure.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});
+test('sends ManyChat leads to the central sheet as organic leads', async () => {
+  const original = global.fetch;
+  let call;
+  global.fetch = async (url, options) => { call = { url, body: JSON.parse(options.body) }; return { ok: true, json: async () => ({ ok: true }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'roast-room' } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(call.url, 'https://script.example/agenda');
+    assert.equal(call.body.action, 'organico');
+    assert.equal(call.body.secret, 's3cret');
+    assert.equal(call.body.recurso, 'Roast Room');
+    assert.equal(call.body.fuente, 'ManyChat · Roast Room');
   } finally { global.fetch = original; }
 });

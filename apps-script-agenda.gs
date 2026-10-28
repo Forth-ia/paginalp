@@ -1,18 +1,26 @@
 /**
  * Agenda + Sheets maestro — lucianomusella.com/aprende
  * ---------------------------------------------------------------------------
- * Reemplaza a web-aprende.gs dentro del Apps Script del Google Sheets
- * "Leads - Octubre 1". Lo llaman las funciones de Vercel (api/aprende-lead.js,
- * api/aprende-agenda.js y api/admin.js) con una clave secreta.
+ * Va en el Apps Script del Google Sheets central de leads (creado con
+ * admin@getforth.ai). Lo llaman las funciones de Vercel (api/aprende-lead.js,
+ * api/aprende-agenda.js, api/admin.js, api/resource-lead.js y api/popup-lead.js)
+ * con una clave secreta.
  *
  * Hace cuatro cosas:
- *  1. Guarda cada lead en la pestaña MAESTRO (el email es la llave única) y en
- *     la pestaña del flujo del agente: "Web - Aprende" (calificados) o
- *     "Web - No calificados".
+ *  1. Guarda cada lead en MAESTRO (todos, el email es la llave única) y en la
+ *     pestaña del flujo que le toca, donde trabaja el agente:
+ *       "ManyChat - Orgánicos"      ManyChat y pop-up del sitio, para alimentarlos.
+ *       "Página - No agendados"     /aprende: calificados sin cita o formulario a medias.
+ *       "Página - Agendados"        /aprende: con cita (y luego show / venta).
+ *       "Página - No calificados"   /aprende: no pasan el filtro.
+ *     Un lead de la página está en una sola de esas tres y se mueve al avanzar;
+ *     cuando entra al formulario de la página sale de "ManyChat - Orgánicos".
  *  2. Calcula los horarios libres de los closers leyendo sus Google Calendar.
  *  3. Agenda la llamada (Google Meet) en el calendario del closer, invita al
  *     lead y avisa por correo al closer y al lead.
  *  4. Manda recordatorios por correo 24 h y 1 h antes (función activarRecordatorios).
+ *
+ * importarHistoricos() copia una vez los leads de los Sheets anteriores.
  *
  * Requisitos (una sola vez):
  *  - Servicios (+) → Google Calendar API (identificador "Calendar").
@@ -21,6 +29,8 @@
  *    acceso "Cualquier usuario".
  *  - Cada closer distinto de admin@getforth.ai comparte su calendario con
  *    admin@getforth.ai con permiso "Hacer cambios en eventos".
+ *  - Para importarHistoricos: admin@getforth.ai puede ver los Sheets de
+ *    SHEETS_ANTERIORES.
  */
 
 var AG = {
@@ -43,7 +53,7 @@ var HOJA_MAESTRO = 'MAESTRO';
 var COLUMNAS_MAESTRO = [
   ['email', 'email'], ['Fecha de registro', 'creado'], ['Última actualización', 'actualizado'],
   ['Nombre', 'nombre'], ['WhatsApp', 'telefono'], ['País', 'pais'], ['Fuente', 'fuente'],
-  ['Estado', 'estado'], ['Calificado', 'calificado'],
+  ['Recursos descargados', 'recursos'], ['Estado', 'estado'], ['Calificado', 'calificado'],
   ['¿Dónde aplicará IA?', 'aplica'], ['¿Cuándo quiere empezar?', 'inicio'], ['Inversión $500 USD', 'inversion'],
   ['Principal reto', 'reto'],
   ['Cita (hora Colombia)', 'cita'], ['cita_inicio', 'cita_inicio'], ['Closer', 'closer'],
@@ -55,18 +65,25 @@ var COLUMNAS_MAESTRO = [
   ['fbp', 'fbp'], ['fbc', 'fbc'], ['recordatorio_24h', 'recordatorio_24h'], ['recordatorio_1h', 'recordatorio_1h']
 ];
 
-// Pestañas que lee el agente. "Web - Aprende" conserva sus columnas de siempre;
-// las nuevas (Estado, Cita, País) se agregan al final.
-var COLUMNAS_FLUJO = [
-  ['Fecha y hora', 'creado'], ['Nombre', 'nombre'], ['Email', 'email'], ['WhatsApp', 'telefono'],
-  ['¿Dónde vas a aplicar lo que aprendas de IA?', 'aplica'], ['¿Cuándo quieres empezar?', 'inicio'],
-  ['Inversión $500 USD', 'inversion'], ['Principal reto', 'reto'],
-  ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
-  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['Fuente', 'fuente'],
-  ['Estado', 'estado'], ['Cita (hora Colombia)', 'cita'], ['País', 'pais']
+// Pestañas donde trabaja el agente (ver encabezado).
+var HOJA_ORGANICOS = 'ManyChat - Orgánicos';
+var COLUMNAS_ORGANICOS = [
+  ['Fecha de registro', 'creado'], ['Última actividad', 'actualizado'], ['Nombre', 'nombre'], ['Email', 'email'],
+  ['WhatsApp', 'telefono'], ['Fuente', 'fuente'], ['Recursos descargados', 'recursos'], ['Estado', 'estado']
 ];
-var HOJA_CALIFICADOS = 'Web - Aprende';
-var HOJA_NO_CALIFICADOS = 'Web - No calificados';
+var HOJA_AGENDADOS = 'Página - Agendados';
+var HOJA_NO_AGENDADOS = 'Página - No agendados';
+var HOJA_NO_CALIFICADOS = 'Página - No calificados';
+var HOJAS_PAGINA = [HOJA_NO_AGENDADOS, HOJA_AGENDADOS, HOJA_NO_CALIFICADOS];
+var COLUMNAS_PAGINA = [
+  ['Fecha de registro', 'creado'], ['Última actualización', 'actualizado'], ['Nombre', 'nombre'], ['Email', 'email'],
+  ['WhatsApp', 'telefono'], ['País', 'pais'], ['Estado', 'estado'],
+  ['¿Dónde aplicará IA?', 'aplica'], ['¿Cuándo quiere empezar?', 'inicio'], ['Inversión $500 USD', 'inversion'],
+  ['Principal reto', 'reto'], ['Cita (hora Colombia)', 'cita'], ['Closer', 'closer'], ['Link de Meet', 'meet'],
+  ['Asistencia', 'asistencia'], ['Venta', 'venta'], ['Valor venta', 'valor'], ['Moneda', 'moneda'],
+  ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
+  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['Fuente', 'fuente']
+];
 
 // Estados que una nueva visita al formulario no debe pisar.
 var ESTADOS_AVANZADOS = ['Agendado', 'Show', 'No show', 'Venta', 'No venta'];
@@ -74,13 +91,11 @@ var ESTADOS_AVANZADOS = ['Agendado', 'Show', 'No show', 'Venta', 'No venta'];
 function doPost(e) {
   var datos;
   try { datos = JSON.parse(e.postData.contents); } catch (err) { return respuesta_({ ok: false, error: 'json' }); }
-  // Formato anterior (web-aprende.gs): fila directa en "Web - Aprende", sin clave.
-  if (!datos.action) return legado_(datos);
   if (!datos.secret || datos.secret !== PropertiesService.getScriptProperties().getProperty('AGENDA_SECRET')) {
     return respuesta_({ ok: false, error: 'no_autorizado' });
   }
   try {
-    var acciones = { contacto: contacto_, calificacion: calificacion_, horarios: horarios_, agendar: agendar_, listar: listar_, lead: leadPorEmail_, marcar: marcar_ };
+    var acciones = { organico: organico_, contacto: contacto_, calificacion: calificacion_, horarios: horarios_, agendar: agendar_, listar: listar_, lead: leadPorEmail_, marcar: marcar_ };
     if (!acciones[datos.action]) return respuesta_({ ok: false, error: 'accion' });
     return respuesta_(acciones[datos.action](datos));
   } catch (err) {
@@ -95,12 +110,30 @@ function doGet() {
 
 /* ----------------------------- leads ----------------------------- */
 
+// ManyChat (links /acceso/) y pop-up del sitio.
+function organico_(d) {
+  if (!d.email) return { ok: false, error: 'email' };
+  conLock_(function () {
+    var actual = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
+    var campos = { nombre: d.nombre, telefono: d.telefono, recursos_agregar: d.recurso };
+    if (!actual) { campos.fuente = d.fuente; campos.estado = 'Orgánico'; }
+    escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
+    // Si ya está en el flujo de la página, no se le abre un segundo flujo.
+    if (actual && actual.estado && actual.estado !== 'Orgánico') return;
+    escribirFila_(HOJA_ORGANICOS, COLUMNAS_ORGANICOS, d.email,
+      { nombre: d.nombre, telefono: d.telefono, fuente: d.fuente, recursos_agregar: d.recurso, estado: 'Orgánico' });
+  });
+  return { ok: true };
+}
+
 function contacto_(d) {
   conLock_(function () {
     var actual = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
     var campos = camposBase_(d);
-    if (!actual || !actual.estado) campos.estado = 'Formulario iniciado';
+    var nuevo = !actual || !actual.estado || actual.estado === 'Orgánico';
+    if (nuevo) campos.estado = 'Formulario incompleto';
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
+    if (nuevo) ubicarEnPagina_(d.email, HOJA_NO_AGENDADOS);
   });
   return { ok: true };
 }
@@ -115,14 +148,21 @@ function calificacion_(d) {
     if (!avanzado) campos.estado = d.calificado ? 'No agendado' : 'No calificado';
     if (d.evento_meta) campos.eventos_meta_agregar = d.evento_meta;
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
-
-    var flujo = {};
-    Object.keys(campos).forEach(function (k) { flujo[k] = campos[k]; });
-    flujo.fuente = d.calificado ? 'Aprende · Lead calificado' : 'Aprende · No calificado';
-    if (avanzado) delete flujo.estado;
-    escribirFila_(d.calificado ? HOJA_CALIFICADOS : HOJA_NO_CALIFICADOS, COLUMNAS_FLUJO, d.email, flujo);
+    // Con cita ya agendada se queda en "Agendados"; solo se actualizan sus respuestas.
+    if (avanzado) escribirFila_(HOJA_AGENDADOS, COLUMNAS_PAGINA, d.email, campos, true);
+    else ubicarEnPagina_(d.email, d.calificado ? HOJA_NO_AGENDADOS : HOJA_NO_CALIFICADOS);
   });
   return { ok: true };
+}
+
+// Deja el lead (con lo que hay en MAESTRO) en una sola pestaña del flujo de la página.
+function ubicarEnPagina_(email, destino) {
+  var lead = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, email);
+  if (!lead) return;
+  HOJAS_PAGINA.concat([HOJA_ORGANICOS]).forEach(function (h) { if (h !== destino) borrarFila_(h, email); });
+  var campos = {};
+  COLUMNAS_PAGINA.forEach(function (c) { if (c[1] !== 'email' && lead[c[1]] !== '') campos[c[1]] = lead[c[1]]; });
+  escribirFila_(destino, COLUMNAS_PAGINA, email, campos);
 }
 
 function camposBase_(d) {
@@ -147,7 +187,7 @@ function marcar_(d) {
   conLock_(function () {
     if (!leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email)) throw new Error('no_existe');
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
-    if (campos.estado) escribirFila_(HOJA_CALIFICADOS, COLUMNAS_FLUJO, d.email, { estado: campos.estado }, true);
+    escribirFila_(HOJA_AGENDADOS, COLUMNAS_PAGINA, d.email, campos, true);
     fila = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
   });
   return { ok: true, lead: fila };
@@ -258,7 +298,7 @@ function agendar_(d) {
     };
     if (d.evento_meta) campos.eventos_meta_agregar = d.evento_meta;
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
-    escribirFila_(HOJA_CALIFICADOS, COLUMNAS_FLUJO, d.email, { estado: 'Agendado', cita: campos.cita }, true);
+    ubicarEnPagina_(d.email, HOJA_AGENDADOS);
     CacheService.getScriptCache().remove('horarios');
     lead = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
     resultado = { ok: true, cita: citaDe_(lead) };
@@ -357,6 +397,137 @@ function probarCalendarios() {
   console.log('Horarios libres próximos 14 días: ' + horarios_().slots.length);
 }
 
+/* ------------------------- importar históricos ------------------------- */
+
+var SHEETS_ANTERIORES = {
+  manychat: '1nkNG9buhWsLM7ADuG9VOyZbWE6P2z7PAAXt3FCr_tDU', // "Leads - Manychat - Página" (pestaña Leads)
+  pagina: '1XDJwH0i-jech5NN9QmqDP7-ev9YmL4ga47FCU6okO8M'    // "Leads - Octubre 1" (pestaña Web - Aprende)
+};
+
+// Ejecútala una vez desde el editor. Se puede repetir: el email es la llave, no duplica.
+function importarHistoricos() {
+  var maestro = tabla_(HOJA_MAESTRO, COLUMNAS_MAESTRO), organicos = tabla_(HOJA_ORGANICOS, COLUMNAS_ORGANICOS);
+  var pagina = {};
+  HOJAS_PAGINA.forEach(function (h) { pagina[h] = tabla_(h, COLUMNAS_PAGINA); });
+  var cuenta = { organicos: 0, agendados: 0, noAgendados: 0, omitidos: 0 };
+
+  // 1. ManyChat + pop-up -> "ManyChat - Orgánicos"
+  var libroMc = SpreadsheetApp.openById(SHEETS_ANTERIORES.manychat);
+  filasDe_(libroMc.getSheetByName('Leads') || libroMc.getSheets()[0]).forEach(function (r) {
+    var email = correo_(r['Email']);
+    if (!email) { cuenta.omitidos++; return; }
+    var fuente = String(r['Fuente'] || 'Página Web');
+    var recurso = fuente.replace(/^ManyChat · /, '').replace(/^Recurso: /, '');
+    var previo = maestro.get(email);
+    var campos = { creado: r['Fecha y hora'], nombre: r['Nombre'], telefono: String(r['Teléfono'] || ''), recursos_agregar: recurso };
+    if (!previo) { campos.fuente = fuente; campos.estado = 'Orgánico'; }
+    maestro.set(email, campos);
+    if (previo && previo.estado && previo.estado !== 'Orgánico') return;
+    organicos.set(email, { creado: r['Fecha y hora'], nombre: r['Nombre'], telefono: String(r['Teléfono'] || ''), fuente: fuente, recursos_agregar: recurso, estado: 'Orgánico' });
+    cuenta.organicos++;
+  });
+
+  // 2. Leads calificados de la página -> Agendados / No agendados (según los calendarios)
+  var citas = citasPorInvitado_();
+  var anterior = SpreadsheetApp.openById(SHEETS_ANTERIORES.pagina).getSheetByName('Web - Aprende');
+  filasDe_(anterior).forEach(function (r) {
+    var email = correo_(r['Email']);
+    if (!email || /prueba/i.test(r['Nombre'] + ' ' + email)) { cuenta.omitidos++; return; }
+    var cita = citas[email];
+    var previo = maestro.get(email);
+    var campos = {
+      creado: r['Fecha y hora'], nombre: r['Nombre'], telefono: String(r['WhatsApp'] || ''), pais: r['País'],
+      aplica: r['¿Dónde vas a aplicar lo que aprendas de IA?'], inicio: r['¿Cuándo quieres empezar?'],
+      inversion: r['Inversión $500 USD'], reto: r['Principal reto'], calificado: 'Sí', fuente: 'Aprende · histórico',
+      utm_source: r['utm_source'], utm_medium: r['utm_medium'], utm_campaign: r['utm_campaign'], utm_content: r['utm_content'], utm_term: r['utm_term']
+    };
+    if (!previo || ESTADOS_AVANZADOS.indexOf(previo.estado) === -1) {
+      campos.estado = cita ? 'Agendado' : 'No agendado';
+      if (cita) {
+        campos.cita = Utilities.formatDate(cita.inicio, AG.zona, 'dd/MM/yyyy HH:mm');
+        campos.cita_inicio = cita.inicio.toISOString(); campos.closer = cita.closer;
+      }
+    }
+    maestro.set(email, campos);
+    var lead = maestro.get(email);
+    var destino = ESTADOS_AVANZADOS.indexOf(lead.estado) !== -1 ? HOJA_AGENDADOS : HOJA_NO_AGENDADOS;
+    organicos.del(email);
+    HOJAS_PAGINA.forEach(function (h) { if (h !== destino) pagina[h].del(email); });
+    var datos = {};
+    COLUMNAS_PAGINA.forEach(function (c) { if (c[1] !== 'email' && lead[c[1]] !== '') datos[c[1]] = lead[c[1]]; });
+    pagina[destino].set(email, datos);
+    cuenta[destino === HOJA_AGENDADOS ? 'agendados' : 'noAgendados']++;
+  });
+
+  [maestro, organicos].concat(HOJAS_PAGINA.map(function (h) { return pagina[h]; })).forEach(function (t) { t.save(); });
+  console.log(JSON.stringify(cuenta));
+  return cuenta;
+}
+
+// { email del invitado: { inicio, closer } } con las citas de los últimos 90 días y próximos 60.
+function citasPorInvitado_() {
+  var citas = {};
+  var desde = new Date(Date.now() - 90 * 86400000), hasta = new Date(Date.now() + 60 * 86400000);
+  AG.closers.forEach(function (c) {
+    var cal = CalendarApp.getCalendarById(c.email);
+    if (!cal) { console.warn('Sin acceso al calendario de ' + c.email); return; }
+    cal.getEvents(desde, hasta).forEach(function (ev) {
+      ev.getGuestList().forEach(function (g) {
+        var email = correo_(g.getEmail());
+        if (email && email !== c.email) citas[email] = { inicio: ev.getStartTime(), closer: c.email };
+      });
+    });
+  });
+  return citas;
+}
+
+function filasDe_(hoja) {
+  if (!hoja || hoja.getLastRow() < 2) return [];
+  var valores = hoja.getDataRange().getValues(), titulos = valores[0];
+  return valores.slice(1).map(function (fila) {
+    var o = {};
+    titulos.forEach(function (t, i) { o[t] = fila[i]; });
+    return o;
+  });
+}
+
+function correo_(valor) {
+  var email = String(valor || '').trim().toLowerCase();
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) ? email : '';
+}
+
+// Pestaña completa en memoria (para importar miles de filas sin pasarse del tiempo de Apps Script).
+function tabla_(nombre, columnas) {
+  var hoja = hoja_(nombre, columnas);
+  var mapa = asegurarColumnas_(hoja, columnas);
+  var ancho = hoja.getLastColumn();
+  var filas = hoja.getLastRow() > 1 ? hoja.getRange(2, 1, hoja.getLastRow() - 1, ancho).getValues() : [];
+  var indice = {};
+  filas.forEach(function (f, i) { indice[String(f[mapa.email]).trim().toLowerCase()] = i; });
+  var cambio = false;
+  return {
+    get: function (email) { return email in indice ? objetoFila_(filas[indice[email]], mapa) : null; },
+    set: function (email, campos) {
+      var nueva = !(email in indice);
+      if (nueva) { indice[email] = filas.length; filas.push(new Array(ancho).fill('')); }
+      aplicarCampos_(filas[indice[email]], mapa, email, campos, nueva);
+      cambio = true;
+    },
+    del: function (email) {
+      if (!(email in indice)) return;
+      filas.splice(indice[email], 1);
+      indice = {};
+      filas.forEach(function (f, i) { indice[String(f[mapa.email]).trim().toLowerCase()] = i; });
+      cambio = true;
+    },
+    save: function () {
+      if (!cambio) return;
+      if (hoja.getLastRow() > 1) hoja.getRange(2, 1, hoja.getLastRow() - 1, ancho).clearContent();
+      if (filas.length) hoja.getRange(2, 1, filas.length, ancho).setValues(filas.map(textoPlano_));
+    }
+  };
+}
+
 /* ------------------------- Sheets: utilidades ------------------------- */
 
 function conLock_(fn) {
@@ -432,39 +603,51 @@ function escribirFila_(nombre, columnas, email, campos, soloSiExiste) {
   if (n === -1 && soloSiExiste) return;
   var ancho = hoja.getLastColumn();
   var fila = n === -1 ? new Array(ancho).fill('') : hoja.getRange(n, 1, 1, ancho).getValues()[0];
+  aplicarCampos_(fila, mapa, email, campos, n === -1);
+  fila = textoPlano_(fila);
+  if (n === -1) hoja.appendRow(fila);
+  else hoja.getRange(n, 1, 1, ancho).setValues([fila]);
+}
+
+function aplicarCampos_(fila, mapa, email, campos, nueva) {
   var ahora = new Date();
-  if (n === -1) {
+  if (nueva) {
     if (mapa.creado !== undefined) fila[mapa.creado] = ahora;
     fila[mapa.email] = String(email).trim().toLowerCase();
   }
   if (mapa.actualizado !== undefined) fila[mapa.actualizado] = ahora;
   Object.keys(campos).forEach(function (k) {
     var v = campos[k];
-    if (v === undefined || v === null) return;
-    if (k === 'eventos_meta_agregar') {
-      if (mapa.eventos_meta === undefined) return;
-      var previos = String(fila[mapa.eventos_meta] || '').split(',').map(function (x) { return x.trim(); }).filter(String);
+    if (v === undefined || v === null || v === '' && /_agregar$/.test(k)) return;
+    // "<campo>_agregar": suma el valor a la lista separada por comas de esa columna.
+    var lista = /^(.+)_agregar$/.exec(k);
+    if (lista) {
+      var col = lista[1];
+      if (mapa[col] === undefined) return;
+      var previos = String(fila[mapa[col]] || '').split(',').map(function (x) { return x.trim(); }).filter(String);
       if (previos.indexOf(v) === -1) previos.push(v);
-      fila[mapa.eventos_meta] = previos.join(', ');
+      fila[mapa[col]] = previos.join(', ');
       return;
     }
     if (mapa[k] === undefined) return;
-    fila[mapa[k]] = v;
+    // Las fechas llegan como texto ISO cuando se copian de otra pestaña.
+    fila[mapa[k]] = (k === 'creado' || k === 'actualizado') && typeof v === 'string' && v ? new Date(v) : v;
   });
-  // El apóstrofo inicial hace que Sheets guarde cada texto tal cual: no convierte
-  // el WhatsApp en número, ni la cita en fecha, ni ejecuta fórmulas del texto libre.
-  fila = fila.map(function (v) { return typeof v === 'string' && v !== '' ? "'" + v : v; });
-  if (n === -1) hoja.appendRow(fila);
-  else hoja.getRange(n, 1, 1, ancho).setValues([fila]);
 }
 
-function legado_(datos) {
-  conLock_(function () {
-    var campos = {};
-    COLUMNAS_FLUJO.forEach(function (c) { if (datos[c[1]] !== undefined) campos[c[1]] = String(datos[c[1]]); });
-    escribirFila_(HOJA_CALIFICADOS, COLUMNAS_FLUJO, datos.email || '', campos);
-  });
-  return respuesta_({ ok: true });
+// El apóstrofo inicial hace que Sheets guarde cada texto tal cual: no convierte
+// el WhatsApp en número, ni la cita en fecha, ni ejecuta fórmulas del texto libre.
+function textoPlano_(fila) {
+  return fila.map(function (v) { return typeof v === 'string' && v !== '' ? "'" + v : v; });
+}
+
+function borrarFila_(nombre, email) {
+  var hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(nombre);
+  if (!hoja || hoja.getLastRow() < 2) return;
+  var titulos = hoja.getRange(1, 1, 1, hoja.getLastColumn()).getValues()[0];
+  var mapa = { email: titulos.indexOf('Email') !== -1 ? titulos.indexOf('Email') : titulos.indexOf('email') };
+  if (mapa.email === -1) return;
+  for (var n = buscarFila_(hoja, mapa, email); n !== -1; n = buscarFila_(hoja, mapa, email)) hoja.deleteRow(n);
 }
 
 function esc_(s) {

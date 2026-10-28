@@ -273,9 +273,7 @@
   }
 
   /* ---------- captura suave de leads ----------
-     Configura la URL publicada de Apps Script una sola vez aquí. El script
-     adjunto registra siempre en la pestaña "Leads" y asigna la fecha allá. */
-  var LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
+     /api/popup-lead los guarda en "ManyChat - Orgánicos" del Sheets central. */
   var resourcePath = /^\/recursos(?:\/|$)/.test(location.pathname);
   var popupDelay = resourcePath ? 8000 : 10000;
   var popupKey = 'lm_lead_popup_closed:' + location.pathname;
@@ -295,10 +293,8 @@
     if (reason) track('lead_popup_' + reason, { source: leadSource() });
   }
   function sendLead(data) {
-    if (!LEADS_ENDPOINT || LEADS_ENDPOINT.indexOf('PASTE_YOUR') !== -1) return false;
-    // Apps Script acepta este POST sin requerir CORS; la respuesta no contiene datos sensibles.
     try {
-      fetch(LEADS_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data), keepalive: true });
+      fetch('/api/popup-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data), keepalive: true });
       return true;
     } catch (err) { return false; }
   }

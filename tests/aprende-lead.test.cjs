@@ -207,3 +207,16 @@ test('a sale needs value and currency and is sent as Purchase', async () => {
   assert.equal(noSale.meta.length, 0);
   assert.equal(noSale.body.meta, null);
 });
+
+test('popup leads go to the central sheet as organic leads', async () => {
+  const popup = require('../api/popup-lead.js');
+  const res = await run(popup, { method: 'POST', body: { nombre: 'Ana', email: 'Ana@Example.com', telefono: '300 000 0000', fuente: 'Recurso: roast-room' } });
+  assert.deepEqual(res.body, { ok: true });
+  assert.equal(res.agenda[0].action, 'organico');
+  assert.equal(res.agenda[0].email, 'ana@example.com');
+  assert.equal(res.agenda[0].fuente, 'Pop-up · Recurso: roast-room');
+  assert.equal(res.agenda[0].recurso, 'roast-room');
+  const bad = await run(popup, { method: 'POST', body: { nombre: 'A', email: 'x', telefono: '1' } });
+  assert.equal(bad.statusCode, 400);
+  assert.equal(bad.calls.length, 0);
+});

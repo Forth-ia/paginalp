@@ -1,8 +1,19 @@
 {
   "functions": {
-    "api/resource-lead.js": { "maxDuration": 90 },
-    "api/aprende-lead.js": { "maxDuration": 60 },
-    "api/aprende-agenda.js": { "maxDuration": 60 },
-    "api/admin.js": { "maxDuration": 60 }
+    "api/resource-lead.js": {
+      "maxDuration": 90
+    },
+    "api/aprende-lead.js": {
+      "maxDuration": 60
+    },
+    "api/aprende-agenda.js": {
+      "maxDuration": 60
+    },
+    "api/admin.js": {
+      "maxDuration": 60
+    },
+    "api/popup-lead.js": {
+      "maxDuration": 30
+    }
   }
 }

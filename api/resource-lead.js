@@ -1,4 +1,5 @@
-const LEADS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwNEtZuSl_emmSz7hhtYI5w5-9NK3c2IevQv-xvJpJWZmznqtYquydAzTZ0cFDBW2wgvg/exec';
+// Los leads de ManyChat van a "ManyChat - Orgánicos" del Sheets central, vía el
+// Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const RESOURCES = new Map([
   ['roast-room', 'Roast Room'],
   ['mods-claude-code', 'Mods para Claude Code'],
@@ -44,11 +45,12 @@ async function saveLead(data) {
   try {
     // Apps Script writes on POST, then redirects to a separate confirmation URL.
     // Retry only the confirmation GET: repeating the POST could duplicate a lead.
-    const response = await fetch(LEADS_ENDPOINT, {
+    if (!process.env.AGENDA_SCRIPT_URL || !process.env.AGENDA_SECRET) throw collectorError('collector_not_configured');
+    const response = await fetch(process.env.AGENDA_SCRIPT_URL, {
       method: 'POST', redirect: 'manual',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       // Allow cold starts, leaving 27 seconds for confirmation within the 90s limit.
-      body: JSON.stringify(data), signal: AbortSignal.timeout(60000)
+      body: JSON.stringify({ ...data, action: 'organico', secret: process.env.AGENDA_SECRET }), signal: AbortSignal.timeout(60000)
     });
     if (![301, 302, 303].includes(response.status)) return await readConfirmation(response);
     const location = response.headers.get('location');
@@ -107,7 +109,7 @@ module.exports = async function (req, res) {
     return res.status(400).json({ ok: false });
   }
   try {
-    await saveLead({ nombre, email, telefono, fuente: 'ManyChat · ' + RESOURCES.get(resource) });
+    await saveLead({ nombre, email, telefono, fuente: 'ManyChat · ' + RESOURCES.get(resource), recurso: RESOURCES.get(resource) });
     return res.status(200).json({ ok: true, redirect: '/recursos/' + resource + '/' });
   } catch (error) {
     const code = error.name === 'TimeoutError' || error.name === 'AbortError' || error.code === 23
