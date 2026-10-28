@@ -33,6 +33,51 @@
  },
  "resources": [
 {
+  "id": "video-explicativo-hyperframes",
+  "slug": "video-explicativo-hyperframes",
+  "title": "Cómo convertir cualquier tema en un video explicativo con Claude",
+  "category": "creativo",
+  "secondary": [
+    "claude",
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Crea con HyperFrames y Claude Code un video explicativo con escenas, animaciones, subtítulos y narración a partir de cualquier tema, paper o documento.",
+  "what_you_get": [
+    "Cómo instalar HyperFrames y crear el proyecto",
+    "Prompt listo para copiar",
+    "Cómo generar la narración con ElevenLabs o Google Cloud",
+    "Cómo previsualizar, exportar y revisar el MP4"
+  ],
+  "ideal_for": [
+    "Creadores de contenido",
+    "Quienes explican temas complejos en video"
+  ],
+  "includes": [
+    "Comandos de terminal",
+    "Prompt copiable",
+    "Checklist de revisión"
+  ],
+  "tools": [
+    "Claude Code",
+    "HyperFrames",
+    "ElevenLabs",
+    "Google Cloud Text-to-Speech"
+  ],
+  "words": 753,
+  "read_min": 5,
+  "related_tutorials": [],
+  "related_resources": [
+    "lm-13",
+    "alternativa-adobe-craft"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "alternativa-adobe-craft",
   "slug": "alternativa-adobe-craft",
   "title": "Cómo usar la alternativa de Adobe creada con Claude",
