@@ -2,6 +2,7 @@ const { readBody, COUNTRIES } = require('./_lib/lead.js');
 const { checkPassword, sessionCookie, clearCookie, currentUser } = require('./_lib/auth.js');
 const { sendEvent, sha256 } = require('./_lib/meta.js');
 const { callAgenda } = require('./_lib/agenda.js');
+const { notifyAgent } = require('./_lib/whatsapp-agent.js');
 
 const CURRENCIES = ['USD', 'COP'];
 // Campos que el panel muestra; fbp/fbc se quedan en el servidor.
@@ -88,5 +89,6 @@ async function mark(req, res, user) {
   }
   const result = await callAgenda('marcar', { email, campos, evento_meta: sent });
   if (!result.ok) throw new Error(result.error);
+  await notifyAgent(email, campos.estado);
   return res.status(200).json({ ok: true, lead: visible(result.lead), meta: event ? Boolean(sent) : null });
 }
