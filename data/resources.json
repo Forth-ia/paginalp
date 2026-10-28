@@ -33,6 +33,51 @@
  },
  "resources": [
 {
+  "id": "alternativa-adobe-craft",
+  "slug": "alternativa-adobe-craft",
+  "title": "Cómo usar la alternativa de Adobe creada con Claude",
+  "category": "creativo",
+  "secondary": [
+    "claude",
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Descarga ArtCraft Launcher y prueba alternativas gratuitas y de código abierto a Photoshop, Premiere, Illustrator y Acrobat, listas para trabajar con agentes de AI.",
+  "what_you_get": [
+    "Cómo descargar e instalar ArtCraft Launcher",
+    "Alternativas a Photoshop, Premiere, Illustrator y Acrobat",
+    "Otras 8 herramientas del catálogo",
+    "Qué es MCP y cómo automatizar con agentes de AI"
+  ],
+  "ideal_for": [
+    "Diseñadores y editores",
+    "Equipos que buscan alternativas gratuitas a Adobe"
+  ],
+  "includes": [
+    "Enlaces de descarga",
+    "Pasos para probar cada app",
+    "Lista de repositorios"
+  ],
+  "tools": [
+    "ArtCraft Launcher",
+    "PhotoCraft",
+    "FilmCraft",
+    "MCP"
+  ],
+  "words": 857,
+  "read_min": 5,
+  "related_tutorials": [],
+  "related_resources": [
+    "lm-13",
+    "lm-17"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "roast-room",
   "slug": "roast-room",
   "title": "Crea tu propia junta directiva (Roast Room) con AI",
