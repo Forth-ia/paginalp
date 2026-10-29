@@ -265,3 +265,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/video-explicativo-hyperframes/
 
 La distinción depende de la URL enviada.
+
+
+## AI Index 2026 de Stanford
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/stanford-ai-index-2026/
+
+Exige nombre, correo y celular en cada visita. Muestra el análisis de fondo sin permitir
+interactuar con él ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · AI Index 2026 de Stanford`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/stanford-ai-index-2026/
+
+La distinción depende de la URL enviada.

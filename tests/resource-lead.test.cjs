@@ -499,3 +499,45 @@ test('keeps the ManyChat link UTMs so we know which reel brought the lead', asyn
     assert.deepEqual(call.utm, { utm_source: 'instagram', utm_content: 'reel-28oct' });
   } finally { global.fetch = original; }
 });
+
+test('AI Index 2026 de Stanford requires all contact fields and confirmed storage before unlocking', async () => {
+  const original = global.fetch;
+  const sent = [];
+  let confirmed = true;
+  global.fetch = async (_, options) => {
+    sent.push(JSON.parse(options.body));
+    return { ok: true, json: async () => ({ ok: confirmed }) };
+  };
+  try {
+    const body = { ...valid, resource: 'stanford-ai-index-2026', fuente: 'spoofed' };
+    for (const field of ['nombre', 'email', 'telefono']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...body, [field]: '' } }, res);
+      assert.equal(res.statusCode, 400);
+    }
+    assert.equal(sent.length, 0);
+    const success = response();
+    await handler({ method: 'POST', body }, success);
+    assert.equal(success.statusCode, 200);
+    assert.equal(sent[0].fuente, 'ManyChat · AI Index 2026 de Stanford');
+    assert.equal(success.body.redirect, '/recursos/stanford-ai-index-2026/');
+    confirmed = false;
+    const failure = response();
+    await handler({ method: 'POST', body }, failure);
+    assert.equal(failure.statusCode, 502);
+    assert.equal(failure.body.ok, false);
+    assert.equal(failure.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});
+
+test('keeps the ManyChat link UTMs so we know which reel brought the lead', async () => {
+  const original = global.fetch;
+  let call;
+  global.fetch = async (url, options) => { call = JSON.parse(options.body); return { ok: true, json: async () => ({ ok: true }) }; };
+  try {
+    const res = response();
+    await handler({ method: 'POST', body: { ...valid, resource: 'roast-room', utm: { utm_source: 'instagram', utm_content: 'reel-28oct', utm_term: '=HACK()', otro: 'x' } } }, res);
+    assert.equal(res.statusCode, 200);
+    assert.deepEqual(call.utm, { utm_source: 'instagram', utm_content: 'reel-28oct' });
+  } finally { global.fetch = original; }
+});
