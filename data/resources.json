@@ -33,6 +33,46 @@
  },
  "resources": [
 {
+  "id": "stanford-ai-index-2026",
+  "slug": "stanford-ai-index-2026",
+  "title": "La IA más inteligente de la Tierra ahora es gratis. Stanford acaba de publicar el mapa de hacia dónde va realmente el billón de dólares.",
+  "category": "negocio",
+  "secondary": [
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Stanford HAI publicó el AI Index 2026: la inteligencia ya es un commodity, el 97 % del valor queda sin capturar y casi nadie ha implementado agentes.",
+  "what_you_get": [
+    "Las 3 cifras clave del AI Index 2026 de Stanford",
+    "La analogía de la electricidad y la brecha de implementación",
+    "Qué significa para los próximos 18 meses",
+    "El marco de 5 puntos y las fuentes"
+  ],
+  "ideal_for": [
+    "Fundadores y equipos directivos",
+    "Quienes deciden cómo implementar IA"
+  ],
+  "includes": [
+    "Cifras del informe",
+    "Análisis por perfil",
+    "Fuentes citadas"
+  ],
+  "tools": [
+    "Stanford AI Index",
+    "Chatbot Arena",
+    "SWE-bench"
+  ],
+  "words": 2822,
+  "read_min": 14,
+  "related_tutorials": [],
+  "related_resources": [],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "video-explicativo-hyperframes",
   "slug": "video-explicativo-hyperframes",
   "title": "Cómo convertir cualquier tema en un video explicativo con Claude",
