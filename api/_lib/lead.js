@@ -4,6 +4,13 @@ const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'ut
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const clip = (value, max) => (typeof value === 'string' ? value.trim().slice(0, max) : '');
 
+// Lee un parámetro de la URL sin req.query: en Vercel ese atajo usa url.parse(),
+// que Node marca como obsoleto y llena los registros de avisos.
+function queryParam(req, name) {
+  if (req.url) return new URL(req.url, 'http://localhost').searchParams.get(name) || '';
+  return (req.query && req.query[name]) || '';
+}
+
 function readBody(req) {
   try { return typeof req.body === 'string' ? JSON.parse(req.body) : req.body; } catch (_) { return undefined; }
 }
@@ -72,4 +79,4 @@ const sheetFields = lead => ({
   fbp: lead.fbp, fbc: lead.fbc, utm: lead.utm
 });
 
-module.exports = { readBody, parseContact, parseUtm, addAnswers, answerLabels, sheetFields, COUNTRIES, EMAIL_RE };
+module.exports = { queryParam, readBody, parseContact, parseUtm, addAnswers, answerLabels, sheetFields, COUNTRIES, EMAIL_RE };

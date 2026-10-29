@@ -1,4 +1,4 @@
-const { readBody, COUNTRIES } = require('./_lib/lead.js');
+const { queryParam, readBody, COUNTRIES } = require('./_lib/lead.js');
 const { checkPassword, sessionCookie, clearCookie, currentUser } = require('./_lib/auth.js');
 const { sendEvent, sha256 } = require('./_lib/meta.js');
 const { callAgenda } = require('./_lib/agenda.js');
@@ -14,7 +14,7 @@ const visible = lead => Object.fromEntries(VISIBLE.map(k => [k, lead[k] || '']))
 // /api/admin?a=login|logout|me|list|mark
 module.exports = async function (req, res) {
   res.setHeader('Cache-Control', 'no-store');
-  const action = (req.query && req.query.a) || '';
+  const action = queryParam(req, 'a');
   // Los POST solo aceptan JSON: junto con la cookie SameSite=Strict, frena envíos desde otros sitios.
   if (req.method === 'POST' && !/^application\/json/.test((req.headers || {})['content-type'] || '')) return res.status(415).json({ ok: false });
 

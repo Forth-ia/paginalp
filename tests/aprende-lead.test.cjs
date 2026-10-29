@@ -249,3 +249,10 @@ test('popup leads keep the visit UTMs', async () => {
   const res = await run(popup, { method: 'POST', body: { nombre: 'Ana', email: 'ana@example.com', telefono: '3000000000', fuente: 'Página Web', utm: { utm_source: 'ig', utm_content: 'reel-1' } } });
   assert.deepEqual(res.agenda[0].utm, { utm_source: 'ig', utm_content: 'reel-1' });
 });
+
+test('reads URL parameters from req.url like Vercel sends them', async () => {
+  const res = await run(agendaHandler, { method: 'GET', url: '/api/aprende-agenda?p=1&t=123' }, () => ({ ok: true, slots: [] }));
+  assert.equal(res.agenda[0].prioridad, true);
+  const admin = await run(adminHandler, { method: 'GET', url: '/api/admin?a=list' });
+  assert.equal(admin.statusCode, 401);
+});
