@@ -37,7 +37,8 @@ var AG = {
   zona: 'America/Bogota',
   offset: '-05:00', // Colombia no tiene horario de verano
   duracionMin: 30,
-  diasAdelante: 14,
+  diasAdelante: 14, // hasta dónde se busca espacio si la ventana está llena
+  diasVentana: 2,   // día de agendamiento + 2 días hábiles; más solo si no hay ningún espacio
   avisoMinimoMin: 120, // no se puede agendar con menos de 2 horas
   diasHabiles: [1, 2, 3, 4, 5], // lunes a viernes
   closers: [
@@ -47,7 +48,7 @@ var AG = {
   // Leads prioritarios (assets/js/aprende-qualify.js → priority): solo ven sus horarios,
   // y le llega un aviso por correo apenas califican.
   prioritario: 'admin@getforth.ai',
-  titulo: 'Conversación con Luciano Musella · Programa de IA',
+  colorEvento: '11', // rojo ("Tomate") en Google Calendar
   remitente: 'Luciano Musella',
   whatsappComunidad: 'https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW'
 };
@@ -244,16 +245,37 @@ function horarios_(d) {
   var cache = CacheService.getScriptCache();
   var guardado = cache.get(clave);
   if (guardado) return JSON.parse(guardado);
-  var ahora = new Date();
-  var desde = new Date(ahora.getTime() + AG.avisoMinimoMin * 60000);
-  var hasta = new Date(ahora.getTime() + AG.diasAdelante * 86400000);
-  var libres = libresPorSlot_(ahora, hasta, desde);
+  var libres = ventana_(new Date()).libres;
   var slots = Object.keys(libres).filter(function (s) { return !prioridad || libres[s].indexOf(AG.prioritario) !== -1; }).sort();
-  // Si el closer principal no tiene ningún espacio, el prioritario ve los de todos.
+  // Si el closer principal no tiene espacio en la ventana, el prioritario ve los de todos.
   if (prioridad && !slots.length) slots = Object.keys(libres).sort();
   var resultado = { ok: true, zona: AG.zona, duracion: AG.duracionMin, slots: slots };
   cache.put(clave, JSON.stringify(resultado), 60);
   return resultado;
+}
+
+// Ventana de agenda: el día en que la persona agenda + los AG.diasVentana días hábiles
+// siguientes. Solo si ningún closer tiene espacio en esos días se abre el siguiente
+// día hábil, uno a la vez. Devuelve { dias: ['yyyy-MM-dd'], libres: { ISO: [closers] } }.
+function ventana_(ahora) {
+  var desde = new Date(ahora.getTime() + AG.avisoMinimoMin * 60000);
+  var hasta = new Date(ahora.getTime() + AG.diasAdelante * 86400000);
+  var todos = libresPorSlot_(ahora, hasta, desde);
+  var hoy = Utilities.formatDate(ahora, AG.zona, 'yyyy-MM-dd');
+  var habiles = [];
+  for (var i = 1; i <= AG.diasAdelante; i++) {
+    var dia = new Date(ahora.getTime() + i * 86400000);
+    if (AG.diasHabiles.indexOf(Number(Utilities.formatDate(dia, AG.zona, 'u'))) !== -1) habiles.push(Utilities.formatDate(dia, AG.zona, 'yyyy-MM-dd'));
+  }
+  var claves = Object.keys(todos);
+  var libres = {}, dias = [hoy];
+  for (var n = AG.diasVentana; n <= habiles.length; n++) {
+    dias = [hoy].concat(habiles.slice(0, n));
+    libres = {};
+    claves.forEach(function (s) { if (dias.indexOf(Utilities.formatDate(new Date(s), AG.zona, 'yyyy-MM-dd')) !== -1) libres[s] = todos[s]; });
+    if (Object.keys(libres).length) break;
+  }
+  return { dias: dias, libres: libres };
 }
 
 // { 'ISO inicio': [emails de closers libres] }
@@ -310,6 +332,8 @@ function agendar_(d) {
     var inicio = new Date(d.inicio);
     var minimo = Date.now() + AG.avisoMinimoMin * 60000;
     if (isNaN(inicio.getTime()) || inicio.getTime() < minimo) { resultado = { ok: false, error: 'no_disponible' }; return; }
+    // Solo dentro de la ventana de agenda (día de hoy + 2 hábiles, o la que se abrió por falta de espacio).
+    if (ventana_(new Date()).dias.indexOf(Utilities.formatDate(inicio, AG.zona, 'yyyy-MM-dd')) === -1) { resultado = { ok: false, error: 'no_disponible' }; return; }
     var libres = libresPorSlot_(new Date(inicio.getTime() - 60000), new Date(inicio.getTime() + AG.duracionMin * 60000 + 60000), new Date(minimo))[inicio.toISOString()] || [];
     if (!libres.length) { resultado = { ok: false, error: 'no_disponible' }; return; }
 
@@ -318,7 +342,8 @@ function agendar_(d) {
       : elegirCloser_(libres);
     var fin = new Date(inicio.getTime() + AG.duracionMin * 60000);
     var evento = Calendar.Events.insert({
-      summary: AG.titulo + ' · ' + lead.nombre,
+      summary: lead.nombre + ' - Inteligencia Artificial',
+      colorId: AG.colorEvento,
       description: descripcionCita_(lead),
       start: { dateTime: inicio.toISOString(), timeZone: AG.zona },
       end: { dateTime: fin.toISOString(), timeZone: AG.zona },
