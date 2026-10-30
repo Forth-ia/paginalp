@@ -18,7 +18,9 @@
  *  2. Calcula los horarios libres de los closers leyendo sus Google Calendar.
  *  3. Agenda la llamada (Google Meet) en el calendario del closer, invita al
  *     lead y avisa por correo al closer y al lead.
- *  4. Manda recordatorios por correo 24 h y 1 h antes (función activarRecordatorios).
+ *  4. Manda recordatorios por correo 24 h y 1 h antes (función activarRecordatorios) y,
+ *     en el mismo disparador, mantiene las citas al día con el calendario del closer
+ *     (cancelada → vuelve a "Página - No agendados"; cambiada de hora → se actualiza).
  *
  * importarHistoricos() copia una vez los leads de los Sheets anteriores.
  *
@@ -434,8 +436,10 @@ function avisarLead_(lead, closer) {
   });
 }
 
-// Disparador cada 15 minutos (activarRecordatorios): recordatorio 24 h y 1 h antes.
+// Disparador cada 15 minutos (activarRecordatorios): pone las citas al día con el
+// calendario y manda el recordatorio 24 h y 1 h antes.
 function enviarRecordatorios() {
+  try { sincronizarCitas_(); } catch (err) { console.error('sincronizar citas', err); }
   var hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA_MAESTRO);
   if (!hoja || hoja.getLastRow() < 2) return;
   var valores = hoja.getDataRange().getValues();
@@ -456,6 +460,58 @@ function enviarRecordatorios() {
     });
     hoja.getRange(i + 1, mapa[tipo === '1h' ? 'recordatorio_1h' : 'recordatorio_24h'] + 1).setValue(new Date());
   }
+}
+
+// Espejo del calendario: si la cita se borra o se cancela en el calendario del closer (o el
+// lead rechaza la invitación), el lead vuelve a "Página - No agendados" sin cita; si el closer
+// la cambia de hora, se actualiza. Así el admin, los recordatorios y el agente de WhatsApp no
+// siguen con una cita que ya no existe.
+function sincronizarCitas_() {
+  var hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA_MAESTRO);
+  if (!hoja || hoja.getLastRow() < 2) return;
+  var valores = hoja.getDataRange().getValues();
+  var mapa = mapaColumnas_(valores[0], COLUMNAS_MAESTRO);
+  var desde = Date.now() - 3600000; // solo citas que no han terminado
+  var cambios = [];
+  for (var i = 1; i < valores.length; i++) {
+    var lead = objetoFila_(valores[i], mapa);
+    if (lead.estado !== 'Agendado' || !lead.evento_calendario || !lead.closer || !lead.cita_inicio) continue;
+    if (new Date(lead.cita_inicio).getTime() < desde) continue;
+    var evento = null;
+    try {
+      evento = Calendar.Events.get(lead.closer, lead.evento_calendario);
+    } catch (err) {
+      // Un evento borrado del todo responde "Not Found"; cualquier otro error se reintenta en 15 minutos.
+      if (!/not found|deleted|404|410/i.test(String(err))) { console.warn('No pude leer la cita de ' + lead.email, err); continue; }
+    }
+    var email = String(lead.email).trim().toLowerCase();
+    var invitado = evento && (evento.attendees || []).filter(function (a) { return String(a.email).toLowerCase() === email; })[0];
+    if (!evento || evento.status === 'cancelled' || (invitado && invitado.responseStatus === 'declined')) {
+      cambios.push({ email: email, cancelada: true });
+    } else if (evento.start && evento.start.dateTime && new Date(evento.start.dateTime).getTime() !== new Date(lead.cita_inicio).getTime()) {
+      cambios.push({ email: email, inicio: new Date(evento.start.dateTime), meet: evento.hangoutLink || lead.meet });
+    }
+  }
+  cambios.forEach(function (c) {
+    conLock_(function () {
+      if (c.cancelada) {
+        escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, c.email, {
+          estado: 'No agendado', cita: '', cita_inicio: '', closer: '', meet: '', evento_calendario: '',
+          recordatorio_24h: '', recordatorio_1h: ''
+        });
+        ubicarEnPagina_(c.email, HOJA_NO_AGENDADOS);
+      } else {
+        var campos = {
+          cita: Utilities.formatDate(c.inicio, AG.zona, 'dd/MM/yyyy HH:mm'), cita_inicio: c.inicio.toISOString(),
+          meet: c.meet, recordatorio_24h: '', recordatorio_1h: ''
+        };
+        escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, c.email, campos);
+        escribirFila_(HOJA_AGENDADOS, COLUMNAS_PAGINA, c.email, campos, true);
+      }
+    });
+  });
+  if (cambios.length) CacheService.getScriptCache().removeAll(['horarios', 'horarios_prioridad']);
+  console.log('Citas al día con el calendario: ' + cambios.length + ' cambios');
 }
 
 function activarRecordatorios() {
