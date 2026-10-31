@@ -3,7 +3,7 @@
   var form = document.getElementById('resource-access-form');
   if (!form) return;
   var resource = form.elements.resource ? form.elements.resource.value : 'claude-productivity';
-  if (['stanford-ai-index-2026', 'video-explicativo-hyperframes', 'alternativa-adobe-craft', 'roast-room', 'mods-claude-code', 'obscura-claude-code', 'chatgpt-dots', '5-trucos-ocultos-claude', 'claude-maquina-de-leads', 'sales-coach-assistant', 'everything-claude-code', 'skillspector', 'claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources', 'higgsfield-codex-cli', 'claude-code-codex-plugin', 'fable-orquesta-codex-ejecuta', 'instagram-agent-skill-claude', 'la-maquina-de-uno'].indexOf(resource) === -1) return;
+  if (['4-mcps-agente-real', 'stanford-ai-index-2026', 'video-explicativo-hyperframes', 'alternativa-adobe-craft', 'roast-room', 'mods-claude-code', 'obscura-claude-code', 'chatgpt-dots', '5-trucos-ocultos-claude', 'claude-maquina-de-leads', 'sales-coach-assistant', 'everything-claude-code', 'skillspector', 'claude-productivity', 'claude-for-legal', 'google-skills-claude', 'linkedin-skills', 'claude-human-resources', 'higgsfield-codex-cli', 'claude-code-codex-plugin', 'fable-orquesta-codex-ejecuta', 'instagram-agent-skill-claude', 'la-maquina-de-uno'].indexOf(resource) === -1) return;
   // ManyChat puede marcar el link con ?utm_content=<reel> para saber qué contenido trajo al lead.
   function utmFromLink() {
     var utm = {};

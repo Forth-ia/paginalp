@@ -2,6 +2,7 @@
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const { parseUtm } = require('./_lib/lead.js');
 const RESOURCES = new Map([
+  ['4-mcps-agente-real', '4 MCPs que convierten a Claude en un agente real'],
   ['stanford-ai-index-2026', 'AI Index 2026 de Stanford'],
   ['video-explicativo-hyperframes', 'Video explicativo con HyperFrames'],
   ['alternativa-adobe-craft', 'Alternativa a Adobe con Claude'],

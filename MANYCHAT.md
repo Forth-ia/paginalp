@@ -282,3 +282,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/stanford-ai-index-2026/
 
 La distinción depende de la URL enviada.
+
+
+## 4 MCPs que convierten a Claude en un agente real
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/4-mcps-agente-real/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · 4 MCPs que convierten a Claude en un agente real`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/4-mcps-agente-real/
+
+La distinción depende de la URL enviada.
