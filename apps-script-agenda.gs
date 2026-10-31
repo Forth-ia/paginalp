@@ -103,7 +103,7 @@ function doPost(e) {
   try { datos = JSON.parse(e.postData.contents); } catch (err) { return respuesta_({ ok: false, error: 'json' }); }
   if (!claveValida_(datos.secret)) return respuesta_({ ok: false, error: 'no_autorizado' });
   try {
-    var acciones = { organico: organico_, contacto: contacto_, calificacion: calificacion_, horarios: horarios_, agendar: agendar_, listar: listar_, lead: leadPorEmail_, marcar: marcar_ };
+    var acciones = { organico: organico_, contacto: contacto_, calificacion: calificacion_, horarios: horarios_, agendar: agendar_, avisar_cita: avisarCita_, listar: listar_, lead: leadPorEmail_, marcar: marcar_ };
     if (!acciones[datos.action]) return respuesta_({ ok: false, error: 'accion' });
     return respuesta_(acciones[datos.action](datos));
   } catch (err) {
@@ -334,9 +334,9 @@ function agendar_(d) {
     var inicio = new Date(d.inicio);
     var minimo = Date.now() + AG.avisoMinimoMin * 60000;
     if (isNaN(inicio.getTime()) || inicio.getTime() < minimo) { resultado = { ok: false, error: 'no_disponible' }; return; }
-    // Solo dentro de la ventana de agenda (día de hoy + 2 hábiles, o la que se abrió por falta de espacio).
-    if (ventana_(new Date()).dias.indexOf(Utilities.formatDate(inicio, AG.zona, 'yyyy-MM-dd')) === -1) { resultado = { ok: false, error: 'no_disponible' }; return; }
-    var libres = libresPorSlot_(new Date(inicio.getTime() - 60000), new Date(inicio.getTime() + AG.duracionMin * 60000 + 60000), new Date(minimo))[inicio.toISOString()] || [];
+    // Solo dentro de la ventana de agenda (día de hoy + 2 hábiles, o la que se abrió por falta de
+    // espacio) y con algún closer libre: una sola consulta al calendario para las dos cosas.
+    var libres = ventana_(new Date()).libres[inicio.toISOString()] || [];
     if (!libres.length) { resultado = { ok: false, error: 'no_disponible' }; return; }
 
     var closer = lead.prioridad === 'Alta' && libres.indexOf(AG.prioritario) !== -1
@@ -363,11 +363,21 @@ function agendar_(d) {
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
     ubicarEnPagina_(d.email, HOJA_AGENDADOS);
     CacheService.getScriptCache().removeAll(['horarios', 'horarios_prioridad']);
-    lead = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
+    Object.keys(campos).forEach(function (k) { lead[k] = campos[k]; });
     resultado = { ok: true, cita: citaDe_(lead) };
-    try { avisarCloser_(closer, lead); avisarLead_(lead, closer); } catch (err) { console.error('correo cita', err); }
+    // avisos_aparte: Vercel responde al lead primero y pide los correos con "avisar_cita".
+    if (!d.avisos_aparte) avisarCita_({ email: d.email });
   });
   return resultado;
+}
+
+// Correos de la cita recién agendada (closer y lead). Va aparte para no hacer esperar al lead.
+function avisarCita_(d) {
+  var lead = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
+  if (!lead || lead.estado !== 'Agendado') return { ok: false, error: 'sin_cita' };
+  var closer = AG.closers.filter(function (c) { return c.email === lead.closer; })[0];
+  try { if (closer) avisarCloser_(closer, lead); avisarLead_(lead, closer); } catch (err) { console.error('correo cita', err); }
+  return { ok: true };
 }
 
 // Reparto por turnos entre los closers libres en ese horario.

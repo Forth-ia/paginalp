@@ -255,45 +255,35 @@
     .modal--form{height:auto;max-height:92vh;overflow-y:auto;padding:28px 32px 30px}
     .lf{display:block}
     .lf[hidden]{display:none}
-    .lf__top{display:flex;align-items:center;gap:14px;margin:0 40px 22px 0;min-height:34px}
-    .lf__back{border:0;background:none;padding:0;cursor:pointer;font:600 .85rem var(--sans);color:var(--ink-2)}
-    .lf__back:hover{color:var(--ink)}
-    .lf__count{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
-    .lf__bar{flex:1;height:4px;border-radius:4px;background:var(--sand);overflow:hidden}
-    .lf__bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s cubic-bezier(.32,.72,0,1)}
-    .lf__step{border:0;margin:0;padding:0;min-width:0}
-    .lf__step:not(.is-current){display:none}
-    .lf__q{font-family:var(--serif);font-weight:600;font-size:clamp(1.2rem,2.2vw,1.45rem);line-height:1.25;color:var(--ink);padding:0;margin-bottom:20px}
-    .lf__opts{display:grid;gap:10px}
-    .lf__opt{display:flex;align-items:center;gap:12px;padding:15px 16px;border:1px solid var(--line);border-radius:12px;cursor:pointer;font-size:.97rem;color:var(--ink);background:#fff;transition:border-color .2s,background .2s}
-    .lf__opt:hover{border-color:rgba(217,119,87,.5)}
-    .lf__opt input{appearance:none;-webkit-appearance:none;flex-shrink:0;width:18px;height:18px;margin:0;border:1.5px solid var(--ink-3);border-radius:50%;display:grid;place-content:center}
-    .lf__opt input::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .15s}
-    .lf__opt input:checked{border-color:var(--accent)}
-    .lf__opt input:checked::before{transform:scale(1)}
-    .lf__opt:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
-    .lf__opt input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-    .lf textarea,.lf__field input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:10px;font:400 1rem var(--sans);color:var(--ink);background:#fff}
-    .lf textarea{resize:vertical;min-height:110px}
-    .lf textarea:focus,.lf__field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-    .lf__field{display:grid;gap:6px;font-size:.85rem;font-weight:600;color:var(--ink-2);margin-bottom:14px}
-    .lf__tel{display:grid;grid-template-columns:minmax(0,172px) 1fr;gap:8px}
-    .lf__tel select{width:100%;padding:13px 10px;border:1px solid var(--line);border-radius:10px;font:400 .95rem var(--sans);color:var(--ink);background:#fff}
-    .lf__tel select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+    .lf__title{font-weight:700;font-size:1.15rem;line-height:1.3;color:var(--ink);margin:0 0 6px}
+    .lf__intro{color:var(--ink-2);font-size:.92rem;margin:0 0 20px}
+    .lf__field{display:grid;gap:7px;margin-bottom:16px;min-width:0}
+    .lf__label{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.35}
+    .lf__label i{font-style:normal;color:var(--accent-deep)}
+    .lf__row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .lf input:not([type="radio"]),.lf select,.lf textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font:400 .97rem var(--sans);color:var(--ink);background:#FAF9F7;transition:border-color .2s,box-shadow .2s,background .2s}
+    .lf input:focus,.lf select:focus,.lf textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:#fff}
+    .lf select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%235B5752' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+    .lf select:invalid,.lf select.is-empty{color:var(--ink-3)}
+    .lf select option{color:var(--ink)}
+    .lf textarea{resize:vertical;min-height:64px}
+    .lf__tel{display:grid;grid-template-columns:minmax(0,184px) 1fr;gap:8px}
+    .lf__field.is-invalid input,.lf__field.is-invalid select,.lf__field.is-invalid textarea{border-color:var(--accent-deep);background:#fff}
+    .lf__more{animation:lfreveal .45s cubic-bezier(.32,.72,0,1)}
+    .lf__more[hidden]{display:none}
+    @keyframes lfreveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
     .lf__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-    .lf__err{display:none;color:var(--accent-deep);font-size:.87rem;margin:8px 0 0}
-    .lf__step.is-invalid .lf__err{display:block}
-    .lf__next{width:100%;margin-top:18px}
-    .lf__legal{display:block;text-align:center;margin-top:12px;font-size:.78rem;color:var(--ink-3)}
+    .lf__err{color:var(--accent-deep);font-size:.87rem;margin:0 0 12px}
+    .lf__err[hidden]{display:none}
+    .lf__next{width:100%;margin-top:14px}
+    .lf__legal{display:block;font-size:.76rem;color:var(--ink-3);line-height:1.45}
     .lf__legal a{text-decoration:underline}
-    .lf__wait{text-align:center;padding:40px 0;color:var(--ink-2)}
     .lf__spin{display:inline-block;width:30px;height:30px;border:3px solid var(--sand);border-top-color:var(--accent);border-radius:50%;animation:lfspin .8s linear infinite;margin-bottom:14px}
     @keyframes lfspin{to{transform:rotate(360deg)}}
     .lf__notfit{text-align:center;padding:24px 4px 6px;display:grid;gap:18px;justify-items:center}
     .lf__notfit[hidden]{display:none}
     .lf__link{font-weight:600;color:var(--accent-deep)}
     .lf__link[hidden]{display:none}
-    .lf__intro{color:var(--ink-2);font-size:.95rem;margin:-8px 0 20px}
     .lf__check{width:52px;height:52px;border-radius:50%;display:grid;place-content:center;background:var(--accent-soft);color:var(--accent-deep);font-size:1.5rem;font-weight:700}
     /* --- agenda integrada (estilo iClosed) --- */
     .book section{padding:0}
@@ -651,46 +641,38 @@
       </div>
       <div class="book" id="agenda">
         <div class="book__steps" aria-hidden="true">
-          <span class="is-on" data-bstep="1">Tus datos y preguntas</span>
+          <span class="is-on" data-bstep="1">Completa el formulario</span>
           <span data-bstep="2">Agenda tu llamada</span>
         </div>
         <div class="book__body">
           <div class="book__left">
             <form class="lf" id="leadForm" novalidate>
-        <div class="lf__top">
-          <button type="button" class="lf__back" id="lfBack" hidden>&larr; Atr&aacute;s</button>
-          <span class="lf__count" id="lfCount"></span>
-          <div class="lf__bar" aria-hidden="true"><i id="lfBar"></i></div>
-        </div>
-        <fieldset class="lf__step" data-step>
-          <legend class="lf__q">Cu&eacute;ntanos sobre ti</legend>
-          <p class="lf__intro">Tus datos y 4 preguntas cortas. Si el programa encaja contigo, eliges el horario aqu&iacute; mismo.</p>
-          <label class="lf__field">Nombre completo<input name="nombre" autocomplete="name" maxlength="120" placeholder="Tu nombre"></label>
-          <label class="lf__field">Email<input name="email" type="email" autocomplete="email" maxlength="254" placeholder="tu@email.com"></label>
-          <div class="lf__field">
-            <label for="lfTel">WhatsApp</label>
-            <div class="lf__tel">
-              <select name="pais" aria-label="Pa&iacute;s" id="lfPais"></select>
-              <input id="lfTel" name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="20" placeholder="300 000 0000">
-            </div>
-          </div>
-          <input class="lf__hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <p class="lf__err" data-err>Revisa tu nombre, email y n&uacute;mero de WhatsApp.</p>
-          <button type="button" class="btn btn--wide lf__next" data-contact>Continuar</button>
-          <small class="lf__legal">Al continuar aceptas nuestra <a href="/politica-de-privacidad/" target="_blank" rel="noopener">pol&iacute;tica de privacidad</a>.</small>
-        </fieldset>
-        <div id="lfQuestions"></div>
-        <fieldset class="lf__step" data-step>
-          <legend class="lf__q">&iquest;Cu&aacute;l es el principal reto o tarea que hoy te quita m&aacute;s tiempo y te gustar&iacute;a resolver con ayuda de la IA?</legend>
-          <textarea name="reto" rows="4" maxlength="1000" placeholder="Cu&eacute;ntalo con tus palabras"></textarea>
-          <p class="lf__err" data-err>Cu&eacute;ntanos un poco m&aacute;s para preparar tu conversaci&oacute;n.</p>
-          <button type="submit" class="btn btn--wide lf__next">Enviar mis respuestas</button>
-        </fieldset>
-        <div class="lf__step lf__wait" data-wait hidden>
-          <span class="lf__spin" aria-hidden="true"></span>
-          <p>Revisando tus respuestas&hellip;</p>
-        </div>
-      </form>
+              <h3 class="lf__title">Agenda tu conversaci&oacute;n con Luciano</h3>
+              <p class="lf__intro">30 minutos por Google Meet. Completa tus datos y elige tu horario aqu&iacute; mismo.</p>
+              <div class="lf__field" data-field="telefono">
+                <label class="lf__label" for="lfTel">WhatsApp <i>*</i></label>
+                <div class="lf__tel">
+                  <select name="pais" aria-label="Pa&iacute;s" id="lfPais"></select>
+                  <input id="lfTel" name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="20" placeholder="300 000 0000">
+                </div>
+              </div>
+              <div class="lf__row">
+                <div class="lf__field" data-field="nombre"><label class="lf__label" for="lfNombre">Nombre <i>*</i></label><input id="lfNombre" name="nombre" autocomplete="given-name" maxlength="60" placeholder="Nombre"></div>
+                <div class="lf__field" data-field="apellido"><label class="lf__label" for="lfApellido">Apellido <i>*</i></label><input id="lfApellido" name="apellido" autocomplete="family-name" maxlength="60" placeholder="Apellido"></div>
+              </div>
+              <div class="lf__field" data-field="email"><label class="lf__label" for="lfEmail">Email <i>*</i></label><input id="lfEmail" name="email" type="email" autocomplete="email" maxlength="254" placeholder="tu@email.com"></div>
+              <input class="lf__hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <div class="lf__more" id="lfMore" hidden>
+                <div id="lfQuestions"></div>
+                <div class="lf__field" data-field="reto">
+                  <label class="lf__label" for="lfReto">&iquest;Qu&eacute; tarea o reto te gustar&iacute;a resolver con IA? <i>*</i></label>
+                  <textarea id="lfReto" name="reto" rows="2" maxlength="1000" placeholder="Ej.: responder clientes, hacer reportes, crear contenido&hellip;"></textarea>
+                </div>
+              </div>
+              <p class="lf__err" id="lfErr" role="alert" hidden></p>
+              <small class="lf__legal">Al continuar aceptas que guardemos tus datos seg&uacute;n nuestra <a href="/politica-de-privacidad/" target="_blank" rel="noopener">pol&iacute;tica de privacidad</a>.</small>
+              <button type="submit" class="btn btn--wide lf__next">Continuar &rsaquo;</button>
+            </form>
             <div class="book__summary" id="lfSummary" hidden>
               <span class="kicker">Tu conversaci&oacute;n</span>
               <h3 class="h3">Conversaci&oacute;n con Luciano Musella</h3>
@@ -796,7 +778,7 @@
     document.querySelectorAll('[data-open-waitlist]').forEach(function(el){el.addEventListener('click',function(e){
       e.preventDefault();
       document.getElementById('agenda').scrollIntoView({behavior:'smooth',block:'start'});
-      setTimeout(function(){var f=document.querySelector('#leadForm .lf__step.is-current input:not([type=radio]):not(.lf__hp), #leadForm .lf__step.is-current textarea');if(f)f.focus({preventScroll:true});},600);
+      setTimeout(function(){var f=document.querySelector('#leadForm:not([hidden]) #lfTel');if(f)f.focus({preventScroll:true});},600);
     })});
   </script>
   <script src="/assets/js/aprende-qualify.js"></script>

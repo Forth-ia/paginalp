@@ -1,7 +1,9 @@
-/* /aprende — agenda integrada en la sección "Cómo empezar" (estilo iClosed).
-   1. Contacto: queda guardado en el Sheets MAESTRO aunque abandone (FormularioIniciado).
-   2. Preguntas: calificado -> Lead y se desbloquea el calendario de la derecha;
-      no calificado -> LeadNoCalificado y curso gratis. Prioritarios: solo horarios de admin@getforth.ai.
+/* /aprende — agenda integrada en la sección "Cómo empezar" (estilo acquisition.com).
+   1. Contacto: apenas está completo se despliegan las preguntas en el mismo panel, y queda
+      guardado en el Sheets MAESTRO aunque abandone (FormularioIniciado).
+   2. Preguntas: la regla de aprende-qualify.js decide en el navegador, así el calendario abre
+      al instante; el servidor guarda y manda Lead / LeadNoCalificado en segundo plano.
+      Prioritarios: solo horarios de admin@getforth.ai.
    3. Agenda: horario libre de los closers -> Schedule. Cada evento va por pixel + API de
       Conversiones con el mismo event_id. */
 (function () {
@@ -13,10 +15,7 @@
   var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
   var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
   var book = d.getElementById('agenda'), summary = d.getElementById('lfSummary');
-  // No se mueve el foco al cargar la página: solo cuando la persona ya está usando la agenda.
-  var focusOk = false;
-  book.addEventListener('pointerdown', function () { focusOk = true; });
-  book.addEventListener('keydown', function () { focusOk = true; });
+  var more = d.getElementById('lfMore'), errBox = d.getElementById('lfErr'), el = form.elements;
 
   // UTMs de la visita: se conservan si la persona navega antes de llenar el formulario.
   var utm = {};
@@ -27,41 +26,27 @@
     else utm = JSON.parse(sessionStorage.getItem('ap_utm') || '{}');
   } catch (e) {}
 
-  // Preguntas de opción múltiple, generadas desde aprende-qualify.js.
+  // Preguntas como listas desplegables, generadas desde aprende-qualify.js.
   var holder = d.getElementById('lfQuestions');
   Object.keys(Q).forEach(function (name) {
-    var html = '<fieldset class="lf__step" data-step><legend class="lf__q">' + Q[name].label + '</legend><div class="lf__opts">';
-    Object.keys(Q[name].options).forEach(function (value) {
-      html += '<label class="lf__opt"><input type="radio" name="' + name + '" value="' + value + '"><span>' + Q[name].options[value] + '</span></label>';
-    });
-    holder.insertAdjacentHTML('beforeend', html + '</div></fieldset>');
+    var html = '<div class="lf__field" data-field="' + name + '"><label class="lf__label" for="lf_' + name + '">' + Q[name].label + ' <i>*</i></label>' +
+      '<select id="lf_' + name + '" name="' + name + '" class="is-empty"><option value="">Selecciona</option>';
+    Object.keys(Q[name].options).forEach(function (value) { html += '<option value="' + value + '">' + Q[name].options[value] + '</option>'; });
+    holder.insertAdjacentHTML('beforeend', html + '</select></div>');
   });
 
-  form.elements.pais.innerHTML = w.aprendeQualify.COUNTRIES.map(function (c) {
-    return '<option value="' + c[0] + '">' + c[0] + ' (+' + c[1] + ')</option>';
+  el.pais.innerHTML = w.aprendeQualify.COUNTRIES.map(function (c) {
+    return '<option value="' + c[0] + '">' + c[0] + ' +' + c[1] + '</option>';
   }).join('');
 
-  var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
-  var wait = form.querySelector('[data-wait]');
-  var back = d.getElementById('lfBack'), count = d.getElementById('lfCount'), bar = d.getElementById('lfBar');
-  var current = 0, sending = false, contact = null;
+  var contact = null, sentKey = '', qualifyReq = null, retryQualify = null, sending = false;
 
-  function show(index) {
-    current = index;
-    steps.forEach(function (step, i) { step.classList.toggle('is-current', i === index); step.classList.remove('is-invalid'); });
-    count.textContent = 'Paso ' + (index + 1) + ' de ' + steps.length;
-    bar.style.width = ((index + 1) / steps.length * 100) + '%';
-    back.hidden = index === 0;
-    var field = steps[index].querySelector('input:checked, textarea, input:not([type="radio"]):not(.lf__hp), input');
-    if (field && focusOk) field.focus({ preventScroll: true });
-  }
   function bookStep(n) {
-    book.querySelectorAll('[data-bstep]').forEach(function (el) { el.classList.toggle('is-on', Number(el.getAttribute('data-bstep')) <= n); });
+    book.querySelectorAll('[data-bstep]').forEach(function (x) { x.classList.toggle('is-on', Number(x.getAttribute('data-bstep')) <= n); });
   }
-  function invalid(step) { step.classList.add('is-invalid'); return false; }
   function newId(prefix) { return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
   function firstName() { return contact.nombre.split(' ')[0]; }
-  function names(root) { root.querySelectorAll('[data-name]').forEach(function (el) { el.textContent = firstName(); }); }
+  function names(root) { root.querySelectorAll('[data-name]').forEach(function (x) { x.textContent = firstName(); }); }
   function pixel(kind, name, params, id) {
     if (typeof w.fbq !== 'function') return;
     try { w.fbq(kind, name, params, { eventID: id }); } catch (err) {}
@@ -88,98 +73,134 @@
   }
 
   /* ---------- paso 1: contacto ---------- */
-  form.querySelector('[data-contact]').addEventListener('click', function () {
-    var el = form.elements, step = steps[current];
-    var data = { nombre: el.nombre.value.trim(), email: el.email.value.trim(), telefono: el.telefono.value.trim(), pais: el.pais.value };
-    var digits = data.telefono.replace(/\D/g, '');
-    if (data.nombre.length < 2 || /^[=+@-]/.test(data.nombre) || !EMAIL_RE.test(data.email) ||
-        !/^[+\d\s().-]+$/.test(data.telefono) || digits.length < 6 || digits.length > 15) return invalid(step);
-    var changed = !contact || contact.email !== data.email || contact.telefono !== data.telefono || contact.nombre !== data.nombre;
-    contact = data;
-    if (changed && !el.website.value) {
-      var id = newId('form');
-      pixel('trackCustom', 'FormularioIniciado', { content_name: 'aprende' }, id);
-      post('/api/aprende-lead', withContact({ step: 'contacto', event_id: id })).catch(function () {});
-    }
-    loadSlots(); // el calendario queda listo mientras responde las preguntas
-    show(current + 1);
-  });
+  // Campos de contacto que están mal (vacío = todo bien).
+  function contactErrors() {
+    var tel = el.telefono.value.trim(), digits = tel.replace(/\D/g, ''), email = el.email.value.trim(), bad = [];
+    if (!/^[+\d\s().-]+$/.test(tel) || digits.length < 6 || digits.length > 15) bad.push('telefono');
+    ['nombre', 'apellido'].forEach(function (k) {
+      var v = el[k].value.trim();
+      if (!v || /^[=+@-]/.test(v)) bad.push(k);
+    });
+    if (!EMAIL_RE.test(email) || /^[=+@-]/.test(email)) bad.push('email');
+    return bad;
+  }
+  function readContact() {
+    return { nombre: (el.nombre.value.trim() + ' ' + el.apellido.value.trim()).trim(), email: el.email.value.trim(),
+      telefono: el.telefono.value.trim(), pais: el.pais.value };
+  }
+  function mark(fields) {
+    form.querySelectorAll('[data-field]').forEach(function (f) { f.classList.toggle('is-invalid', fields.indexOf(f.getAttribute('data-field')) !== -1); });
+  }
+  function showErr(text) { errBox.textContent = text || ''; errBox.hidden = !text; }
 
-  form.addEventListener('change', function (e) {
-    if (e.target.type !== 'radio') return;
-    setTimeout(function () { show(current + 1); }, 220);
+  // Con el contacto completo se despliegan las preguntas, sin botón de por medio.
+  function reveal() {
+    if (!more.hidden || contactErrors().length) return;
+    more.hidden = false;
+    loadSlots();
+  }
+  // FormularioIniciado + guardado en MAESTRO, una vez por cada contacto distinto.
+  function saveContact() {
+    if (contactErrors().length || el.website.value) return;
+    contact = readContact();
+    var key = [contact.nombre, contact.email, contact.telefono, contact.pais].join('|');
+    if (key === sentKey) return;
+    sentKey = key;
+    var id = newId('form');
+    pixel('trackCustom', 'FormularioIniciado', { content_name: 'aprende' }, id);
+    post('/api/aprende-lead', withContact({ step: 'contacto', event_id: id })).catch(function () {});
+  }
+
+  function answers() {
+    return { aplica: el.aplica.value, inicio: el.inicio.value, inversion: el.inversion.value, reto: el.reto.value.trim() };
+  }
+  // Si las respuestas ya lo hacen prioritario, sus horarios se van cargando.
+  function prefetchPriority() { if (priority(answers())) loadSlots(false, true); }
+
+  form.addEventListener('input', function (e) {
+    var f = e.target.closest('[data-field]');
+    if (f) f.classList.remove('is-invalid');
+    showErr('');
+    reveal();
   });
-  back.addEventListener('click', function () { if (current > 0 && !sending) show(current - 1); });
-  form.addEventListener('input', function () { steps[current].classList.remove('is-invalid'); });
-  d.querySelectorAll('[data-open-waitlist]').forEach(function (el) { el.addEventListener('click', function () { focusOk = true; }); });
+  form.addEventListener('change', function (e) {
+    if (e.target.tagName === 'SELECT') e.target.classList.toggle('is-empty', !e.target.value);
+    reveal();
+    if (more.contains(e.target)) prefetchPriority();
+  });
+  // Al pasar a las preguntas (o salir del contacto ya completo) queda guardado el contacto.
+  form.addEventListener('focusout', function () {
+    setTimeout(function () { if (!more.hidden) saveContact(); }, 0);
+  });
 
   /* ---------- paso 2: calificación ---------- */
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (sending) return;
-    var step = steps[current];
-    if (!contact) return show(0);
-    var answers = {
-      aplica: (form.querySelector('input[name="aplica"]:checked') || {}).value,
-      inicio: (form.querySelector('input[name="inicio"]:checked') || {}).value,
-      inversion: (form.querySelector('input[name="inversion"]:checked') || {}).value,
-      reto: form.elements.reto.value.trim()
-    };
-    if (answers.reto.length < 3) return invalid(step);
-    // Si falta una respuesta (no debería pasar), vuelve a esa pregunta.
-    var missing = ['aplica', 'inicio', 'inversion'].findIndex(function (k) { return !answers[k]; });
-    if (missing !== -1) return show(missing + 1);
-
+    var bad = contactErrors();
+    if (bad.length) { mark(bad); showErr('Revisa los campos marcados.'); return; }
+    if (more.hidden) { more.hidden = false; loadSlots(); }
+    var a = answers();
+    bad = ['aplica', 'inicio', 'inversion'].filter(function (k) { return !a[k]; });
+    if (a.reto.length < 3) bad.push('reto');
+    if (bad.length) {
+      mark(bad); showErr('Responde las preguntas marcadas para continuar.');
+      var first = form.querySelector('[data-field="' + bad[0] + '"] select, [data-field="' + bad[0] + '"] textarea');
+      if (first) first.focus();
+      return;
+    }
+    mark([]); showErr('');
+    saveContact();
+    contact = readContact();
     sending = true;
-    var data = withContact(answers);
-    data.step = 'calificacion'; data.event_id = newId('lead'); data.website = form.elements.website.value;
-    steps.forEach(function (s) { s.classList.remove('is-current'); });
-    back.hidden = true; wait.hidden = false;
 
-    var qualified = qualify(answers);
+    var data = withContact(a);
+    data.step = 'calificacion'; data.event_id = newId('lead'); data.website = el.website.value;
+    var qualified = qualify(a);
     if (!data.website) {
       if (qualified) pixel('track', 'Lead', { content_name: 'aprende', lead_status: 'calificado' }, data.event_id);
       else pixel('trackCustom', 'LeadNoCalificado', { content_name: 'aprende', lead_status: 'no_calificado' }, data.event_id);
     }
-    var finished = false;
-    function finish(serverQualified) {
-      if (finished) return; finished = true;
-      if (typeof serverQualified === 'boolean') qualified = serverQualified;
-      form.hidden = true;
-      if (qualified) return openCalendar(priority(answers));
-      var notFit = d.getElementById('lfNotFit');
-      cal.hidden = true; book.classList.add('book--single');
-      names(notFit); notFit.hidden = false;
-      book.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    // Si el servidor tarda (arranque en frío de Sheets), la persona sigue con la regla local.
-    setTimeout(finish, 9000);
-    post('/api/aprende-lead', data)
-      .then(function (r) { return r.json(); })
-      .then(function (r) { finish(r && r.ok ? r.qualified : undefined); })
-      .catch(function () { finish(); });
+    // Se guarda en segundo plano (el Sheets acepta contacto y calificación en cualquier orden);
+    // agendar espera a que termine.
+    var sendQualify = function () {
+      return post('/api/aprende-lead', data).then(function (r) { if (!r.ok) throw new Error('lead'); return r.json(); });
+    };
+    retryQualify = sendQualify;
+    qualifyReq = sendQualify().catch(function () { return sendQualify(); });
+    qualifyReq.catch(function () {});
+
+    form.hidden = true;
+    if (qualified) return openCalendar(priority(a));
+    var notFit = d.getElementById('lfNotFit');
+    cal.hidden = true; book.classList.add('book--single');
+    names(notFit); notFit.hidden = false;
+    book.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   /* ---------- paso 3: calendario ---------- */
   var cal = d.getElementById('lfCal');
   var $ = function (sel) { return cal.querySelector(sel); };
-  var slotsPromise = null, byDay = {}, monthCursor = null, firstMonth = null, lastMonth = null, selectedDay = '', selectedSlot = '', booking = false;
+  var byDay = {}, monthCursor = null, firstMonth = null, lastMonth = null, selectedDay = '', selectedSlot = '', booking = false;
   var TZ = (Intl.DateTimeFormat().resolvedOptions().timeZone || 'tu zona').replace(/_/g, ' ');
   var dayKey = function (date) { return date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2); };
   var upper = function (s) { return s.charAt(0).toUpperCase() + s.slice(1); };
   var fmtDay = function (date) { return date.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' }); };
   var fmtTime = function (date) { return date.toLocaleTimeString('es', { hour: 'numeric', minute: '2-digit' }); };
 
-  // prio: solo horarios del closer prioritario (admin@getforth.ai).
-  var prioritySlots = false;
-  function loadSlots(force) {
-    if (slotsPromise && !force) return slotsPromise;
-    var qs = [prioritySlots ? 'p=1' : '', force ? 't=' + Date.now() : ''].filter(Boolean).join('&');
-    slotsPromise = fetch('/api/aprende-agenda' + (qs ? '?' + qs : ''))
+  // Horarios generales y los del closer prioritario (admin@getforth.ai), cada uno se pide una
+  // sola vez y antes de que la persona termine el formulario. force: saltar el caché (409).
+  var slotsReq = {}, prioritySlots = false;
+  function loadSlots(force, prio) {
+    var key = prio ? 'p' : 'g';
+    if (slotsReq[key] && !force) return slotsReq[key];
+    var qs = [prio ? 'p=1' : '', force ? 't=' + Date.now() : ''].filter(Boolean).join('&');
+    var req = fetch('/api/aprende-agenda' + (qs ? '?' + qs : ''))
       .then(function (r) { if (!r.ok) throw new Error('slots'); return r.json(); })
       .then(function (r) { return r.slots || []; });
-    slotsPromise.catch(function () { slotsPromise = null; });
-    return slotsPromise;
+    slotsReq[key] = req;
+    req.catch(function () { if (slotsReq[key] === req) delete slotsReq[key]; });
+    return req;
   }
 
   // El calendario se ve (bloqueado) desde que la sección se acerca a la pantalla.
@@ -199,10 +220,10 @@
     $('[data-cal-closed]').hidden = true; $('[data-cal-open]').hidden = false;
     summary.querySelector('[data-summary-who]').textContent = contact.nombre + ' · ' + contact.email;
     summary.hidden = false; bookStep(2);
+    prioritySlots = prio;
     cal.classList.remove('is-locked'); cal.classList.add('is-loading'); $('[data-cal-loading]').hidden = false;
     if (w.matchMedia('(max-width: 900px)').matches) cal.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    var request = prio ? (prioritySlots = true, loadSlots(true)) : loadSlots();
-    request.catch(function () { return loadSlots(true); }).then(renderSlots, function () {
+    loadSlots(false, prio).catch(function () { return loadSlots(true, prio); }).then(renderSlots, function () {
       showError('No pudimos cargar los horarios. Recarga la página o escríbenos por WhatsApp para agendar.');
     });
   }
@@ -274,14 +295,18 @@
     if (booking || !selectedSlot) return;
     booking = true;
     var button = $('[data-book]'), label = button.textContent, id = newId('schedule');
-    button.disabled = true; button.textContent = 'Agendando…'; showError('');
-    post('/api/aprende-agenda', withContact({ inicio: selectedSlot, event_id: id }))
+    button.disabled = true; button.textContent = 'Confirmando tu llamada…'; showError('');
+    // Primero tiene que quedar guardada la calificación (normalmente ya terminó).
+    // Si no se pudo guardar (sin conexión), se reintenta aquí.
+    qualifyReq = (qualifyReq || Promise.resolve()).catch(function () { return retryQualify(); });
+    qualifyReq.catch(function () {})
+      .then(function () { return post('/api/aprende-agenda', withContact({ inicio: selectedSlot, event_id: id })); })
       .then(function (r) { return r.json().then(function (body) { return { status: r.status, body: body }; }); })
       .then(function (r) {
         if (r.status === 409) {
           selectedSlot = '';
           showError('Ese horario se acaba de ocupar. Elige otro, por favor.');
-          return loadSlots(true).then(renderSlots);
+          return loadSlots(true, prioritySlots).then(renderSlots);
         }
         if (!r.body.ok) throw new Error('book');
         pixel('track', 'Schedule', { content_name: 'aprende' }, id);
@@ -304,5 +329,4 @@
     panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  show(0);
 })();

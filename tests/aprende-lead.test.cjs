@@ -131,7 +131,7 @@ test('still answers the visitor when Meta and the sheet fail, without recording 
 test('lists free slots from the agenda script with a short CDN cache', async () => {
   const res = await run(agendaHandler, { method: 'GET' }, () => ({ ok: true, slots: ['2026-11-02T16:00:00.000Z'], duracion: 30 }));
   assert.deepEqual(res.body, { ok: true, slots: ['2026-11-02T16:00:00.000Z'], duracion: 30 });
-  assert.match(res.headers['Cache-Control'], /s-maxage=30/);
+  assert.match(res.headers['Cache-Control'], /s-maxage=60/);
 });
 
 test('books a qualified lead and sends Schedule with the same person data', async () => {
@@ -140,6 +140,10 @@ test('books a qualified lead and sends Schedule with the same person data', asyn
   assert.deepEqual(res.body, { ok: true, cita });
   assert.equal(res.agenda[0].action, 'agendar');
   assert.equal(res.agenda[0].email, 'ana@example.com');
+  // Los correos se piden aparte para no hacer esperar al lead.
+  assert.equal(res.agenda[0].avisos_aparte, true);
+  assert.equal(res.agenda[1].action, 'avisar_cita');
+  assert.equal(res.agenda[1].email, 'ana@example.com');
   assert.equal(res.meta[0].event_name, 'Schedule');
   assert.equal(res.meta[0].event_id, 'schedule-abc123');
   assert.deepEqual(res.meta[0].user_data.em, [sha('ana@example.com')]);
