@@ -300,3 +300,35 @@ test('the popup in site.js offers the same options the API accepts', () => {
     }
   }
 });
+
+test('a personal booking link books without the form and fills Meta from the sheet', async () => {
+  process.env.AGENDA_LINK_SECRET = 'link-secret';
+  const { makeToken, readToken, BASE_URL } = require('../api/_lib/booking-link.js');
+  const t = makeToken(' Ana@Example.com ');
+  assert.equal(readToken(t), 'ana@example.com');
+  assert.equal(readToken(t.slice(0, -1) + (t.endsWith('A') ? 'B' : 'A')), null);
+  assert.equal(readToken(makeToken('ana@example.com', 'otro-secreto')), null);
+  assert.equal(BASE_URL, 'https://www.lucianomusella.com/agendar/');
+  const cita = { inicio: '2026-10-29T15:00:00.000Z', meet: 'https://meet.google.com/x', closer: 'Luciano' };
+  const agenda = action => action === 'agendar' ? { ok: true, cita, nombre: 'Ana María', telefono: '3214056645', pais: 'Colombia' } : { ok: true };
+  const res = await run(agendaHandler, { method: 'POST', body: { t, inicio: '2026-10-29T15:00:00.000Z', event_id: 'schedule-abc123' } }, agenda);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.nombre, 'Ana María');
+  assert.equal(res.agenda[0].action, 'agendar');
+  assert.equal(res.agenda[0].email, 'ana@example.com');
+  assert.equal(res.agenda[0].directo, true);
+  assert.equal(res.meta[0].event_name, 'Schedule');
+  assert.equal(res.meta[0].event_id, 'schedule-abc123');
+  assert.deepEqual(res.meta[0].user_data.ph, [sha('573214056645')]);
+  // El WhatsApp del pop-up ya viene con indicativo
+  const popup = await run(agendaHandler, { method: 'POST', body: { t, inicio: '2026-10-29T15:00:00.000Z' } },
+    action => action === 'agendar' ? { ok: true, cita, nombre: 'Ana', telefono: '573214056645', pais: 'Colombia' } : { ok: true });
+  assert.deepEqual(popup.meta[0].user_data.ph, [sha('573214056645')]);
+  const bad = await run(agendaHandler, { method: 'POST', body: { t: t + 'x', inicio: '2026-10-29T15:00:00.000Z' } });
+  assert.equal(bad.statusCode, 400);
+  assert.equal(bad.body.error, 'link');
+  assert.equal(bad.calls.length, 0);
+  // Desde /aprende sigue sin el permiso de link directo
+  const normal = await run(agendaHandler, { method: 'POST', body: { ...contact, inicio: '2026-10-29T15:00:00.000Z' } }, agenda);
+  assert.equal(normal.agenda[0].directo, false);
+});

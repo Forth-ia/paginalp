@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Elige el d&iacute;a y la hora de tu llamada con el equipo de Luciano Musella.">
+  <title>Agenda tu llamada | Luciano Musella</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '950144990819131');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=950144990819131&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <style>
+    /* /agendar/?t=…: link personal que manda el agente de WhatsApp. Sin formulario: solo el
+       calendario (mismo diseño que /aprende) y la confirmación. */
+    :root{
+      --navy:#12112E;--blue:#3B3BFF;--sky:#E5F5F8;--orange:#FF5A1F;--orange-deep:#E0470F;
+      --ink:#12112E;--ink-2:#45446A;--ink-3:#6F6E8E;--line:rgba(18,17,46,.10);--line-strong:rgba(18,17,46,.18);
+      --night:linear-gradient(180deg,#12112E 0%,#191873 64%,#2B2BD6 140%);
+      --serif:'Source Serif 4',Georgia,serif;--sans:'Figtree',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{margin:0;min-height:100vh;background:var(--sky);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    h1,h2,h3,p{margin:0}
+    [hidden]{display:none!important}
+    :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+    .wrap{width:min(760px,100% - 32px);margin-inline:auto}
+
+    .top{background:var(--night);color:#fff;padding:22px 0 120px;text-align:center}
+    .top__bar{display:flex;justify-content:center;margin-bottom:clamp(30px,5vw,48px)}
+    .brand{display:inline-flex;align-items:flex-start;font:800 21px/1 var(--sans);letter-spacing:-.03em;color:#fff;white-space:nowrap}
+    .brand::after{content:"";width:.5em;height:.5em;margin:-.05em 0 0 .08em;background:var(--orange);
+      -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 2 6.5 8.2l5.3 2.3-9.3 11 3 2.5 9.4-11 2.4 5.3z'/%3E%3C/svg%3E") center/contain no-repeat;
+      mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 2 6.5 8.2l5.3 2.3-9.3 11 3 2.5 9.4-11 2.4 5.3z'/%3E%3C/svg%3E") center/contain no-repeat}
+    .top h1{font:600 clamp(30px,4.4vw,46px)/1.08 var(--serif);letter-spacing:-.025em;text-wrap:balance}
+    .top p{margin:14px auto 0;max-width:46ch;color:rgba(255,255,255,.8);font-size:clamp(16px,1.4vw,18px)}
+    .facts{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 20px;margin-top:20px;font-size:15px;color:rgba(255,255,255,.86)}
+    .facts span::before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:50%;background:var(--orange);vertical-align:2px}
+
+    .card{position:relative;margin:-88px auto 48px;background:#fff;border-radius:24px;padding:30px 32px 32px;box-shadow:0 50px 90px -50px rgba(18,17,46,.55)}
+    @media (max-width:640px){.top{padding-bottom:100px}.card{padding:24px 18px 26px;border-radius:20px;margin-top:-76px}}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 28px;border:0;border-radius:12px;cursor:pointer;
+      background:var(--orange);color:var(--navy);font:700 17px/1 var(--sans);letter-spacing:-.01em;transition:transform .3s var(--ease),background-color .2s}
+    .btn:hover{background:#FF7140;transform:translateY(-1px)}
+    .btn:active{transform:scale(.98)}
+    .btn--wide{width:100%}
+    .btn[disabled]{opacity:.6;cursor:default;transform:none}
+
+    /* calendario (igual que /aprende) */
+    .cal__title{font:600 clamp(21px,1.9vw,25px)/1.25 var(--serif);letter-spacing:-.015em;margin-bottom:6px}
+    .cal__sub{color:var(--ink-2);font-size:15px;margin:0 0 22px}
+    .cal__grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:start}
+    .cal__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:16px}
+    .cal__nav{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1.2rem;color:var(--ink-2)}
+    .cal__nav:disabled{opacity:.35;cursor:default}
+    .cal__dow,.cal__days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+    .cal__dow span{font-size:12px;font-weight:700;color:var(--ink-3);padding-bottom:4px}
+    .cal__days button{aspect-ratio:1;border:0;border-radius:50%;font:600 15px var(--sans);background:transparent;color:#A3A2B8;cursor:default}
+    .cal__days button.is-open{background:rgba(59,59,255,.09);color:var(--blue);cursor:pointer}
+    .cal__days button.is-open:hover{background:rgba(59,59,255,.18)}
+    .cal__days button.is-sel{background:var(--blue);color:#fff}
+    .cal__daylabel{font-weight:600;margin-bottom:12px}
+    .cal__times{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-height:330px;overflow-y:auto;padding-right:2px}
+    .cal__times button{padding:13px 8px;border:1.5px solid rgba(59,59,255,.35);border-radius:12px;background:#fff;color:var(--blue);font:600 15px var(--sans);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+    .cal__times button:hover{background:rgba(59,59,255,.07)}
+    .cal__times button.is-sel{background:var(--blue);border-color:var(--blue);color:#fff}
+    .cal__loading{text-align:center;padding:30px 0;color:var(--ink-2)}
+    .cal__err{color:var(--orange-deep);font-size:15px;margin-top:14px}
+    .cal__confirm{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:14px}
+    .cal__confirm p{margin:0;color:var(--ink-2)}
+    .cal.is-loading .cal__grid{display:none}
+    @media (max-width:640px){.cal__grid{grid-template-columns:1fr;gap:20px}.cal__times{max-height:none;grid-template-columns:repeat(3,1fr)}}
+
+    .spin{display:inline-block;width:30px;height:30px;border:3px solid var(--sky);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .msg{text-align:center;padding:10px 4px 6px;display:grid;gap:18px;justify-items:center}
+    .msg h2{font:600 clamp(24px,2.4vw,30px)/1.2 var(--serif);letter-spacing:-.015em}
+    .msg p{color:var(--ink-2);max-width:48ch}
+    .msg .link{font-weight:600;color:var(--blue)}
+    .check{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;font-size:1.6rem;font-weight:700}
+    .foot{text-align:center;color:var(--ink-3);font-size:14px;padding:0 16px 40px}
+    .foot a{color:var(--ink-2);font-weight:600}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div class="top__bar"><a href="/" class="brand" aria-label="Luciano Musella, inicio">Luciano Musella</a></div>
+      <h1>Elige el d&iacute;a y la hora de tu llamada</h1>
+      <p>Una conversaci&oacute;n con el equipo de Luciano para ver c&oacute;mo aplicar IA en tu trabajo o tu negocio.</p>
+      <div class="facts"><span>30 minutos</span><span>Google Meet</span><span>Sin costo</span></div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="card">
+      <section class="cal is-loading" id="cal" aria-labelledby="calTitle">
+        <h2 class="cal__title" id="calTitle">Horarios disponibles</h2>
+        <p class="cal__sub">En tu hora local (<span data-tz></span>).</p>
+        <div class="cal__grid">
+          <div class="cal__month">
+            <div class="cal__head">
+              <button type="button" class="cal__nav" data-month-prev aria-label="Mes anterior">&lsaquo;</button>
+              <b data-month></b>
+              <button type="button" class="cal__nav" data-month-next aria-label="Mes siguiente">&rsaquo;</button>
+            </div>
+            <div class="cal__dow" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div class="cal__days" data-days></div>
+          </div>
+          <div class="cal__side">
+            <p class="cal__daylabel" data-day-label>Elige un d&iacute;a disponible</p>
+            <div class="cal__times" data-times></div>
+          </div>
+        </div>
+        <div class="cal__loading" data-cal-loading><span class="spin" aria-hidden="true"></span><p>Buscando horarios disponibles&hellip;</p></div>
+        <p class="cal__err" data-cal-err hidden></p>
+        <div class="cal__confirm" data-confirm hidden>
+          <p>Tu llamada: <b data-pick></b></p>
+          <button type="button" class="btn btn--wide" data-book>Confirmar llamada</button>
+        </div>
+      </section>
+
+      <section class="msg" id="done" hidden>
+        <span class="check" aria-hidden="true">&#10003;</span>
+        <h2 data-done-title>&iexcl;Listo! Tu llamada qued&oacute; agendada</h2>
+        <p><b data-when></b><br>Te enviamos la invitaci&oacute;n con el link de Google Meet a tu correo. Agr&eacute;gala a tu calendario para que no se te pase.</p>
+        <a href="#" class="link" data-meet target="_blank" rel="noopener" hidden>Link de la reuni&oacute;n &rarr;</a>
+        <a href="https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW" class="btn btn--wide" target="_blank" rel="noopener">Unirme al grupo de WhatsApp</a>
+      </section>
+
+      <section class="msg" id="badLink" hidden>
+        <h2>Este link para agendar no es v&aacute;lido</h2>
+        <p>Puede que se haya copiado incompleto. Agenda desde la p&aacute;gina en un minuto, o resp&oacute;ndenos por WhatsApp y te mandamos uno nuevo.</p>
+        <a href="/aprende/#agenda" class="btn btn--wide">Agendar desde la p&aacute;gina</a>
+      </section>
+    </div>
+  </main>
+  <p class="foot">&iquest;Prefieres otro horario? Resp&oacute;ndenos por WhatsApp. &middot; <a href="/">lucianomusella.com</a></p>
+
+  <script src="/agendar/agendar.js"></script>
+</body>
+</html>

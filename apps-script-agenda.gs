@@ -76,7 +76,7 @@ var COLUMNAS_MAESTRO = [
   ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
   ['utm_content', 'utm_content'], ['utm_term', 'utm_term'],
   ['fbp', 'fbp'], ['fbc', 'fbc'], ['recordatorio_24h', 'recordatorio_24h'], ['recordatorio_1h', 'recordatorio_1h'],
-  ['Pop-up', 'popup_formulario'], ['Prioridad pop-up', 'prioridad_popup']
+  ['Pop-up', 'popup_formulario'], ['Prioridad pop-up', 'prioridad_popup'], ['Agendó desde', 'agendo_desde']
 ].concat(COLUMNAS_POPUP);
 
 // Pestañas donde trabaja el agente (ver encabezado).
@@ -99,7 +99,7 @@ var COLUMNAS_PAGINA = [
   ['Principal reto', 'reto'], ['Cita (hora Colombia)', 'cita'], ['Closer', 'closer'], ['Link de Meet', 'meet'],
   ['Asistencia', 'asistencia'], ['Venta', 'venta'], ['Valor venta', 'valor'], ['Moneda', 'moneda'],
   ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
-  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['Fuente', 'fuente']
+  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['Fuente', 'fuente'], ['Agendó desde', 'agendo_desde']
 ];
 
 // Estados que una nueva visita al formulario no debe pisar.
@@ -352,9 +352,13 @@ function agendar_(d) {
   var resultado;
   conLock_(function () {
     var lead = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
-    if (!lead || lead.calificado !== 'Sí') { resultado = { ok: false, error: 'no_calificado' }; return; }
+    if (!lead) { resultado = { ok: false, error: 'no_lead' }; return; }
+    // directo: llegó con su link personal (/agendar/?t=…) que le mandó el agente; ya no se le
+    // exige calificar. Desde /aprende sí.
+    if (!d.directo && lead.calificado !== 'Sí') { resultado = { ok: false, error: 'no_calificado' }; return; }
+    var contacto = { nombre: lead.nombre, telefono: String(lead.telefono || ''), pais: lead.pais };
     if (lead.cita_inicio && new Date(lead.cita_inicio).getTime() > Date.now() && lead.estado === 'Agendado') {
-      resultado = { ok: true, ya_agendado: true, cita: citaDe_(lead) }; return;
+      resultado = Object.assign({ ok: true, ya_agendado: true, cita: citaDe_(lead) }, contacto); return;
     }
     var inicio = new Date(d.inicio);
     var minimo = Date.now() + AG.avisoMinimoMin * 60000;
@@ -382,14 +386,15 @@ function agendar_(d) {
     var campos = {
       estado: 'Agendado', cita: Utilities.formatDate(inicio, AG.zona, 'dd/MM/yyyy HH:mm'),
       cita_inicio: inicio.toISOString(), closer: closer.email, meet: evento.hangoutLink || '',
-      evento_calendario: evento.id, recordatorio_24h: '', recordatorio_1h: ''
+      evento_calendario: evento.id, recordatorio_24h: '', recordatorio_1h: '',
+      agendo_desde: d.directo ? 'Link directo' : '/aprende'
     };
     if (d.evento_meta) campos.eventos_meta_agregar = d.evento_meta;
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
     ubicarEnPagina_(d.email, HOJA_AGENDADOS);
     CacheService.getScriptCache().removeAll(['horarios', 'horarios_prioridad']);
     Object.keys(campos).forEach(function (k) { lead[k] = campos[k]; });
-    resultado = { ok: true, cita: citaDe_(lead) };
+    resultado = Object.assign({ ok: true, cita: citaDe_(lead) }, contacto);
     // avisos_aparte: Vercel responde al lead primero y pide los correos con "avisar_cita".
     if (!d.avisos_aparte) avisarCita_({ email: d.email });
   });
