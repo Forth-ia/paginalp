@@ -7,17 +7,17 @@
   <title>Agenda de llamadas | Luciano Musella</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet">
   <style>
     /* /admin — agenda de llamadas en vista de semana (estilo Google Calendar) y resultado
        (show, venta). Lógica en admin/admin.js. */
     :root{
-      --ink:#191918;--ink-2:#5B5752;--ink-3:#8F8A84;--paper:#FFFFFF;--cream:#F7F5F2;--sand:#EFECE8;
-      --accent:#D97757;--accent-deep:#C45E3E;--accent-soft:rgba(217,119,87,.12);--line:rgba(25,25,24,.10);--line-2:rgba(25,25,24,.06);
+      --ink:#12112E;--ink-2:#45446A;--ink-3:#6F6E8E;--paper:#FFFFFF;--cream:#F3FAFB;--sand:#E2F4F7;
+      --accent:#FF5A1F;--accent-deep:#E0470F;--accent-soft:rgba(255,90,31,.12);--line:rgba(18,17,46,.10);--line-2:rgba(18,17,46,.06);
       --ok:#2F7D4F;--ok-soft:rgba(47,125,79,.12);--bad:#B4442C;--bad-soft:rgba(180,68,44,.10);
-      --c1:#D97757;--c1-soft:#FBE9E2;--c2:#3F6FB5;--c2-soft:#E3ECF8;--c0:#8F8A84;--c0-soft:#EFECE8;
+      --c1:#FF5A1F;--c1-soft:#FFE6DC;--c2:#3B3BFF;--c2-soft:#E3E3FF;--c0:#8F8A84;--c0-soft:#EFECE8;
       --now:#E0412E;--slot:26px;
-      --serif:'Playfair Display',Georgia,serif;--sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+      --serif:'Source Serif 4',Georgia,serif;--sans:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;
     }
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
@@ -73,8 +73,8 @@
     .hours div{height:calc(var(--slot) * 2);font-size:.7rem;color:var(--ink-3);text-align:right;padding-right:8px;transform:translateY(-.6em)}
     .hours div:first-child{visibility:hidden}
     .col{position:relative;border-left:1px solid var(--line-2);background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--slot) - 1px),var(--line-2) calc(var(--slot) - 1px),var(--line-2) var(--slot)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--slot) * 2 - 1px),var(--line) calc(var(--slot) * 2 - 1px),var(--line) calc(var(--slot) * 2))}
-    .col.is-today{background-color:rgba(217,119,87,.035)}
-    .off{position:absolute;left:0;right:0;background:repeating-linear-gradient(135deg,rgba(25,25,24,.025) 0 6px,transparent 6px 12px);pointer-events:none}
+    .col.is-today{background-color:rgba(255,90,31,.035)}
+    .off{position:absolute;left:0;right:0;background:repeating-linear-gradient(135deg,rgba(18,17,46,.025) 0 6px,transparent 6px 12px);pointer-events:none}
     .now{position:absolute;left:-1px;right:0;height:2px;background:var(--now);z-index:3;pointer-events:none}
     .now::before{content:'';position:absolute;left:-6px;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--now)}
     .ev{position:absolute;border:0;text-align:left;cursor:pointer;border-radius:6px;padding:3px 7px;overflow:hidden;font-size:.74rem;line-height:1.3;white-space:nowrap;text-overflow:ellipsis;background:var(--soft);color:var(--ink);border-left:4px solid var(--c);z-index:2;transition:box-shadow .15s,transform .15s}
@@ -119,7 +119,7 @@
     .tabs i:empty,.tabs i[data-n="0"]{background:var(--ink-3)}
     .items{padding:10px 0 12px}
     .item{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:2px 10px;align-items:center;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
-    .item:hover{border-color:rgba(217,119,87,.5)}
+    .item:hover{border-color:rgba(255,90,31,.5)}
     .item .dot{width:10px;height:10px;border-radius:50%;background:var(--c)}
     .item__txt b,.item__txt small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .quick{display:flex;gap:4px}
@@ -134,7 +134,7 @@
     .foot{font-size:.74rem;color:var(--ink-3);padding:0 0 14px}
 
     /* detalle de la cita */
-    .overlay{position:fixed;inset:0;background:rgba(25,25,24,.38);z-index:20;display:grid;place-items:center;padding:20px;animation:fade .15s ease-out}
+    .overlay{position:fixed;inset:0;background:rgba(18,17,46,.38);z-index:20;display:grid;place-items:center;padding:20px;animation:fade .15s ease-out}
     @keyframes fade{from{opacity:0}to{opacity:1}}
     .detail{width:min(600px,100%);max-height:min(88dvh,820px);background:#fff;border-radius:20px;box-shadow:0 30px 80px -20px rgba(0,0,0,.45);display:flex;flex-direction:column;overflow:hidden;animation:pop .2s cubic-bezier(.32,.72,0,1)}
     @keyframes pop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:none;opacity:1}}

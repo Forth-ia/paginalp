@@ -87,7 +87,7 @@
   }
 
   /* ---------- nav ---------- */
-  var nav = d.querySelector('.nav'), hero = d.querySelector('.hero'), burger = d.querySelector('.burger'), menu = d.querySelector('.menu');
+  var nav = d.querySelector('.nav'), hero = d.querySelector('.hero, .hm-hero'), burger = d.querySelector('.burger'), menu = d.querySelector('.menu');
   var lastY = 0;
   function onScroll() {
     var y = w.scrollY;

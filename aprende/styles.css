@@ -3,19 +3,19 @@
    ======================================== */
 :root {
   --color-bg: #FFFFFF;
-  --color-surface: #F7F5F2;
-  --color-surface-alt: #EFECE8;
-  --color-accent: #D97757;
-  --color-accent-hover: #C45E3E;
-  --color-accent-soft: rgba(217, 119, 87, 0.1);
-  --color-text-primary: #191918;
-  --color-text-secondary: #6B6B6B;
-  --color-text-tertiary: #999999;
+  --color-surface: #F3FAFB;
+  --color-surface-alt: #E2F4F7;
+  --color-accent: #FF5A1F;
+  --color-accent-hover: #E0470F;
+  --color-accent-soft: rgba(255, 90, 31, 0.1);
+  --color-text-primary: #12112E;
+  --color-text-secondary: #45446A;
+  --color-text-tertiary: #6F6E8E;
   --color-border: rgba(0, 0, 0, 0.08);
   --color-border-strong: rgba(0, 0, 0, 0.15);
 
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Source Serif 4', Georgia, serif;
 
   --container-max: 1120px;
   --container-narrow: 720px;
