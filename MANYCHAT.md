@@ -316,3 +316,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/skill-debrief-claude/
 
 La distinción depende de la URL enviada.
+
+
+## Skill de escritura para LinkedIn
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/skill-escritura-linkedin/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Skill de escritura para LinkedIn`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/skill-escritura-linkedin/
+
+La distinción depende de la URL enviada.
