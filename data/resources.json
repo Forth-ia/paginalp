@@ -33,6 +33,48 @@
  },
  "resources": [
 {
+  "id": "skill-escritura-linkedin",
+  "slug": "skill-escritura-linkedin",
+  "title": "Guía: crea tu skill de escritura para LinkedIn",
+  "category": "contenido",
+  "secondary": [
+    "claude"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Crea un skill de Claude que escribe posts de LinkedIn con tu voz: junta tus posts, saca tu análisis de estilo y usa la plantilla completa del SKILL.md.",
+  "what_you_get": [
+    "Cómo juntar tus posts reales como fuente de verdad",
+    "Prompt para sacar tu análisis de estilo",
+    "Cómo armar y subir tu SKILL.md",
+    "Plantilla completa y tabla de errores comunes"
+  ],
+  "ideal_for": [
+    "Creadores y fundadores que publican en LinkedIn",
+    "Quienes quieren escribir con su voz y no con la de ChatGPT"
+  ],
+  "includes": [
+    "Prompt copiable",
+    "Plantilla SKILL.md",
+    "Tabla de errores y soluciones"
+  ],
+  "tools": [
+    "Claude",
+    "Skills",
+    "LinkedIn"
+  ],
+  "words": 1999,
+  "read_min": 9,
+  "related_tutorials": [],
+  "related_resources": [
+    "linkedin-skills"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "stanford-ai-index-2026",
   "slug": "stanford-ai-index-2026",
   "title": "La IA más inteligente de la Tierra ahora es gratis. Stanford acaba de publicar el mapa de hacia dónde va realmente el billón de dólares.",
