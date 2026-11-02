@@ -42,7 +42,7 @@ var AG = {
   diasAdelante: 14, // hasta dónde se busca espacio si la ventana está llena
   diasVentana: 2,   // día de agendamiento + 2 días hábiles; más solo si no hay ningún espacio
   avisoMinimoMin: 120, // no se puede agendar con menos de 2 horas
-  diasHabiles: [1, 2, 3, 4, 5], // lunes a viernes
+  diasHabiles: [1, 2, 3, 4, 5, 6], // lunes a sábado; nunca domingos ni festivos de Colombia (festivoCO_)
   closers: [
     { email: 'admin@getforth.ai', nombre: 'Luciano', bloques: [['11:00', '19:00']] },
     { email: 'info@getforth.ai', nombre: 'Andrea', bloques: [['07:30', '11:30'], ['13:00', '15:00']] }
@@ -292,7 +292,7 @@ function ventana_(ahora) {
   var habiles = [];
   for (var i = 1; i <= AG.diasAdelante; i++) {
     var dia = new Date(ahora.getTime() + i * 86400000);
-    if (AG.diasHabiles.indexOf(Number(Utilities.formatDate(dia, AG.zona, 'u'))) !== -1) habiles.push(Utilities.formatDate(dia, AG.zona, 'yyyy-MM-dd'));
+    if (diaDeAgenda_(dia)) habiles.push(Utilities.formatDate(dia, AG.zona, 'yyyy-MM-dd'));
   }
   var claves = Object.keys(todos);
   var libres = {}, dias = [hoy];
@@ -305,6 +305,36 @@ function ventana_(ahora) {
   return { dias: dias, libres: libres };
 }
 
+// Se agenda en AG.diasHabiles (hora Colombia) salvo festivos de Colombia.
+function diaDeAgenda_(dia) {
+  if (AG.diasHabiles.indexOf(Number(Utilities.formatDate(dia, AG.zona, 'u'))) === -1) return false;
+  return !festivoCO_(Utilities.formatDate(dia, AG.zona, 'yyyy-MM-dd'));
+}
+
+// Festivos de Colombia (Ley 51 de 1983, "Ley Emiliani"): fijos, los que se pasan al lunes
+// siguiente y los que dependen de la Pascua. fecha: 'yyyy-MM-dd'.
+var FESTIVOS_CO_ = {};
+function festivoCO_(fecha) {
+  var anio = Number(fecha.slice(0, 4));
+  if (!FESTIVOS_CO_[anio]) FESTIVOS_CO_[anio] = festivosCO_(anio);
+  return FESTIVOS_CO_[anio].indexOf(fecha) !== -1;
+}
+
+function festivosCO_(anio) {
+  var dia = function (mes, d) { return new Date(Date.UTC(anio, mes - 1, d)); };
+  var sumar = function (fecha, n) { return new Date(fecha.getTime() + n * 86400000); };
+  var alLunes = function (fecha) { return sumar(fecha, (8 - fecha.getUTCDay()) % 7); };
+  // Domingo de Pascua (algoritmo de Meeus/Jones/Butcher, calendario gregoriano)
+  var a = anio % 19, b = Math.floor(anio / 100), c = anio % 100, d = Math.floor(b / 4), e = b % 4;
+  var f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+  var i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+  var pascua = dia(Math.floor((h + l - 7 * m + 114) / 31), ((h + l - 7 * m + 114) % 31) + 1);
+  var fijos = [dia(1, 1), dia(5, 1), dia(7, 20), dia(8, 7), dia(12, 8), dia(12, 25), sumar(pascua, -3), sumar(pascua, -2)];
+  var trasladables = [dia(1, 6), dia(3, 19), dia(6, 29), dia(8, 15), dia(10, 12), dia(11, 1), dia(11, 11),
+    sumar(pascua, 39), sumar(pascua, 60), sumar(pascua, 68)]; // Ascensión, Corpus Christi, Sagrado Corazón
+  return fijos.concat(trasladables.map(alLunes)).map(function (x) { return x.toISOString().slice(0, 10); });
+}
+
 // { 'ISO inicio': [emails de closers libres] }
 function libresPorSlot_(ahora, hasta, desde) {
   var ocupado = ocupadoPorCloser_(ahora, hasta);
@@ -312,7 +342,7 @@ function libresPorSlot_(ahora, hasta, desde) {
   for (var i = 0; i <= AG.diasAdelante; i++) {
     var dia = new Date(ahora.getTime() + i * 86400000);
     var fecha = Utilities.formatDate(dia, AG.zona, 'yyyy-MM-dd');
-    if (AG.diasHabiles.indexOf(Number(Utilities.formatDate(dia, AG.zona, 'u'))) === -1) continue;
+    if (!diaDeAgenda_(dia)) continue;
     AG.closers.forEach(function (closer) {
       if (!ocupado[closer.email]) return; // sin acceso a su calendario: no se ofrece
       closer.bloques.forEach(function (bloque) {
