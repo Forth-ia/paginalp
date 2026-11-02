@@ -299,3 +299,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/4-mcps-agente-real/
 
 La distinción depende de la URL enviada.
+
+
+## Skill Debrief en Claude (Notion + Google Calendar)
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/skill-debrief-claude/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Skill Debrief en Claude (Notion + Google Calendar)`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/skill-debrief-claude/
+
+La distinción depende de la URL enviada.
