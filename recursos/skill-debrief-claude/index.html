@@ -48,10 +48,10 @@
 <h3>1) Abrir Claude y conectar Notion + Google Calendar</h3>
 <h4>1.1 Conecta Notion</h4>
 <ol><li>Ve a <strong>Settings / Ajustes</strong> (normalmente en tu perfil).</li><li>Busca la sección <strong>Integrations / Conexiones / Connected apps</strong>.</li><li>Selecciona <strong>Notion</strong>.</li><li>Haz clic en <strong>Connect</strong>.</li><li>Notion te pedirá permisos:</li><li>Elige el workspace correcto.</li><li>Autoriza el acceso.</li><li>Si te da a elegir páginas/bases de datos, selecciona la base de datos de tareas (la crearás en el paso 2 si aún no existe).</li></ol>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-1.jpg" alt="Claude, Customize > Connectors: Notion conectado con sus permisos de herramientas" width="1600" height="788" loading="lazy"><figcaption>Notion conectado en Claude.</figcaption></figure>
 <h4>1.2 Conecta Google Calendar</h4>
 <ol><li>En la misma sección de integraciones, selecciona <strong>Google Calendar</strong>.</li><li>Haz clic en <strong>Connect</strong>.</li><li>Inicia sesión con tu Google.</li><li>Acepta permisos.</li><li>Confirma qué calendarios quieres habilitar (si aplica, selecciona el calendario donde realmente planeas tu día).</li></ol>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-2.jpg" alt="Claude, Customize > Connectors: Google Calendar conectado" width="1600" height="594" loading="lazy"><figcaption>Google Calendar conectado en Claude.</figcaption></figure>
 <div class="callout"><p><strong>Checklist rápido (Paso 1):</strong></p>
 <ul><li>Notion conectado</li><li>Google Calendar conectado</li><li>Ya puedes pasar al Paso 2</li><li>Y si no solo pidele a claude qeu te guie para hacerlo</li></ul></div>
 <hr>
@@ -62,11 +62,11 @@
 <p>Copia y pega este prompt en Notion AI (en una página en blanco) y dile que lo ejecute:</p>
 <p>Prompt (Notion AI)</p>
 <ul><li>Crea una base de datos tipo tabla llamada “Tareas”.</li><li>Columnas:</li><li>“Nombre de la tarea” (Title)</li><li>“Duración (min)” (Number)</li><li>“Fecha límite” (Date)</li><li>“Prioridad” (Select) con opciones: Alta, Media, Baja</li><li>“Status” (Status) con opciones: Por hacer, En progreso, Hecho</li><li>“Proyecto” (Select) (si existe una base de datos “Proyectos”, entonces usa Relation en vez de Select)</li><li>Agrega 3 tareas de ejemplo con datos realistas.</li></ul>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-3.jpg" alt="Notion AI con el prompt para crear la base de datos Tareas" width="1600" height="1538" loading="lazy"><figcaption>Notion AI creando la base de datos con el prompt.</figcaption></figure>
 <div class="callout"><p><strong>Recomendación:</strong> usa Duración en minutos (15, 30, 1 hora, 2 horas). Es más fácil para bloquear el calendario.</p></div>
 <h4>2.2 Crear la base de datos manualmente (paso a paso)</h4>
 <ol><li>En Notion, crea una nueva página o usa tu espacio donde gestionas tareas.</li><li>Escribe <code>/database</code> y elige <strong>Table – Full page</strong> (o <strong>Table – Inline</strong> si la quieres dentro de una página).</li><li>Nombra la base: <strong>Tareas</strong>.</li><li>Crea/ajusta las columnas así:</li><li><strong>Nombre de la tarea</strong> → Title</li><li><strong>Duración (min)</strong> → Select (opciones: 2 horas, 1 hora, 30 mins, 15 mins)</li><li><strong>Fecha límite</strong> → Date</li><li><strong>Prioridad</strong> → Select (opciones sugeridas: Alta, Media, Baja)</li><li><strong>Status</strong> → Status (opciones sugeridas: Por hacer, En progreso, Hecho)</li><li><strong>Proyecto</strong> → Select (nombre de los diferentes proyectos)</li></ol>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-4.jpg" alt="Base de datos Tareas en Notion con duración, energía, fecha límite y prioridad" width="1600" height="758" loading="lazy"><figcaption>La base de datos Tareas lista en Notion.</figcaption></figure>
 <hr>
 <h3>3) Crear el Skill en Claude - Tienes 2 opciones</h3>
 <p>En este paso crearás el Skill y dejarás listo el contenido/instrucciones.</p>
@@ -74,8 +74,8 @@
 <ol><li>Descarga este archivo -</li></ol>
 <div class="fig-ph"><b>Archivo descargable</b><span>chief-of-staff.skill (4.6 KiB) · disponible pronto</span></div>
 <ol><li>Instala este skill</li></ol>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-5.jpg" alt="Selector de archivos del computador con chief-of-staff.skill seleccionado" width="1600" height="948" loading="lazy"><figcaption>Selecciona el archivo chief-of-staff.skill.</figcaption></figure>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-6.jpg" alt="Claude con el archivo chief-of-staff.skill adjunto, listo para instalar" width="1600" height="1131" loading="lazy"><figcaption>El skill adjunto en el chat de Claude.</figcaption></figure>
 <h4>3.2 - Copiar y pegar todo el prompt y volverlo archivo MD</h4>
 <h4>Prompt para pegar - Este COPY y PASTE</h4>
 <hr>
@@ -223,10 +223,10 @@ Que te vaya bien hoy. 💪</pre></div>
 <ul><li><strong>“Brief” &quot;buenos días&quot;, &quot;buenas tardes&quot;, &quot;debrief&quot;, &quot;qué tengo hoy&quot;, &quot;arrancamos&quot;, &quot;cómo está el día&quot;, &quot;planea mi día&quot;, &quot;good morning”</strong></li></ul>
 <h4>Cómo usarla</h4>
 <ol><li>Abre un chat en Claude.</li><li>Escribe: la palabra mágica</li><li>(Opcional) Aclara el enfoque del día: hoy quiero avanzar en el proyecto X”.</li></ol>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-9.jpg" alt="Plan propuesto por Claude con tareas asignadas a los bloques libres del día" width="1600" height="1115" loading="lazy"><figcaption>Respuesta de Claude: el plan propuesto para hoy.</figcaption></figure>
 <hr>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
-<div class="fig-ph"><b>Imagen en preparación</b><span>Muy pronto verás aquí la captura de este paso</span></div>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-7.jpg" alt="Respuesta de Claude al escribir "morning": agenda del día con reuniones y alertas" width="1600" height="1300" loading="lazy"><figcaption>Respuesta de Claude: tu agenda del día.</figcaption></figure>
+<figure class="article-figure"><img src="/assets/img/recursos/skill-debrief-claude-8.jpg" alt="Respuesta de Claude con todos los pendientes de Notion ordenados por prioridad" width="1600" height="1270" loading="lazy"><figcaption>Respuesta de Claude: todos tus pendientes.</figcaption></figure>
 <h3>5) Flujo de uso (lo que hace el Skill)</h3>
 <p>Cada vez que lo actives con la palabra mágica, debe seguir este orden:</p>
 <h4>5.1 Reporte del día (Calendario)</h4>

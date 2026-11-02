@@ -37,7 +37,7 @@ Lo comparto porque el mundo está cambiando más rápido de lo que la mayoría c
   - Elige el workspace correcto.
   - Autoriza el acceso.
   - Si te da a elegir páginas/bases de datos, selecciona la base de datos de tareas (la crearás en el paso 2 si aún no existe).
-    :::figure Screenshot 2026-03-19 at 12.56.12 PM.png
+    ![Claude, Customize > Connectors: Notion conectado con sus permisos de herramientas](/assets/img/recursos/skill-debrief-claude-1.jpg)
 
 #### 1.2 Conecta Google Calendar
 
@@ -46,7 +46,7 @@ Lo comparto porque el mundo está cambiando más rápido de lo que la mayoría c
 1. Inicia sesión con tu Google.
 1. Acepta permisos.
 1. Confirma qué calendarios quieres habilitar (si aplica, selecciona el calendario donde realmente planeas tu día).
-  :::figure Screenshot 2026-03-19 at 12.54.21 PM.png
+  ![Claude, Customize > Connectors: Google Calendar conectado](/assets/img/recursos/skill-debrief-claude-2.jpg)
 
 :::callout
   **Checklist rápido (Paso 1):**
@@ -84,7 +84,7 @@ Prompt (Notion AI)
   - “Status” (Status) con opciones: Por hacer, En progreso, Hecho
   - “Proyecto” (Select) (si existe una base de datos “Proyectos”, entonces usa Relation en vez de Select)
 - Agrega 3 tareas de ejemplo con datos realistas.
-  :::figure Screenshot 2026-03-19 at 1.00.04 PM.png
+  ![Notion AI con el prompt para crear la base de datos Tareas](/assets/img/recursos/skill-debrief-claude-3.jpg)
 
 :::callout
   **Recomendación:** usa Duración en minutos (15, 30, 1 hora, 2 horas). Es más fácil para bloquear el calendario.
@@ -103,7 +103,7 @@ Prompt (Notion AI)
   - **Prioridad** → Select (opciones sugeridas: Alta, Media, Baja)
   - **Status** → Status (opciones sugeridas: Por hacer, En progreso, Hecho)
   - **Proyecto** → Select (nombre de los diferentes proyectos)
-:::figure Screenshot 2026-03-19 at 12.57.06 PM.png
+![Base de datos Tareas en Notion con duración, energía, fecha límite y prioridad](/assets/img/recursos/skill-debrief-claude-4.jpg)
 
 ---
 
@@ -117,9 +117,9 @@ En este paso crearás el Skill y dejarás listo el contenido/instrucciones.
 :::file chief-of-staff.skill (4.6 KiB)
 
 1. Instala este skill
-:::figure Screenshot 2026-03-19 at 1.11.11 PM.png
+![Selector de archivos del computador con chief-of-staff.skill seleccionado](/assets/img/recursos/skill-debrief-claude-5.jpg)
 
-:::figure Screenshot 2026-03-19 at 1.11.26 PM.png
+![Claude con el archivo chief-of-staff.skill adjunto, listo para instalar](/assets/img/recursos/skill-debrief-claude-6.jpg)
 
 #### 3.2 - Copiar y pegar todo el prompt y volverlo archivo MD
 
@@ -397,13 +397,13 @@ Define una frase corta para activarlo
 1. Abre un chat en Claude.
 1. Escribe: la palabra mágica
 1. (Opcional) Aclara el enfoque del día: hoy quiero avanzar en el proyecto X”.
-:::figure Screenshot 2026-03-19 at 1.15.34 PM.png
+![Plan propuesto por Claude con tareas asignadas a los bloques libres del día](/assets/img/recursos/skill-debrief-claude-9.jpg)
 
 ---
 
-:::figure Screenshot 2026-03-19 at 1.15.52 PM.png
+![Respuesta de Claude al escribir "morning": agenda del día con reuniones y alertas](/assets/img/recursos/skill-debrief-claude-7.jpg)
 
-:::figure Screenshot 2026-03-19 at 1.16.13 PM.png
+![Respuesta de Claude con todos los pendientes de Notion ordenados por prioridad](/assets/img/recursos/skill-debrief-claude-8.jpg)
 
 ### 5) Flujo de uso (lo que hace el Skill)
 
