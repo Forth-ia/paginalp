@@ -258,3 +258,45 @@ test('reads URL parameters from req.url like Vercel sends them', async () => {
   const admin = await run(adminHandler, { method: 'GET', url: '/api/admin?a=list' });
   assert.equal(admin.statusCode, 401);
 });
+
+test('popup contact without answers is saved as an incomplete form', async () => {
+  const popup = require('../api/popup-lead.js');
+  const res = await run(popup, { method: 'POST', body: { nombre: 'Ana', email: 'ana@example.com', telefono: '573001234567', pais: 'Colombia', fuente: 'Página Web' } });
+  assert.deepEqual(res.body, { ok: true });
+  assert.equal(res.agenda[0].formulario, 'Incompleto');
+  assert.equal(res.agenda[0].pais, 'Colombia');
+  assert.equal(res.agenda[0].respuestas, undefined);
+});
+
+test('popup answers are stored as text with an A/B/C priority', async () => {
+  const popup = require('../api/popup-lead.js');
+  const base = { nombre: 'Ana', email: 'ana@example.com', telefono: '573001234567', fuente: 'Página Web' };
+  let res = await run(popup, { method: 'POST', body: { ...base, respuestas: { etapa: 'negocio', dueno: 'socios', empleados: '6-20', ventas: '1k-5k', industria: 'marketing' } } });
+  assert.equal(res.agenda[0].formulario, 'Completo');
+  assert.equal(res.agenda[0].prioridad_popup, 'A');
+  assert.deepEqual(res.agenda[0].respuestas, { etapa: 'Tengo mi propio negocio', dueno: 'Sí, tengo socio(s)', empleados: '6 a 20', ventas: 'US$1.000 a 5.000', industria: 'Marketing, publicidad o agencia' });
+  res = await run(popup, { method: 'POST', body: { ...base, respuestas: { etapa: 'independiente', dueno: 'unico', empleados: '0', ventas: '1k-5k', industria: 'otra' } } });
+  assert.equal(res.agenda[0].prioridad_popup, 'B');
+  res = await run(popup, { method: 'POST', body: { ...base, respuestas: { etapa: 'empleado', rol: 'gerente', industria: 'finanzas' } } });
+  assert.equal(res.agenda[0].prioridad_popup, 'A');
+  res = await run(popup, { method: 'POST', body: { ...base, respuestas: { etapa: 'estudiante', industria: 'educacion' } } });
+  assert.equal(res.agenda[0].prioridad_popup, 'C');
+  // Le faltó una pregunta que le tocaba, o mandó una opción que no existe.
+  const missing = await run(popup, { method: 'POST', body: { ...base, respuestas: { etapa: 'negocio', industria: 'otra' } } });
+  assert.equal(missing.statusCode, 400);
+  const bogus = await run(popup, { method: 'POST', body: { ...base, respuestas: { etapa: 'empleado', rol: 'jefe', industria: 'otra' } } });
+  assert.equal(bogus.statusCode, 400);
+});
+
+test('the popup in site.js offers the same options the API accepts', () => {
+  const fs = require('node:fs');
+  const { QUESTIONS } = require('../api/_lib/popup-questions.js');
+  const src = fs.readFileSync(require('node:path').join(__dirname, '../assets/js/site.js'), 'utf8');
+  const block = src.slice(src.indexOf('var POP_QUESTIONS'), src.indexOf('function popEsc'));
+  for (const [id, opts] of Object.entries(QUESTIONS)) {
+    assert.ok(block.includes(`id: '${id}'`), id);
+    for (const [value, label] of Object.entries(opts)) {
+      if (value !== 'show') assert.ok(block.includes(`['${value}', '${label}']`), `${id}.${value}`);
+    }
+  }
+});

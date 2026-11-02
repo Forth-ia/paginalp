@@ -272,14 +272,53 @@
     renderCourse();
   }
 
-  /* ---------- captura suave de leads ----------
-     /api/popup-lead los guarda en "ManyChat - Orgánicos" del Sheets central. */
+  /* ---------- captura de leads (pop-up en 2 pasos) ----------
+     1) nombre, correo y WhatsApp; 2) preguntas de calificación. El contacto se guarda al pasar
+     el paso 1 (o al cerrar con los datos completos) como "Pop-up incompleto", y otra vez
+     con las respuestas. /api/popup-lead lo escribe en "ManyChat - Orgánicos" del Sheets central;
+     las opciones y la prioridad A/B/C están también en api/_lib/popup-questions.js. */
   var resourcePath = /^\/recursos(?:\/|$)/.test(location.pathname);
   var popupDelay = resourcePath ? 8000 : 10000;
   var popupKey = 'lm_lead_popup_closed:' + location.pathname;
   var capturedKey = 'lm_lead_captured';
+  var forcePopup = /[?&]popup=1\b/.test(location.search);
   var hasInteracted = false, popupShown = false, delayDone = false;
 
+  var POP_COUNTRIES = [
+    ['Colombia', '57'], ['México', '52'], ['Argentina', '54'], ['Chile', '56'], ['Perú', '51'],
+    ['Ecuador', '593'], ['Venezuela', '58'], ['Uruguay', '598'], ['Paraguay', '595'], ['Bolivia', '591'],
+    ['Costa Rica', '506'], ['Panamá', '507'], ['Guatemala', '502'], ['El Salvador', '503'],
+    ['Honduras', '504'], ['Nicaragua', '505'], ['República Dominicana', '1'], ['Puerto Rico', '1'],
+    ['España', '34'], ['Estados Unidos', '1']
+  ];
+  // "show" decide si la pregunta aplica según la etapa elegida.
+  var CON_NEGOCIO = ['paralelo', 'independiente', 'negocio'];
+  var POP_QUESTIONS = [
+    { id: 'etapa', label: '¿En qué etapa estás?', options: [
+      ['empleado', 'Soy empleado'], ['emprender', 'Soy empleado y quiero emprender'],
+      ['paralelo', 'Soy empleado con un negocio aparte'], ['independiente', 'Soy independiente o freelance'],
+      ['negocio', 'Tengo mi propio negocio'], ['estudiante', 'Estudio o estoy buscando trabajo']] },
+    { id: 'dueno', label: '¿Eres dueño de la empresa?', show: CON_NEGOCIO, options: [
+      ['unico', 'Sí, soy el único dueño'], ['socios', 'Sí, tengo socio(s)'], ['directivo', 'Soy directivo, no dueño']] },
+    { id: 'empleados', label: '¿Tienes empleados?', show: CON_NEGOCIO, options: [
+      ['0', 'No, trabajo solo'], ['1-5', '1 a 5'], ['6-20', '6 a 20'], ['21-50', '21 a 50'],
+      ['51-200', '51 a 200'], ['200+', 'Más de 200']] },
+    { id: 'rol', label: '¿Cuál es tu rol?', show: ['empleado', 'emprender'], options: [
+      ['operativo', 'Operativo o analista'], ['lider', 'Coordinador o líder de equipo'],
+      ['gerente', 'Gerente o director'], ['clevel', 'Alta dirección (C-level)']] },
+    { id: 'ventas', label: '¿Cuánto vende tu negocio al mes?', show: CON_NEGOCIO, options: [
+      ['0', 'Aún no factura'], ['<1k', 'Menos de US$1.000'], ['1k-5k', 'US$1.000 a 5.000'],
+      ['5k-20k', 'US$5.000 a 20.000'], ['20k-100k', 'US$20.000 a 100.000'], ['100k+', 'Más de US$100.000']] },
+    { id: 'industria', label: '¿En qué industria está tu negocio o trabajas?', options: [
+      ['servicios', 'Servicios profesionales (consultoría, legal, contable)'], ['marketing', 'Marketing, publicidad o agencia'],
+      ['tecnologia', 'Tecnología o software'], ['finanzas', 'Finanzas, banca o seguros'],
+      ['retail', 'Retail, comercio o e-commerce'], ['salud', 'Salud y bienestar'], ['educacion', 'Educación y formación'],
+      ['inmobiliario', 'Bienes raíces o construcción'], ['manufactura', 'Manufactura o industria'],
+      ['logistica', 'Logística y transporte'], ['hoteleria', 'Restaurantes, hotelería o turismo'], ['agro', 'Agro'],
+      ['publico', 'Sector público u ONG'], ['otra', 'Otra']] }
+  ];
+
+  function popEsc(v) { return String(v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function leadSource() {
     if (location.pathname === '/recursos/' || location.pathname === '/recursos/index.html') return 'Recursos';
     if (resourcePath) return 'Recurso: ' + location.pathname.split('/').filter(Boolean).pop();
@@ -289,7 +328,8 @@
     var modal = d.getElementById('lead-popup');
     if (!modal) return;
     modal.classList.remove('is-visible');
-    setTimeout(function () { if (modal.parentNode) modal.parentNode.removeChild(modal); }, reduce ? 0 : 180);
+    d.documentElement.classList.remove('has-lead-pop');
+    setTimeout(function () { if (modal.parentNode) modal.parentNode.removeChild(modal); }, reduce ? 0 : 220);
     if (reason) track('lead_popup_' + reason, { source: leadSource() });
   }
   function sendLead(data) {
@@ -298,48 +338,159 @@
       return true;
     } catch (err) { return false; }
   }
+  function popField(name, input) {
+    return '<label class="lead-pop__field"><span>' + name + '</span>' + input + '<em class="lead-pop__err"></em></label>';
+  }
+  function popSelect(q) {
+    return '<label class="lead-pop__field lead-pop__q" data-q="' + q.id + '"' + (q.show ? ' hidden' : '') + '><span>' + q.label + '<i>*</i></span>' +
+      '<select name="' + q.id + '"><option value="" selected disabled>Elige una opción</option>' +
+      q.options.map(function (o) { return '<option value="' + o[0] + '">' + popEsc(o[1]) + '</option>'; }).join('') +
+      '</select><em class="lead-pop__err"></em></label>';
+  }
   function showLeadPopup() {
-    if (d.body.getAttribute('data-lead-popup') === 'off' || popupShown || !hasInteracted || !delayDone) return;
-    try { if (sessionStorage.getItem(popupKey) || localStorage.getItem(capturedKey)) return; } catch (err) {}
+    if (popupShown || d.getElementById('lead-popup')) return;
+    if (!forcePopup) {
+      if (d.body.getAttribute('data-lead-popup') === 'off' || !hasInteracted || !delayDone) return;
+      try { if (sessionStorage.getItem(popupKey) || localStorage.getItem(capturedKey)) return; } catch (err) {}
+    }
     popupShown = true;
+    var STEPS = 2, step = 1, contact = null;
     var modal = d.createElement('section');
     modal.id = 'lead-popup'; modal.className = 'lead-pop'; modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true'); modal.setAttribute('aria-labelledby', 'lead-popup-title');
     modal.innerHTML = '<div class="lead-pop__card">' +
-      '<button class="lead-pop__close" type="button" aria-label="Cerrar">×</button>' +
-      '<span class="lead-pop__eyebrow">Recursos prácticos de IA</span>' +
-      '<h2 id="lead-popup-title">¿Te mando más ideas como esta?</h2>' +
-      '<p>Déjame tus datos y te comparto recursos para aplicar IA en tu trabajo.</p>' +
+      '<div class="lead-pop__bar" aria-hidden="true"><i></i><i></i></div>' +
+      '<div class="lead-pop__top"><button class="lead-pop__back" type="button" hidden>← Atrás</button>' +
+      '<span class="lead-pop__count">Paso <b>1</b> de ' + STEPS + '</span>' +
+      '<button class="lead-pop__close" type="button" aria-label="Cerrar">×</button></div>' +
       '<form class="lead-pop__form" novalidate>' +
-      '<label>Nombre<input name="nombre" autocomplete="name" required placeholder="Tu nombre"></label>' +
-      '<label>Email<input name="email" type="email" autocomplete="email" required placeholder="tu@email.com"></label>' +
-      '<label>Celular<input name="telefono" type="tel" autocomplete="tel" required placeholder="300 000 0000"></label>' +
-      '<button class="btn btn--accent" type="submit"><span class="btn__t">Quiero recibirlos</span></button>' +
-      '<small>Sin spam. Puedes salir cuando quieras.</small></form></div>';
+      '<div class="lead-pop__step" data-step="1">' +
+        '<span class="lead-pop__eyebrow">Recursos prácticos de IA · gratis</span>' +
+        '<h2 id="lead-popup-title">Te mando ideas de IA que puedes aplicar <em>esta semana.</em></h2>' +
+        '<p>Guías, prompts y plantillas que uso con mis clientes. ¿A dónde te las mando?</p>' +
+        '<div class="lead-pop__qs">' +
+        popField('Nombre', '<input name="nombre" autocomplete="given-name" placeholder="Tu nombre" maxlength="80">') +
+        popField('Correo electrónico', '<input name="email" type="email" autocomplete="email" inputmode="email" placeholder="tu@correo.com" maxlength="254">') +
+        popField('WhatsApp', '<span class="lead-pop__tel"><select name="pais" aria-label="País">' +
+          POP_COUNTRIES.map(function (c, i) { return '<option value="' + i + '">' + popEsc(c[0]) + ' +' + c[1] + '</option>'; }).join('') +
+          '</select><input name="telefono" type="tel" autocomplete="tel-national" inputmode="tel" placeholder="300 000 0000" maxlength="20"></span>') +
+        '</div>' +
+      '</div>' +
+      '<div class="lead-pop__step" data-step="2" hidden>' +
+        '<span class="lead-pop__eyebrow">Último paso</span>' +
+        '<h2>Cuéntame en qué estás, <span data-nombre></span>.</h2>' +
+        '<p>Así te mando lo que de verdad te sirve según tu etapa y tu industria.</p>' +
+        '<div class="lead-pop__qs">' + POP_QUESTIONS.map(popSelect).join('') + '</div>' +
+      '</div>' +
+      '<button class="btn btn--accent lead-pop__next" type="submit"><span class="btn__t">Continuar</span></button>' +
+      '<small class="lead-pop__fine">Tus datos están seguros. Puedes darte de baja cuando quieras.</small>' +
+      '</form></div>';
     d.body.appendChild(modal);
+    d.documentElement.classList.add('has-lead-pop');
     w.requestAnimationFrame(function () { modal.classList.add('is-visible'); });
+
+    var form = modal.querySelector('form'), f = form.elements;
+    var nextBtn = modal.querySelector('.lead-pop__next'), backBtn = modal.querySelector('.lead-pop__back');
+
+    function setErr(input, msg) {
+      var field = input.closest('.lead-pop__field');
+      field.classList.toggle('is-invalid', !!msg);
+      field.querySelector('.lead-pop__err').textContent = msg || '';
+      return !msg;
+    }
+    function visibleQs() {
+      var etapa = f.etapa.value;
+      return POP_QUESTIONS.filter(function (q) { return !q.show || (etapa && q.show.indexOf(etapa) !== -1); });
+    }
+    function contactErrors() {
+      var digits = f.telefono.value.replace(/\D/g, '');
+      return {
+        nombre: f.nombre.value.trim().length < 2 ? 'Escribe tu nombre.' : '',
+        email: /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(f.email.value.trim()) ? '' : 'Revisa tu correo, parece incompleto.',
+        telefono: digits.length < 7 || digits.length > 13 ? 'Escribe tu número de WhatsApp completo.' : ''
+      };
+    }
+    function validate(n) {
+      var ok = true;
+      if (n === 1) {
+        var errs = contactErrors();
+        Object.keys(errs).forEach(function (k) { if (!setErr(f[k], errs[k])) ok = false; });
+        return ok;
+      }
+      visibleQs().forEach(function (q) { if (!setErr(f[q.id], f[q.id].value ? '' : 'Elige una opción.')) ok = false; });
+      return ok;
+    }
+    // El contacto queda como "Pop-up incompleto" hasta que responda las preguntas.
+    function saveContact() {
+      var c = POP_COUNTRIES[Number(f.pais.value)] || POP_COUNTRIES[0];
+      var numero = f.telefono.value.replace(/\D/g, '').replace(/^0+/, '');
+      if (numero.length > 10 && numero.indexOf(c[1]) === 0) numero = numero.slice(c[1].length);
+      var next = { nombre: f.nombre.value.trim(), email: f.email.value.trim().toLowerCase(),
+        telefono: c[1] + numero, pais: c[0], fuente: leadSource(), utm: utm };
+      // Si volvió atrás y cambió algo, se guarda de nuevo.
+      if (contact && contact.nombre === next.nombre && contact.email === next.email && contact.telefono === next.telefono) return;
+      contact = next;
+      sendLead(contact);
+      try { localStorage.setItem(capturedKey, '1'); } catch (err) {}
+      track('lead_popup_contact', { source: leadSource() });
+    }
+    function go(n) {
+      step = n;
+      modal.querySelectorAll('.lead-pop__step').forEach(function (s) { s.hidden = Number(s.dataset.step) !== n; });
+      modal.querySelectorAll('.lead-pop__bar i').forEach(function (bar, i) { bar.classList.toggle('is-on', i < n); });
+      modal.querySelector('.lead-pop__count b').textContent = n;
+      backBtn.hidden = n === 1;
+      nextBtn.querySelector('.btn__t').textContent = n === STEPS ? 'Enviar y recibir recursos' : 'Continuar';
+      modal.querySelector('[data-nombre]').textContent = (f.nombre.value.trim().split(/\s+/)[0] || '');
+      var first = modal.querySelector('.lead-pop__step[data-step="' + n + '"] input, .lead-pop__step[data-step="' + n + '"] select');
+      if (first && !w.matchMedia('(pointer:coarse)').matches) first.focus({ preventScroll: true });
+      modal.querySelector('.lead-pop__card').scrollTop = 0;
+    }
+
+    f.etapa.addEventListener('change', function () {
+      var shown = visibleQs().map(function (q) { return q.id; });
+      POP_QUESTIONS.forEach(function (q) {
+        var field = modal.querySelector('[data-q="' + q.id + '"]'), on = shown.indexOf(q.id) !== -1;
+        if (field.hidden === on) { field.hidden = !on; if (on) field.classList.add('is-new'); }
+        if (!on) { f[q.id].value = ''; setErr(f[q.id], ''); }
+      });
+    });
+    form.addEventListener('change', function (e) { if (e.target.closest('.lead-pop__q') && e.target.value) setErr(e.target, ''); });
+    form.addEventListener('input', function (e) { if (e.target.closest('.is-invalid')) setErr(e.target, ''); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!validate(step)) { var bad = modal.querySelector('.is-invalid input, .is-invalid select'); if (bad) bad.focus(); return; }
+      if (step === 1) { saveContact(); track('lead_popup_step', { step: 2 }); go(2); return; }
+      var respuestas = {};
+      visibleQs().forEach(function (q) { respuestas[q.id] = f[q.id].value; });
+      var data = {}; for (var k in contact) data[k] = contact[k];
+      data.respuestas = respuestas;
+      if (!sendLead(data)) { form.classList.add('is-error'); return; }
+      track('lead_popup_submitted', { source: leadSource(), etapa: f.etapa.value });
+      form.innerHTML = '<div class="lead-pop__success"><span class="lead-pop__check" aria-hidden="true"></span>' +
+        '<b>¡Listo, ' + popEsc(contact.nombre.split(/\s+/)[0]) + '!</b>' +
+        '<span>Revisa tu correo y tu WhatsApp. Muy pronto te escribimos con los primeros recursos.</span></div>';
+      modal.querySelector('.lead-pop__top').style.visibility = 'hidden';
+      modal.querySelectorAll('.lead-pop__bar i').forEach(function (bar) { bar.classList.add('is-on'); });
+      setTimeout(function () { removeLeadPopup('completed'); }, 3200);
+    });
+    backBtn.addEventListener('click', function () { if (step > 1) go(step - 1); });
     modal.querySelector('.lead-pop__close').addEventListener('click', function () {
       try { sessionStorage.setItem(popupKey, '1'); } catch (err) {}
-      removeLeadPopup('closed');
+      // Cerró con los datos completos sin darle a "Continuar": igual queda como incompleto.
+      var errs = contactErrors();
+      if (!contact && !errs.nombre && !errs.email && !errs.telefono) saveContact();
+      removeLeadPopup(step === 2 ? 'closed_questions' : 'closed');
     });
     modal.addEventListener('click', function (e) { if (e.target === modal) modal.querySelector('.lead-pop__close').click(); });
-    modal.querySelector('form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var form = e.currentTarget, nombre = form.elements.nombre.value.trim(), email = form.elements.email.value.trim(), telefono = form.elements.telefono.value.trim(), telefonoDigits = telefono.replace(/\D/g, '');
-      if (!nombre || !telefonoDigits || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { form.classList.add('is-invalid'); return; }
-      var submitted = sendLead({ nombre: nombre, email: email, telefono: telefonoDigits, fuente: leadSource(), utm: utm });
-      if (!submitted) { form.classList.add('is-error'); return; }
-      try { localStorage.setItem(capturedKey, '1'); } catch (err) {}
-      track('lead_popup_submitted', { source: leadSource() });
-      form.innerHTML = '<div class="lead-pop__success"><b>¡Listo!</b><span>Muy pronto tendrás noticias mías.</span></div>';
-      setTimeout(function () { removeLeadPopup('completed'); }, 1600);
-    });
-    modal.querySelector('input').focus();
+    go(1);
     track('lead_popup_shown', { source: leadSource(), delay_seconds: popupDelay / 1000 });
   }
   ['pointerdown', 'keydown', 'touchstart', 'scroll'].forEach(function (eventName) {
     w.addEventListener(eventName, function () { hasInteracted = true; showLeadPopup(); }, { passive: true, once: true });
   });
+  if (forcePopup) w.addEventListener('load', showLeadPopup);
   setTimeout(function () { delayDone = true; showLeadPopup(); }, popupDelay);
   d.addEventListener('keydown', function (e) { if (e.key === 'Escape' && d.getElementById('lead-popup')) d.querySelector('.lead-pop__close').click(); });
 

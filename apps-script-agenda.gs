@@ -55,6 +55,12 @@ var AG = {
   whatsappComunidad: 'https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW'
 };
 
+// Respuestas del pop-up del sitio (api/_lib/popup-questions.js), en MAESTRO y en Orgánicos.
+var COLUMNAS_POPUP = [
+  ['Etapa', 'etapa'], ['¿Dueño de la empresa?', 'dueno'], ['Empleados', 'empleados'], ['Rol', 'rol'],
+  ['Ventas mensuales', 'ventas'], ['Industria', 'industria']
+];
+
 var HOJA_MAESTRO = 'MAESTRO';
 var COLUMNAS_MAESTRO = [
   ['email', 'email'], ['Fecha de registro', 'creado'], ['Última actualización', 'actualizado'],
@@ -69,8 +75,9 @@ var COLUMNAS_MAESTRO = [
   ['eventos_meta_enviados', 'eventos_meta'], ['Marcado por', 'marcado_por'],
   ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
   ['utm_content', 'utm_content'], ['utm_term', 'utm_term'],
-  ['fbp', 'fbp'], ['fbc', 'fbc'], ['recordatorio_24h', 'recordatorio_24h'], ['recordatorio_1h', 'recordatorio_1h']
-];
+  ['fbp', 'fbp'], ['fbc', 'fbc'], ['recordatorio_24h', 'recordatorio_24h'], ['recordatorio_1h', 'recordatorio_1h'],
+  ['Pop-up', 'popup_formulario'], ['Prioridad pop-up', 'prioridad_popup']
+].concat(COLUMNAS_POPUP);
 
 // Pestañas donde trabaja el agente (ver encabezado).
 var HOJA_ORGANICOS = 'ManyChat - Orgánicos';
@@ -79,8 +86,8 @@ var COLUMNAS_ORGANICOS = [
   ['WhatsApp', 'telefono'], ['Fuente', 'fuente'], ['Recursos descargados', 'recursos'], ['Estado', 'estado'],
   ['Contenidos que lo trajeron', 'contenidos'],
   ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
-  ['utm_content', 'utm_content'], ['utm_term', 'utm_term']
-];
+  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['Prioridad', 'prioridad_popup']
+].concat(COLUMNAS_POPUP);
 var HOJA_AGENDADOS = 'Página - Agendados';
 var HOJA_NO_AGENDADOS = 'Página - No agendados';
 var HOJA_NO_CALIFICADOS = 'Página - No calificados';
@@ -133,21 +140,39 @@ function claveValida_(recibida) {
 
 /* ----------------------------- leads ----------------------------- */
 
-// ManyChat (links /acceso/) y pop-up del sitio.
+// ManyChat (links /acceso/) y pop-up del sitio. El pop-up manda formulario "Incompleto" (solo dejó
+// sus datos) o "Completo" (con respuestas y prioridad A/B/C). En Orgánicos el incompleto queda con
+// Estado "Pop-up incompleto" hasta que responda; en MAESTRO el Estado sigue siendo "Orgánico"
+// (es el que decide el flujo de /aprende) y el avance del pop-up va en la columna "Pop-up".
 function organico_(d) {
   if (!d.email) return { ok: false, error: 'email' };
   // utm_content (o utm_campaign) del link = el reel o publicación que trajo al lead.
   var utm = d.utm || {};
   var contenido = utm.utm_content || utm.utm_campaign || '';
+  var popup = {};
+  if (d.formulario === 'Completo') {
+    popup.popup_formulario = 'Completo';
+    popup.prioridad_popup = d.prioridad_popup;
+    COLUMNAS_POPUP.forEach(function (c) { popup[c[1]] = (d.respuestas && d.respuestas[c[1]]) || ''; });
+  } else if (d.formulario === 'Incompleto') {
+    popup.popup_formulario = 'Incompleto';
+  }
   conLock_(function () {
     var actual = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
-    var campos = { nombre: d.nombre, telefono: d.telefono, recursos_agregar: d.recurso, contenidos_agregar: contenido };
+    // Un contacto nuevo del pop-up nunca deshace uno que ya respondió las preguntas.
+    if (popup.popup_formulario === 'Incompleto' && actual && actual.popup_formulario === 'Completo') popup = {};
+    var campos = { nombre: d.nombre, telefono: d.telefono, pais: d.pais, recursos_agregar: d.recurso, contenidos_agregar: contenido };
+    Object.assign(campos, popup);
     // En MAESTRO los UTM son los del primer contacto: no se pisan los de un anuncio.
     if (!actual) { campos.fuente = d.fuente; campos.estado = 'Orgánico'; Object.assign(campos, utm); }
     escribirFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email, campos);
     // Si ya está en el flujo de la página, no se le abre un segundo flujo.
     if (actual && actual.estado && actual.estado !== 'Orgánico') return;
-    var organico = { nombre: d.nombre, telefono: d.telefono, fuente: d.fuente, recursos_agregar: d.recurso, contenidos_agregar: contenido, estado: 'Orgánico' };
+    var previo = leerFila_(HOJA_ORGANICOS, COLUMNAS_ORGANICOS, d.email);
+    var organico = { nombre: d.nombre, telefono: d.telefono, fuente: d.fuente, recursos_agregar: d.recurso, contenidos_agregar: contenido };
+    Object.assign(organico, popup);
+    // Solo un lead que entra por primera vez queda como incompleto; responder (o ManyChat) lo deja en "Orgánico".
+    organico.estado = popup.popup_formulario === 'Incompleto' ? (previo ? undefined : 'Pop-up incompleto') : 'Orgánico';
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { organico[k] = utm[k] || ''; });
     escribirFila_(HOJA_ORGANICOS, COLUMNAS_ORGANICOS, d.email, organico);
   });
