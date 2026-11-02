@@ -23,19 +23,17 @@ const contact = {
 const valid = { ...contact, ...good, reto: 'Responder correos de clientes' };
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 
-test('qualifies only leads without disqualifying answers', () => {
+test('disqualifies only "more later / exploring" and "can not invest"', () => {
   assert.equal(qualify(good), true);
   assert.equal(qualify({ ...good, aplica: 'empleado', inicio: '2_3_meses', inversion: 'organizarme' }), true);
-  assert.equal(qualify({ ...good, aplica: 'no_claro' }), false);
   assert.equal(qualify({ ...good, inicio: 'mas_adelante' }), false);
   assert.equal(qualify({ ...good, inicio: 'explorando' }), false);
   assert.equal(qualify({ ...good, inversion: 'no_puede' }), false);
-  // "Necesito conocer mejor" solo con urgencia alta.
-  assert.equal(qualify({ ...good, inversion: 'conocer_mas', inicio: 'este_mes' }), true);
-  assert.equal(qualify({ ...good, inversion: 'conocer_mas', inicio: '2_3_meses' }), false);
-  // "Nuevo negocio" solo con disposición a invertir.
-  assert.equal(qualify({ ...good, aplica: 'nuevo_negocio', inversion: 'organizarme' }), true);
-  assert.equal(qualify({ ...good, aplica: 'nuevo_negocio', inversion: 'conocer_mas' }), false);
+  // Dónde aplica la IA nunca descalifica, y "conocer mejor" sirve con cualquier fecha cercana.
+  assert.equal(qualify({ ...good, aplica: 'no_claro' }), true);
+  assert.equal(qualify({ ...good, inversion: 'conocer_mas', inicio: '2_3_meses' }), true);
+  assert.equal(qualify({ ...good, aplica: 'nuevo_negocio', inversion: 'conocer_mas', inicio: 'ya' }), true);
+  assert.equal(qualify({ ...good, aplica: 'no_claro', inicio: '2_3_meses', inversion: 'conocer_mas' }), true);
 });
 
 function response() {
@@ -230,7 +228,7 @@ test('top leads are flagged as priority and get the main closer slots', async ()
   assert.equal(priority(good), true);
   assert.equal(priority({ ...good, inicio: '2_3_meses' }), false);
   assert.equal(priority({ ...good, inversion: 'organizarme' }), false);
-  assert.equal(priority({ ...good, aplica: 'no_claro' }), false);
+  assert.equal(priority({ ...good, inversion: 'conocer_mas' }), false);
   let res = await run(leadHandler, { method: 'POST', body: valid });
   assert.equal(res.agenda[0].prioridad, true);
   res = await run(leadHandler, { method: 'POST', body: { ...valid, inversion: 'organizarme' } });

@@ -44,13 +44,11 @@
     ['España', '34'], ['Estados Unidos', '1']
   ];
 
-  // Calificado = ninguna respuesta descalificante, con dos casos condicionados.
+  // Calificado = quiere empezar en los próximos meses y puede invertir. Dónde aplica la IA y el
+  // reto no descalifican: son contexto para el agente.
   function qualify(a) {
-    if (a.aplica === 'no_claro') return false;
     if (a.inicio === 'mas_adelante' || a.inicio === 'explorando') return false;
     if (a.inversion === 'no_puede') return false;
-    if (a.inversion === 'conocer_mas' && a.inicio !== 'ya' && a.inicio !== 'este_mes') return false;
-    if (a.aplica === 'nuevo_negocio' && a.inversion !== 'listo' && a.inversion !== 'organizarme') return false;
     return true;
   }
 
