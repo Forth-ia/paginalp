@@ -45,7 +45,8 @@ var AG = {
   diasHabiles: [1, 2, 3, 4, 5, 6], // lunes a sábado; nunca domingos ni festivos de Colombia (festivoCO_)
   closers: [
     { email: 'admin@getforth.ai', nombre: 'Luciano', bloques: [['11:00', '19:00']] },
-    { email: 'info@getforth.ai', nombre: 'Andrea', bloques: [['07:30', '11:30'], ['13:00', '15:00']] }
+    // dias: los días de la semana en que atiende (1 = lunes); sin dias, todos los de AG.diasHabiles.
+    { email: 'info@getforth.ai', nombre: 'Andrea', bloques: [['07:30', '11:30'], ['13:00', '15:00']], dias: [1, 2, 3, 4, 5] }
   ],
   // Leads prioritarios (assets/js/aprende-qualify.js → priority): solo ven sus horarios,
   // y le llega un aviso por correo apenas califican.
@@ -343,8 +344,10 @@ function libresPorSlot_(ahora, hasta, desde) {
     var dia = new Date(ahora.getTime() + i * 86400000);
     var fecha = Utilities.formatDate(dia, AG.zona, 'yyyy-MM-dd');
     if (!diaDeAgenda_(dia)) continue;
+    var diaSemana = Number(Utilities.formatDate(dia, AG.zona, 'u'));
     AG.closers.forEach(function (closer) {
       if (!ocupado[closer.email]) return; // sin acceso a su calendario: no se ofrece
+      if (closer.dias && closer.dias.indexOf(diaSemana) === -1) return;
       closer.bloques.forEach(function (bloque) {
         var inicio = new Date(fecha + 'T' + bloque[0] + ':00' + AG.offset);
         var fin = new Date(fecha + 'T' + bloque[1] + ':00' + AG.offset);
