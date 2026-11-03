@@ -333,3 +333,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/skill-escritura-linkedin/
 
 La distinción depende de la URL enviada.
+
+
+## AI Stack de Tyler Denk (beehiiv)
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/ai-stack-tyler-denk/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · AI Stack de Tyler Denk (beehiiv)`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/ai-stack-tyler-denk/
+
+La distinción depende de la URL enviada.
