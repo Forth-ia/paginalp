@@ -33,6 +33,52 @@
  },
  "resources": [
 {
+  "id": "ai-stack-tyler-denk",
+  "slug": "ai-stack-tyler-denk",
+  "title": "Cómo construir tu propio AI Stack: el sistema que usa Tyler Denk para operar Beehiiv",
+  "category": "negocio",
+  "secondary": [
+    "agentes",
+    "claude"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Aprende cómo Tyler Denk conecta las herramientas de beehiiv con Claude y arma tu propio AI Stack con MCP, Skills y tareas programadas en 30 días.",
+  "what_you_get": [
+    "Las 4 capas del AI Stack de Tyler Denk",
+    "Las herramientas de su stack y para qué sirve cada una",
+    "Cómo empezar: inventario, conexiones y contexto",
+    "Plan de 30 días, ejemplo de Skill y prompt para diseñar tu sistema"
+  ],
+  "ideal_for": [
+    "Fundadores y líderes de equipo",
+    "Empresas que quieren ser AI Native"
+  ],
+  "includes": [
+    "Tablas de herramientas y plan",
+    "Skill de ejemplo",
+    "Prompt copiable",
+    "Recomendaciones de seguridad"
+  ],
+  "tools": [
+    "Claude",
+    "MCP",
+    "Claude Skills",
+    "Scheduled Tasks"
+  ],
+  "words": 1984,
+  "read_min": 8,
+  "related_tutorials": [],
+  "related_resources": [
+    "4-mcps-agente-real",
+    "stanford-ai-index-2026"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "skill-escritura-linkedin",
   "slug": "skill-escritura-linkedin",
   "title": "Guía: crea tu skill de escritura para LinkedIn",
