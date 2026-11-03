@@ -15,7 +15,8 @@
  *       "Página - No calificados"   /aprende: no pasan el filtro.
  *     Un lead de la página está en una sola de esas tres y se mueve al avanzar;
  *     cuando entra al formulario de la página sale de "ManyChat - Orgánicos".
- *  2. Calcula los horarios libres de los closers leyendo sus Google Calendar.
+ *  2. Calcula los horarios libres de los closers: el horario y quién está habilitado
+ *     salen de getforth (Ventas → Configurar calendarios) y lo ocupado, de sus Google Calendar.
  *  3. Agenda la llamada (Google Meet) en el calendario del closer, invita al
  *     lead y avisa por correo al closer y al lead.
  *  4. Manda recordatorios por correo 24 h y 1 h antes (función activarRecordatorios) y,
@@ -43,6 +44,9 @@ var AG = {
   diasVentana: 2,   // día de agendamiento + 2 días hábiles; más solo si no hay ningún espacio
   avisoMinimoMin: 120, // no se puede agendar con menos de 2 horas
   diasHabiles: [1, 2, 3, 4, 5, 6], // lunes a sábado; nunca domingos ni festivos de Colombia (festivoCO_)
+  // Horarios y closers habilitados se manejan en getforth (Ventas → Configurar calendarios).
+  // Los bloques/dias de abajo solo se usan si getforth nunca ha respondido.
+  calendariosPanel: 'https://www.getforth.app/api/ventas/calendars',
   closers: [
     { email: 'admin@getforth.ai', nombre: 'Luciano', bloques: [['11:00', '19:00']] },
     // dias: los días de la semana en que atiende (1 = lunes); sin dias, todos los de AG.diasHabiles.
@@ -339,6 +343,7 @@ function festivosCO_(anio) {
 // { 'ISO inicio': [emails de closers libres] }
 function libresPorSlot_(ahora, hasta, desde) {
   var ocupado = ocupadoPorCloser_(ahora, hasta);
+  var panel = calendariosPanel_();
   var libres = {};
   for (var i = 0; i <= AG.diasAdelante; i++) {
     var dia = new Date(ahora.getTime() + i * 86400000);
@@ -347,8 +352,7 @@ function libresPorSlot_(ahora, hasta, desde) {
     var diaSemana = Number(Utilities.formatDate(dia, AG.zona, 'u'));
     AG.closers.forEach(function (closer) {
       if (!ocupado[closer.email]) return; // sin acceso a su calendario: no se ofrece
-      if (closer.dias && closer.dias.indexOf(diaSemana) === -1) return;
-      closer.bloques.forEach(function (bloque) {
+      bloquesDelDia_(closer, diaSemana, panel).forEach(function (bloque) {
         var inicio = new Date(fecha + 'T' + bloque[0] + ':00' + AG.offset);
         var fin = new Date(fecha + 'T' + bloque[1] + ':00' + AG.offset);
         for (var t = inicio.getTime(); t + AG.duracionMin * 60000 <= fin.getTime(); t += AG.duracionMin * 60000) {
@@ -363,6 +367,42 @@ function libresPorSlot_(ahora, hasta, desde) {
     });
   }
   return libres;
+}
+
+// Bloques ['HH:mm', 'HH:mm'] en que el closer recibe llamadas ese día (diaSemana: 1 = lunes).
+// Manda lo configurado en getforth (Ventas → Configurar calendarios): apagado = sin bloques.
+// Si el closer no está en el panel, o el panel no responde, se usa AG.closers.
+function bloquesDelDia_(closer, diaSemana, panel) {
+  var config = panel && panel[closer.email];
+  if (!config) return closer.dias && closer.dias.indexOf(diaSemana) === -1 ? [] : closer.bloques;
+  var dia = config.enabled && config.schedule && config.schedule[diaSemana - 1];
+  if (!dia || !dia.enabled) return [];
+  return (dia.ranges || []).map(function (r) { return [r.start, r.end]; });
+}
+
+// { email: { enabled, schedule } } de getforth. Se guarda 1 minuto en caché y la última respuesta
+// buena en las propiedades del script, por si getforth no responde.
+function calendariosPanel_() {
+  var cache = CacheService.getScriptCache();
+  var guardado = cache.get('calendarios_panel');
+  if (guardado) return JSON.parse(guardado);
+  var props = PropertiesService.getScriptProperties();
+  var mapa = null;
+  try {
+    var respuesta = UrlFetchApp.fetch(AG.calendariosPanel, { muteHttpExceptions: true });
+    if (respuesta.getResponseCode() !== 200) throw new Error('getforth respondió ' + respuesta.getResponseCode());
+    mapa = {};
+    (JSON.parse(respuesta.getContentText()).calendars || []).forEach(function (c) {
+      mapa[String(c.email).toLowerCase()] = { enabled: Boolean(c.enabled), schedule: c.schedule || [] };
+    });
+    props.setProperty('CALENDARIOS_PANEL', JSON.stringify(mapa));
+  } catch (err) {
+    console.warn('No se pudieron leer los calendarios de getforth; se usa la última copia.', err);
+    var copia = props.getProperty('CALENDARIOS_PANEL');
+    mapa = copia ? JSON.parse(copia) : null;
+  }
+  if (mapa) cache.put('calendarios_panel', JSON.stringify(mapa), 60);
+  return mapa;
 }
 
 function ocupadoPorCloser_(desde, hasta) {
@@ -602,12 +642,17 @@ function instalar() {
   return { calendarios: calendarios, recordatorios: 'activos', importados: importados };
 }
 
-// Ejecútala desde el editor para comprobar el acceso a los calendarios.
+// Ejecútala desde el editor para comprobar el acceso a los calendarios y a getforth
+// (la primera vez pide autorizar la conexión a getforth).
 function probarCalendarios() {
   var ocupado = ocupadoPorCloser_(new Date(), new Date(Date.now() + 7 * 86400000));
+  CacheService.getScriptCache().removeAll(['calendarios_panel', 'horarios', 'horarios_prioridad']);
+  var panel = calendariosPanel_();
   var estado = {};
   AG.closers.forEach(function (c) {
-    estado[c.email] = ocupado[c.email] ? 'OK, ' + ocupado[c.email].length + ' bloques ocupados' : 'SIN ACCESO';
+    var config = panel && panel[c.email];
+    var getforth = !config ? 'no está en getforth (usa el horario de AG)' : config.enabled ? 'habilitado en getforth' : 'DESHABILITADO en getforth';
+    estado[c.email] = (ocupado[c.email] ? 'OK, ' + ocupado[c.email].length + ' bloques ocupados' : 'SIN ACCESO') + ' · ' + getforth;
     console.log(c.email + ': ' + estado[c.email]);
   });
   estado.horarios_libres_14_dias = horarios_().slots.length;
