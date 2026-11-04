@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
   <meta name="description" content="Elige el d&iacute;a y la hora de tu llamada con el equipo de Luciano Musella.">
-  <title>Agenda tu llamada | Luciano Musella</title>
+  <title>Agenda tu llamada | Forth</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
@@ -100,14 +100,27 @@
     .check{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;font-size:1.6rem;font-weight:700}
     .foot{text-align:center;color:var(--ink-3);font-size:14px;padding:0 16px 40px}
     .foot a{color:var(--ink-2);font-weight:600}
+
+    /* Forth limpio: encabezado blanco, una sola fuente, azul como acento, sin degradados */
+    :root{--serif:var(--sans);--sky:#F6F7FA}
+    .top{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+    .brand{color:var(--ink);font-size:24px;letter-spacing:-.045em}
+    .top h1{font-weight:800;letter-spacing:-.04em}
+    .top p{color:var(--ink-2)}
+    .facts{color:var(--ink-2)}
+    .facts span::before{background:var(--blue)}
+    .card{box-shadow:0 0 0 1px var(--line),0 40px 80px -50px rgba(18,17,46,.45)}
+    .cal__title,.msg h2{font-weight:800;letter-spacing:-.03em}
+    .btn{background:var(--blue);color:#fff}
+    .btn:hover{background:#2E2EE0}
   </style>
 </head>
 <body>
   <header class="top">
     <div class="wrap">
-      <div class="top__bar"><a href="/" class="brand" aria-label="Luciano Musella, inicio">Luciano Musella</a></div>
+      <div class="top__bar"><a href="/" class="brand" aria-label="Forth, inicio">Forth</a></div>
       <h1>Elige el d&iacute;a y la hora de tu llamada</h1>
-      <p>Una conversaci&oacute;n con el equipo de Luciano para ver c&oacute;mo aplicar IA en tu trabajo o tu negocio.</p>
+      <p>Una conversaci&oacute;n con el equipo de Forth para ver c&oacute;mo aplicar IA en tu trabajo o tu negocio.</p>
       <div class="facts"><span>30 minutos</span><span>Google Meet</span><span>Sin costo</span></div>
     </div>
   </header>
@@ -151,7 +164,7 @@
       <section class="msg" id="badLink" hidden>
         <h2>Este link para agendar no es v&aacute;lido</h2>
         <p>Puede que se haya copiado incompleto. Agenda desde la p&aacute;gina en un minuto, o resp&oacute;ndenos por WhatsApp y te mandamos uno nuevo.</p>
-        <a href="/aprende/#agenda" class="btn btn--wide">Agendar desde la p&aacute;gina</a>
+        <a href="/agenda/" class="btn btn--wide">Agendar desde la p&aacute;gina</a>
       </section>
     </div>
   </main>

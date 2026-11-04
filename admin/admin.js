@@ -80,7 +80,7 @@
     for (var i = 0; i < 7; i++) days.push(addDays(monday, i));
     // Fin de semana solo si ese fin de semana hay citas.
     return days.filter(function (k, i) {
-      return i < 5 || leads.some(function (l) { return l.cita_inicio && dayKey(startMs(l)) === k; });
+      return i < 6 || leads.some(function (l) { return l.cita_inicio && dayKey(startMs(l)) === k; });
     });
   }
   $('today').addEventListener('click', function () { anchor = dayKey(Date.now()); miniMonth = anchor.slice(0, 7); render(); scrollNow(); });
@@ -162,7 +162,7 @@
       evs.forEach(function (l) {
         var top = Math.max(0, (startMs(l) - base) / (30 * 60000));
         var c = closerOf(l), pending = needsMark(l), past = startMs(l) + CALL_MIN * 60000 <= Date.now();
-        var st = l.venta === 'Venta' ? '$' : l.asistencia === 'Show' ? '✓' : l.asistencia === 'No show' ? '✗' : pending ? '⚠' : '';
+        var st = l.venta === 'Venta' ? '$' : l.venta === 'Buen lead (Meta)' ? '★' : l.venta === 'No calificado' ? '⊘' : l.asistencia === 'Show' ? '✓' : l.asistencia === 'No show' ? '✗' : pending ? '⚠' : '';
         var cls = 'ev ' + c.c + (past ? ' is-past' : '') + (pending ? ' is-pending' : '') + (l.asistencia === 'No show' ? ' is-noshow' : '') + (l.email === selected ? ' is-sel' : '');
         var dim = matches(l) ? '' : 'opacity:.25;';
         html += '<button type="button" class="' + cls + '" data-open="' + esc(l.email) + '" style="' + dim + 'top:calc(' + slot + ' * ' + top + ' + 1px);height:calc(' + slot + ' * ' + (CALL_MIN / 30) + ' - 3px);' +
@@ -199,7 +199,9 @@
       marcar: withCita.filter(needsMark).sort(function (a, b) { return startMs(b) - startMs(a); }),
       proximas: withCita.filter(function (l) { return startMs(l) + CALL_MIN * 60000 > now; }).sort(function (a, b) { return startMs(a) - startMs(b); }),
       sinagendar: leads.filter(function (l) { return !l.cita_inicio && l.calificado === 'Sí'; })
-        .sort(function (a, b) { return (b.prioridad === 'Alta') - (a.prioridad === 'Alta') || (a.creado < b.creado ? 1 : -1); })
+        .sort(function (a, b) { return (b.prioridad === 'Alta') - (a.prioridad === 'Alta') || (a.creado < b.creado ? 1 : -1); }),
+      // Tuvieron la llamada y no eran el perfil: Meta recibió LeadNoCalificado y el agente no les escribe.
+      nocalif: withCita.filter(function (l) { return l.venta === 'No calificado'; }).sort(function (a, b) { return startMs(b) - startMs(a); })
     };
   }
 
@@ -210,24 +212,26 @@
     var conCita = leads.filter(function (l) { return l.cita_inicio && startMs(l) + CALL_MIN * 60000 <= Date.now() && l.asistencia; });
     var shows = conCita.filter(function (l) { return l.asistencia === 'Show'; }).length;
     var ventas = leads.filter(function (l) { return l.venta === 'Venta'; });
+    var buenos = leads.filter(function (l) { return l.venta === 'Buen lead (Meta)'; }).length;
     var porMoneda = {};
     ventas.forEach(function (l) { porMoneda[l.moneda || 'USD'] = (porMoneda[l.moneda || 'USD'] || 0) + Number(l.valor || 0); });
     var total = Object.keys(porMoneda).map(function (m) { return m + ' ' + porMoneda[m].toLocaleString('es'); }).join(' · ');
     $('stats').innerHTML = [
       [hoy, 'Llamadas hoy'], [semana, view === 'day' ? 'Este día' : 'Esta semana'],
       [conCita.length ? Math.round(shows / conCita.length * 100) + '%' : '—', 'Show rate'], [g.marcar.length, 'Por marcar'],
-      [ventas.length + (total ? ' · ' + total : ''), 'Ventas', true]
+      [ventas.length + (total ? ' · ' + total : ''), 'Ventas', true],
+      [buenos, 'Buenos leads (Meta)', true]
     ].map(function (s) { return '<div class="stat' + (s[2] ? ' stat--wide' : '') + '"><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></div>'; }).join('');
     $('pendingN').textContent = g.marcar.length ? '(' + g.marcar.length + ')' : '';
 
-    var tabs = query ? [['buscar', 'Resultados']] : [['marcar', 'Marcar'], ['proximas', 'Próximas'], ['sinagendar', 'Sin cita']];
+    var tabs = query ? [['buscar', 'Resultados']] : [['marcar', 'Marcar'], ['proximas', 'Próximas'], ['sinagendar', 'Sin cita'], ['nocalif', 'No calif.']];
     var current = query ? 'buscar' : sideTab;
-    var lists = { marcar: g.marcar, proximas: g.proximas, sinagendar: g.sinagendar, buscar: leads.filter(matches) };
+    var lists = { marcar: g.marcar, proximas: g.proximas, sinagendar: g.sinagendar, nocalif: g.nocalif, buscar: leads.filter(matches) };
     $('tabs').innerHTML = tabs.map(function (t) {
       return '<button type="button" data-side="' + t[0] + '" class="' + (t[0] === current ? 'is-on' : '') + '">' + t[1] + '<i data-n="' + lists[t[0]].length + '">' + lists[t[0]].length + '</i></button>';
     }).join('');
     var rows = lists[current];
-    var empty = { marcar: 'Todo marcado. ¡Bien!', proximas: 'No hay llamadas próximas.', sinagendar: 'No hay calificados sin cita.', buscar: 'Sin resultados.' };
+    var empty = { marcar: 'Todo marcado. ¡Bien!', proximas: 'No hay llamadas próximas.', sinagendar: 'No hay calificados sin cita.', nocalif: 'Nadie marcado como no calificado.', buscar: 'Sin resultados.' };
     $('items').innerHTML = rows.length ? rows.slice(0, 200).map(function (l) {
       var c = closerOf(l), when = l.cita_inicio ? fmtDate(dayKey(startMs(l))) + ' · ' + fmtTime(startMs(l)) + ' · ' + c.nombre : 'Sin cita · ' + (l.telefono || l.email);
       var quick = needsMark(l) && !l.asistencia ? '<span class="quick">' +
@@ -239,10 +243,12 @@
 
   /* ---------- detalle ---------- */
   function chips(l) {
-    var map = { 'Venta': 'ok', 'Show': 'ok', 'Agendado': 'accent', 'No show': 'bad', 'No venta': 'bad' };
+    var map = { 'Venta': 'ok', 'Show': 'ok', 'Agendado': 'accent', 'No show': 'bad', 'No venta': 'bad', 'No calificado': 'bad' };
     return '<span class="chip chip--' + (map[l.estado] || '') + '">' + esc(l.estado || '—') + '</span>' +
       (l.prioridad === 'Alta' ? '<span class="chip chip--accent">🔥 Prioritario</span>' : '') +
-      (l.venta === 'Venta' ? '<span class="chip chip--ok">' + esc(l.moneda + ' ' + Number(l.valor).toLocaleString('es')) + '</span>' : '');
+      (l.venta === 'Venta' ? '<span class="chip chip--ok">' + esc(l.moneda + ' ' + Number(l.valor).toLocaleString('es')) + '</span>' : '') +
+      (l.venta === 'Buen lead (Meta)' ? '<span class="chip chip--ok">&#9733; Buen lead (venta para Meta)</span>' : '') +
+      (l.venta === 'No calificado' ? '<span class="chip chip--bad">No calificado en la llamada</span>' : '');
   }
 
   function renderDetail() {
@@ -261,8 +267,11 @@
             '<input type="number" min="1" step="1" placeholder="Valor de la venta" value="' + esc(l.valor) + '" id="valor" aria-label="Valor de la venta">' +
             '<select id="moneda" aria-label="Moneda"><option' + (l.moneda !== 'COP' ? ' selected' : '') + '>USD</option><option' + (l.moneda === 'COP' ? ' selected' : '') + '>COP</option></select>' +
             '<div class="btns"><button type="button" class="btn" data-act="Venta"' + pending + '>$ Venta</button>' +
-            '<button type="button" class="btn btn--ghost" data-act="No venta"' + pending + '>No venta</button></div>' +
-          '</div>') : '<p class="hint">Marca Show para registrar la venta.</p>') +
+            '<button type="button" class="btn btn--good' + (l.venta === 'Buen lead (Meta)' ? ' is-on' : '') + '" data-act="Buen lead"' + pending + ' title="Le llega a Meta como venta para que traiga más personas así. En el Sheets no cuenta como venta.">&#9733; Buen lead</button></div>' +
+            '<div class="btns"><button type="button" class="btn btn--ghost' + (l.venta === 'No venta' ? ' is-on' : '') + '" data-act="No venta"' + pending + '>No venta</button>' +
+            '<button type="button" class="btn btn--ghost btn--bad' + (l.venta === 'No calificado' ? ' is-on' : '') + '" data-act="No calificado"' + pending + ' title="Llegó a la llamada pero no era el perfil.">No calificado</button></div>' +
+            '<p class="hint">&#9733; Buen lead: a Meta le llega como venta (si no escribes valor, USD 500). No calificado: a Meta le llega como mal lead y el agente no le vuelve a escribir. Después de la llamada el seguimiento es manual.</p>' +
+          '</div>') : '<p class="hint">Marca Show para registrar el resultado.</p>') +
         (l.eventos_meta ? '<p class="hint">Meta: ' + esc(l.eventos_meta) + '</p>' : '') +
       '</div>') : '<p class="hint">Este lead calificó pero no agendó: escríbele por WhatsApp.</p>';
     box.className = 'detail ' + c.c;
@@ -351,6 +360,12 @@
         if (!(body.valor > 0)) { toast('Escribe el valor de la venta.'); $('valor').focus(); return; }
         if (!confirm('¿Registrar venta de ' + body.moneda + ' ' + body.valor.toLocaleString('es') + '? Se enviará a Meta como compra.')) return;
       }
+      if (act === 'Buen lead') {
+        body.valor = Number($('valor').value) > 0 ? Number($('valor').value) : 500;
+        body.moneda = $('moneda').value;
+        if (!confirm('¿Marcar como buen lead? A Meta le llega como compra de ' + body.moneda + ' ' + body.valor.toLocaleString('es') + ' para que traiga más personas así. En el Sheets NO cuenta como venta.')) return;
+      }
+      if (act === 'No calificado' && !confirm('¿Marcar como no calificado? Tuvo la llamada pero no era el perfil: a Meta le llega como mal lead y el agente no le vuelve a escribir.')) return;
     }
     busy[email] = true; render();
     api('mark', body).then(function (r) {

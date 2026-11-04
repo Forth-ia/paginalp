@@ -12,12 +12,12 @@
     /* /admin — agenda de llamadas en vista de semana (estilo Google Calendar) y resultado
        (show, venta). Lógica en admin/admin.js. */
     :root{
-      --ink:#12112E;--ink-2:#45446A;--ink-3:#6F6E8E;--paper:#FFFFFF;--cream:#F3FAFB;--sand:#E2F4F7;
-      --accent:#FF5A1F;--accent-deep:#E0470F;--accent-soft:rgba(255,90,31,.12);--line:rgba(18,17,46,.10);--line-2:rgba(18,17,46,.06);
+      --ink:#12112E;--ink-2:#45446A;--ink-3:#6F6E8E;--paper:#FFFFFF;--cream:#F6F7FA;--sand:#EEF0F6;
+      --accent:#3B3BFF;--accent-deep:#2E2EE0;--accent-soft:rgba(59,59,255,.10);--line:rgba(18,17,46,.10);--line-2:rgba(18,17,46,.06);
       --ok:#2F7D4F;--ok-soft:rgba(47,125,79,.12);--bad:#B4442C;--bad-soft:rgba(180,68,44,.10);
       --c1:#FF5A1F;--c1-soft:#FFE6DC;--c2:#3B3BFF;--c2-soft:#E3E3FF;--c0:#8F8A84;--c0-soft:#EFECE8;
       --now:#E0412E;--slot:26px;
-      --serif:'Source Serif 4',Georgia,serif;--sans:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;
+      --serif:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;--sans:'Figtree',-apple-system,BlinkMacSystemFont,sans-serif;
     }
     *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
@@ -73,7 +73,7 @@
     .hours div{height:calc(var(--slot) * 2);font-size:.7rem;color:var(--ink-3);text-align:right;padding-right:8px;transform:translateY(-.6em)}
     .hours div:first-child{visibility:hidden}
     .col{position:relative;border-left:1px solid var(--line-2);background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--slot) - 1px),var(--line-2) calc(var(--slot) - 1px),var(--line-2) var(--slot)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--slot) * 2 - 1px),var(--line) calc(var(--slot) * 2 - 1px),var(--line) calc(var(--slot) * 2))}
-    .col.is-today{background-color:rgba(255,90,31,.035)}
+    .col.is-today{background-color:rgba(59,59,255,.035)}
     .off{position:absolute;left:0;right:0;background:repeating-linear-gradient(135deg,rgba(18,17,46,.025) 0 6px,transparent 6px 12px);pointer-events:none}
     .now{position:absolute;left:-1px;right:0;height:2px;background:var(--now);z-index:3;pointer-events:none}
     .now::before{content:'';position:absolute;left:-6px;top:-5px;width:12px;height:12px;border-radius:50%;background:var(--now)}
@@ -198,6 +198,21 @@
       .cols{grid-template-columns:1fr}
       .cols .box{margin-bottom:16px}
     }
+
+    /* Forth limpio: una sola fuente, azul como acento; el naranja queda solo para Luciano y la flecha */
+    .brand,.login h1,.detail h2{font-weight:800;letter-spacing:-.03em}
+    .brand{display:flex;align-items:center;gap:10px;font-size:1.05rem;color:var(--ink-2,#45446A)}
+    .brand__logo{display:inline-flex;align-items:flex-start;font:800 1.45rem/1 var(--sans);letter-spacing:-.045em;color:#12112E}
+    .brand__logo::after{content:"";width:.42em;height:.42em;margin:-.06em 0 0 .06em;background:#FF5A1F;
+      -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 2 6.5 8.2l5.3 2.3-9.3 11 3 2.5 9.4-11 2.4 5.3z'/%3E%3C/svg%3E") center/contain no-repeat;
+              mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 2 6.5 8.2l5.3 2.3-9.3 11 3 2.5 9.4-11 2.4 5.3z'/%3E%3C/svg%3E") center/contain no-repeat}
+
+    /* resultado después de Show: venta, buen lead (venta para Meta), no venta, no calificado */
+    .sale .btns+.btns{margin-top:8px}
+    .btn--good{background:#E8F7EE;color:#0F7A3D;box-shadow:inset 0 0 0 1.5px #BFE6CD}
+    .btn--good:hover{background:#DDF2E6}
+    .btn--bad{color:#B42318}
+    .btn.is-on{box-shadow:inset 0 0 0 2px currentColor}
   </style>
 </head>
 <body>
@@ -214,7 +229,7 @@
 
   <div class="app" id="app" hidden>
     <header class="top">
-      <span class="brand">Agenda</span>
+      <span class="brand"><b class="brand__logo">Forth</b> Agenda</span>
       <button class="btn btn--ghost" id="today" type="button">Hoy</button>
       <button class="icon" id="prev" type="button" aria-label="Anterior">&lsaquo;</button>
       <button class="icon" id="next" type="button" aria-label="Siguiente">&rsaquo;</button>

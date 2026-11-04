@@ -4,68 +4,215 @@
 <script src="https://api.adpulze.io/api/v1/scripts/ghl.js?location_id=22"></script><script src="https://api.adpulze.io/api/v1/scripts/organic.js?location_id=22"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aprende a construir con IA | Luciano Musella</title>
-<meta name="description" content="Tutoriales, recursos y retos gratis para construir con IA. Y un programa para profesionales que quieren ir más lejos.">
+<title>Forth | Automatización con IA para empresas y profesionales</title>
+<meta name="description" content="Forth automatiza empresas con inteligencia artificial y enseña a profesionales a construir con IA. Con Luciano Musella.">
 <meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="Aprende a construir con IA"><meta property="og:description" content="Tutoriales, recursos y retos gratis para construir con IA. Y un programa para profesionales que quieren ir más lejos."><meta property="og:type" content="website">
+<meta property="og:title" content="Forth | Convierte inteligencia en crecimiento"><meta property="og:description" content="Automatización con IA para empresas y un programa para profesionales. Con Luciano Musella."><meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/site.css">
-
+<link rel="stylesheet" href="/assets/css/forth.css">
 </head>
-<body data-page="home">
+<body class="forth" data-page="home">
 <a class="sr" href="#main">Ir al contenido</a>
-<header class="nav" id="nav">
-  <div class="nav__in">
-    <a class="nav__brand" href="/">Luciano<span>.</span>Musella</a>
-    <ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul>
-    <div class="nav__cta">
-      <a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "nav"}' ><span class="btn__t">Agenda</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
-    </div>
+
+<a class="f-announce" href="/agenda/" data-track="agenda_click" data-track-props='{"from":"announce"}'><b class="f-pill">Nuevo</b> <span>agenda una llamada gratis de 30 minutos con el equipo de Forth &rarr;</span></a>
+
+<header class="f-nav" id="fnav">
+  <div class="f-wrap f-nav__in">
+    <a class="f-logo f-nav__logo" id="navLogo" href="/" aria-label="Forth, inicio">Forth</a>
+    <nav class="f-nav__links" aria-label="Principal">
+      <a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a class="f-nav__free" href="/biblioteca/">Aprende gratis</a>
+    </nav>
+    <a class="f-btn f-btn--sm" href="/agenda/" data-track="agenda_click" data-track-props='{"from":"nav"}'>Agenda tu llamada</a>
+    <button class="f-nav__burger" type="button" aria-expanded="false" aria-controls="fmenu" aria-label="Menú">&#9776;</button>
   </div>
+  <nav class="f-wrap f-nav__menu" id="fmenu" aria-label="Menú móvil">
+    <a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a class="f-nav__free" href="/biblioteca/">Aprende gratis</a>
+    <a class="f-btn" href="/agenda/">Agenda tu llamada</a>
+  </nav>
 </header>
-<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a><a href="https://lucianomusella.com/aprende">Agenda<small>06</small></a></div><div class="menu__foot"><a class="btn btn--light" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "menu"}' ><span class="btn__t">Agenda una conversación</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></nav></div>
+
 <main id="main">
-<section class="hm-hero" id="hero-home" data-bg="cream">
-  <div class="wrap hm-hero__in">
-    <div class="hm-hero__copy">
-      <span class="eyebrow eyebrow--dot">Para profesionales, gerentes y líderes</span>
-      <h1 class="hm-h1">Construye con IA. <em class="serif tint">Aprende haciendo.</em></h1>
-      <p class="hm-hero__sub">Videos, guías y retos para usar la IA de verdad en tu trabajo. Abiertos y sin registro.</p>
-      <div class="actions"><a class="btn " href="/tutoriales/" data-track="tutorial_click" data-track-props='{"from": "hero"}' ><span class="btn__t">Ver tutoriales</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="btn btn--ghost" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "hero"}' ><span class="btn__t">Agendar llamada</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
-      <p class="hm-hero__meta">32 tutoriales · 44 recursos · 1 reto guiado</p>
+
+  <!-- 1. Hero: qué hace Forth + video -->
+  <section class="f-hero" id="hero">
+    <div class="f-wrap f-hero__in">
+      <div>
+        <div class="f-hero__brand f-hero__fade"><span class="f-logo f-logo--xl" id="heroLogo">Forth</span><span class="f-hero__tag"><b>Think human.</b> <i>Operate AI.</i></span></div>
+        <h1 class="f-h1"><span class="f-line"><span>Convierte inteligencia</span></span><span class="f-line"><span class="f-accent f-under">en crecimiento<span class="f-dot">.</span></span></span></h1>
+        <div class="f-hero__fade">
+          <p class="f-lede">Automatizamos empresas con inteligencia artificial y enseñamos a profesionales a construir con IA.</p>
+          <div class="f-hero__cta">
+            <a class="f-btn" href="/agenda/" data-track="agenda_click" data-track-props='{"from":"hero"}'>Agenda tu llamada</a>
+            <a class="f-btn f-btn--ghost" href="#servicios">Ver servicios</a>
+          </div>
+          <p class="f-hero__note"><img src="/assets/img/brand/luciano-portrait.webp" alt="" width="34" height="34">Con Luciano Musella, fundador de Forth</p>
+        </div>
+      </div>
+      <div class="f-hero__visual">
+      <img class="f-hero__avatar" src="/assets/img/brand/avatar-body.webp" alt="" width="408" height="1337">
+      <div class="f-video" data-video="aHSszeH4-Ro">
+        <img src="https://img.youtube.com/vi/aHSszeH4-Ro/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high">
+        <button type="button" aria-label="Ver el video"><span class="f-video__play" aria-hidden="true"></span></button>
+        <span class="f-video__len">Mira cómo trabajamos</span>
+      </div>
+      </div>
     </div>
-    <div class="hm-hero__video">
-      <div class="hm-player" data-yt="679gFLF5TiM" data-title="Descubre como utilizar herramientas como Claude, ChatGPT y agentes de AI para automatizar tareas, resolver problemas y crear soluciones sin necesidad de saber programar" data-video-view="679gFLF5TiM" role="button" tabindex="0" aria-label="Reproducir: Descubre como utilizar herramientas como Claude, ChatGPT y agentes de AI para automatizar tareas, resolver problemas y crear soluciones sin necesidad de saber programar"><img src="https://img.youtube.com/vi/679gFLF5TiM/maxresdefault.jpg" alt="" onerror="this.src='https://img.youtube.com/vi/679gFLF5TiM/hqdefault.jpg'"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div></div>
-      <div class="hm-player__cap"><span class="hm-player__k">Empieza por aquí</span><p>Descubre como utilizar herramientas como Claude, ChatGPT y agentes de AI para automatizar tareas, resolver problemas y crear soluciones sin necesidad de saber programar.</p></div>
+  </section>
+
+  <!-- 2. Prueba -->
+  <section class="f-proof" aria-label="Forth en números">
+    <div class="f-wrap f-proof__in">
+      <div data-reveal><b data-count="100" data-prefix="+">+100</b><span>soluciones de IA implementadas</span></div>
+      <div data-reveal style="--i:1"><b data-count="40" data-prefix="+">+40</b><span>empresas y clientes atendidos</span></div>
+      <div data-reveal style="--i:2"><b data-count="32">32</b><span>tutoriales gratis</span></div>
+      <div data-reveal style="--i:3"><b data-count="61">61</b><span>recursos listos para usar</span></div>
     </div>
-  </div>
-</section><section class="sec sec--paper sec--tight" data-bg="paper" id="empezar"><div class="wrap hm-routes" data-reveal><div class="hm-ask"><img class="hm-ask__face" src="/assets/img/brand/face-smirk.webp" alt="" width="224" height="328" loading="lazy"><div><h2 class="hm-title">¿Qué quieres aprender?</h2><p class="hm-ask__tip">Elige un tema y te muestro por dónde empezar.</p></div></div><div class="hm-pills"><a class="hm-pill" href="/tutoriales/#ruta-nuevo" data-track="related_content_click" data-track-props="{&quot;route&quot;: &quot;nuevo&quot;, &quot;from&quot;: &quot;home&quot;}"><b>Empezar en IA</b><span>3 videos · 44 recursos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="hm-pill" href="/tutoriales/#ruta-claude" data-track="related_content_click" data-track-props="{&quot;route&quot;: &quot;claude&quot;, &quot;from&quot;: &quot;home&quot;}"><b>Claude</b><span>3 videos · 44 recursos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="hm-pill" href="/tutoriales/#ruta-agentes" data-track="related_content_click" data-track-props="{&quot;route&quot;: &quot;agentes&quot;, &quot;from&quot;: &quot;home&quot;}"><b>Construir agentes</b><span>3 videos · 44 recursos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="hm-pill" href="/tutoriales/#ruta-automatizar" data-track="related_content_click" data-track-props="{&quot;route&quot;: &quot;automatizar&quot;, &quot;from&quot;: &quot;home&quot;}"><b>Automatizar mi trabajo</b><span>3 videos · 44 recursos</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section><section class="sec sec--cream " data-bg="cream"><div class="wrap hm-head" data-reveal><div><span class="hm-label">Tutoriales</span><h2 class="hm-title">Aprende viendo <em class="serif tint">cómo se construye</em></h2></div><a class="link-arrow" href="/tutoriales/">Ver todos los tutoriales <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><div class="wrap hm-vgrid"><article class="hm-v" data-reveal style="--i:0"><div class="hm-v__th" data-yt="5I0naOsMtAQ" data-title="Crea un Skill con Claude Desde Cero | Escribe Mejor Tu contenido" role="button" tabindex="0" aria-label="Reproducir: Crea un Skill con Claude Desde Cero | Escribe Mejor Tu contenido"><img src="https://img.youtube.com/vi/5I0naOsMtAQ/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">12 min</span></div><a class="hm-v__t" href="/tutoriales/crea-un-skill-con-claude-desde-cero-escribe-mejor-tu-conteni/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;5I0naOsMtAQ&quot;, &quot;from&quot;: &quot;home_grid&quot;}">Crea un Skill con Claude Desde Cero | Escribe Mejor Tu contenido</a><div class="hm-v__m">Claude</div></article><article class="hm-v" data-reveal style="--i:1"><div class="hm-v__th" data-yt="sn3zkOGdfsM" data-title="Claude Skills, Plugins y Conectores: Cuál es la diferencia?" role="button" tabindex="0" aria-label="Reproducir: Claude Skills, Plugins y Conectores: Cuál es la diferencia?"><img src="https://img.youtube.com/vi/sn3zkOGdfsM/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">6 min</span></div><a class="hm-v__t" href="/tutoriales/claude-skills-plugins-y-conectores-cul-es-la-diferencia/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;sn3zkOGdfsM&quot;, &quot;from&quot;: &quot;home_grid&quot;}">Claude Skills, Plugins y Conectores: Cuál es la diferencia?</a><div class="hm-v__m">Claude</div></article><article class="hm-v" data-reveal style="--i:2"><div class="hm-v__th" data-yt="n7w3Y4X1QgE" data-title="Construí una App desde Cero sin Saber Programar (Usando Claude Code)" role="button" tabindex="0" aria-label="Reproducir: Construí una App desde Cero sin Saber Programar (Usando Claude Code)"><img src="https://img.youtube.com/vi/n7w3Y4X1QgE/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">10 min</span></div><a class="hm-v__t" href="/tutoriales/constru-una-app-desde-cero-sin-saber-programar-usando-claude/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;n7w3Y4X1QgE&quot;, &quot;from&quot;: &quot;home_grid&quot;}">Construí una App desde Cero sin Saber Programar (Usando Claude Code)</a><div class="hm-v__m">Claude</div></article><article class="hm-v" data-reveal style="--i:3"><div class="hm-v__th" data-yt="0BaH6tekits" data-title="Automaticé la operación de una empresa de 50 empleados con AI y Notion" role="button" tabindex="0" aria-label="Reproducir: Automaticé la operación de una empresa de 50 empleados con AI y Notion"><img src="https://img.youtube.com/vi/0BaH6tekits/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">24 min</span></div><a class="hm-v__t" href="/tutoriales/automatic-la-operacin-de-una-empresa-de-50-empleados-con-ai-/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;0BaH6tekits&quot;, &quot;from&quot;: &quot;home_grid&quot;}">Automaticé la operación de una empresa de 50 empleados con AI y Notion</a><div class="hm-v__m">Construcciones reales</div></article><article class="hm-v" data-reveal style="--i:4"><div class="hm-v__th" data-yt="4o29hLQAWmw" data-title="Tutorial Crea Un Chatbot De WhatsApp (formato fácil)" role="button" tabindex="0" aria-label="Reproducir: Tutorial Crea Un Chatbot De WhatsApp (formato fácil)"><img src="https://img.youtube.com/vi/4o29hLQAWmw/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">9 min</span></div><a class="hm-v__t" href="/tutoriales/tutorial-crea-un-chatbot-de-whatsapp-formato-fcil/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;4o29hLQAWmw&quot;, &quot;from&quot;: &quot;home_grid&quot;}">Tutorial Crea Un Chatbot De WhatsApp (formato fácil)</a><div class="hm-v__m">Automatizaciones</div></article><article class="hm-v" data-reveal style="--i:5"><div class="hm-v__th" data-yt="wiGN309SE5U" data-title="NotebookLM: Tutorial Completo para Aprender a Usarlo Desde Cero" role="button" tabindex="0" aria-label="Reproducir: NotebookLM: Tutorial Completo para Aprender a Usarlo Desde Cero"><img src="https://img.youtube.com/vi/wiGN309SE5U/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">6 min</span></div><a class="hm-v__t" href="/tutoriales/notebooklm-tutorial-completo-para-aprender-a-usarlo-desde-ce/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;wiGN309SE5U&quot;, &quot;from&quot;: &quot;home_grid&quot;}">NotebookLM: Tutorial Completo para Aprender a Usarlo Desde Cero</a><div class="hm-v__m">Herramientas</div></article><article class="hm-v" data-reveal style="--i:6"><div class="hm-v__th" data-yt="y3NWAa5z6HU" data-title="Tutorial - Crear un Bot de Whatsapp de la forma más fácil. En solo 10 minutos" role="button" tabindex="0" aria-label="Reproducir: Tutorial - Crear un Bot de Whatsapp de la forma más fácil. En solo 10 minutos"><img src="https://img.youtube.com/vi/y3NWAa5z6HU/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">12 min</span></div><a class="hm-v__t" href="/tutoriales/tutorial-crear-un-bot-de-whatsapp-de-la-forma-ms-fcil-en-sol/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;y3NWAa5z6HU&quot;, &quot;from&quot;: &quot;home_grid&quot;}">Tutorial - Crear un Bot de Whatsapp de la forma más fácil. En solo 10 minutos</a><div class="hm-v__m">Automatizaciones</div></article><article class="hm-v" data-reveal style="--i:7"><div class="hm-v__th" data-yt="aHSszeH4-Ro" data-title="Cómo crear presentaciones increíbles con IA en menos de 10 minutos (ChatGPT + Lovable)" role="button" tabindex="0" aria-label="Reproducir: Cómo crear presentaciones increíbles con IA en menos de 10 minutos (ChatGPT + Lovable)"><img src="https://img.youtube.com/vi/aHSszeH4-Ro/mqdefault.jpg" alt="" loading="lazy"><div class="play"><span class="play__b"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></div><span class="dur">8 min</span></div><a class="hm-v__t" href="/tutoriales/cmo-crear-presentaciones-increbles-con-ia-en-menos-de-10-min/" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;aHSszeH4-Ro&quot;, &quot;from&quot;: &quot;home_grid&quot;}">Cómo crear presentaciones increíbles con IA en menos de 10 minutos (ChatGPT + Lovable)</a><div class="hm-v__m">Herramientas</div></article></div></section><section class="sec sec--sand " data-bg="sand"><div class="wrap hm-head" data-reveal><div><span class="hm-label">Recursos</span><h2 class="hm-title">Guías, prompts y configuraciones <em class="serif tint">para usar hoy</em></h2></div><a class="link-arrow" href="/recursos/">Ver todos los recursos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div><div class="wrap hm-rgrid"><a class="hm-r" href="/recursos/roadmap-claude-5-dias/" data-reveal style="--i:0" data-track="resource_click" data-track-props="{&quot;resource&quot;: &quot;roadmap-claude-5-dias&quot;, &quot;from&quot;: &quot;home&quot;}"><div class="hm-r__v hm-r__v--days"><span><b>Día 1</b>Chat</span><span><b>Día 2</b>Proyectos</span><span><b>Día 3</b>Cowork</span><span><b>Día 4</b>MCP</span><span><b>Día 5</b>Rutina</span></div><div class="hm-r__b"><span class="res__type">Guía paso a paso</span><div class="hm-r__t">Guía Oficial para Principiantes en Claude: Roadmap de 5 Días</div><div class="hm-r__f"><span>Empezar</span><span>8 min · con tutorial</span></div></div></a><a class="hm-r" href="/recursos/skill-debrief-claude/" data-reveal style="--i:1" data-track="resource_click" data-track-props="{&quot;resource&quot;: &quot;skill-debrief-claude&quot;, &quot;from&quot;: &quot;home&quot;}"><div class="hm-r__v hm-r__v--shot"><img src="/assets/img/recursos/skill-debrief-claude.jpg" alt="" loading="lazy"></div><div class="hm-r__b"><span class="res__type">Guía paso a paso</span><div class="hm-r__t">Guía paso a paso para crear un Skill - DEBRIEF en Claude (Notion + Google Calendar)</div><div class="hm-r__f"><span>Claude</span><span>13 min · con tutorial</span></div></div></a><a class="hm-r" href="/recursos/hermes/" data-reveal style="--i:2" data-track="resource_click" data-track-props="{&quot;resource&quot;: &quot;hermes&quot;, &quot;from&quot;: &quot;home&quot;}"><div class="hm-r__v hm-r__v--flow"><svg viewBox="0 0 400 250" fill="none" aria-hidden="true"><g stroke="#8F8A84" stroke-width="1.2" stroke-dasharray="3 4"><path d="M92 125h70M238 125h70"/></g><rect x="20" y="95" width="72" height="60" rx="10" fill="#F7F5F2" stroke="#191918" stroke-opacity=".18"/><rect x="162" y="80" width="76" height="90" rx="14" fill="#191918"/><rect x="308" y="95" width="72" height="60" rx="10" fill="#F7F5F2" stroke="#191918" stroke-opacity=".18"/><circle cx="200" cy="125" r="14" fill="#D97757"/><text x="56" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#5B5752" letter-spacing="1">PIDES</text><text x="344" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#5B5752" letter-spacing="1">HECHO</text><text x="200" y="205" text-anchor="middle" font-family="Playfair Display,serif" font-style="italic" font-size="20" fill="#191918">el agente ejecuta</text></svg></div><div class="hm-r__b"><span class="res__type">Análisis</span><div class="hm-r__t">Hermes: El agente de IA que ejecuta, no solo responde</div><div class="hm-r__f"><span>Agentes</span><span>4 min</span></div></div></a></div></section><section class="sec sec--ink sec--tight" data-bg="ink"><div class="wrap hm-reto">
-      <div data-reveal><span class="hm-label" style="color:var(--on-dark-3)">Reto gratuito · 5 días · 20 min al día</span>
-        <h2 class="hm-title" style="color:#fff">Claude en 5 días: <em class="serif tint">construye algo cada día</em></h2>
-        <p class="hm-p" style="color:var(--on-dark-2)">Terminas con Claude configurado a tu medida: tu contexto, dos skills propios y una rutina que trabaja sola.</p>
-        <div class="actions"><a class="btn btn--light" href="/retos/claude-en-5-dias/#registro" data-track="challenge_click" data-track-props='{"challenge": "claude-en-5-dias", "from": "home"}' ><span class="btn__t">Reservar mi lugar</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="link-arrow" href="/retos/claude-en-5-dias/">Cómo funciona <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
-      <div class="days days--compact" data-reveal style="--i:1"><div class="day"><span class="day__n">Día 1</span><div><div class="day__t">Configura tu Claude</div><div class="day__d">Proyecto, contexto general y la primera conversación útil.</div></div></div><div class="day"><span class="day__n">Día 2</span><div><div class="day__t">Tu primer skill</div><div class="day__d">Un skill que escribe como tú.</div></div></div><div class="day"><span class="day__n">Día 3</span><div><div class="day__t">Conecta tus herramientas</div><div class="day__d">MCPs: Claude entra a tu calendario y tus archivos.</div></div></div><div class="day"><span class="day__n">Día 4</span><div><div class="day__t">Que trabaje solo</div><div class="day__d">Una rutina programada que te espera cada mañana.</div></div></div><div class="day"><span class="day__n">Día 5</span><div><div class="day__t">Tu sistema</div><div class="day__d">Lo unes todo y decides qué sigue.</div></div></div></div></div></section><section class="sec sec--paper " data-bg="paper"><div class="wrap hm-head" data-reveal><div><span class="hm-label">Construido de verdad</span><h2 class="hm-title">Cosas reales <em class="serif tint">hechas con IA</em></h2></div></div><div class="wrap hm-show"><a class="hm-s" href="/tutoriales/automatic-la-operacin-de-una-empresa-de-50-empleados-con-ai-/" data-reveal style="--i:0" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;0BaH6tekits&quot;, &quot;from&quot;: &quot;showcase&quot;}"><img src="https://img.youtube.com/vi/0BaH6tekits/maxresdefault.jpg" alt="" loading="lazy"><div class="hm-s__b"><span>Operación</span><div class="hm-s__t">La operación de una empresa de 50 empleados, con AI y Notion</div></div></a><a class="hm-s" href="/tutoriales/construimos-una-mquina-de-contenido-con-ia-para-una-psicloga/" data-reveal style="--i:1" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;eCS-sZbsOGs&quot;, &quot;from&quot;: &quot;showcase&quot;}"><img src="https://img.youtube.com/vi/eCS-sZbsOGs/maxresdefault.jpg" alt="" loading="lazy"><div class="hm-s__b"><span>Contenido</span><div class="hm-s__t">Una máquina de contenido para una psicóloga</div></div></a><a class="hm-s" href="/tutoriales/construyendo-un-app-de-inteligencia-artificial-para-una-de-l/" data-reveal style="--i:2" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;foO-yV6BOL8&quot;, &quot;from&quot;: &quot;showcase&quot;}"><img src="https://img.youtube.com/vi/foO-yV6BOL8/maxresdefault.jpg" alt="" loading="lazy"><div class="hm-s__b"><span>Producto</span><div class="hm-s__t">Una app de IA para una de las donuterías más famosas</div></div></a><a class="hm-s" href="/tutoriales/construye-un-software-que-tu-firma-de-abogados-deje-de-pagar/" data-reveal style="--i:3" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;y9RakPN56rI&quot;, &quot;from&quot;: &quot;showcase&quot;}"><img src="https://img.youtube.com/vi/y9RakPN56rI/maxresdefault.jpg" alt="" loading="lazy"><div class="hm-s__b"><span>Software</span><div class="hm-s__t">Software para que una firma de abogados deje de pagar cada mes</div></div></a><a class="hm-s" href="/tutoriales/tutorial-crear-un-bot-de-whatsapp-de-la-forma-ms-fcil-en-sol/" data-reveal style="--i:4" data-track="tutorial_click" data-track-props="{&quot;video_id&quot;: &quot;y3NWAa5z6HU&quot;, &quot;from&quot;: &quot;showcase&quot;}"><img src="https://img.youtube.com/vi/y3NWAa5z6HU/maxresdefault.jpg" alt="" loading="lazy"><div class="hm-s__b"><span>Automatización</span><div class="hm-s__t">Un bot de WhatsApp en 10 minutos</div></div></a><a class="hm-s hm-s--res" href="/recursos/agente-mercado/" data-reveal style="--i:5" data-track="resource_click" data-track-props="{&quot;resource&quot;: &quot;agente-mercado&quot;, &quot;from&quot;: &quot;showcase&quot;}"><div class="hm-s__b"><span>Agente · recurso</span><div class="hm-s__t">Un agente que hace el mercado por mí</div></div></a></div></section><section class="sec sec--cream " data-bg="cream"><div class="wrap hm-prog">
-      <div data-reveal><span class="hm-label">Programa</span><h2 class="hm-title">De aprender IA <em class="serif tint">a construir con ella</em></h2>
-        <p class="hm-p">Un programa práctico para profesionales, gerentes y founders. Tomas un problema real de tu trabajo y sales con agentes, automatizaciones y herramientas funcionando, no con horas de contenido visto.</p>
-        <div class="actions"><a class="btn " href="/programa/" data-track="program_click" data-track-props='{"from": "home"}' ><span class="btn__t">Conocer el programa</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="link-arrow" href="https://lucianomusella.com/aprende" data-track="agenda_click">Agendar una conversación <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
-      <ul class="list list--check" data-reveal style="--i:1"><li>Agentes que ejecutan tareas reales: correo, agenda, seguimiento, reportes</li><li>Automatizaciones de tus procesos repetitivos, conectadas a tus herramientas</li><li>Skills y configuraciones de Claude hechas para tu rol y tu empresa</li><li>Criterio propio para decidir qué automatizar y qué no</li></ul></div></section><section class="sec sec--sand sec--tight" data-bg="sand"><div class="wrap hm-who">
-      <div class="hm-who__img" data-reveal><img src="/aprende/img/luciano-hero.jpg" alt="Luciano Musella"></div>
-      <div data-reveal style="--i:1"><span class="hm-label">Quién enseña</span><h2 class="hm-title">Luciano Musella construye con IA todos los días. <em class="serif tint">Y lo enseña.</em></h2>
-        <p class="hm-p">Ayuda a empresas y profesionales a convertirse en AI-natives: instala los sistemas, entrena al equipo y, al final, la IA no es algo que "usan", es cómo operan.</p></div></div></section><section class="sec sec--ink sec--tight" data-bg="ink"><div class="wrap hm-cta hm-cta--avatar" data-reveal><img class="hm-cta__avatar" src="/assets/img/brand/avatar-body.webp" alt="" width="408" height="1337" loading="lazy"><div><h2 class="hm-title" style="color:#fff">Antes de hablar de un curso, <em class="serif tint">entender qué necesitas</em></h2>
-      <p class="hm-p" style="color:var(--on-dark-2)">Una conversación corta para ver si el programa encaja contigo. Sin presión.</p></div>
-      <div><a class="btn btn--accent" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "home_footer"}' ><span class="btn__t">Agendar una conversación</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></div></section>
+  </section>
+
+  <!-- 3. Servicios -->
+  <section class="f-sec" id="servicios">
+    <div class="f-wrap">
+      <h2 class="f-h2" data-reveal>Dos formas de trabajar con Forth<span class="f-dot">.</span></h2>
+      <p class="f-lede f-sub" data-reveal>Las dos empiezan igual: entendiendo tu caso antes de tocar una herramienta.</p>
+      <div class="f-offers">
+        <article class="f-offer f-offer--main" data-reveal>
+          <span class="f-offer__k">Para empresas</span>
+          <h3 class="f-h3">Automatización con IA para tu empresa</h3>
+          <p>Entendemos tus procesos, construimos los agentes y automatizaciones que necesitas y dejamos a tu equipo operándolos.</p>
+          <ul><li>Agentes y automatizaciones a la medida</li><li>Conectados a las herramientas que ya usas</li><li>Tu equipo entrenado para usarlos</li></ul>
+          <a class="f-btn" href="/agenda/" data-track="agenda_click" data-track-props='{"from":"servicio_empresas"}'>Agenda tu llamada</a>
+        </article>
+        <article class="f-offer" data-reveal style="--i:1">
+          <span class="f-offer__k">Para profesionales</span>
+          <h3 class="f-h3">Programa Forth</h3>
+          <p>Aprende a construir agentes, automatizaciones y apps con IA resolviendo un problema real de tu trabajo.</p>
+          <ul><li>Empiezas por tu caso, no por un temario</li><li>Construyes mientras aprendes</li><li>Sales con sistemas funcionando</li></ul>
+          <a class="f-link" href="/programa/" data-track="programa_click" data-track-props='{"from":"servicios"}'>Conocer el programa &rarr;</a>
+        </article>
+      </div>
+      <div class="f-free-line" data-reveal><img class="f-free-line__face" src="/assets/img/brand/face-smirk.webp" alt="" width="224" height="328" loading="lazy"><span><b>¿Prefieres empezar por tu cuenta?</b> Tutoriales, recursos y retos gratis.</span><a class="f-link" href="/biblioteca/">Ver la biblioteca &rarr;</a></div>
+    </div>
+  </section>
+
+  <!-- 4. Manifiesto -->
+  <section class="f-manifest f-gray">
+    <div class="f-wrap">
+      <p class="f-manifest__t" id="manifest">Automatizar sin criterio es acelerar el caos. Por eso en Forth primero entendemos qué necesitas y después <span class="f-accent">construimos.</span></p>
+    </div>
+  </section>
+
+  <!-- 5. Casos -->
+  <section class="f-sec" id="casos">
+    <div class="f-wrap">
+      <div class="f-cases__head">
+        <div>
+          <h2 class="f-h2" data-reveal>Lo que hemos construido con IA<span class="f-dot">.</span></h2>
+          <p class="f-lede f-sub" data-reveal>Casos reales, con el paso a paso grabado.</p>
+        </div>
+        <div class="f-cases__nav"><button type="button" data-cases="-1" aria-label="Anterior">&larr;</button><button type="button" data-cases="1" aria-label="Siguiente">&rarr;</button></div>
+      </div>
+      <div class="f-cases__row" id="casesRow">
+        <a class="f-case" href="/tutoriales/automatic-la-operacin-de-una-empresa-de-50-empleados-con-ai-/" data-reveal><figure><img src="https://img.youtube.com/vi/0BaH6tekits/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Operación</small><b>La operación de una empresa de 50 empleados, con IA y Notion</b></div></a>
+        <a class="f-case" href="/tutoriales/construyendo-un-app-de-inteligencia-artificial-para-una-de-l/" data-reveal style="--i:1"><figure><img src="https://img.youtube.com/vi/foO-yV6BOL8/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Producto</small><b>Una app de IA para una de las donuterías más famosas</b></div></a>
+        <a class="f-case" href="/tutoriales/construye-un-software-que-tu-firma-de-abogados-deje-de-pagar/" data-reveal style="--i:2"><figure><img src="https://img.youtube.com/vi/y9RakPN56rI/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Software</small><b>Software para que una firma de abogados deje de pagar cada mes</b></div></a>
+        <a class="f-case" href="/tutoriales/construimos-una-mquina-de-contenido-con-ia-para-una-psicloga/" data-reveal style="--i:3"><figure><img src="https://img.youtube.com/vi/eCS-sZbsOGs/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Contenido</small><b>Una máquina de contenido para una psicóloga</b></div></a>
+        <a class="f-case" href="/tutoriales/tutorial-crear-un-bot-de-whatsapp-de-la-forma-ms-fcil-en-sol/"><figure><img src="https://img.youtube.com/vi/y3NWAa5z6HU/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Automatización</small><b>Un bot de WhatsApp en 10 minutos</b></div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Proceso -->
+  <section class="f-sec f-gray">
+    <div class="f-wrap">
+      <h2 class="f-h2" data-reveal>Así empieza todo con Forth<span class="f-dot">.</span></h2>
+      <div class="f-steps" id="steps">
+        <div class="f-steps__track" aria-hidden="true"><i></i></div>
+        <div class="f-step"><i>1</i><h3 class="f-h3">Hablamos de tu caso</h3><p>Una llamada gratis de 30 minutos: cómo trabajas hoy y qué quieres conseguir con IA.</p></div>
+        <div class="f-step"><i>2</i><h3 class="f-h3">Definimos el plan</h3><p>Automatización para tu empresa o el programa para ti. Te decimos con honestidad qué tiene sentido.</p></div>
+        <div class="f-step"><i>3</i><h3 class="f-h3">Lo ponemos a operar</h3><p>Lo que se construye queda funcionando en el trabajo real, no en una presentación.</p></div>
+      </div>
+      <div class="f-method__cta" data-reveal>
+        <a class="f-btn" href="/agenda/" data-track="agenda_click" data-track-props='{"from":"proceso"}'>Agenda tu llamada</a>
+        <span>Sin costo y sin compromiso.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. La cara de Forth -->
+  <section class="f-sec f-founder" id="nosotros">
+    <div class="f-wrap f-founder__in">
+      <figure class="f-founder__photo" data-reveal>
+        <img src="/assets/img/brand/luciano-portrait.webp" alt="Luciano Musella" loading="lazy" width="1000" height="860">
+        <figcaption>Luciano Musella, fundador de Forth</figcaption>
+      </figure>
+      <div data-reveal style="--i:1">
+        <h2 class="f-h2">Detrás de Forth está <span class="f-accent">Luciano Musella</span><span class="f-dot">.</span></h2>
+        <p class="f-lede">Construye con IA todos los días. Lleva más de 100 soluciones implementadas para más de 40 clientes: agentes, automatizaciones y sistemas que hoy funcionan dentro de empresas reales.</p>
+        <p class="f-lede">En Forth enseña lo mismo que implementa, a partir del caso de cada persona y cada empresa.</p>
+        <blockquote>&ldquo;Muchos equipos usan IA todos los días, pero frente a un problema real no saben si necesitan un agente, una automatización o una app. Ahí empezamos.&rdquo;<span>Luciano Musella</span></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Aprende gratis: clases recientes + biblioteca -->
+  <section class="f-sec f-gray" id="aprende">
+    <div class="f-wrap">
+      <div class="f-cases__head">
+        <div>
+          <h2 class="f-h2" data-reveal>Aprende gratis con Forth<span class="f-dot">.</span></h2>
+          <p class="f-lede f-sub" data-reveal>Clases en video, guías y un reto para dar tus primeros pasos con IA.</p>
+        </div>
+        <a class="f-btn f-btn--ghost" href="/biblioteca/" data-reveal data-track="biblioteca_click" data-track-props='{"from":"home"}'>Ver la biblioteca</a>
+      </div>
+      <div class="f-learn"><a class="f-case" href="/tutoriales/crea-un-skill-con-claude-desde-cero-escribe-mejor-tu-conteni/" data-reveal style="--i:0"><figure><img src="https://img.youtube.com/vi/5I0naOsMtAQ/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Claude · 12 min</small><b>Crea un Skill con Claude Desde Cero | Escribe Mejor Tu contenido</b></div></a><a class="f-case" href="/tutoriales/tutorial-completo-de-claude-cowork-cmo-usar-claude-cowork-me/" data-reveal style="--i:1"><figure><img src="https://img.youtube.com/vi/wpYDisTBlE8/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Claude · 6 min</small><b>Tutorial completo de Claude Cowork: cómo usar Claude Cowork mejor que el 99% de las personas</b></div></a><a class="f-case" href="/tutoriales/claude-skills-plugins-y-conectores-cul-es-la-diferencia/" data-reveal style="--i:2"><figure><img src="https://img.youtube.com/vi/sn3zkOGdfsM/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Claude · 6 min</small><b>Claude Skills, Plugins y Conectores: Cuál es la diferencia?</b></div></a><a class="f-case" href="/tutoriales/constru-una-app-desde-cero-sin-saber-programar-usando-claude/" data-reveal style="--i:3"><figure><img src="https://img.youtube.com/vi/n7w3Y4X1QgE/maxresdefault.jpg" alt="" loading="lazy" width="1280" height="720"></figure><div><small>Claude · 10 min</small><b>Construí una App desde Cero sin Saber Programar (Usando Claude Code)</b></div></a></div>
+      <div class="f-learn__more" data-reveal>
+        <a href="/biblioteca/#rutas"><b>4</b> rutas de aprendizaje</a>
+        <a href="/biblioteca/#clases"><b>32</b> clases en video</a>
+        <a href="/biblioteca/#guias"><b>61</b> guías y recursos</a>
+        <a href="/retos/claude-en-5-dias/"><b>1</b> reto de 5 días</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Preguntas -->
+  <section class="f-sec">
+    <div class="f-wrap f-faq-wrap">
+      <div data-reveal><h2 class="f-h2">Preguntas frecuentes<span class="f-dot">.</span></h2><p class="f-lede f-sub">¿Te queda otra duda? La resolvemos en la llamada.</p></div>
+      <div class="f-faq" data-reveal>
+        <details><summary>¿Qué es Forth?</summary><p>Forth es una empresa de inteligencia artificial. Automatizamos procesos de empresas con agentes y sistemas de IA, y tenemos un programa para profesionales que quieren aprender a construirlos. La cara de Forth es Luciano Musella.</p></details>
+        <details><summary>¿Qué tipo de empresas automatizan?</summary><p>Empresas que repiten tareas a diario: atención por WhatsApp, reportes, ventas, operación interna. En la llamada vemos tus procesos y te decimos qué vale la pena automatizar primero.</p></details>
+        <details><summary>¿Necesito saber programar para el programa?</summary><p>No. Está pensado para profesionales, no para desarrolladores. Se construye con herramientas de IA y criterio, no con código desde cero.</p></details>
+        <details><summary>¿Es para mí si hoy solo uso ChatGPT?</summary><p>Sí. No necesitas llegar sabiendo qué es un agente, MCP o RAG. Partimos de cómo trabajas hoy.</p></details>
+        <details><summary>¿Qué pasa en la llamada?</summary><p>Son 30 minutos para entender tu caso. Si vemos que podemos ayudarte, te contamos cómo. Si no, te recomendamos por dónde empezar gratis.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Cierre -->
+  <section class="f-close f-gray f-center">
+    <div class="f-wrap">
+      <h2 class="f-h2" data-reveal>Tu primera conversación con Forth es <span class="f-accent">gratis</span><span class="f-dot">.</span></h2>
+      <p class="f-lede" data-reveal>30 minutos para entender tu caso y decirte si podemos ayudarte. Sin presión.</p>
+      <a class="f-btn" href="/agenda/" data-reveal data-track="agenda_click" data-track-props='{"from":"cierre"}'>Agenda tu llamada</a>
+    </div>
+  </section>
 </main>
-<footer class="foot">
-  <div class="wrap foot__in">
-    <div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div>
-    <div><h6>Explora</h6><ul><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul></div>
-    <div><h6>Canales</h6><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+
+<footer class="f-foot">
+  <div class="f-wrap">
+    <div class="f-foot__top">
+      <div><a class="f-logo" href="/">Forth</a><p>Automatización con IA para empresas y un programa para profesionales. Con Luciano Musella.</p></div>
+      <div><h4>Forth</h4><ul><li><a href="#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="#casos">Casos</a></li><li><a href="/agenda/">Agenda tu llamada</a></li></ul></div>
+      <div><h4>Aprende gratis</h4><ul><li><a href="/biblioteca/">Biblioteca</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li></ul></div>
+      <div><h4>Canales</h4><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="f-foot__legal"><span>&copy; 2026 Forth. <a href="/politica-de-privacidad/">Política de privacidad</a></span><span><b>Think human.</b> Operate AI.</span></div>
   </div>
-  <div class="wrap foot__legal"><span>© 2026 Luciano Musella</span><span class="foot__tag"><b>Think human.</b> <i>Operate AI.</i></span></div>
 </footer>
 
-<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/site.js"></script>
+<script src="/assets/js/forth.js"></script>
 </body>
 </html>

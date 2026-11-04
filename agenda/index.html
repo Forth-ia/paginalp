@@ -1,60 +1,388 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<script src="https://api.adpulze.io/api/v1/scripts/ghl.js?location_id=22"></script><script src="https://api.adpulze.io/api/v1/scripts/organic.js?location_id=22"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agenda | Luciano Musella</title>
-<meta name="description" content="Agenda una conversación con Luciano.">
-<meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="Agenda"><meta property="og:description" content="Agenda una conversación con Luciano."><meta property="og:type" content="website">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css">
+<script src="https://api.adpulze.io/api/v1/scripts/ghl.js?location_id=22"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Agenda tu llamada | Forth</title>
+  <meta name="description" content="Agenda una llamada gratis de 30 minutos con el equipo de Forth.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '950144990819131');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=950144990819131&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+  <link rel="stylesheet" href="/assets/css/forth.css">
+  <style>
+    /* /agenda: el mismo formulario y calendario de /aprende (aprende/lead-form.js), en una página
+       propia a la que llevan todos los botones "Agenda tu llamada" del sitio. */
 
+    /* /aprende · estética Forth v2 con la estructura de acquisition.com/workshop-4b:
+       sin menú, hero centrado, síntomas, qué construyes, carta de Luciano, agenda a mitad de
+       página en una sola columna (formulario y luego calendario), preguntas y cierre.
+       Ritmo de color: noche (navy) / blanco / aqua, siempre en ese orden. */
+    :root{
+      --navy:#12112E;--navy-2:#1A1960;--blue:#3B3BFF;--aqua:#B0E4EC;--sky:#E5F5F8;--mist:#F3FAFB;
+      --orange:#FF5A1F;--orange-deep:#E0470F;--white:#fff;
+      --ink:#12112E;--ink-2:#45446A;--ink-3:#6F6E8E;--line:rgba(18,17,46,.10);--line-strong:rgba(18,17,46,.18);
+      --on-dark-2:rgba(255,255,255,.8);--on-dark-3:rgba(255,255,255,.58);--line-dark:rgba(255,255,255,.14);
+      --night:linear-gradient(180deg,#12112E 0%,#191873 64%,#2B2BD6 140%);
+      --serif:'Source Serif 4',Georgia,serif;--sans:'Figtree',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      --ease:cubic-bezier(.16,1,.3,1);--wrap:1180px;
+      /* compatibilidad con el formulario y el calendario (aprende/lead-form.js) */
+      --accent:var(--orange);--accent-deep:var(--orange-deep);--accent-soft:rgba(255,90,31,.12);--sand:var(--sky);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{margin:0;background:var(--white);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    img,video{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    h1,h2,h3,p,ul,figure{margin:0}
+    ul{padding:0;list-style:none}
+    ::selection{background:var(--blue);color:#fff}
+    :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+    [hidden]{display:none!important}
+    .wrap{width:min(var(--wrap),100% - 40px);margin-inline:auto}
+    section{padding:clamp(72px,9vw,120px) 0;position:relative}
+    .book section{padding:0}
+    .s-white{background:#fff}.s-sky{background:var(--sky)}
+    .s-night{position:relative;background:var(--night);color:#fff;overflow:hidden;isolation:isolate}
+    .s-night::before{content:"";position:absolute;width:70%;aspect-ratio:1;left:50%;bottom:-55%;transform:translateX(-50%);background:radial-gradient(closest-side,rgba(59,59,255,.5),transparent);z-index:-1}
+
+    /* tipografía de marca: "Think human." en serif, "Operate AI." en sans naranja */
+    .h1{font:600 clamp(36px,4.6vw,62px)/1.06 var(--serif);letter-spacing:-.028em}
+    .h2{font:600 clamp(32px,3.8vw,50px)/1.08 var(--serif);letter-spacing:-.025em;max-width:22ch}
+    .h3{font:600 clamp(22px,2vw,27px)/1.2 var(--serif);letter-spacing:-.015em}
+    .op{font-family:var(--sans);font-weight:700;letter-spacing:-.035em;color:var(--orange)}
+    .lede{font-size:clamp(17px,1.3vw,19px);line-height:1.6;color:var(--ink-2);max-width:56ch}
+    .s-night .h2,.s-night .h1{color:#fff}
+    .s-night .lede{color:var(--on-dark-2)}
+    .center{text-align:center}.center .h2,.center .lede{margin-inline:auto}
+
+    /* botón: naranja, texto grande (WCAG AA), una sola intención en toda la página */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 28px;border:0;border-radius:12px;cursor:pointer;
+      background:var(--orange);color:var(--navy);font:700 17px/1 var(--sans);letter-spacing:-.01em;white-space:nowrap;transition:transform .3s var(--ease),background-color .2s}
+    .btn::after{content:"";width:18px;height:18px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2312112E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center/18px no-repeat;transition:transform .3s var(--ease)}
+    .btn:hover{background:#FF7140;transform:translateY(-1px)}
+    .btn:hover::after{transform:translateX(3px)}
+    .btn:active{transform:scale(.98)}
+    .btn--wide{width:100%}
+    .btn[disabled]{opacity:.6;cursor:default;transform:none}
+
+    /* corchetes de marca y globos de diálogo del personaje */
+    .bracket{position:relative}
+    .bracket::before,.bracket::after{content:"";position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(var(--orange),var(--orange)) left top/11px 2px no-repeat,linear-gradient(var(--orange),var(--orange)) left top/2px 11px no-repeat,
+        linear-gradient(var(--orange),var(--orange)) right bottom/11px 2px no-repeat,linear-gradient(var(--orange),var(--orange)) right bottom/2px 11px no-repeat}
+    .bracket::after{background:linear-gradient(var(--orange),var(--orange)) right top/11px 2px no-repeat,linear-gradient(var(--orange),var(--orange)) right top/2px 11px no-repeat,
+        linear-gradient(var(--orange),var(--orange)) left bottom/11px 2px no-repeat,linear-gradient(var(--orange),var(--orange)) left bottom/2px 11px no-repeat}
+    .tag{display:inline-block;padding:9px 15px}.tag b{font:600 1em var(--serif)}.tag i{font-style:normal;font-weight:600;color:var(--orange)}
+    .say{display:flex;align-items:flex-end;gap:12px}
+    .say__face{width:76px;flex:none}
+    .say__bubble{position:relative;background:#fff;color:var(--ink);padding:14px 18px;font:600 16px/1.35 var(--serif);max-width:28ch;box-shadow:0 18px 36px -24px rgba(18,17,46,.45)}
+    .say__bubble em{font-style:normal;font-family:var(--sans);color:var(--orange-deep)}
+    .s-night .say__bubble{background:rgba(255,255,255,.08);color:#fff;box-shadow:none;border:1px solid var(--line-dark)}
+    .s-night .say__bubble em{color:var(--orange)}
+    @media (prefers-reduced-motion:no-preference){
+      .say__face{transform-origin:50% 90%}
+      .say.is-in .say__face,[data-reveal].is-in .say__face{animation:nod .9s var(--ease) .2s both}
+    }
+    @keyframes nod{0%{transform:rotate(0) scale(.6);opacity:0}60%{transform:rotate(-6deg) scale(1.04);opacity:1}100%{transform:none;opacity:1}}
+
+    /* cursor Forth: puntero blanco con halo azul */
+    .cursor{position:absolute;width:64px;height:64px;pointer-events:none;filter:drop-shadow(0 0 20px rgba(90,90,255,.95)) drop-shadow(0 0 54px rgba(59,59,255,.8))}
+    .cursor svg{width:100%;height:100%}
+    @keyframes bob{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,-5px)}}
+
+    /* ---------- agenda: copy a la izquierda, tarjeta de una columna a la derecha ---------- */
+    .bk{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,5vw,72px);align-items:start}
+    .bk__copy{position:sticky;top:32px}
+    .bk__copy .lede{margin-top:18px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 30px}
+    .chips span{background:#fff;border-radius:12px;padding:12px 16px;font-weight:600;font-size:15px;box-shadow:0 10px 24px -20px rgba(18,17,46,.5)}
+    .bk__steps{display:grid;gap:10px;margin-bottom:28px}
+    .bk__steps li{display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:center;font-weight:600}
+    .bk__steps b{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;font-size:14px}
+    .bk__avatar{display:flex;align-items:flex-end;gap:14px}
+    .bk__avatar img{width:auto;height:170px}
+    @media (max-width:960px){.bk{grid-template-columns:1fr}.bk__copy{position:static}.bk__avatar img{height:130px}}
+
+    .book{background:#fff;border-radius:26px;box-shadow:0 2px 0 rgba(18,17,46,.03),0 50px 90px -50px rgba(18,17,46,.55);overflow:hidden;scroll-margin-top:24px}
+    .book__steps{display:flex;justify-content:center;gap:28px;padding:15px 16px;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-3)}
+    .book__steps span::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--line-strong);margin-right:8px;vertical-align:1px}
+    .book__steps .is-on{color:var(--ink);font-weight:600}
+    .book__steps .is-on::before{background:var(--orange)}
+    .book__body{display:grid;grid-template-columns:1fr}
+    .book__left{padding:30px 32px 32px}
+    .book__left:has(.lf[hidden]){padding-bottom:0}
+    .book__right{padding:0 32px 32px}
+    .book__right:has(.cal.is-locked){display:none}
+    .book__summary .kicker{display:none}
+    .book__summary .h3{font-size:20px;margin-bottom:12px}
+    .book__facts{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--ink-2);font-size:15px}
+    .book__facts li::before{content:"";display:inline-block;width:16px;height:16px;margin-right:8px;vertical-align:-3px;border-radius:50%;background:var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4L18 8'/%3E%3C/svg%3E") center/11px no-repeat}
+    .book__facts li:empty{display:none}
+    .book__summary{padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:24px}
+    .book--single .book__left{display:none}
+    .book--single .book__right{padding-top:30px}
+    @media (max-width:640px){.book__left{padding:24px 18px 26px}.book__right{padding:0 18px 26px}.book__steps{gap:16px;font-size:13px}}
+
+    /* formulario de un panel (estilo acquisition.com) */
+    .lf{display:block}
+    .lf__title{font:700 21px/1.25 var(--sans);letter-spacing:-.02em;margin:0 0 6px}
+    .lf__intro{color:var(--ink-2);font-size:15px;margin:0 0 22px}
+    .lf__field{display:grid;gap:7px;margin-bottom:16px;min-width:0}
+    .lf__label{font-size:14px;font-weight:600;line-height:1.35}
+    .lf__label i{font-style:normal;color:var(--orange-deep)}
+    .lf__row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .lf input:not([type="radio"]),.lf select,.lf textarea{width:100%;padding:13px 14px;border:1px solid var(--line-strong);border-radius:12px;font:400 16px var(--sans);color:var(--ink);background:var(--mist);transition:border-color .2s,box-shadow .2s,background .2s}
+    .lf input::placeholder,.lf textarea::placeholder{color:#5F5D7E}
+    .lf input:focus,.lf select:focus,.lf textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(59,59,255,.14);background:#fff}
+    .lf select{appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2345446A' stroke-width='1.7'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center}
+    .lf select.is-empty{color:#5F5D7E}
+    .lf select option{color:var(--ink)}
+    .lf textarea{resize:vertical;min-height:66px}
+    .lf__tel{display:grid;grid-template-columns:minmax(0,184px) 1fr;gap:8px}
+    .lf__field.is-invalid input,.lf__field.is-invalid select,.lf__field.is-invalid textarea{border-color:var(--orange-deep);background:#fff}
+    .lf__more{animation:lfreveal .5s var(--ease)}
+    @keyframes lfreveal{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+    .lf__hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+    .lf__err{color:var(--orange-deep);font-size:14px;margin:0 0 12px}
+    .lf__next{margin-top:14px}
+    .lf__legal{display:block;font-size:12.5px;color:var(--ink-3);line-height:1.45}
+    .lf__legal a{text-decoration:underline}
+    .lf__spin{display:inline-block;width:30px;height:30px;border:3px solid var(--sky);border-top-color:var(--blue);border-radius:50%;animation:lfspin .8s linear infinite;margin-bottom:14px}
+    @keyframes lfspin{to{transform:rotate(360deg)}}
+    .lf__notfit{text-align:center;padding:10px 4px 6px;display:grid;gap:18px;justify-items:center}
+    .lf__notfit .h3{font-size:clamp(24px,2.4vw,30px)}
+    .lf__notfit .lede{font-size:17px}
+    .lf__link{font-weight:600;color:var(--blue)}
+    .lf__check{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:#fff;font-size:1.6rem;font-weight:700;box-shadow:0 0 0 10px rgba(59,59,255,.12)}
+    @media (max-width:520px){.lf__tel{grid-template-columns:136px 1fr}}
+    @media (max-width:420px){.lf__row{grid-template-columns:1fr}}
+
+    /* calendario */
+    .cal{position:relative}
+    .cal__title{font:600 clamp(21px,1.9vw,25px)/1.25 var(--serif);letter-spacing:-.015em;margin-bottom:8px}
+    .cal__sub{color:var(--ink-2);font-size:15px;margin:0 0 22px}
+    .cal__lock{display:none}
+    .cal__grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:start}
+    .cal__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:16px}
+    .cal__nav{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1.2rem;color:var(--ink-2)}
+    .cal__nav:disabled{opacity:.35;cursor:default}
+    .cal__dow,.cal__days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+    .cal__dow span{font-size:12px;font-weight:700;color:var(--ink-3);padding-bottom:4px}
+    .cal__days button{aspect-ratio:1;border:0;border-radius:50%;font:600 15px var(--sans);background:transparent;color:#A3A2B8;cursor:default}
+    .cal__days button.is-open{background:rgba(59,59,255,.09);color:var(--blue);cursor:pointer}
+    .cal__days button.is-open:hover{background:rgba(59,59,255,.18)}
+    .cal__days button.is-sel{background:var(--blue);color:#fff}
+    .cal__daylabel{font-weight:600;margin-bottom:12px}
+    .cal__times{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-height:330px;overflow-y:auto;padding-right:2px}
+    .cal__times button{padding:13px 8px;border:1.5px solid rgba(59,59,255,.35);border-radius:12px;background:#fff;color:var(--blue);font:600 15px var(--sans);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+    .cal__times button:hover{background:rgba(59,59,255,.07)}
+    .cal__times button.is-sel{background:var(--blue);border-color:var(--blue);color:#fff}
+    .cal__loading{text-align:center;padding:30px 0;color:var(--ink-2)}
+    .cal__err{color:var(--orange-deep);font-size:15px;margin-top:14px}
+    .cal__confirm{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:grid;gap:14px}
+    .cal__confirm p{margin:0;color:var(--ink-2)}
+    .cal.is-loading .cal__grid{display:none}
+    @media (max-width:640px){.cal__grid{grid-template-columns:1fr;gap:20px}.cal__times{max-height:none;grid-template-columns:repeat(3,1fr)}}
+
+    /* ---------- Forth limpio (2026-11): misma estética de la home nueva ----------
+       Una sola fuente, fondo blanco y gris claro, azul Forth como acento, naranja solo
+       en la flecha del logo y en algún detalle. Nada de degradados. */
+    :root{--serif:var(--sans);--night:#12112E;--accent:var(--blue);--accent-deep:#2E2EE0;--accent-soft:rgba(59,59,255,.10);--gray:#F6F7FA}
+    .h1,.h2,.h3,.cal__title,.faq summary,.say__bubble,.tag b{font-family:var(--sans);font-weight:800;letter-spacing:-.04em}
+    .say__bubble{font-weight:600;letter-spacing:-.015em}
+    .s-sky{background:var(--gray)}
+    .s-night{background:#fff;color:var(--ink)}
+    .s-night::before{display:none}
+    .s-night .h2,.s-night .h1{color:var(--ink)}
+    .s-night .lede,.hero__sub,.proofline{color:var(--ink-2)}
+    .proofline b{color:var(--ink)}
+    #luciano,.close{background:var(--gray)}
+    .hero{border-bottom:1px solid var(--line)}
+    .brand{color:var(--ink);font-size:26px;letter-spacing:-.045em}
+    .hero__nav{color:var(--ink-2)}
+    .hero__nav a:hover,.foot__nav a:hover{color:var(--ink)}
+    .op,.hero__call{color:var(--blue)}
+    .s-night .say__bubble{background:#fff;color:var(--ink);border:0;box-shadow:0 0 0 1px var(--line),0 18px 36px -24px rgba(18,17,46,.35)}
+    .s-night .say__bubble em{color:var(--blue)}
+    .announce{background:var(--blue);color:#fff}
+    .announce b{color:#fff}
+    .announce a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+    .btn{background:var(--blue);color:#fff}
+    .btn::after{filter:invert(1)}
+    .btn:hover{background:#2E2EE0;box-shadow:0 14px 30px -14px rgba(59,59,255,.7)}
+    .yt__play{background-color:var(--blue)}
+    .tile--hero,.vs__card--after{background:var(--navy)}
+    .vs__card--after::before{display:none}
+    .hero__peek{filter:drop-shadow(0 16px 18px rgba(18,17,46,.2))}
+    .foot{background:var(--navy)}
+    :root{--sky:#F1F2F7}
+    .who__bio{color:var(--ink-2)}
+    .who__bio strong{color:var(--ink)}
+    .who__photo img{box-shadow:0 30px 60px -36px rgba(18,17,46,.5)}
+    .foot .brand{color:#fff}
+    .letter{box-shadow:0 0 0 1px var(--line),0 30px 60px -40px rgba(18,17,46,.35)}
+  
+    /* /agenda: página propia para agendar */
+    [data-reveal]{opacity:1!important;transform:none!important}
+    .ag-sec{padding:clamp(40px,6vw,72px) 0 clamp(64px,8vw,104px);background:var(--gray)}
+    .bk__copy .h2{font-size:clamp(32px,3.6vw,48px)}
+
+  </style>
 </head>
-<body data-page="agenda">
-<a class="sr" href="#main">Ir al contenido</a>
-<header class="nav" id="nav">
-  <div class="nav__in">
-    <a class="nav__brand" href="/">Luciano<span>.</span>Musella</a>
-    <ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul>
-    <div class="nav__cta">
-      <a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "nav"}' ><span class="btn__t">Agenda</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
-    </div>
+<body class="forth" data-page="agenda" data-lead-popup="off">
+<header class="f-nav" id="fnav">
+  <div class="f-wrap f-nav__in">
+    <a class="f-logo" href="/" aria-label="Forth, inicio">Forth</a>
+    <nav class="f-nav__links" aria-label="Principal">
+      <a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a class="f-nav__free" href="/biblioteca/">Aprende gratis</a>
+    </nav>
+    <a class="f-btn f-btn--sm" href="/agenda/" data-track="agenda_click" data-track-props='{"from":"nav"}'>Agenda tu llamada</a>
+    <button class="f-nav__burger" type="button" aria-expanded="false" aria-controls="fmenu" aria-label="Menú">&#9776;</button>
   </div>
+  <nav class="f-wrap f-nav__menu" id="fmenu" aria-label="Menú móvil">
+    <a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a class="f-nav__free" href="/biblioteca/">Aprende gratis</a>
+    <a class="f-btn" href="/agenda/">Agenda tu llamada</a>
+  </nav>
 </header>
-<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a><a href="https://lucianomusella.com/aprende">Agenda<small>06</small></a></div><div class="menu__foot"><a class="btn btn--light" href="https://lucianomusella.com/aprende" data-track="agenda_click" data-track-props='{"from": "menu"}' ><span class="btn__t">Agenda una conversación</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div></nav></div>
-<main id="main">
-<section class="ahead sec--cream" data-bg="cream" style="min-height:60dvh"><div class="wrap split split--wide" style="align-items:start">
-      <div><span class="eyebrow eyebrow--dot" data-reveal>Agenda</span><h1 class="display display--l" data-reveal style="--i:1;margin-top:14px">Antes de hablar de un curso, quiero entender <em class="serif tint">qué necesitas</em></h1>
-        <p class="lead" data-reveal style="--i:2;margin-top:20px">Una conversación de 30 minutos con Luciano para ver dónde estás con IA y si el programa encaja contigo. Si no encaja, te lo dice y te deja con recursos para seguir solo.</p>
-        <ul class="list mt-3" data-reveal style="--i:3"><li>Cuéntanos tu situación en 3 preguntas</li><li>Elige el horario que te sirva</li><li>Recibes la confirmación y el link de la reunión</li></ul>
-        <p class="muted mt-3" style="font-size:14px" data-reveal style="--i:4">En esta preview el botón te lleva al flujo real de aplicación que ya funciona en <code>/aprende</code> (formulario + calendario). No se ha modificado.</p></div>
-      <div class="shell" data-reveal style="--i:2"><div class="shell__in" style="padding:32px;display:grid;gap:16px"><span class="eyebrow">Siguiente paso</span><h3 class="h3">Aplicar al programa</h3><p style="margin:0;color:var(--ink-2)">Tres preguntas cortas y el calendario de Luciano. Tarda dos minutos.</p>
-        <div class="actions"><a class="btn btn--accent" href="/aprende/#como-empezar" data-track="agenda_click" data-track-props='{"from": "agenda_page", "target": "aprende"}' ><span class="btn__t">Ir al formulario de aplicación</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></span></a></div></div></div></div></section>
-    <section class="sec sec--paper " data-bg="paper"><div class="wrap sec__head"><div><span class="eyebrow eyebrow--dot" data-reveal>Mientras tanto</span><h2 class="h2" data-reveal style="--i:1;margin-top:14px">Si todavía no es el momento, <em class="serif tint">sigue construyendo</em></h2></div>
-  <div data-reveal style="--i:2;display:grid;gap:16px;justify-items:end"></div></div><div class="wrap grid-3"><a class="res res--sm" href="/recursos/roadmap-claude-5-dias/" data-reveal style="--i:0" data-track="resource_click" data-track-props='{"resource":"roadmap-claude-5-dias","from":"card"}'>
-  <div class="card__meta"><span class="res__type">Guía paso a paso</span><span>· Empezar</span></div>
-  <div class="card__title">Guía Oficial para Principiantes en Claude: Roadmap de 5 Días</div>
-  <div class="card__foot"><span>8 min · con tutorial</span><span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a><a class="res res--sm" href="/recursos/5-niveles-de-claude/" data-reveal style="--i:1" data-track="resource_click" data-track-props='{"resource":"5-niveles-de-claude","from":"card"}'>
-  <div class="card__meta"><span class="res__type">Guía paso a paso</span><span>· Claude</span></div>
-  <div class="card__title">Los 5 Niveles de Claude: De Chatbot a Agente que Trabaja Solo</div>
-  <div class="card__foot"><span>6 min · con tutorial</span><span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a><a class="res res--sm" href="/recursos/hermes/" data-reveal style="--i:2" data-track="resource_click" data-track-props='{"resource":"hermes","from":"card"}'>
-  <div class="card__meta"><span class="res__type">Análisis</span><span>· Agentes</span></div>
-  <div class="card__title">Hermes: El agente de IA que ejecuta, no solo responde</div>
-  <div class="card__foot"><span>4 min · lectura</span><span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div></a></div></section>
+<main>
+  <section class="ag-sec" id="como-empezar">
+    <div class="wrap bk">
+      <div class="bk__copy" data-reveal>
+        <h1 class="h2">Agenda tu llamada <span class="op">con Forth.</span></h1>
+        <p class="lede">Una conversaci&oacute;n gratis de 30 minutos para entender tu caso: c&oacute;mo usas IA hoy y qu&eacute; quieres lograr. Funciona igual si eres:</p>
+        <div class="chips"><span>Empleado</span><span>Due&ntilde;o de empresa</span><span>Freelancer o consultor</span><span>Creando un negocio</span></div>
+        <ol class="bk__steps" style="list-style:none;padding:0;margin-top:0">
+          <li><b>1</b>Completa el formulario en 1 minuto</li>
+          <li><b>2</b>Elige d&iacute;a y hora</li>
+          <li><b>3</b>Hablamos 30 minutos por Google Meet</li>
+        </ol>
+        <div class="bk__avatar say"><img src="/assets/img/brand/avatar-body.webp" alt="" width="408" height="1337" loading="lazy"><p class="say__bubble bracket">Elige un horario y hablamos de tu caso. <em>Sin compromiso.</em></p></div>
+      </div>
+      <div data-reveal style="--i:1">
+      <div class="book" id="agenda">
+        <div class="book__steps" aria-hidden="true">
+          <span class="is-on" data-bstep="1">Completa el formulario</span>
+          <span data-bstep="2">Agenda tu llamada</span>
+        </div>
+        <div class="book__body">
+          <div class="book__left">
+            <form class="lf" id="leadForm" novalidate>
+              <h3 class="lf__title">Agenda tu conversaci&oacute;n con Luciano</h3>
+              <p class="lf__intro">30 minutos por Google Meet. Completa tus datos y elige tu horario aqu&iacute; mismo.</p>
+              <div class="lf__field" data-field="telefono">
+                <label class="lf__label" for="lfTel">WhatsApp <i>*</i></label>
+                <div class="lf__tel">
+                  <select name="pais" aria-label="Pa&iacute;s" id="lfPais"></select>
+                  <input id="lfTel" name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="20" placeholder="300 000 0000">
+                </div>
+              </div>
+              <div class="lf__row">
+                <div class="lf__field" data-field="nombre"><label class="lf__label" for="lfNombre">Nombre <i>*</i></label><input id="lfNombre" name="nombre" autocomplete="given-name" maxlength="60" placeholder="Nombre"></div>
+                <div class="lf__field" data-field="apellido"><label class="lf__label" for="lfApellido">Apellido <i>*</i></label><input id="lfApellido" name="apellido" autocomplete="family-name" maxlength="60" placeholder="Apellido"></div>
+              </div>
+              <div class="lf__field" data-field="email"><label class="lf__label" for="lfEmail">Email <i>*</i></label><input id="lfEmail" name="email" type="email" autocomplete="email" maxlength="254" placeholder="tu@email.com"></div>
+              <input class="lf__hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <div class="lf__more" id="lfMore" hidden>
+                <div id="lfQuestions"></div>
+                <div class="lf__field" data-field="reto">
+                  <label class="lf__label" for="lfReto">&iquest;Qu&eacute; tarea o reto te gustar&iacute;a resolver con IA? <i>*</i></label>
+                  <textarea id="lfReto" name="reto" rows="2" maxlength="1000" placeholder="Ej.: responder clientes, hacer reportes, crear contenido&hellip;"></textarea>
+                </div>
+              </div>
+              <p class="lf__err" id="lfErr" role="alert" hidden></p>
+              <small class="lf__legal">Al continuar aceptas que guardemos tus datos seg&uacute;n nuestra <a href="/politica-de-privacidad/" target="_blank" rel="noopener">pol&iacute;tica de privacidad</a>.</small>
+              <button type="submit" class="btn btn--wide lf__next">Continuar</button>
+            </form>
+            <div class="book__summary" id="lfSummary" hidden>
+              <span class="kicker">Tu conversaci&oacute;n</span>
+              <h3 class="h3">Conversaci&oacute;n con Luciano Musella</h3>
+              <ul class="book__facts"><li>30 minutos</li><li>Google Meet</li><li data-summary-who></li></ul>
+            </div>
+          </div>
+          <div class="book__right">
+            <section class="cal is-locked" id="lfCal" aria-labelledby="lfCalTitle">
+        <h3 class="cal__title" id="lfCalTitle"><span data-cal-closed>Elige d&iacute;a y hora</span><span data-cal-open hidden>&iexcl;Encajas con el programa, <span data-name></span>! Elige d&iacute;a y hora</span></h3>
+        <p class="cal__sub">Conversaci&oacute;n de 30 minutos por Google Meet con el equipo de Luciano. Horarios en tu hora local (<span data-tz></span>).</p>
+        <div class="cal__grid">
+          <div class="cal__month">
+            <div class="cal__head">
+              <button type="button" class="cal__nav" data-month-prev aria-label="Mes anterior">&lsaquo;</button>
+              <b data-month></b>
+              <button type="button" class="cal__nav" data-month-next aria-label="Mes siguiente">&rsaquo;</button>
+            </div>
+            <div class="cal__dow" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div class="cal__days" data-days></div>
+          </div>
+          <div class="cal__side">
+            <p class="cal__daylabel" data-day-label>Elige un d&iacute;a disponible</p>
+            <div class="cal__times" data-times></div>
+          </div>
+        </div>
+        <div class="cal__loading" data-cal-loading><span class="lf__spin" aria-hidden="true"></span><p>Buscando horarios disponibles&hellip;</p></div>
+        <p class="cal__err" data-cal-err hidden></p>
+        <div class="cal__confirm" data-confirm hidden>
+          <p>Tu llamada: <b data-pick></b></p>
+          <button type="button" class="btn btn--wide" data-book>Confirmar llamada</button>
+        </div>
+        <div class="cal__lock" data-lock><span class="cal__lockicon" aria-hidden="true">&#128274;</span><p>Completa tus datos y las preguntas para ver los horarios disponibles.</p></div>
+      </section>
+            <section class="lf__notfit" id="lfDone" hidden>
+        <span class="lf__check" aria-hidden="true">&#10003;</span>
+        <h2 class="h3">&iexcl;Listo, <span data-name></span>! Tu llamada qued&oacute; agendada</h2>
+        <p class="lede"><b data-when></b><br>Te enviamos la invitaci&oacute;n con el link de Google Meet a <b data-email></b>. Agr&eacute;gala a tu calendario para que no se te pase.</p>
+        <a href="#" class="lf__link" data-meet target="_blank" rel="noopener" hidden>Link de la reuni&oacute;n &rarr;</a>
+        <a href="https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW" class="btn btn--wide" target="_blank" rel="noopener">Unirme al grupo de WhatsApp</a>
+      </section>
+            <section class="lf__notfit" id="lfNotFit" hidden>
+        <h2 class="h3">Gracias por tu sinceridad, <span data-name></span></h2>
+        <p class="lede">Por lo que nos cuentas, este todav&iacute;a no es el mejor momento para el programa. Empieza gratis con nuestro curso <b>Claude en 5 d&iacute;as</b> y &uacute;nete a la comunidad: te iremos compartiendo todo para que avances.</p>
+        <a href="/retos/claude-en-5-dias/" class="btn btn--wide">Empezar el curso gratis</a>
+        <a href="https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW" class="lf__link" target="_blank" rel="noopener">Unirme al grupo de WhatsApp &rarr;</a>
+      </section>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
 </main>
-<footer class="foot">
-  <div class="wrap foot__in">
-    <div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div>
-    <div><h6>Explora</h6><ul><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li><li><a href="https://lucianomusella.com/aprende">Agenda</a></li></ul></div>
-    <div><h6>Canales</h6><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+<footer class="f-foot">
+  <div class="f-wrap">
+    <div class="f-foot__top">
+      <div><a class="f-logo" href="/">Forth</a><p>Automatización con IA para empresas y un programa para profesionales. Con Luciano Musella.</p></div>
+      <div><h4>Forth</h4><ul><li><a href="#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="#casos">Casos</a></li><li><a href="/agenda/">Agenda tu llamada</a></li></ul></div>
+      <div><h4>Aprende gratis</h4><ul><li><a href="/biblioteca/">Biblioteca</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li></ul></div>
+      <div><h4>Canales</h4><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="f-foot__legal"><span>&copy; 2026 Forth. <a href="/politica-de-privacidad/">Política de privacidad</a></span><span><b>Think human.</b> Operate AI.</span></div>
   </div>
-  <div class="wrap foot__legal"><span>© 2026 Luciano Musella</span><span class="foot__tag"><b>Think human.</b> <i>Operate AI.</i></span></div>
 </footer>
-
-<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/aprende-qualify.js"></script>
+<script src="/aprende/lead-form.js"></script>
+<script>
+(function () {
+  var b = document.querySelector('.f-nav__burger'), m = document.getElementById('fmenu');
+  if (b && m) b.addEventListener('click', function () { var o = m.classList.toggle('is-open'); b.setAttribute('aria-expanded', o); });
+})();
+</script>
 </body>
 </html>

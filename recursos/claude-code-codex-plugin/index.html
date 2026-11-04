@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="es"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cómo trabaja Claude Code + Codex: Plugin Oficial | Luciano Musella</title>
+<title>Cómo trabaja Claude Code + Codex: Plugin Oficial | Forth</title>
 <meta name="description" content="Instala el plugin oficial de Codex en Claude Code y aprende a repartir planificación, ejecución y revisión entre ambos.">
 <meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/forth.css">
 </head><body data-page="resource" data-page-props='{"resource":"claude-code-codex-plugin","category":"claude","type":"guia-paso-a-paso"}'>
-<a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav"><div class="nav__in"><a class="nav__brand" href="/">Luciano<span>.</span>Musella</a><ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li></ul><div class="nav__cta"><a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende"><span class="btn__t">Agenda</span></a><button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button></div></div></header>
-<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a><a href="/retos/">Retos<small>04</small></a><a href="/programa/">Programa<small>05</small></a></div></nav></div>
+<a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="/" aria-label="Forth, inicio">Forth</a>
+    <ul class="nav__links"><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a class="nav__free" href="/biblioteca/">Aprende gratis</a></li></ul>
+    <div class="nav__cta">
+      <a class="btn btn--accent btn--sm" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "nav"}'><span class="btn__t">Agenda tu llamada</span></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio</a><a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a href="/biblioteca/">Aprende gratis</a></div><div class="menu__foot"><a class="btn btn--light" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "menu"}'><span class="btn__t">Agenda tu llamada</span></a></div></nav></div>
 <main id="main"><div class="progress" aria-hidden="true"></div>
 <section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=claude">Claude</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo trabaja Claude Code + Codex: Plugin Oficial</h1><p class="lead" style="margin-top:20px">Instala el plugin oficial y divide el trabajo: Claude piensa, planea y revisa; Codex ejecuta el trabajo pesado.</p><div class="ahead__meta"><span>12 min de lectura</span><span class="dot"></span><span>Claude a fondo</span><span class="dot"></span><span>Claude Code</span><span class="dot"></span><span>Codex</span></div><div class="boxes"><div class="box"><h5>Ideal para</h5><ul><li>Quien usa Claude Code y Codex en el mismo proyecto</li><li>Equipos que quieren delegar sin perder supervisión</li><li>Developers que consumen mucho contexto arreglando errores</li></ul></div><div class="box"><h5>Qué obtienes</h5><ul><li>Instalación del plugin oficial, paso a paso</li><li>Reglas listas para tu CLAUDE.md</li><li>Prompts para planear, rescatar errores y revisar</li><li>Flujo para dividir consumo y mantener control</li></ul></div></div></div></section>
 <section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose">
@@ -177,4 +187,14 @@ Antes de ejecutar nada:
 Al finalizar dime qué cerraste, qué quedó pendiente y qué debería comprobar.</pre></div><hr>
 <h2>16. ¿Qué cuenta de uso estás gastando?</h2><h3>Claude</h3><p>Consume el límite de Claude cuando analiza el proyecto, crea el plan, decide la arquitectura, revisa el resultado, escribe pruebas y documenta.</p><h3>Codex</h3><p>Consume el límite de tu cuenta de ChatGPT cuando escribe código, modifica archivos, ejecuta tareas delegadas, hace revisiones y trabaja en tareas largas.</p><blockquote>El objetivo no es simplemente usar dos modelos: es <strong>repartir el consumo entre dos sistemas</strong>.</blockquote><p>El uso de Codex comparte la bolsa de uso correspondiente de tu cuenta de ChatGPT con otros productos o funciones que usen ese mismo límite; no asumas que todo está disponible exclusivamente para Codex.</p><h2>17. ¿Necesito pagar ChatGPT?</h2><p>Los límites concretos dependen del plan y pueden cambiar. Comprueba las condiciones actuales de tu cuenta antes de asumir una cantidad determinada de uso.</p><h2>18. Si algo no funciona</h2><p>Cuando una delegación falle, ejecuta en una terminal normal:</p><div class="codeblock"><div class="codeblock__bar"><span>bash</span><button class="copy" type="button">Copiar</button></div><pre>codex doctor</pre></div><p>Esto revisa el estado de la instalación y de la sesión de Codex. También puedes volver a comprobar desde Claude Code con <code>/codex:setup</code>.</p>
 </article></div></section></main>
-<footer class="foot"><div class="wrap foot__in"><div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div></div></footer><script src="/assets/js/site.js" defer></script></body></html>
+<footer class="f-foot">
+  <div class="f-wrap">
+    <div class="f-foot__top">
+      <div><a class="f-logo" href="/">Forth</a><p>Automatización con IA para empresas y un programa para profesionales. Con Luciano Musella.</p></div>
+      <div><h4>Forth</h4><ul><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/#casos">Casos</a></li><li><a href="/agenda/">Agenda tu llamada</a></li></ul></div>
+      <div><h4>Aprende gratis</h4><ul><li><a href="/biblioteca/">Biblioteca</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li></ul></div>
+      <div><h4>Canales</h4><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="f-foot__legal"><span>&copy; 2026 Forth. <a href="/politica-de-privacidad/">Política de privacidad</a></span><span><b>Think human.</b> Operate AI.</span></div>
+  </div>
+</footer><script src="/assets/js/site.js" defer></script></body></html>

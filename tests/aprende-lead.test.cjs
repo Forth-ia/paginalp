@@ -332,3 +332,32 @@ test('a personal booking link books without the form and fills Meta from the she
   const normal = await run(agendaHandler, { method: 'POST', body: { ...contact, inicio: '2026-10-29T15:00:00.000Z' } }, agenda);
   assert.equal(normal.agenda[0].directo, false);
 });
+
+test('a good lead goes to Meta as a Purchase but is not a sale in the sheet', async () => {
+  const cookie = await login();
+  const headers = { cookie, 'content-type': 'application/json' };
+  let res = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers, body: { email: 'ana@example.com', venta: 'Buen lead' } }, agendaForMark);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.meta[0].event_name, 'Purchase');
+  assert.deepEqual(res.meta[0].custom_data, { value: 500, currency: 'USD', content_name: 'programa-ia' });
+  const saved = res.agenda.find(c => c.action === 'marcar');
+  // Sin valor ni "Venta": las métricas de getforth no lo cuentan como ingreso; Estado Show para el agente
+  assert.equal(saved.campos.venta, 'Buen lead (Meta)');
+  assert.equal(saved.campos.estado, 'Show');
+  assert.equal(saved.campos.valor, '');
+  assert.ok(!/^venta/i.test(saved.campos.venta));
+  res = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers, body: { email: 'ana@example.com', venta: 'Buen lead', valor: 2000000, moneda: 'COP' } }, agendaForMark);
+  assert.deepEqual(res.meta[0].custom_data, { value: 2000000, currency: 'COP', content_name: 'programa-ia' });
+});
+
+test('not qualified after the call tells Meta LeadNoCalificado and gets its own state', async () => {
+  const cookie = await login();
+  const res = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers: { cookie, 'content-type': 'application/json' }, body: { email: 'ana@example.com', venta: 'No calificado' } }, agendaForMark);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.meta[0].event_name, 'LeadNoCalificado');
+  assert.equal(res.meta[0].action_source, 'system_generated');
+  const saved = res.agenda.find(c => c.action === 'marcar');
+  assert.equal(saved.campos.venta, 'No calificado');
+  assert.equal(saved.campos.estado, 'No calificado');
+  assert.equal(saved.evento_meta, 'LeadNoCalificado');
+});

@@ -992,3 +992,75 @@ body[data-page="program"] .sec{padding:clamp(56px,7vw,92px) 0}
 body[data-page="program"] .hm-show{margin-top:6px}
 .hm-s::after{background:linear-gradient(180deg,rgba(18,17,46,0) 18%,rgba(18,17,46,.6) 52%,rgba(18,17,46,.96))}
 .hm-s__t{text-shadow:0 1px 12px rgba(0,0,0,.35)}
+
+/* ==========================================================================
+   FORTH LIMPIO (2026-11): todo el sitio con la estética de la home nueva.
+   Una sola fuente (Figtree), fondo blanco y gris claro, azul Forth como acento,
+   naranja solo en la flecha del logo. Nada de degradados navy -> azul.
+   ========================================================================== */
+:root{
+  --serif:var(--sans);
+  --accent:#3B3BFF; --accent-deep:#2E2EE0; --accent-soft:rgba(59,59,255,.10);
+  --grad-night:#12112E; --grad-sky:#F6F7FA;
+  --cream:#F6F7FA; --sand:#F1F2F7; --sand-2:#E4E6EF; --paper:#FFFFFF; --bg:#FFFFFF;
+  --line:rgba(18,17,46,.10); --line-strong:rgba(18,17,46,.18);
+}
+body{font-family:var(--sans)}
+.display,.h2,.h3,.hm-h1,.hm-title,.cat__h1,.tut-h1,.tut-h2,.course-hub__title,.prose h2,.prose h3,.card__title,.ci__t,.hm-r__t,.pl__title,.ser__title,.coll__t,.route__t,.faq summary,.tv-h1,.lead-pop h2{font-family:var(--sans);font-weight:800;letter-spacing:-.04em}
+em.serif,.course-hub__title em{color:var(--blue);font-weight:800;letter-spacing:-.04em}
+.sec--sand,.sec--cream{background:#F6F7FA}
+.hero,.res--xl,.foot{background:var(--navy)}
+.hero__poster{background:var(--navy)}
+.res--xl::before,.route::before{display:none}
+.chip--tone{background:var(--accent-soft);color:var(--blue)}
+
+/* marca Forth en el menú (la flecha naranja ya la pone .nav__brand::after) */
+.nav__brand{font-size:24px;letter-spacing:-.045em}
+.nav.is-scrolled{background:rgba(255,255,255,.9);box-shadow:0 1px 0 var(--line)}
+.nav__links a::after{background:var(--blue)}
+
+/* botones: azul Forth con texto blanco; la acción principal es "Agenda tu llamada" */
+.btn--accent,.hm-hero .btn:not(.btn--ghost){--btn-bg:var(--blue);--btn-fg:#fff}
+.btn--accent:hover,.hm-hero .btn:not(.btn--ghost):hover{--btn-bg:var(--accent-deep);--btn-fg:#fff;box-shadow:0 14px 30px -14px rgba(59,59,255,.7)}
+.btn--light:hover{--btn-bg:var(--blue);--btn-fg:#fff}
+.lead-pop__bar i.is-on{background:var(--blue)}
+.lead-pop__eyebrow{color:var(--blue)}
+.lead-pop h2 em{color:var(--blue)}
+.progress{background:var(--blue)}
+
+/* el footer de Forth usa las clases .f-foot de forth.css */
+.show__i--res::after,.hm-s--res::after{background:none}
+/* /programa: hero blanco como la home (el menú no se vuelve claro sobre él) */
+.prog-hero{background:#fff;color:var(--ink);border-bottom:1px solid var(--line)}
+.prog-hero .hero__media{display:none}
+.prog-hero .hero__sub{color:var(--ink-2)}
+.prog-hero .eyebrow{color:var(--blue)}
+.prog-hero .link-arrow{color:var(--ink)}
+.prog-hero__avatar{filter:drop-shadow(0 20px 22px rgba(18,17,46,.18));margin-bottom:-40px}
+body[data-page="program"] .nav.is-light{color:var(--ink)}
+.prog-hero .display,.prog-hero .hero__line{color:var(--ink)}
+/* /programa: video que arranca solo, silenciado, como acquisition.com */
+.prog-hero .hero__in{grid-template-columns:1fr 1fr;align-items:center;gap:clamp(32px,5vw,64px)}
+.prog-hero .display--l{font-size:clamp(40px,4.4vw,64px)}
+.prog-hero__video{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:var(--navy);box-shadow:0 40px 80px -40px rgba(18,17,46,.45),0 0 0 1px var(--line)}
+.prog-hero__video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:860px){.prog-hero .hero__in{grid-template-columns:1fr}}
+.nav__brand::after,.foot__brand::after{background:#FF5A1F}
+.prog-hero__sound{position:absolute;inset:0;width:100%;border:0;padding:0;cursor:pointer;background:rgba(18,17,46,.18);display:grid;place-items:center;transition:background .3s}
+.prog-hero__sound:hover{background:rgba(18,17,46,.08)}
+.prog-hero__sound span{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;background:var(--blue);color:#fff;font:700 17px var(--sans);box-shadow:0 18px 40px -16px rgba(18,17,46,.6)}
+.prog-hero__sound span::before{content:"";width:20px;height:20px;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z'/%3E%3C/svg%3E") center/contain no-repeat}
+@media (prefers-reduced-motion:no-preference){.prog-hero__sound span{animation:fsound 2.4s ease-in-out infinite}}
+@keyframes fsound{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.prog-hero__video>iframe,.prog-hero__video #progVideoFrame{position:absolute;inset:0;width:100%;height:100%;border:0}
+.prog-hero__sound[hidden]{display:none}
+/* /programa más compacto: columna más ancha y menos aire entre secciones */
+body[data-page="program"] .wrap{width:min(1320px,100% - 48px)}
+body[data-page="program"] .sec{padding:clamp(44px,5vw,72px) 0}
+body[data-page="program"] .prog-hero .hero__in{padding-top:clamp(28px,4vw,56px);padding-bottom:clamp(36px,4.5vw,64px)}
+body[data-page="program"] .hm-head{margin-bottom:24px}
+.prog-faq__in{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,5vw,72px);align-items:start}
+.prog-faq__in .faq{margin:0;max-width:none}
+@media (max-width:860px){.prog-faq__in{grid-template-columns:1fr;gap:20px}}

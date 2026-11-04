@@ -352,6 +352,47 @@
       .js [data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--i,0) * 80ms)}
       .js [data-reveal].is-in{opacity:1;transform:none}
     }
+
+    /* ---------- Forth limpio (2026-11): misma estética de la home nueva ----------
+       Una sola fuente, fondo blanco y gris claro, azul Forth como acento, naranja solo
+       en la flecha del logo y en algún detalle. Nada de degradados. */
+    :root{--serif:var(--sans);--night:#12112E;--accent:var(--blue);--accent-deep:#2E2EE0;--accent-soft:rgba(59,59,255,.10);--gray:#F6F7FA}
+    .h1,.h2,.h3,.cal__title,.faq summary,.say__bubble,.tag b{font-family:var(--sans);font-weight:800;letter-spacing:-.04em}
+    .say__bubble{font-weight:600;letter-spacing:-.015em}
+    .s-sky{background:var(--gray)}
+    .s-night{background:#fff;color:var(--ink)}
+    .s-night::before{display:none}
+    .s-night .h2,.s-night .h1{color:var(--ink)}
+    .s-night .lede,.hero__sub,.proofline{color:var(--ink-2)}
+    .proofline b{color:var(--ink)}
+    #luciano,.close{background:var(--gray)}
+    .hero{border-bottom:1px solid var(--line)}
+    .brand{color:var(--ink);font-size:26px;letter-spacing:-.045em}
+    .hero__nav{color:var(--ink-2)}
+    .hero__nav a:hover,.foot__nav a:hover{color:var(--ink)}
+    .op,.hero__call{color:var(--blue)}
+    .s-night .say__bubble{background:#fff;color:var(--ink);border:0;box-shadow:0 0 0 1px var(--line),0 18px 36px -24px rgba(18,17,46,.35)}
+    .s-night .say__bubble em{color:var(--blue)}
+    .announce{background:var(--blue);color:#fff}
+    .announce b{color:#fff}
+    .announce a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+    .btn{background:var(--blue);color:#fff}
+    .btn::after{filter:invert(1)}
+    .btn:hover{background:#2E2EE0;box-shadow:0 14px 30px -14px rgba(59,59,255,.7)}
+    .yt__play{background-color:var(--blue)}
+    .tile--hero,.vs__card--after{background:var(--navy)}
+    .vs__card--after::before{display:none}
+    .hero__peek{filter:drop-shadow(0 16px 18px rgba(18,17,46,.2))}
+    .foot{background:var(--navy)}
+    :root{--sky:#F1F2F7}
+    .who__bio{color:var(--ink-2)}
+    .who__bio strong{color:var(--ink)}
+    .who__photo img{box-shadow:0 30px 60px -36px rgba(18,17,46,.5)}
+    .foot .brand{color:#fff}
+    .hero__nav{align-items:center}
+    .hero__nav a.nav__free{color:#C2410C;background:#FFF1EA;padding:7px 13px;border-radius:999px;font-weight:700}
+    .hero__nav a.nav__free:hover{color:#9A3412;background:#FFE4D6}
+    .letter{box-shadow:0 0 0 1px var(--line),0 30px 60px -40px rgba(18,17,46,.35)}
   </style>
 </head>
 <body>
@@ -365,8 +406,8 @@
   <header class="hero s-night" id="top">
     <div class="wrap">
       <div class="hero__top">
-        <a href="/" class="brand" aria-label="Luciano Musella, inicio">Luciano Musella</a>
-        <nav class="hero__nav" aria-label="Sitio"><a href="/">Inicio</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a href="/programa/">Programa</a></nav>
+        <a href="/" class="brand" aria-label="Forth, inicio">Forth</a>
+        <nav class="hero__nav" aria-label="Sitio"><a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a class="nav__free" href="/biblioteca/">Aprende gratis</a></nav>
         <a href="#agenda" class="btn" data-open-waitlist>Agenda tu llamada</a>
       </div>
       <div class="hero__in">
@@ -626,7 +667,7 @@
 
   <footer class="foot">
     <div class="wrap foot__in">
-      <a href="/" class="brand">Luciano Musella</a>
+      <a href="/" class="brand">Forth</a>
       <span class="tag"><b>Think human.</b> <i>Operate AI.</i></span>
       <nav class="foot__nav" aria-label="Sitio"><a href="/">Inicio</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a href="/programa/">Programa</a><a href="/politica-de-privacidad/">Privacidad</a></nav>
     </div>

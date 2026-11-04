@@ -48,7 +48,11 @@ module.exports = async function (req, res) {
   return res.status(404).json({ ok: false });
 };
 
-// Asistencia -> ShowUp / NoShow. Venta con valor -> Purchase. Todo por servidor
+// Valor que se le reporta a Meta por un "buen lead" si el closer no escribe uno (precio del programa).
+const BUEN_LEAD_VALOR = 500;
+
+// Asistencia -> ShowUp / NoShow. Venta o buen lead con valor -> Purchase. No calificado en la
+// llamada -> LeadNoCalificado. Todo por servidor
 // (system_generated): ocurre en la llamada, no en la web.
 async function mark(req, res, user) {
   const data = readBody(req) || {};
@@ -65,8 +69,23 @@ async function mark(req, res, user) {
     if (!(valor > 0) || valor > 100000000 || !moneda) return res.status(400).json({ ok: false, error: 'valor' });
     Object.assign(campos, { venta: 'Venta', valor, moneda, estado: 'Venta' });
     event = { name: 'Purchase', id: 'purchase-' + sha256(email).slice(0, 20), custom: { value: valor, currency: moneda, content_name: 'programa-ia' } };
+  } else if (data.venta === 'Buen lead') {
+    // "Venta fake": a Meta le llega como una compra para que traiga más personas así, pero en el
+    // Sheets no es venta. Estado Show (el agente lo sigue acompañando) y sin valor, para que las
+    // métricas de getforth no lo cuenten como ingreso. La venta real se registra después.
+    const valor = Number(data.valor) > 0 ? Number(data.valor) : BUEN_LEAD_VALOR;
+    const moneda = CURRENCIES.includes(data.moneda) ? data.moneda : 'USD';
+    if (valor > 100000000) return res.status(400).json({ ok: false, error: 'valor' });
+    Object.assign(campos, { venta: 'Buen lead (Meta)', valor: '', moneda: '', estado: 'Show' });
+    event = { name: 'Purchase', id: 'purchase-' + sha256(email).slice(0, 20), custom: { value: valor, currency: moneda, content_name: 'programa-ia' } };
   } else if (data.venta === 'No venta') {
     Object.assign(campos, { venta: 'No venta', valor: '', moneda: '', estado: 'No venta' });
+  } else if (data.venta === 'No calificado') {
+    // Llegó a la llamada pero no era el perfil: no queremos más gente así. A Meta le llega
+    // LeadNoCalificado (el mismo evento del formulario, para excluirlos) y el agente de getforth
+    // cierra el lead y no le vuelve a escribir.
+    Object.assign(campos, { venta: 'No calificado', valor: '', moneda: '', estado: 'No calificado' });
+    event = { name: 'LeadNoCalificado', id: 'nocalificado-llamada-' + sha256(email).slice(0, 20), custom: { content_name: 'llamada' } };
   } else {
     return res.status(400).json({ ok: false });
   }
