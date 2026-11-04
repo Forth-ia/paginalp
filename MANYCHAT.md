@@ -350,3 +350,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/ai-stack-tyler-denk/
 
 La distinción depende de la URL enviada.
+
+
+## Tu primer REPO con GitHub
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/github-primer-repo/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Tu primer REPO con GitHub`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/github-primer-repo/
+
+La distinción depende de la URL enviada.

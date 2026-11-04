@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cómo crear tu primer REPO y respaldar tus proyectos con GitHub | Luciano Musella</title><meta name="description" content="Aprende Git y GitHub desde cero: crea tu primer repositorio, guarda tus avances con commits, súbelos a la nube y recupera tu proyecto si pierdes tu computador."><meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/site.css">
+</head><body data-lead-popup="off" data-page="resource" data-page-props='{"resource":"github-primer-repo","category":"empezar","type":"guia-paso-a-paso"}'>
+<a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav"><div class="nav__in"><a class="nav__brand" href="/">Luciano<span>.</span>Musella</a><ul class="nav__links"><li><a href="/">Inicio</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li><li><a href="/programa/">Programa</a></li></ul><div class="nav__cta"><a class="btn btn--ghost btn--sm" href="https://lucianomusella.com/aprende"><span class="btn__t">Agenda</span></a><button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button></div></div></header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio<small>01</small></a><a href="/tutoriales/">Tutoriales<small>02</small></a><a href="/recursos/">Recursos<small>03</small></a></div></nav></div><main id="main"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=empezar">Empezar</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo crear tu primer REPO y respaldar tus proyectos con GitHub</h1><p class="lead" style="margin-top:20px">Aprende Git y GitHub desde cero: crea tu primer repositorio, guarda tus avances con commits, súbelos a la nube y recupera tu proyecto si pierdes tu computador.</p><div class="ahead__meta"><span>6 min de lectura</span><span class="dot"></span><span>Git · GitHub · Terminal</span><span class="dot"></span><span>Comandos para copiar</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="github-primer-repo"><p>Si trabajas con proyectos, aplicaciones, páginas web o herramientas de AI, necesitas aprender a usar GitHub.</p>
+<p>Git y GitHub te permiten guardar versiones de tus proyectos, recuperar archivos anteriores, experimentar sin dañar tu versión principal y tener una copia del proyecto en internet.</p>
+<p><strong>No necesitas ser programador para empezar.</strong></p>
+<h2 id="1-entiende-los-tres-conceptos">1. Entiende los tres conceptos</h2>
+<p>Antes de comenzar, diferencia estos términos:</p>
+<ul>
+<li><strong>Git:</strong> herramienta que registra los cambios que haces en los archivos de un proyecto.</li>
+<li><strong>Repositorio (repo):</strong> carpeta de tu proyecto que Git mantiene bajo control de versiones.</li>
+<li><strong>GitHub:</strong> plataforma en internet donde puedes alojar tus repositorios y sincronizarlos con tu computador.</li>
+</ul>
+<p>También debes conocer tres conceptos:</p>
+<ul>
+<li><strong>Commit:</strong> un punto de control que guarda un avance de tu proyecto.</li>
+<li><strong>Branch (rama):</strong> una línea de trabajo paralela para probar cambios sin afectar la versión principal.</li>
+<li><strong>Clone (clonar):</strong> descargar una copia completa de un repositorio, incluyendo su historial.</li>
+</ul>
+<h2 id="2-crea-tu-cuenta-de-github">2. Crea tu cuenta de GitHub</h2>
+<ol>
+<li>Entra a <a href="https://github.com" target="_blank" rel="noopener noreferrer">https://github.com</a></li>
+<li>Haz clic en <strong>Sign up</strong>.</li>
+<li>Regístrate con tu correo electrónico.</li>
+<li>Verifica tu cuenta.</li>
+</ol>
+<p>Esta será tu cuenta para guardar y administrar tus proyectos.</p>
+<h2 id="3-prepara-tu-computador">3. Prepara tu computador</h2>
+<p>Para trabajar con repositorios necesitas tener Git instalado.</p>
+<p>Puedes consultar las instrucciones oficiales según tu sistema operativo: <a href="https://github.com/git-guides/install-git" target="_blank" rel="noopener noreferrer">https://github.com/git-guides/install-git</a></p>
+<p>Una vez instalado, abre la Terminal (en Mac) o la terminal de tu sistema operativo.</p>
+<p>Escribe:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git --version</pre></div>
+<p>Si aparece un número de versión, significa que Git está instalado correctamente.</p>
+<p>La primera vez también debes configurar tu nombre y correo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git config --global user.name "Tu Nombre"
+git config --global user.email "tu-correo@email.com"</pre></div>
+<p>Utiliza el correo asociado a tu cuenta de GitHub.</p>
+<h2 id="4-convierte-tu-proyecto-en-un-repositorio">4. Convierte tu proyecto en un repositorio</h2>
+<p>Supongamos que tienes una carpeta llamada <code>mi-proyecto</code> con todos los archivos de tu aplicación.</p>
+<p>Abre la terminal dentro de esa carpeta. Puedes hacerlo desde tu editor de código o navegando hasta la carpeta desde la terminal.</p>
+<p>Ejecuta estos comandos uno por uno:</p>
+<h3 id="paso-1-inicializa-git">Paso 1. Inicializa Git</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git init</pre></div>
+<p>Esto convierte tu carpeta en un repositorio de Git.</p>
+<h3 id="paso-2-agrega-los-archivos">Paso 2. Agrega los archivos</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git add .</pre></div>
+<p>Esto prepara los archivos para guardarlos en el historial.</p>
+<h3 id="paso-3-crea-tu-primer-commit">Paso 3. Crea tu primer commit</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git commit -m "Mi primer respaldo"</pre></div>
+<p>¡Listo! Ya tienes tu primer punto de control.</p>
+<p><strong>Importante:</strong> este commit todavía está guardado localmente en tu computador. Ahora vamos a subirlo a GitHub.</p>
+<h2 id="5-sube-tu-proyecto-a-github">5. Sube tu proyecto a GitHub</h2>
+<p>Entra a <a href="https://github.com/new" target="_blank" rel="noopener noreferrer">https://github.com/new</a> y crea un repositorio nuevo.</p>
+<p>Configúralo así:</p>
+<ul>
+<li><strong>Repository name:</strong> <code>mi-proyecto</code></li>
+<li><strong>Description:</strong> una descripción de tu proyecto.</li>
+<li><strong>Visibility:</strong> Private (recomendado si es un proyecto personal o de trabajo).</li>
+<li>No selecciones README, .gitignore ni License si vas a conectar una carpeta que ya tiene archivos y acabas de inicializar con Git.</li>
+</ul>
+<p>Haz clic en <strong>Create repository</strong>.</p>
+<p>GitHub te mostrará una página con instrucciones para conectar tu proyecto.</p>
+<p>En la terminal, ejecuta los siguientes comandos, reemplazando la URL por la que te entrega GitHub:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git branch -M main
+git remote add origin https://github.com/TU-USUARIO/mi-proyecto.git
+git push -u origin main</pre></div>
+<p><strong>¿Qué hace cada comando?</strong></p>
+<ul>
+<li><code>git branch -M main</code>: establece el nombre de tu rama principal.</li>
+<li><code>git remote add origin</code>: conecta tu proyecto local con el repositorio de GitHub.</li>
+<li><code>git push</code>: sube tus archivos y commits a GitHub.</li>
+</ul>
+<p>¡Ya tienes tu proyecto respaldado en internet!</p>
+<h2 id="6-aprende-a-guardar-tus-avances">6. Aprende a guardar tus avances</h2>
+<p>Esta es la parte que debes convertir en un hábito.</p>
+<p>Cada vez que avances en tu proyecto y quieras guardar un punto de control, abre la terminal dentro de la carpeta y ejecuta:</p>
+<h3 id="1-revisa-que-cambio">1. Revisa qué cambió</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git status</pre></div>
+<h3 id="2-prepara-los-cambios">2. Prepara los cambios</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git add .</pre></div>
+<h3 id="3-guarda-el-avance">3. Guarda el avance</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git commit -m "Descripción del avance"</pre></div>
+<p>Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git commit -m "Agregué el sistema de inicio de sesión"</pre></div>
+<h3 id="4-sube-los-cambios-a-github">4. Sube los cambios a GitHub</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git push</pre></div>
+<p>Ahora tienes ese nuevo punto de control guardado tanto en tu computador como en GitHub.</p>
+<div class="callout"><p>💡 <strong>Mi recomendación:</strong> haz un commit cada vez que completes una funcionalidad importante o un avance significativo.</p></div>
+<h2 id="7-como-recuperas-tu-proyecto-si-pierdes-tu-computador">7. ¿Cómo recuperas tu proyecto si pierdes tu computador?</h2>
+<p>Esta es una de las razones más importantes para usar GitHub.</p>
+<p>Si tu computador se daña, puedes recuperar tu proyecto desde cualquier otro equipo.</p>
+<ol>
+<li>Entra a tu cuenta de GitHub.</li>
+<li>Busca el repositorio que quieres recuperar.</li>
+<li>Haz clic en el botón <strong>Code</strong>.</li>
+<li>Copia la dirección HTTPS.</li>
+<li>Abre una terminal y ejecuta:</li>
+</ol>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git clone https://github.com/TU-USUARIO/mi-proyecto.git</pre></div>
+<p>Esto descargará una copia completa del repositorio, incluyendo los archivos y el historial de versiones.</p>
+<p>También puedes descargar los archivos desde GitHub usando <strong>Code → Download ZIP</strong>, aunque esa opción no conserva el historial completo de Git.</p>
+<h2 id="8-experimenta-sin-danar-tu-proyecto-principal">8. Experimenta sin dañar tu proyecto principal</h2>
+<p>Imagina que tienes una aplicación funcionando y quieres probar una nueva funcionalidad.</p>
+<p>En lugar de modificar directamente tu versión principal, puedes crear una rama:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git switch -c nueva-funcionalidad</pre></div>
+<p>Ahora puedes trabajar en esa rama sin modificar la rama principal <code>main</code>.</p>
+<p>Cuando termines, puedes guardar tus cambios:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git add .
+git commit -m "Nueva funcionalidad"</pre></div>
+<p>Si quieres integrar los cambios a tu versión principal:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git switch main
+git merge nueva-funcionalidad</pre></div>
+<p>Si el experimento no funciona, puedes volver a <code>main</code> sin haber mezclado esos cambios.</p>
+<h2 id="9-tres-reglas-para-proteger-tus-proyectos">9. Tres reglas para proteger tus proyectos</h2>
+<p><strong>1. No olvides hacer push.</strong></p>
+<p>Un commit guardado únicamente en tu computador no es un respaldo en la nube. Debes ejecutar <code>git push</code> para sincronizarlo con GitHub.</p>
+<p><strong>2. Nunca subas contraseñas o claves privadas.</strong></p>
+<p>Archivos como <code>.env</code> pueden contener contraseñas, API keys y credenciales. Configura un <code>.gitignore</code> para excluirlos antes de subir tus archivos.</p>
+<p><strong>3. Utiliza repositorios privados para proyectos sensibles.</strong></p>
+<p>Un repositorio público puede ser visto por cualquier persona. Private restringe el acceso a las personas autorizadas, aunque debes seguir protegiendo tus secretos y credenciales.</p>
+<h2 id="10-los-comandos-que-debes-guardar">10. Los comandos que debes guardar</h2>
+<table><thead><tr><th scope="col">Comando</th><th scope="col">Para qué sirve</th></tr></thead><tbody>
+<tr><td><code>git init</code></td><td>Crear un repositorio</td></tr>
+<tr><td><code>git status</code></td><td>Revisar los cambios</td></tr>
+<tr><td><code>git add .</code></td><td>Preparar los cambios</td></tr>
+<tr><td><code>git commit -m "mensaje"</code></td><td>Guardar un punto de control</td></tr>
+<tr><td><code>git push</code></td><td>Subir cambios a GitHub</td></tr>
+<tr><td><code>git pull</code></td><td>Traer cambios desde GitHub</td></tr>
+<tr><td><code>git clone URL</code></td><td>Descargar un repositorio</td></tr>
+<tr><td><code>git log</code></td><td>Consultar el historial</td></tr>
+<tr><td><code>git switch -c nombre</code></td><td>Crear una rama nueva</td></tr>
+<tr><td><code>git switch main</code></td><td>Volver a la rama principal</td></tr>
+</tbody></table>
+<h2 id="recursos-oficiales-para-seguir-aprendiendo">Recursos oficiales para seguir aprendiendo</h2>
+<p>Toda esta guía está basada en la documentación oficial de GitHub.</p>
+<ul>
+<li>Crear tu primer repositorio: <a href="https://docs.github.com/es/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank" rel="noopener noreferrer">docs.github.com</a></li>
+<li>Entender qué es Git: <a href="https://docs.github.com/en/get-started/using-git/about-git" target="_blank" rel="noopener noreferrer">docs.github.com</a></li>
+<li>Aprender a usar los commits: <a href="https://docs.github.com/en/get-started/using-git/about-commits" target="_blank" rel="noopener noreferrer">docs.github.com</a></li>
+<li>Aprender sobre ramas: <a href="https://docs.github.com/en/get-started/using-git/about-branches" target="_blank" rel="noopener noreferrer">docs.github.com</a></li>
+<li>Clonar repositorios: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository" target="_blank" rel="noopener noreferrer">docs.github.com</a></li>
+<li>Proteger archivos sensibles con .gitignore: <a href="https://docs.github.com/en/get-started/git-basics/ignoring-files" target="_blank" rel="noopener noreferrer">docs.github.com</a></li>
+</ul>
+<div class="callout"><p>💡 <strong>RECUERDA:</strong> Git guarda el historial de tu proyecto. GitHub te permite tener una copia remota. Acostúmbrate a guardar tus avances con commits y sincronizarlos con <em>push</em>.</p><p>Si trabajas con un equipo y quieres ver las últimas versiones subidas, haces <em>pull</em>.</p><p>No esperes a perder semanas de trabajo para empezar a utilizarlo.</p></div></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a href="#1-entiende-los-tres-conceptos">1. Entiende los tres conceptos</a></li><li><a href="#2-crea-tu-cuenta-de-github">2. Crea tu cuenta de GitHub</a></li><li><a href="#3-prepara-tu-computador">3. Prepara tu computador</a></li><li><a href="#4-convierte-tu-proyecto-en-un-repositorio">4. Convierte tu proyecto en un repositorio</a></li><li><a href="#5-sube-tu-proyecto-a-github">5. Sube tu proyecto a GitHub</a></li><li><a href="#6-aprende-a-guardar-tus-avances">6. Aprende a guardar tus avances</a></li><li><a href="#7-como-recuperas-tu-proyecto-si-pierdes-tu-computador">7. ¿Cómo recuperas tu proyecto si pierdes tu computador?</a></li><li><a href="#8-experimenta-sin-danar-tu-proyecto-principal">8. Experimenta sin dañar tu proyecto principal</a></li><li><a href="#9-tres-reglas-para-proteger-tus-proyectos">9. Tres reglas para proteger tus proyectos</a></li><li><a href="#10-los-comandos-que-debes-guardar">10. Los comandos que debes guardar</a></li><li><a href="#recursos-oficiales-para-seguir-aprendiendo">Recursos oficiales para seguir aprendiendo</a></li></ul></nav></aside></div></section></main><footer class="foot"><div class="wrap foot__in"><div><div class="foot__brand">Luciano Musella</div><p style="max-width:34ch;margin:12px 0 0">Aprende a construir con IA. Tutoriales, recursos y retos gratis; y un programa para llevarlo al trabajo.</p></div></div></footer><script src="/assets/js/site.js?v=obscura-access-1" defer></script></body></html>

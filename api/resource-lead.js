@@ -2,6 +2,7 @@
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const { parseUtm } = require('./_lib/lead.js');
 const RESOURCES = new Map([
+  ['github-primer-repo', 'Tu primer REPO con GitHub'],
   ['ai-stack-tyler-denk', 'AI Stack de Tyler Denk (beehiiv)'],
   ['skill-escritura-linkedin', 'Skill de escritura para LinkedIn'],
   ['skill-debrief-claude', 'Skill Debrief en Claude (Notion + Google Calendar)'],

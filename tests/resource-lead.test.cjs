@@ -709,3 +709,33 @@ test('keeps the ManyChat link UTMs so we know which reel brought the lead', asyn
     assert.deepEqual(call.utm, { utm_source: 'instagram', utm_content: 'reel-28oct' });
   } finally { global.fetch = original; }
 });
+
+test('Tu primer REPO con GitHub requires all contact fields and confirmed storage before unlocking', async () => {
+  const original = global.fetch;
+  const sent = [];
+  let confirmed = true;
+  global.fetch = async (_, options) => {
+    sent.push(JSON.parse(options.body));
+    return { ok: true, json: async () => ({ ok: confirmed }) };
+  };
+  try {
+    const body = { ...valid, resource: 'github-primer-repo', fuente: 'spoofed' };
+    for (const field of ['nombre', 'email', 'telefono']) {
+      const res = response();
+      await handler({ method: 'POST', body: { ...body, [field]: '' } }, res);
+      assert.equal(res.statusCode, 400);
+    }
+    assert.equal(sent.length, 0);
+    const success = response();
+    await handler({ method: 'POST', body }, success);
+    assert.equal(success.statusCode, 200);
+    assert.equal(sent[0].fuente, 'ManyChat · Tu primer REPO con GitHub');
+    assert.equal(success.body.redirect, '/recursos/github-primer-repo/');
+    confirmed = false;
+    const failure = response();
+    await handler({ method: 'POST', body }, failure);
+    assert.equal(failure.statusCode, 502);
+    assert.equal(failure.body.ok, false);
+    assert.equal(failure.body.redirect, undefined);
+  } finally { global.fetch = original; }
+});

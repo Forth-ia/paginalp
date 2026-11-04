@@ -33,6 +33,50 @@
  },
  "resources": [
 {
+  "id": "github-primer-repo",
+  "slug": "github-primer-repo",
+  "title": "Cómo crear tu primer REPO y respaldar tus proyectos con GitHub",
+  "category": "empezar",
+  "secondary": [
+    "claude"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Aprende Git y GitHub desde cero: crea tu primer repositorio, guarda tus avances con commits, súbelos a la nube y recupera tu proyecto si pierdes tu computador.",
+  "what_you_get": [
+    "Los conceptos clave: Git, repo, GitHub, commit, branch y clone",
+    "Cómo crear tu primer repositorio y subirlo a GitHub",
+    "El hábito para guardar avances y recuperar tu proyecto",
+    "Cómo experimentar con ramas sin dañar tu versión principal"
+  ],
+  "ideal_for": [
+    "Personas que construyen apps, webs o herramientas con AI",
+    "Principiantes que nunca han usado Git"
+  ],
+  "includes": [
+    "Comandos para copiar",
+    "Tabla de comandos esenciales",
+    "Reglas de seguridad",
+    "Enlaces a la documentación oficial"
+  ],
+  "tools": [
+    "Git",
+    "GitHub",
+    "Terminal"
+  ],
+  "words": 1132,
+  "read_min": 6,
+  "related_tutorials": [],
+  "related_resources": [
+    "roadmap-claude-5-dias",
+    "diseno-web-claude"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "ai-stack-tyler-denk",
   "slug": "ai-stack-tyler-denk",
   "title": "Cómo construir tu propio AI Stack: el sistema que usa Tyler Denk para operar Beehiiv",
