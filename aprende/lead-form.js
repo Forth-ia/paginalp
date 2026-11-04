@@ -13,7 +13,7 @@
   if (!form || !w.aprendeQualify) return;
   var Q = w.aprendeQualify.QUESTIONS, qualify = w.aprendeQualify.qualify, priority = w.aprendeQualify.priority;
   var EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-  var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
   var book = d.getElementById('agenda'), summary = d.getElementById('lfSummary');
   var more = d.getElementById('lfMore'), errBox = d.getElementById('lfErr'), el = form.elements;
 
@@ -22,6 +22,8 @@
   try {
     var qs = new URLSearchParams(location.search);
     UTM_KEYS.forEach(function (k) { if (qs.get(k)) utm[k] = qs.get(k); });
+    // ID del anuncio de Meta: utm_id={{ad.id}} o, en anuncios más viejos, h_ad_id={{ad.id}}.
+    if (!utm.utm_id && /^\d{6,25}$/.test(qs.get('h_ad_id') || '')) utm.utm_id = qs.get('h_ad_id');
     if (Object.keys(utm).length) sessionStorage.setItem('ap_utm', JSON.stringify(utm));
     else utm = JSON.parse(sessionStorage.getItem('ap_utm') || '{}');
   } catch (e) {}

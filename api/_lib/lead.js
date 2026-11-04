@@ -1,6 +1,6 @@
 const { QUESTIONS, COUNTRIES } = require('../../assets/js/aprende-qualify.js');
 
-const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'];
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const clip = (value, max) => (typeof value === 'string' ? value.trim().slice(0, max) : '');
 

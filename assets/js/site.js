@@ -9,7 +9,9 @@
   var utm = {};
   try {
     var q = new URLSearchParams(location.search);
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'].forEach(function (k) { if (q.get(k)) utm[k] = q.get(k); });
+    // ID del anuncio de Meta: utm_id={{ad.id}} o, en anuncios más viejos, h_ad_id={{ad.id}}.
+    if (!utm.utm_id && /^\d{6,25}$/.test(q.get('h_ad_id') || '')) utm.utm_id = q.get('h_ad_id');
     if (Object.keys(utm).length) sessionStorage.setItem('lm_utm', JSON.stringify(utm));
     else utm = JSON.parse(sessionStorage.getItem('lm_utm') || '{}');
     if (!localStorage.getItem('lm_first_touch')) {

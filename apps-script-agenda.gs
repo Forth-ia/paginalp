@@ -79,7 +79,7 @@ var COLUMNAS_MAESTRO = [
   ['Asistencia', 'asistencia'], ['Venta', 'venta'], ['Valor venta', 'valor'], ['Moneda', 'moneda'],
   ['eventos_meta_enviados', 'eventos_meta'], ['Marcado por', 'marcado_por'],
   ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
-  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'],
+  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['ID anuncio', 'utm_id'],
   ['fbp', 'fbp'], ['fbc', 'fbc'], ['recordatorio_24h', 'recordatorio_24h'], ['recordatorio_1h', 'recordatorio_1h'],
   ['Pop-up', 'popup_formulario'], ['Prioridad pop-up', 'prioridad_popup'], ['Agendó desde', 'agendo_desde']
 ].concat(COLUMNAS_POPUP);
@@ -91,7 +91,7 @@ var COLUMNAS_ORGANICOS = [
   ['WhatsApp', 'telefono'], ['Fuente', 'fuente'], ['Recursos descargados', 'recursos'], ['Estado', 'estado'],
   ['Contenidos que lo trajeron', 'contenidos'],
   ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
-  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['Prioridad', 'prioridad_popup']
+  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['ID anuncio', 'utm_id'], ['Prioridad', 'prioridad_popup']
 ].concat(COLUMNAS_POPUP);
 var HOJA_AGENDADOS = 'Página - Agendados';
 var HOJA_NO_AGENDADOS = 'Página - No agendados';
@@ -104,7 +104,7 @@ var COLUMNAS_PAGINA = [
   ['Principal reto', 'reto'], ['Cita (hora Colombia)', 'cita'], ['Closer', 'closer'], ['Link de Meet', 'meet'],
   ['Asistencia', 'asistencia'], ['Venta', 'venta'], ['Valor venta', 'valor'], ['Moneda', 'moneda'],
   ['utm_source', 'utm_source'], ['utm_medium', 'utm_medium'], ['utm_campaign', 'utm_campaign'],
-  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['Fuente', 'fuente'], ['Agendó desde', 'agendo_desde']
+  ['utm_content', 'utm_content'], ['utm_term', 'utm_term'], ['ID anuncio', 'utm_id'], ['Fuente', 'fuente'], ['Agendó desde', 'agendo_desde']
 ];
 
 // Estados que una nueva visita al formulario no debe pisar.
@@ -178,7 +178,7 @@ function organico_(d) {
     Object.assign(organico, popup);
     // Solo un lead que entra por primera vez queda como incompleto; responder (o ManyChat) lo deja en "Orgánico".
     organico.estado = popup.popup_formulario === 'Incompleto' ? (previo ? undefined : 'Pop-up incompleto') : 'Orgánico';
-    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { organico[k] = utm[k] || ''; });
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'].forEach(function (k) { organico[k] = utm[k] || ''; });
     escribirFila_(HOJA_ORGANICOS, COLUMNAS_ORGANICOS, d.email, organico);
   });
   return { ok: true };
@@ -231,7 +231,7 @@ function ubicarEnPagina_(email, destino) {
 function camposBase_(d) {
   var c = { nombre: d.nombre, telefono: d.telefono, pais: d.pais, fuente: d.fuente || 'Web · /aprende', fbp: d.fbp, fbc: d.fbc };
   var utm = d.utm || {};
-  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (utm[k]) c[k] = utm[k]; });
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id'].forEach(function (k) { if (utm[k]) c[k] = utm[k]; });
   return c;
 }
 
