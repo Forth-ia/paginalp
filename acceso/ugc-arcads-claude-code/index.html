@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Accede a la guía: anuncios UGC con Claude Code | Forth</title>
+  <meta name="description" content="Desbloquea gratis la guía para crear anuncios UGC, influencers con IA y anuncios para Meta con Claude Code y Arcads.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Anuncios UGC con Claude Code · Guía paso a paso">
+  <meta property="og:description" content="Completa tus datos y accede gratis a la guía.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/forth.css"><link rel="stylesheet" href="/assets/css/resource-access.css"><link rel="stylesheet" href="/assets/css/leads-access.css">
+  <script src="/assets/js/resource-access.js?v=ugc-arcads-claude-code-1" defer></script>
+</head>
+<body class="resource-access-locked leads-access">
+  <div class="resource-access__preview" inert aria-hidden="true">
+    <header class="nav"><div class="nav__in"><a tabindex="-1" class="nav__brand" href="/">Forth</a><ul class="nav__links"><li><a tabindex="-1" href="/">Inicio</a></li><li><a tabindex="-1" href="/tutoriales/">Tutoriales</a></li><li><a tabindex="-1" href="/recursos/">Recursos</a></li><li><a tabindex="-1" href="/retos/">Retos</a></li><li><a tabindex="-1" href="/programa/">Programa</a></li></ul></div></header>
+    <main id="guide-preview"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a tabindex="-1" href="/recursos/">Recursos</a><span>/</span><a tabindex="-1" href="/recursos/?c=creativo">Creativo</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Crea anuncios UGC con Claude Code y Arcads</h1><p class="lead" style="margin-top:20px">Instala el repositorio que conecta Claude Code con Arcads y crea videos UGC, influencers con IA, anuncios estáticos para Meta y anuncios animados con prompts listos.</p><div class="ahead__meta"><span>7 min de lectura</span><span class="dot"></span><span>Claude Code · Arcads · Seedance</span><span class="dot"></span><span>5 prompts para copiar</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="ugc-arcads-claude-code"><div class="callout"><p>💡 <strong>Repositorio:</strong> <a tabindex="-1" href="https://github.com/mrpaidsocial/arcads-claude-code-mrpaidsocial" target="_blank" rel="noopener noreferrer">github.com/mrpaidsocial/arcads-claude-code-mrpaidsocial</a></p></div>
+<h2 id="1-que-es-este-repositorio-y-para-que-sirve">1. ¿Qué es este repositorio y para qué sirve?</h2>
+<p>Este repositorio conecta Claude Code con la API de Arcads para que puedas crear piezas publicitarias mediante instrucciones en lenguaje natural.</p>
+<p>En lugar de entrar manualmente a una plataforma, configurar cada generación y construir todos los prompts desde cero, Claude puede:</p>
+<ul>
+<li>Entender qué tipo de anuncio quieres producir.</li>
+<li>Elegir el modelo de generación adecuado.</li>
+<li>Construir prompts siguiendo plantillas especializadas.</li>
+<li>Enviar solicitudes a Arcads mediante su API.</li>
+<li>Esperar a que termine la generación.</li>
+<li>Organizar los archivos y guardar referencias.</li>
+<li>Estimar el consumo de créditos antes de generar.</li>
+</ul>
+<div class="callout"><p>💡 <strong>Importante:</strong> no es un modelo de IA gratuito ni una plataforma independiente que genere videos por sí sola. Necesitas una cuenta de Arcads y una API key válida. Las generaciones consumen créditos según el modelo y la configuración.</p></div>
+<h2 id="2-que-puedes-crear-con-este-repositorio">2. ¿Qué puedes crear con este repositorio?</h2>
+<p>El proyecto tiene varias familias de herramientas. Estas son las más interesantes:</p>
+<h3 id="1-videos-ugc">1. Videos UGC</h3>
+<p>Videos que parecen grabados por personas reales, presentando productos, hablando a cámara, contando experiencias y haciendo recomendaciones.</p>
+<p><em>Modelo recomendado: Seedance 2.0.</em></p>
+<h3 id="2-anuncios-cinematograficos">2. Anuncios cinematográficos</h3>
+<p>Videos de productos con efectos, iluminación, rotaciones, transiciones y tomas premium.</p>
+<p><em>Modelos: Seedance 2.0, Sora 2 y Kling 3.0.</em></p>
+<h3 id="3-influencers-creados-con-ia">3. Influencers creados con IA</h3>
+<p>Crear un personaje, generar varias fotografías desde diferentes ángulos y reutilizarlo en diferentes anuncios para mantener consistencia.</p>
+<p><em>Modelo: Nano Banana.</em></p>
+<h3 id="4-anuncios-estaticos-para-meta">4. Anuncios estáticos para Meta</h3>
+<p>Tiene una biblioteca de 37 plantillas de anuncios: estilo Apple Notes, Forbes, comparaciones, conversaciones de WhatsApp, búsquedas de Google, revistas y más.</p>
+<p><em>Modelos: ChatGPT Image 2 y Nano Banana.</em></p>
+<h3 id="5-anuncios-animados-3d">5. Anuncios animados 3D</h3>
+<p>Crear personajes animados, construir una historia por escenas, generar imágenes y convertirlas en videos.</p>
+<p><em>Estilos: Pixar y claymation.</em></p>
+<h3 id="6-miniaturas-para-youtube">6. Miniaturas para YouTube</h3>
+<p>Generar diferentes versiones de thumbnails, utilizando fotografías de referencia para conservar la identidad de una persona.</p>
+<p>También puedes analizar anuncios de referencia, replicar su estructura para otros productos y preparar anuncios para publicar en Meta.</p>
+<p>Todo esto está organizado mediante skills especializadas.</p>
+<h2 id="3-como-instalarlo-en-tu-mac">3. Cómo instalarlo en tu Mac</h2>
+<p>Vamos a utilizar Claude Code como entorno de trabajo.</p>
+<p>Requisitos principales:</p>
+<table><thead><tr><th scope="col">Herramienta</th><th scope="col">Para qué sirve</th></tr></thead><tbody>
+<tr><td>Claude Code</td><td>Ejecutar las instrucciones y skills</td></tr>
+<tr><td>Git</td><td>Descargar el repositorio</td></tr>
+<tr><td>Cuenta Arcads</td><td>Acceder a la API</td></tr>
+<tr><td>API key de Arcads</td><td>Autorizar las generaciones</td></tr>
+</tbody></table>
+<p>No necesitas instalar todas las dependencias adicionales desde el principio. Algunas solo se requieren para los flujos avanzados.</p>
+<h3 id="paso-1-descargar-el-repositorio">Paso 1. Descargar el repositorio</h3>
+<p>Abre Terminal en tu Mac y ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>git clone https://github.com/mrpaidsocial/arcads-claude-code-mrpaidsocial.git</pre></div>
+<p>Después entra a la carpeta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>cd arcads-claude-code-mrpaidsocial</pre></div>
+<h3 id="paso-2-ejecutar-la-instalacion">Paso 2. Ejecutar la instalación</h3>
+<p>Desde la carpeta del proyecto ejecuta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>chmod +x scripts/setup.sh
+./scripts/setup.sh</pre></div>
+<p>El instalador se encarga de:</p>
+<ol>
+<li>Solicitar tu API key de Arcads.</li>
+<li>Guardarla en un archivo <code>.env</code>.</li>
+<li>Comprobar que la conexión funciona.</li>
+<li>Crear tu archivo personal <code>MASTER_CONTEXT.md</code>.</li>
+</ol>
+<h3 id="paso-3-conseguir-tu-api-key">Paso 3. Conseguir tu API key</h3>
+<p>Entra al panel de Arcads, en <a tabindex="-1" href="https://app.arcads.ai/settings/api" target="_blank" rel="noopener noreferrer">app.arcads.ai/settings/api</a>, busca la sección de API y copia tu clave.</p>
+<p>Si todavía no tienes cuenta, puedes crearla en <a tabindex="-1" href="https://arcads.ai" target="_blank" rel="noopener noreferrer">arcads.ai</a>.</p>
+<p>Cuando el instalador solicite la clave, pégala directamente en Terminal.</p>
+<div class="callout"><p>🔒 Nunca compartas tu API key en conversaciones, archivos públicos o repositorios de GitHub. El archivo <code>.env</code> está diseñado para mantenerla fuera de Git.</p></div>
+<h3 id="paso-4-abrir-el-proyecto-en-claude-code">Paso 4. Abrir el proyecto en Claude Code</h3>
+<p>Desde la misma carpeta:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>claude</pre></div>
+<p>Claude Code leerá las instrucciones del proyecto y cargará las skills disponibles.</p>
+<p>El repositorio incluye un sistema de inicio de sesión que muestra información sobre las skills instaladas, la configuración y el contexto del proyecto.</p>
+<h2 id="4-configura-claude-para-que-trabaje-como-tu-equipo-creativo">4. Configura Claude para que trabaje como tu equipo creativo</h2>
+<p>Esta es una de las partes más importantes. El repositorio tiene un archivo llamado <code>MASTER_CONTEXT.md</code>.</p>
+<p>Piensa en él como la memoria de tu equipo creativo.</p>
+<p>Allí puedes definir:</p>
+<ul>
+<li>Qué empresa o marca estás trabajando.</li>
+<li>Qué productos vendes.</li>
+<li>Quién es tu público objetivo.</li>
+<li>Cuál es el tono de comunicación.</li>
+<li>Qué estilos visuales utilizas.</li>
+<li>Qué tipo de anuncios te gustan.</li>
+<li>Qué modelos prefieres.</li>
+<li>Cuánto cuestan tus generaciones en créditos.</li>
+</ul>
+<p>El agente utiliza este contexto para evitar que tengas que explicar todo en cada conversación.</p>
+<h3 id="como-configurarlo">Cómo configurarlo</h3>
+<p>Abre <code>MASTER_CONTEXT.md</code> en Claude Code y pídele:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero configurar mi MASTER_CONTEXT.md.
+
+Ayúdame a definir:
+1. Mi marca y sus productos.
+2. Mi audiencia y sus principales problemas.
+3. Mi propuesta de valor.
+4. Mi tono de comunicación.
+5. Mis referencias visuales.
+6. Los estilos de anuncios que quiero producir.
+7. Mis preferencias de modelos y presupuesto.
+
+Hazme las preguntas necesarias y actualiza el archivo con mis respuestas.</pre></div>
+<div class="callout"><p>💡 <strong>Mi recomendación:</strong> configura primero una marca y un producto de prueba antes de comenzar a producir campañas completas.</p></div>
+<h2 id="5-como-utilizar-las-skills">5. Cómo utilizar las skills</h2>
+<p>Una skill es un conjunto de instrucciones que le enseña a Claude cómo ejecutar una tarea específica.</p>
+<p>En este repositorio encontrarás diferentes skills. No necesitas aprender a programarlas: puedes pedirle a Claude que ejecute el flujo correspondiente.</p>
+<p>Estas son algunas de las más importantes:</p>
+<table><thead><tr><th scope="col">Skill</th><th scope="col">Función</th></tr></thead><tbody>
+<tr><td><code>arcads-external-api</code></td><td>Conexión y generación mediante Arcads</td></tr>
+<tr><td><code>chatgpt-image-ad</code></td><td>Anuncios estáticos con ChatGPT Image</td></tr>
+<tr><td><code>nano-banana-image-ad</code></td><td>Anuncios estáticos con Nano Banana</td></tr>
+<tr><td><code>image-ad-clone</code></td><td>Analizar y replicar anuncios de referencia</td></tr>
+<tr><td><code>generate-youtube-thumbnail</code></td><td>Crear miniaturas de YouTube</td></tr>
+<tr><td><code>meta-ad-builder</code></td><td>Preparar y publicar anuncios en Meta</td></tr>
+<tr><td><code>pixar-style-ad</code></td><td>Crear anuncios animados 3D</td></tr>
+<tr><td><code>claymation-ad</code></td><td>Crear anuncios estilo plastilina</td></tr>
+</tbody></table>
+<p>No tienes que memorizar estos nombres. Puedes describir lo que quieres y Claude debería seleccionar la skill correspondiente.</p>
+<h2 id="6-cosas-que-puedes-pedirle-a-claude">6. Cosas que puedes pedirle a Claude</h2>
+<h3 id="caso-1-crear-un-video-ugc">Caso 1. Crear un video UGC</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero crear un anuncio UGC de 12 segundos para mi producto.
+
+La protagonista es una mujer de 28 años que está en su cocina, sosteniendo el producto y hablando directamente a cámara.
+
+Quiero que parezca un video grabado con un iPhone, con iluminación natural, movimientos espontáneos y una interpretación auténtica.
+
+Utiliza Seedance 2.0 y la plantilla UGC de este repositorio.
+
+Antes de generar:
+1. Propón el guion.
+2. Construye el prompt.
+3. Muéstrame el costo estimado.
+4. Espera mi aprobación.</pre></div>
+<h3 id="caso-2-crear-un-influencer-con-ia">Caso 2. Crear un influencer con IA</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero crear un influencer virtual para mi marca.
+
+Será un hombre de 30 años, colombiano, con apariencia natural y estilo de creador de contenido.
+
+Primero crea su retrato principal con Nano Banana.
+
+Cuando lo apruebe, genera otras 9 imágenes:
+- Perfil izquierdo y derecho.
+- Vista de tres cuartos.
+- Primeros planos.
+- Diferentes expresiones.
+- Diferentes poses.
+
+Quiero mantener la misma identidad facial en todas las imágenes.
+
+Guarda las referencias para reutilizarlas en futuros videos y campañas.</pre></div>
+<h3 id="caso-3-crear-un-anuncio-estatico-para-instagram">Caso 3. Crear un anuncio estático para Instagram</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero crear 5 variaciones de anuncios estáticos para Meta Ads.
+
+Producto: [PRODUCTO].
+Audiencia: [AUDIENCIA].
+Beneficio principal: [BENEFICIO].
+
+Explora las 37 plantillas disponibles en el repositorio y selecciona las cinco que mejor se adapten al producto.
+
+Quiero conceptos visuales diferentes:
+1. Estilo Apple Notes.
+2. Estilo editorial Forbes.
+3. Comparación antes y después.
+4. Una conversación ficticia.
+5. Una pieza publicitaria minimalista.
+
+Utiliza ChatGPT Image 2 o Nano Banana según la plantilla.
+
+Muéstrame los conceptos antes de generar.</pre></div>
+<h3 id="caso-4-replicar-un-anuncio-que-encontraste">Caso 4. Replicar un anuncio que encontraste</h3>
+<p>Puedes darle una imagen o un video de referencia y pedirle que analice su estructura para adaptarla a otro producto.</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero analizar este anuncio de referencia.
+
+Identifica:
+- El hook visual.
+- La composición.
+- La jerarquía del texto.
+- Los colores.
+- La iluminación.
+- El tipo de fotografía.
+- La estructura del mensaje.
+- Los elementos que hacen que destaque.
+
+Después quiero convertirlo en una plantilla reutilizable para mi producto.
+
+No quiero copiar exactamente la marca original. Quiero conservar el concepto creativo y adaptarlo a nuestra identidad visual.
+
+Utiliza la skill image-ad-clone.</pre></div>
+<h3 id="caso-5-crear-un-anuncio-animado-estilo-pixar">Caso 5. Crear un anuncio animado estilo Pixar</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero crear un anuncio animado estilo Pixar para promocionar [PRODUCTO].
+
+Quiero que el producto sea un personaje animado con personalidad propia.
+
+Construye una historia de 8 escenas:
+
+1. Presentación del problema.
+2. Aparición del personaje.
+3. Conflicto.
+4. Descubrimiento de la solución.
+5. Presentación del producto.
+6. Demostración del beneficio.
+7. Transformación.
+8. Llamado a la acción.
+
+Primero genera la hoja de personajes y el storyboard.
+Después de mi aprobación, genera los videos con Seedance 2.0 y ensambla las escenas.
+
+Utiliza la skill pixar-style-ad.</pre></div>
+<h2 id="recursos-para-aprender-mas">Recursos para aprender más</h2>
+<ul>
+<li>Tutorial del creador del repositorio: <a tabindex="-1" href="https://youtu.be/HHGQN9Zqaxo" target="_blank" rel="noopener noreferrer">walkthrough en video del repositorio (YouTube)</a></li>
+<li>Repositorio completo en GitHub: <a tabindex="-1" href="https://github.com/mrpaidsocial/arcads-claude-code-mrpaidsocial" target="_blank" rel="noopener noreferrer">github.com</a></li>
+<li>Configuración de la API de Arcads: <a tabindex="-1" href="https://app.arcads.ai/settings/api" target="_blank" rel="noopener noreferrer">app.arcads.ai</a></li>
+<li>Documentación técnica de Arcads: <a tabindex="-1" href="https://external-api.arcads.ai/docs" target="_blank" rel="noopener noreferrer">external-api.arcads.ai</a></li>
+</ul></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a tabindex="-1" href="#1-que-es-este-repositorio-y-para-que-sirve">1. ¿Qué es este repositorio y para qué sirve?</a></li><li><a tabindex="-1" href="#2-que-puedes-crear-con-este-repositorio">2. ¿Qué puedes crear con este repositorio?</a></li><li><a tabindex="-1" href="#3-como-instalarlo-en-tu-mac">3. Cómo instalarlo en tu Mac</a></li><li><a tabindex="-1" href="#4-configura-claude-para-que-trabaje-como-tu-equipo-creativo">4. Configura Claude para que trabaje como tu equipo creativo</a></li><li><a tabindex="-1" href="#5-como-utilizar-las-skills">5. Cómo utilizar las skills</a></li><li><a tabindex="-1" href="#6-cosas-que-puedes-pedirle-a-claude">6. Cosas que puedes pedirle a Claude</a></li><li><a tabindex="-1" href="#recursos-para-aprender-mas">Recursos para aprender más</a></li></ul></nav></aside></div></section></main>
+  </div>
+  <div class="resource-access lead-pop" role="dialog" aria-modal="true" aria-labelledby="access-title">
+    <section class="lead-pop__card" aria-labelledby="access-title">
+      <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
+      <h2 id="access-title">Desbloquea la guía</h2>
+      <p>Déjame tus datos para acceder gratis a la guía <strong>Crea anuncios UGC con Claude Code</strong> y los 5 prompts para producir tus anuncios.</p>
+      <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
+        <input type="hidden" name="resource" value="ugc-arcads-claude-code">
+        <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
+        <label>Email<input name="email" type="email" inputmode="email" autocapitalize="none" spellcheck="false" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
+        <label>Celular<input name="telefono" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30" placeholder="+57 300 000 0000" aria-describedby="phone-help"></label>
+        <small id="phone-help">Incluye el indicativo de tu país.</small>
+        <button class="btn btn--accent" type="submit"><span class="btn__t">Ver la guía gratis</span></button>
+        <p id="access-status" class="resource-access__status" role="status" aria-live="polite"></p>
+        <small>Al enviar tus datos, recibirás recursos e ideas de IA de Luciano Musella. Sin spam. Puedes dejar de recibirlos cuando quieras.</small>
+      </form>
+      <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
+    </section>
+  </div>
+</body>
+</html>

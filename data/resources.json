@@ -33,6 +33,52 @@
  },
  "resources": [
 {
+  "id": "ugc-arcads-claude-code",
+  "slug": "ugc-arcads-claude-code",
+  "title": "Crea anuncios UGC con Claude Code y Arcads",
+  "category": "creativo",
+  "secondary": [
+    "claude"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Instala el repositorio que conecta Claude Code con Arcads y crea videos UGC, influencers con IA, anuncios estáticos para Meta y anuncios animados con prompts listos.",
+  "what_you_get": [
+    "Qué hace el repositorio de Arcads para Claude Code",
+    "Instalación paso a paso en Mac y configuración de la API key",
+    "Cómo configurar MASTER_CONTEXT.md y usar las skills",
+    "5 prompts listos: UGC, influencer IA, estáticos, clonar anuncios y Pixar"
+  ],
+  "ideal_for": [
+    "Marcas y e-commerce que pautan en Meta",
+    "Media buyers y equipos creativos"
+  ],
+  "includes": [
+    "Comandos de instalación",
+    "Tabla de skills",
+    "5 prompts copiables",
+    "Enlaces oficiales"
+  ],
+  "tools": [
+    "Claude Code",
+    "Arcads",
+    "Seedance 2.0",
+    "Nano Banana",
+    "ChatGPT Image 2"
+  ],
+  "words": 1395,
+  "read_min": 7,
+  "related_tutorials": [],
+  "related_resources": [
+    "higgsfield-claude-video",
+    "gpt-image-2"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "github-primer-repo",
   "slug": "github-primer-repo",
   "title": "Cómo crear tu primer REPO y respaldar tus proyectos con GitHub",

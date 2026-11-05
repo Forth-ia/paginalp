@@ -367,3 +367,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/github-primer-repo/
 
 La distinción depende de la URL enviada.
+
+
+## Anuncios UGC con Claude Code y Arcads
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/ugc-arcads-claude-code/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Anuncios UGC con Claude Code y Arcads`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/ugc-arcads-claude-code/
+
+La distinción depende de la URL enviada.
