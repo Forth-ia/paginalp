@@ -301,6 +301,7 @@ Utiliza la skill pixar-style-ad.
 
 ## Recursos para aprender más
 
+- Publicación original en X: https://x.com/dravenip/status/2107890789225525312
 - Tutorial del creador del repositorio: walkthrough en video del repositorio (YouTube): https://youtu.be/HHGQN9Zqaxo
 - Repositorio completo en GitHub: github.com: https://github.com/mrpaidsocial/arcads-claude-code-mrpaidsocial
 - Configuración de la API de Arcads: app.arcads.ai: https://app.arcads.ai/settings/api
