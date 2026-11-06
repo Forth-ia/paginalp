@@ -34,7 +34,7 @@
   function fmtDate(key) { var t = new Date(key + 'T00:00:00Z'); return DOW[t.getUTCDay()] + ' ' + t.getUTCDate() + ' ' + MONTHS[t.getUTCMonth()]; }
   function startMs(l) { return l.cita_inicio ? new Date(l.cita_inicio).getTime() : NaN; }
   function closerOf(l) { return CLOSERS[l.closer] || { nombre: l.closer || 'Sin closer', c: 'c0' }; }
-  function needsMark(l) { return startMs(l) + CALL_MIN * 60000 <= Date.now() && (!l.asistencia || (l.asistencia === 'Show' && !l.venta)); }
+  function needsMark(l) { return startMs(l) + CALL_MIN * 60000 <= Date.now() && l.venta !== 'No calificado' && (!l.asistencia || (l.asistencia === 'Show' && !l.venta)); }
   function matches(l) { return !query || [l.nombre, l.email, l.telefono].join(' ').toLowerCase().indexOf(query) !== -1; }
   function byEmail(email) { return leads.filter(function (l) { return l.email === email; })[0]; }
   // wa.me necesita el indicativo: el Sheets guarda el número sin él.
@@ -243,7 +243,7 @@
 
   /* ---------- detalle ---------- */
   function chips(l) {
-    var map = { 'Venta': 'ok', 'Show': 'ok', 'Agendado': 'accent', 'No show': 'bad', 'No venta': 'bad', 'No calificado': 'bad' };
+    var map = { 'Venta': 'ok', 'Show': 'ok', 'Agendado': 'accent', 'No show': 'bad', 'No show sin mensajes': 'bad', 'No venta': 'bad', 'No calificado': 'bad' };
     return '<span class="chip chip--' + (map[l.estado] || '') + '">' + esc(l.estado || '—') + '</span>' +
       (l.prioridad === 'Alta' ? '<span class="chip chip--accent">🔥 Prioritario</span>' : '') +
       (l.venta === 'Venta' ? '<span class="chip chip--ok">' + esc(l.moneda + ' ' + Number(l.valor).toLocaleString('es')) + '</span>' : '') +
@@ -255,23 +255,25 @@
     var l = byEmail(selected), box = $('detail');
     if (!l) { $('overlay').hidden = true; selected = ''; return; }
     var c = closerOf(l), pending = busy[l.email] ? ' disabled' : '';
+    var noCalif = l.venta === 'No calificado';
     var when = l.cita_inicio ? fmtDate(dayKey(startMs(l))) + ' · ' + fmtTime(startMs(l)) + ' – ' + fmtTime(startMs(l) + CALL_MIN * 60000) + ' · ' + c.nombre : 'Calificado, sin cita';
     var result = l.cita_inicio ? (
       '<div class="box"><h3>Resultado de la llamada</h3>' +
-        '<div class="seg" role="group" aria-label="Asistencia">' +
-          '<button type="button" data-act="Show" class="' + (l.asistencia === 'Show' ? 'is-ok' : '') + '"' + pending + '>✓ Show</button>' +
-          '<button type="button" data-act="No show" class="' + (l.asistencia === 'No show' ? 'is-bad' : '') + '"' + pending + '>✗ No show</button>' +
+        '<div class="seg" role="group" aria-label="Resultado">' +
+          '<button type="button" data-act="Show" class="' + (noCalif ? '' : l.asistencia === 'Show' ? 'is-ok' : '') + '"' + pending + '>✓ Show</button>' +
+          '<button type="button" data-act="No show" class="' + (l.estado === 'No show' ? 'is-bad' : '') + '"' + pending + '>✗ No show</button>' +
+          '<button type="button" data-act="No show sin mensajes" class="' + (l.estado === 'No show sin mensajes' ? 'is-bad' : '') + '"' + pending + ' title="Cuenta como no show, pero el agente no le escribe por WhatsApp.">✗ No show sin mensajes</button>' +
+          '<button type="button" data-act="No calificado" class="' + (noCalif ? 'is-bad' : '') + '"' + pending + ' title="No era el perfil: a Meta le llega como mal lead y el agente no le vuelve a escribir.">⊘ No calificado</button>' +
         '</div>' +
-        (l.asistencia === 'Show' ? (
+        (l.asistencia === 'Show' && !noCalif ? (
           '<div class="sale">' +
             '<input type="number" min="1" step="1" placeholder="Valor de la venta" value="' + esc(l.valor) + '" id="valor" aria-label="Valor de la venta">' +
             '<select id="moneda" aria-label="Moneda"><option' + (l.moneda !== 'COP' ? ' selected' : '') + '>USD</option><option' + (l.moneda === 'COP' ? ' selected' : '') + '>COP</option></select>' +
             '<div class="btns"><button type="button" class="btn" data-act="Venta"' + pending + '>$ Venta</button>' +
             '<button type="button" class="btn btn--good' + (l.venta === 'Buen lead (Meta)' ? ' is-on' : '') + '" data-act="Buen lead"' + pending + ' title="Le llega a Meta como venta para que traiga más personas así. En el Sheets no cuenta como venta.">&#9733; Buen lead</button></div>' +
-            '<div class="btns"><button type="button" class="btn btn--ghost' + (l.venta === 'No venta' ? ' is-on' : '') + '" data-act="No venta"' + pending + '>No venta</button>' +
-            '<button type="button" class="btn btn--ghost btn--bad' + (l.venta === 'No calificado' ? ' is-on' : '') + '" data-act="No calificado"' + pending + ' title="Llegó a la llamada pero no era el perfil.">No calificado</button></div>' +
-            '<p class="hint">&#9733; Buen lead: a Meta le llega como venta (si no escribes valor, USD 500). No calificado: a Meta le llega como mal lead y el agente no le vuelve a escribir. Después de la llamada el seguimiento es manual.</p>' +
-          '</div>') : '<p class="hint">Marca Show para registrar el resultado.</p>') +
+            '<div class="btns"><button type="button" class="btn btn--ghost' + (l.venta === 'No venta' ? ' is-on' : '') + '" data-act="No venta"' + pending + '>No venta</button></div>' +
+            '<p class="hint">&#9733; Buen lead: a Meta le llega como venta (si no escribes valor, USD 500). Después de la llamada el seguimiento es manual.</p>' +
+          '</div>') : '') +
         (l.eventos_meta ? '<p class="hint">Meta: ' + esc(l.eventos_meta) + '</p>' : '') +
       '</div>') : '<p class="hint">Este lead calificó pero no agendó: escríbele por WhatsApp.</p>';
     box.className = 'detail ' + c.c;
@@ -352,7 +354,10 @@
     email = email || selected;
     var body = { email: email };
     if (act === 'Show' || act === 'No show') body.asistencia = act;
-    else {
+    else if (act === 'No show sin mensajes') {
+      if (!confirm('¿Marcar no show sin mensajes? Cuenta como no show, pero el agente no le escribe ni le responde por WhatsApp.')) return;
+      body.asistencia = 'No show'; body.sin_mensajes = true;
+    } else {
       body.venta = act;
       if (act === 'Venta') {
         body.valor = Number($('valor').value);
@@ -365,7 +370,7 @@
         body.moneda = $('moneda').value;
         if (!confirm('¿Marcar como buen lead? A Meta le llega como compra de ' + body.moneda + ' ' + body.valor.toLocaleString('es') + ' para que traiga más personas así. En el Sheets NO cuenta como venta.')) return;
       }
-      if (act === 'No calificado' && !confirm('¿Marcar como no calificado? Tuvo la llamada pero no era el perfil: a Meta le llega como mal lead y el agente no le vuelve a escribir.')) return;
+      if (act === 'No calificado' && !confirm('¿Marcar como no calificado? No era el perfil: a Meta le llega como mal lead y el agente no le vuelve a escribir.')) return;
     }
     busy[email] = true; render();
     api('mark', body).then(function (r) {

@@ -61,7 +61,9 @@ async function mark(req, res, user) {
   let event;
   if (data.asistencia === 'Show' || data.asistencia === 'No show') {
     campos.asistencia = data.asistencia;
-    campos.estado = data.asistencia;
+    // sin_mensajes: para la empresa y para Meta es un no show, pero el agente no arranca el flujo
+    // de WhatsApp y queda en pausa con esa persona.
+    campos.estado = data.asistencia === 'No show' && data.sin_mensajes === true ? 'No show sin mensajes' : data.asistencia;
     event = { name: data.asistencia === 'Show' ? 'ShowUp' : 'NoShow', id: 'asistencia-' + sha256(email).slice(0, 20) };
   } else if (data.venta === 'Venta') {
     const valor = Number(data.valor);
@@ -94,6 +96,8 @@ async function mark(req, res, user) {
   const found = await callAgenda('lead', { email });
   if (!found.ok) return res.status(404).json({ ok: false });
   const lead = found.lead;
+  // Corrige un "No calificado" marcado por error: al volver a marcar asistencia deja de serlo.
+  if (data.asistencia && lead.venta === 'No calificado') campos.venta = '';
   let sent;
   if (event) {
     const country = COUNTRIES.find(c => c[0] === lead.pais);

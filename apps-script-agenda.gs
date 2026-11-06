@@ -108,7 +108,7 @@ var COLUMNAS_PAGINA = [
 ];
 
 // Estados que una nueva visita al formulario no debe pisar.
-var ESTADOS_AVANZADOS = ['Agendado', 'Show', 'No show', 'Venta', 'No venta'];
+var ESTADOS_AVANZADOS = ['Agendado', 'Show', 'No show', 'No show sin mensajes', 'Venta', 'No venta'];
 
 function doPost(e) {
   var datos;

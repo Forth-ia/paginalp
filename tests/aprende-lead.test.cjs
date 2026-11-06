@@ -350,6 +350,29 @@ test('a good lead goes to Meta as a Purchase but is not a sale in the sheet', as
   assert.deepEqual(res.meta[0].custom_data, { value: 2000000, currency: 'COP', content_name: 'programa-ia' });
 });
 
+test('no show without messages counts as a no show for Meta and pauses the agent', async () => {
+  const cookie = await login();
+  const res = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers: { cookie, 'content-type': 'application/json' }, body: { email: 'ana@example.com', asistencia: 'No show', sin_mensajes: true } }, agendaForMark);
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.meta[0].event_name, 'NoShow');
+  const saved = res.agenda.find(c => c.action === 'marcar');
+  assert.equal(saved.campos.asistencia, 'No show');
+  assert.equal(saved.campos.estado, 'No show sin mensajes');
+  const normal = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers: { cookie, 'content-type': 'application/json' }, body: { email: 'ana@example.com', asistencia: 'No show' } }, agendaForMark);
+  assert.equal(normal.agenda.find(c => c.action === 'marcar').campos.estado, 'No show');
+});
+
+test('not qualified without Show sends only LeadNoCalificado, and marking attendance undoes it', async () => {
+  const cookie = await login();
+  const headers = { cookie, 'content-type': 'application/json' };
+  const direct = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers, body: { email: 'ana@example.com', venta: 'No calificado' } }, agendaForMark);
+  assert.deepEqual(direct.meta.map(e => e.event_name), ['LeadNoCalificado']);
+  assert.equal(direct.agenda.find(c => c.action === 'marcar').campos.asistencia, undefined);
+  const marked = action => (action === 'lead' ? { ok: true, lead: { ...stored, venta: 'No calificado' } } : { ok: true, lead: stored });
+  const undo = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers, body: { email: 'ana@example.com', asistencia: 'Show' } }, marked);
+  assert.equal(undo.agenda.find(c => c.action === 'marcar').campos.venta, '');
+});
+
 test('not qualified after the call tells Meta LeadNoCalificado and gets its own state', async () => {
   const cookie = await login();
   const res = await run(adminHandler, { method: 'POST', query: { a: 'mark' }, headers: { cookie, 'content-type': 'application/json' }, body: { email: 'ana@example.com', venta: 'No calificado' } }, agendaForMark);
