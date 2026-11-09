@@ -401,3 +401,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/firecrawl-claude/
 
 La distinción depende de la URL enviada.
+
+
+## 120 apps para construir con IA
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/120-apps-con-ia/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · 120 apps para construir con IA`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/120-apps-con-ia/
+
+La distinción depende de la URL enviada.
