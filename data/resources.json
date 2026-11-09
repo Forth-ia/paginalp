@@ -33,6 +33,48 @@
  },
  "resources": [
 {
+  "id": "120-apps-con-ia",
+  "slug": "120-apps-con-ia",
+  "title": "120 apps que podrías empezar a construir mañana con IA (+ prompt para construirlas)",
+  "category": "negocio",
+  "secondary": [
+    "empezar"
+  ],
+  "type": "lista-curada",
+  "type_label": "Lista curada",
+  "summary": "120 ideas de aplicaciones sencillas en 12 categorías, cómo elegir la primera y el prompt para construirla con Claude Code, Lovable o Replit.",
+  "what_you_get": [
+    "120 ideas de apps numeradas en 12 categorías",
+    "4 condiciones para elegir cuál construir primero",
+    "Un prompt listo para construir el MVP con IA"
+  ],
+  "ideal_for": [
+    "Emprendedores y dueños de negocio que quieren su primera app",
+    "Profesionales que buscan automatizar un problema de su sector"
+  ],
+  "includes": [
+    "120 ideas",
+    "Criterios para elegir",
+    "1 prompt copiable"
+  ],
+  "tools": [
+    "Claude Code",
+    "Lovable",
+    "Replit"
+  ],
+  "words": 1877,
+  "read_min": 8,
+  "related_tutorials": [],
+  "related_resources": [
+    "github-primer-repo",
+    "diseno-web-claude"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "firecrawl-claude",
   "slug": "firecrawl-claude",
   "title": "Así haces que Claude deje de mentirte (Claude + Firecrawl)",
