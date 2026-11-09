@@ -33,6 +33,49 @@
  },
  "resources": [
 {
+  "id": "firecrawl-claude",
+  "slug": "firecrawl-claude",
+  "title": "Así haces que Claude deje de mentirte (Claude + Firecrawl)",
+  "category": "claude",
+  "secondary": [
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Conecta Firecrawl a Claude para que busque en la web, haga scraping y use Alexandria, un catálogo de más de 400 proveedores de datos, desde claude.ai o Claude Code.",
+  "what_you_get": [
+    "Qué es Alexandria y el flujo descubrir, revisar y ejecutar",
+    "Conexión en claude.ai y la app de Claude sin terminal",
+    "Instalación del MCP y el CLI de Firecrawl en Claude Code",
+    "Pruebas para confirmar que funciona y solución a errores comunes"
+  ],
+  "ideal_for": [
+    "Quienes necesitan datos reales y con fuentes en Claude",
+    "Equipos de ventas, marketing e investigación"
+  ],
+  "includes": [
+    "Comandos de instalación",
+    "Prompts de prueba",
+    "Tabla de errores comunes"
+  ],
+  "tools": [
+    "Claude",
+    "Claude Code",
+    "Firecrawl"
+  ],
+  "words": 909,
+  "read_min": 5,
+  "related_tutorials": [],
+  "related_resources": [
+    "4-mcps-agente-real",
+    "5-mcps-claude"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "ugc-arcads-claude-code",
   "slug": "ugc-arcads-claude-code",
   "title": "Crea anuncios UGC con Claude Code y Arcads",
