@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Accede a la guía: Claude + Firecrawl | Forth</title>
+  <meta name="description" content="Desbloquea gratis la guía para conectar Firecrawl a Claude y que trabaje con datos reales de la web y de más de 400 proveedores.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Claude + Firecrawl · Guía paso a paso">
+  <meta property="og:description" content="Completa tus datos y accede gratis a la guía.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/forth.css"><link rel="stylesheet" href="/assets/css/resource-access.css"><link rel="stylesheet" href="/assets/css/leads-access.css">
+  <script src="/assets/js/resource-access.js?v=firecrawl-claude-1" defer></script>
+</head>
+<body class="resource-access-locked leads-access">
+  <div class="resource-access__preview" inert aria-hidden="true">
+    <header class="nav"><div class="nav__in"><a tabindex="-1" class="nav__brand" href="/">Forth</a><ul class="nav__links"><li><a tabindex="-1" href="/">Inicio</a></li><li><a tabindex="-1" href="/tutoriales/">Tutoriales</a></li><li><a tabindex="-1" href="/recursos/">Recursos</a></li><li><a tabindex="-1" href="/retos/">Retos</a></li><li><a tabindex="-1" href="/programa/">Programa</a></li></ul></div></header>
+    <main id="guide-preview"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a tabindex="-1" href="/recursos/">Recursos</a><span>/</span><a tabindex="-1" href="/recursos/?c=claude">Claude</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Así haces que Claude deje de mentirte (Claude + Firecrawl)</h1><p class="lead" style="margin-top:20px">Conecta Firecrawl a Claude para que busque en la web, haga scraping y use Alexandria, un catálogo de más de 400 proveedores de datos, desde claude.ai o Claude Code.</p><div class="ahead__meta"><span>5 min de lectura</span><span class="dot"></span><span>Claude · Claude Code · Firecrawl</span><span class="dot"></span><span>2 rutas de instalación</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="firecrawl-claude"><h2 id="1-que-es-y-para-que-sirve">1. Qué es y para qué sirve</h2>
+<p>Alexandria es el catálogo de Firecrawl que le da a Claude acceso a más de 400 proveedores de datos (enriquecimiento de empresas, búsqueda de personas, emails, finanzas, noticias, registros públicos, SEO) a través de una sola conexión. Además de Alexandria, Firecrawl le suma a Claude búsqueda web, scraping de páginas, interacción con sitios y monitoreo de cambios.</p>
+<p>El flujo siempre es el mismo, en tres pasos:</p>
+<ol>
+<li><strong>Descubrir</strong> la herramienta que sirve (gratis).</li>
+<li><strong>Revisar</strong> qué datos pide y cuánto cuesta (gratis).</li>
+<li><strong>Ejecutarla</strong> para traer los datos (se cobra en créditos, según el precio listado de cada herramienta).</li>
+</ol>
+<h2 id="2-antes-de-empezar">2. Antes de empezar</h2>
+<p>Necesitas una cuenta de Firecrawl (se crea gratis al conectar) y elegir una de dos rutas según dónde uses Claude. Alexandria no funciona en el modo gratuito sin cuenta: exige una API key o una conexión iniciada con tu cuenta.</p>
+<table><thead><tr><th scope="col">Usas Claude en…</th><th scope="col">Ruta</th><th scope="col">Necesitas terminal</th><th scope="col">Tiempo aprox.</th></tr></thead><tbody>
+<tr><td>claude.ai, app de escritorio o móvil</td><td>Ruta 1: conector</td><td>No</td><td>2 minutos</td></tr>
+<tr><td>Claude Code (terminal o pestaña Code)</td><td>Ruta 2: MCP + CLI</td><td>Sí, con Node.js instalado</td><td>5 minutos</td></tr>
+</tbody></table>
+<h2 id="3-ruta-1-claudeai-y-la-app-de-claude-sin-terminal">3. Ruta 1: claude.ai y la app de Claude (sin terminal)</h2>
+<p>Se conecta desde el directorio de conectores de Claude, con un clic y sin copiar claves.</p>
+<ol>
+<li>Abre el <a tabindex="-1" href="https://claude.ai/directory/connectors/firecrawl" target="_blank" rel="noopener noreferrer">conector de Firecrawl en Claude</a> con tu sesión de Claude iniciada.</li>
+<li>Haz clic en <strong>Conectar</strong> (Connect).</li>
+<li>Se abre Firecrawl: inicia sesión o crea tu cuenta gratis.</li>
+<li>Autoriza el acceso y elige tu equipo (team) de Firecrawl.</li>
+<li>Vuelve a Claude y abre un chat nuevo. En el menú de herramientas del chat (botón «+» o el ícono de conectores), confirma que Firecrawl está activado.</li>
+<li>Si las herramientas no aparecen, recarga la página o reinicia la app.</li>
+</ol>
+<div class="callout"><p>🔒 No pegues una API key en ningún enlace de instalación: el conector maneja la autenticación por su cuenta.</p></div>
+<h2 id="4-ruta-2-claude-code-mcp-cli">4. Ruta 2: Claude Code (MCP + CLI)</h2>
+<p>En Claude Code conviene instalar dos cosas: el servidor MCP (para que Claude use Firecrawl como herramienta) y el CLI con sus skills (para que lo use desde la terminal). Son independientes: autenticar uno no autentica el otro.</p>
+<h3 id="paso-0-revisa-si-ya-lo-tienes">Paso 0. Revisa si ya lo tienes</h3>
+<p>Si inicias sesión en Claude Code con tu suscripción de Claude, hereda los conectores de claude.ai. Abre Claude Code, escribe <code>/mcp</code> y mira si Firecrawl ya aparece. Si está, salta al paso 2.</p>
+<h3 id="paso-1-agrega-el-servidor-mcp">Paso 1. Agrega el servidor MCP</h3>
+<p>En tu terminal:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>claude mcp add --transport http firecrawl https://mcp.firecrawl.dev/v2/mcp-oauth</pre></div>
+<p>Luego abre Claude Code, escribe <code>/mcp</code>, selecciona firecrawl y completa el inicio de sesión en el navegador (eligiendo tu equipo).</p>
+<div class="callout"><p>💡 Esa URL es para el cliente MCP: no la abras directo en el navegador.</p></div>
+<h3 id="paso-2-instala-el-cli-y-las-skills">Paso 2. Instala el CLI y las skills</h3>
+<p>Requiere Node.js. En la carpeta de tu proyecto:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>npx -y firecrawl-cli@latest init --all --browser</pre></div>
+<p>Esto instala el comando <code>firecrawl</code>, las skills del CLI y las skills de flujos de trabajo (informes de investigación, auditorías SEO, listas de leads), y abre el navegador para iniciar sesión.</p>
+<p>Alternativa manual:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>npm install -g firecrawl-cli
+firecrawl login</pre></div>
+<h3 id="paso-3-verifica-el-cli">Paso 3. Verifica el CLI</h3>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>firecrawl --status
+firecrawl scrape "https://firecrawl.dev" -o .firecrawl/install-check.md</pre></div>
+<p>Si ambos comandos responden sin error, quedó listo. Si algún trabajo falla, <code>firecrawl doctor &lt;job-id&gt;</code> diagnostica el problema.</p>
+<h2 id="5-probar-que-funciona">5. Probar que funciona</h2>
+<p>La prueba es simple: pídele a Claude una búsqueda y confirma que responde con enlaces a las fuentes.</p>
+<h3 id="prueba-basica-cualquier-ruta">Prueba básica (cualquier ruta)</h3>
+<p>Escríbele a Claude:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Busca en la web las últimas notas de versión de Firecrawl y resume las fuentes.</pre></div>
+<h3 id="prueba-de-alexandria-por-mcp">Prueba de Alexandria (por MCP)</h3>
+<p>Pídele algo que necesite un proveedor de datos, por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Usa Firecrawl Alexandria para encontrar una herramienta de enriquecimiento de empresas, muéstrame qué datos pide y cuánto cuesta, y luego tráeme el perfil de una empresa.</pre></div>
+<p>Claude usará <code>firecrawl_search</code> para descubrir la herramienta, <code>firecrawl_find_tools</code> para revisar sus datos y precio, y <code>firecrawl_scrape</code> para ejecutarla.</p>
+<h3 id="prueba-de-alexandria-por-cli">Prueba de Alexandria (por CLI)</h3>
+<p>Los mismos tres pasos desde la terminal:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button tabindex="-1" class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre># 1. Descubrir herramientas (gratis)
+firecrawl search alexandria 'perfil de una empresa a partir de su dominio'
+
+# 2. Revisar qué pide y cuánto cuesta (gratis)
+firecrawl list &lt;proveedor&gt; &lt;capacidad&gt; --pretty
+
+# 3. Ejecutar (cobra créditos)
+firecrawl scrape &lt;proveedor&gt;/&lt;capacidad&gt; --options '&lt;JSON con los datos que pide&gt;'</pre></div>
+<p>Reemplaza <code>&lt;proveedor&gt;</code> y <code>&lt;capacidad&gt;</code> por los que te devuelva el paso 1.</p>
+<h2 id="6-costos-y-errores-comunes">6. Costos y errores comunes</h2>
+<p>Descubrir y revisar herramientas es gratis; solo pagas créditos al ejecutar una, al precio que muestra cada herramienta. Cada feedback que envías sobre Alexandria devuelve 1 crédito (máximo 100 por equipo al día).</p>
+<table><thead><tr><th scope="col">Problema</th><th scope="col">Qué hacer</th></tr></thead><tbody>
+<tr><td>Las herramientas de Firecrawl no aparecen en Claude</td><td>Abre un chat nuevo o reinicia la app; en Claude Code revisa <code>/mcp</code></td></tr>
+<tr><td>Error <code>THIRD_PARTY_DATA_TERMS_REQUIRED</code></td><td>Ese proveedor exige aceptar sus términos: un admin de tu equipo los acepta en el enlace que trae el error</td></tr>
+<tr><td>Error 401 o «sin autenticar» en el CLI</td><td>Ejecuta <code>firecrawl login --browser</code></td></tr>
+<tr><td>Alexandria no responde sin cuenta</td><td>El modo gratuito sin clave no incluye Alexandria; conecta tu cuenta</td></tr>
+<tr><td>Llamadas rechazadas desde VPN o proxy</td><td>Desactiva la VPN o usa tu cuenta autenticada</td></tr>
+<tr><td>Un trabajo falla sin explicación</td><td><code>firecrawl doctor &lt;job-id&gt;</code></td></tr>
+</tbody></table>
+<p>Tus conexiones activas se revisan y revocan en Connected apps de Firecrawl.</p>
+<h2 id="fuentes">Fuentes</h2>
+<ul>
+<li><a tabindex="-1" href="https://alexandria.firecrawl.dev/" target="_blank" rel="noopener noreferrer">Firecrawl Alexandria</a></li>
+<li><a tabindex="-1" href="https://docs.firecrawl.dev/features/alexandria" target="_blank" rel="noopener noreferrer">Docs de Alexandria</a></li>
+<li><a tabindex="-1" href="https://docs.firecrawl.dev/mcp-server/oauth" target="_blank" rel="noopener noreferrer">Guía de conexión MCP (OAuth)</a></li>
+<li><a tabindex="-1" href="https://alexandria.firecrawl.dev/agent-onboarding/SKILL.md" target="_blank" rel="noopener noreferrer">Onboarding para agentes (SKILL.md)</a></li>
+</ul></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a tabindex="-1" href="#1-que-es-y-para-que-sirve">1. Qué es y para qué sirve</a></li><li><a tabindex="-1" href="#2-antes-de-empezar">2. Antes de empezar</a></li><li><a tabindex="-1" href="#3-ruta-1-claudeai-y-la-app-de-claude-sin-terminal">3. Ruta 1: claude.ai y la app de Claude (sin terminal)</a></li><li><a tabindex="-1" href="#4-ruta-2-claude-code-mcp-cli">4. Ruta 2: Claude Code (MCP + CLI)</a></li><li><a tabindex="-1" href="#5-probar-que-funciona">5. Probar que funciona</a></li><li><a tabindex="-1" href="#6-costos-y-errores-comunes">6. Costos y errores comunes</a></li><li><a tabindex="-1" href="#fuentes">Fuentes</a></li></ul></nav></aside></div></section></main>
+  </div>
+  <div class="resource-access lead-pop" role="dialog" aria-modal="true" aria-labelledby="access-title">
+    <section class="lead-pop__card" aria-labelledby="access-title">
+      <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
+      <h2 id="access-title">Desbloquea la guía</h2>
+      <p>Déjame tus datos para acceder gratis a la guía <strong>Así haces que Claude deje de mentirte (Claude + Firecrawl)</strong> con los pasos para conectarlo y los prompts para probarlo.</p>
+      <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
+        <input type="hidden" name="resource" value="firecrawl-claude">
+        <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
+        <label>Email<input name="email" type="email" inputmode="email" autocapitalize="none" spellcheck="false" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
+        <label>Celular<input name="telefono" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30" placeholder="+57 300 000 0000" aria-describedby="phone-help"></label>
+        <small id="phone-help">Incluye el indicativo de tu país.</small>
+        <button class="btn btn--accent" type="submit"><span class="btn__t">Ver la guía gratis</span></button>
+        <p id="access-status" class="resource-access__status" role="status" aria-live="polite"></p>
+        <small>Al enviar tus datos, recibirás recursos e ideas de IA de Luciano Musella. Sin spam. Puedes dejar de recibirlos cuando quieras.</small>
+      </form>
+      <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
+    </section>
+  </div>
+</body>
+</html>

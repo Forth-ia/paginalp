@@ -384,3 +384,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/ugc-arcads-claude-code/
 
 La distinción depende de la URL enviada.
+
+
+## Claude + Firecrawl
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/firecrawl-claude/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Claude + Firecrawl`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/firecrawl-claude/
+
+La distinción depende de la URL enviada.
