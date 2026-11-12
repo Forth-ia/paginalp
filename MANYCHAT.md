@@ -418,3 +418,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/120-apps-con-ia/
 
 La distinción depende de la URL enviada.
+
+
+## 5 MCPs que vuelven a Claude un agente
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/5-mcps-claude/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · 5 MCPs que vuelven a Claude un agente`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/5-mcps-claude/
+
+La distinción depende de la URL enviada.

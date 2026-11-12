@@ -2,6 +2,7 @@
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const { parseUtm } = require('./_lib/lead.js');
 const RESOURCES = new Map([
+  ['5-mcps-claude', '5 MCPs que vuelven a Claude un agente'],
   ['120-apps-con-ia', '120 apps para construir con IA'],
   ['firecrawl-claude', 'Claude + Firecrawl'],
   ['ugc-arcads-claude-code', 'Anuncios UGC con Claude Code y Arcads'],
