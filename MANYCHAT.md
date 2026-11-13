@@ -435,3 +435,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/5-mcps-claude/
 
 La distinción depende de la URL enviada.
+
+
+## Gestión de archivos con AI
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/gestion-archivos-ia/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Gestión de archivos con AI`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/gestion-archivos-ia/
+
+La distinción depende de la URL enviada.
