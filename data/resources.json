@@ -33,6 +33,51 @@
  },
  "resources": [
 {
+  "id": "gestion-archivos-ia",
+  "slug": "gestion-archivos-ia",
+  "title": "Guía de gestión de archivos con AI: deja que la AI organice tus archivos",
+  "category": "agentes",
+  "secondary": [
+    "claude",
+    "negocio"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Crea un manual de reglas para que ChatGPT, Claude o Gemini renombre y ordene tus archivos, reorganiza tu Google Drive y automatiza tu Inbox con una tarea programada diaria.",
+  "what_you_get": [
+    "Los 3 elementos de un manual de reglas para organizar archivos",
+    "Un ejemplo práctico con carpeta Inbox y aprendizaje de preferencias",
+    "Cómo reorganizar Google Drive, Dropbox, OneDrive o iCloud con AI",
+    "Una tarea programada diaria que ordena tu Inbox con tu aprobación"
+  ],
+  "ideal_for": [
+    "Profesionales con carpetas de Descargas y Drive desordenadas",
+    "Dueños de negocio que gestionan recibos, facturas y documentos"
+  ],
+  "includes": [
+    "Estructura de carpetas",
+    "Convenciones de nombres",
+    "7 prompts copiables"
+  ],
+  "tools": [
+    "ChatGPT",
+    "Claude",
+    "Gemini",
+    "Google Drive"
+  ],
+  "words": 2237,
+  "read_min": 10,
+  "related_tutorials": [],
+  "related_resources": [
+    "lm-37",
+    "lm-14"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "120-apps-con-ia",
   "slug": "120-apps-con-ia",
   "title": "120 apps que podrías empezar a construir mañana con IA (+ prompt para construirlas)",
