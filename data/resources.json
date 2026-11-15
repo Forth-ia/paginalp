@@ -33,6 +33,50 @@
  },
  "resources": [
 {
+  "id": "virality-predictor-higgsfield",
+  "slug": "virality-predictor-higgsfield",
+  "title": "Virality Predictor de Higgsfield + Claude",
+  "category": "creativo",
+  "secondary": [
+    "claude",
+    "contenido"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Conecta Higgsfield a Claude y analiza tus videos antes de publicarlos: puntaje de viralidad, fuerza del hook, hold rate y mapa de calor, en segundos.",
+  "what_you_get": [
+    "Qué mide el Virality Predictor y qué devuelve el reporte",
+    "Conexión de Higgsfield en claude.ai, Claude Desktop y Claude Code",
+    "Prompts para analizar un video y reabrir reportes anteriores",
+    "Flujo recomendado para filtrar anuncios, costos y límites"
+  ],
+  "ideal_for": [
+    "Creadores que quieren validar reels antes de publicarlos",
+    "Equipos de marketing que prueban varias versiones de un anuncio"
+  ],
+  "includes": [
+    "Pasos de conexión",
+    "1 comando de terminal",
+    "2 prompts copiables"
+  ],
+  "tools": [
+    "Claude",
+    "Claude Code",
+    "Higgsfield"
+  ],
+  "words": 678,
+  "read_min": 3,
+  "related_tutorials": [],
+  "related_resources": [
+    "lm-13",
+    "ugc-arcads-claude-code"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "gestion-archivos-ia",
   "slug": "gestion-archivos-ia",
   "title": "Guía de gestión de archivos con AI: deja que la AI organice tus archivos",
