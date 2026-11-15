@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Accede a la guía Virality Predictor de Higgsfield + Claude | Forth</title>
+  <meta name="description" content="Desbloquea gratis la guía: conecta Higgsfield a Claude y analiza tus videos antes de publicarlos con puntaje de viralidad, hook, hold rate y mapa de calor.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:title" content="Virality Predictor · Guía paso a paso">
+  <meta property="og:description" content="Completa tus datos y accede gratis a la guía.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/forth.css"><link rel="stylesheet" href="/assets/css/resource-access.css"><link rel="stylesheet" href="/assets/css/leads-access.css">
+  <script src="/assets/js/resource-access.js?v=virality-predictor-higgsfield-1" defer></script>
+</head>
+<body class="resource-access-locked leads-access">
+  <div class="resource-access__preview" inert aria-hidden="true">
+    <header class="nav"><div class="nav__in"><a tabindex="-1" class="nav__brand" href="/">Forth</a><ul class="nav__links"><li><a tabindex="-1" href="/">Inicio</a></li><li><a tabindex="-1" href="/tutoriales/">Tutoriales</a></li><li><a tabindex="-1" href="/recursos/">Recursos</a></li><li><a tabindex="-1" href="/retos/">Retos</a></li><li><a tabindex="-1" href="/programa/">Programa</a></li></ul></div></header>
+    <main id="guide-preview"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap">
+      <div class="crumbs"><a tabindex="-1" href="/recursos/">Recursos</a><span>/</span><a tabindex="-1" href="/recursos/?c=creativo">Creativo</a></div>
+      <span class="res__type">Guía paso a paso</span>
+      <h1 class="display display--l" style="--i:1;margin-top:14px">Virality Predictor</h1>
+      <p class="lead" style="--i:2;margin-top:20px">Conecta Higgsfield a Claude y analiza tus videos antes de publicarlos: puntaje de viralidad, fuerza del hook, hold rate y mapa de calor, en segundos.</p>
+      <div class="ahead__meta" style="--i:3"><span>3 min de lectura</span><span class="dot"></span><span>Imagen, video y diseño</span><span class="dot"></span><span>Claude</span><span class="dot"></span><span>Claude Code</span><span class="dot"></span><span>Higgsfield</span></div>
+      <div class="boxes"><div class="box"><h5>Qué obtienes</h5><ul><li>Qué mide el Virality Predictor y qué devuelve el reporte</li><li>Conexión de Higgsfield en claude.ai, Claude Desktop y Claude Code</li><li>Prompts para analizar un video y reabrir reportes anteriores</li><li>Flujo recomendado para filtrar anuncios, costos y límites</li></ul></div></div>
+    </div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article">
+      <article class="prose" data-resource="virality-predictor-higgsfield"><h2 id="que-es">Qué es</h2>
+<p>Virality Predictor analiza un video antes de publicarlo. Recibe un clip de hasta quince segundos, vertical u horizontal, y en segundos devuelve un reporte basado en cuatro indicadores principales. Según Higgsfield, entrega un puntaje de viralidad, el momento exacto de mayor fuerza del hook, un hold rate y un mapa de calor que muestra qué regiones del cerebro activa tu clip. Se lanzó el 9 de mayo de 2026.</p>
+<div class="callout"><p>💡 <strong>Requisitos:</strong> una suscripción paga y activa de Higgsfield y una cuenta de Claude. No se necesita API key ni configuración adicional.</p></div>
+<h2 id="paso-1-conectar-higgsfield-a-claude-web-o-app-de-escritorio">Paso 1: Conectar Higgsfield a Claude (web o app de escritorio)</h2>
+<ol><li>Abre claude.ai, haz clic en tu ícono de perfil y entra a <strong>Settings → Connectors</strong>.</li><li>Haz clic en <strong>Add custom connector</strong>.</li><li>Ponle de nombre: <code>Higgsfield</code></li><li>Pega la URL del servidor MCP: <code>https://mcp.higgsfield.ai/mcp</code></li><li>Haz clic en <strong>Connect</strong>: se abre una ventana de autorización de Higgsfield. Inicia sesión con tu cuenta de Higgsfield y autoriza.</li></ol>
+<div class="callout"><p>💡 En Claude Desktop los pasos son iguales: Settings (menú superior, o Cmd+, en Mac) → Connectors → Add custom connector, pegas <code>https://mcp.higgsfield.ai/mcp</code>, haces clic en Connect y autorizas con tu cuenta de Higgsfield.</p></div>
+<p>La conexión se hace una sola vez: el conector queda ligado a tu cuenta, así que está disponible en Claude Web, Desktop y Cowork. Cuando ya está conectado a tu cuenta, Claude en el celular también lo puede usar.</p>
+<h3 id="paso-1-alternativo-claude-code-desde-la-terminal">Paso 1 (alternativo): Claude Code desde la terminal</h3>
+<p>Un solo comando agrega el conector:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Terminal</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>claude mcp add higgsfield https://mcp.higgsfield.ai/mcp</pre></div>
+<div class="callout"><p>💡 <strong>Ojo:</strong> para Claude Code y Codex, Higgsfield recomienda usar su CLI en vez del conector visual. El CLI se instala de forma global con npm, se autentica en la terminal y opcionalmente trae los skills empaquetados de Higgsfield. El repositorio oficial del CLI es <a tabindex="-1" href="https://github.com/higgsfield-ai/cli" target="_blank" rel="noopener noreferrer">github.com/higgsfield-ai/cli</a>.</p></div>
+<h3 id="si-da-error-al-conectar">Si da error al conectar</h3>
+<p>Claude puede mostrar "Couldn't reach the MCP server" o "Authorization with the MCP server failed" al agregar el conector. Revisa que la URL sea exactamente <code>https://mcp.higgsfield.ai/mcp</code> y que tu suscripción de Higgsfield esté activa. En planes de Anthropic administrados (Team/Enterprise), puede que un administrador tenga que habilitar primero la URL del MCP de Higgsfield.</p>
+<h2 id="paso-2-usar-virality-predictor-desde-claude">Paso 2: Usar Virality Predictor desde Claude</h2>
+<ol><li>Abre un chat nuevo en Claude y verifica que el conector Higgsfield esté activo (en el menú de herramientas del chat).</li><li>Adjunta tu video (máximo 15 segundos) o pásale el link.</li><li>Escribe algo como el prompt de abajo.</li><li>Claude sube el video a Higgsfield, lanza el análisis y te devuelve un dashboard interactivo con los resultados.</li><li>Para volver a abrir un análisis anterior, usa el segundo prompt. La herramienta reabre el dashboard existente sin volver a analizar.</li></ol>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Analiza este video con el Virality Predictor de Higgsfield y dime el puntaje de viralidad, hook score, hold rate y qué debería cambiar.</pre></div>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para reabrir un reporte</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Ábreme otra vez el reporte de Virality Predictor del video X.</pre></div>
+<p>También funciona con videos que hayas generado dentro de Higgsfield: le puedes pedir a Claude que genere el video y después lo pase directo por el predictor.</p>
+<h2 id="flujo-recomendado-para-anuncios">Flujo recomendado para anuncios</h2>
+<ol><li>Importa el brand deck a Claude para sacar ideas.</li><li>Genera anuncios estilo UGC con Higgsfield.</li><li>Filtra los creativos con el Virality Predictor.</li><li>Evalúa los puntajes, la fuerza del hook y el hold rate. Luego itera sobre la versión con el puntaje más alto y expórtala en el formato nativo de cada plataforma.</li></ol>
+<h2 id="costo">Costo</h2>
+<p>Cuando salió, el predictor estaba gratis como preview experimental, sin consumir créditos. Sin embargo, Higgsfield dice que cada generación hecha a través del conector usa créditos, y los modelos ilimitados y las generaciones gratis no aplican. Revisa tu saldo en Higgsfield antes de analizar muchos videos.</p>
+<h2 id="limites">Límites</h2>
+<ul><li>Solo clips de hasta 15 segundos. Si tu reel dura más, analiza los primeros 15 segundos (hook + Lock-In Zone).</li><li>El puntaje es una predicción, no una garantía. Úsalo para comparar versiones de un mismo video, no como verdad absoluta.</li></ul>
+<h2 id="fuentes">Fuentes</h2>
+<ul><li><a tabindex="-1" href="https://higgsfield.ai/es/apps/virality-predictor" target="_blank" rel="noopener noreferrer">Higgsfield: Virality Predictor</a></li></ul>
+        </article>
+      <aside class="aside">
+        <div class="aside__box"><h5>Recursos relacionados</h5><ul class="aside__list"><a tabindex="-1" href="/recursos/higgsfield-claude-video/"><span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span>Claude + Higgsfield: Crea video con AI directamente desde Claude</span></a><a tabindex="-1" href="/recursos/ugc-arcads-claude-code/"><span class="card__arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span>Crea anuncios UGC con Claude Code y Arcads</span></a></ul></div>
+        <div class="aside__box" style="background:var(--ink);color:#fff;border-color:transparent"><h5 style="color:var(--on-dark-3)">Siguiente paso</h5><p style="margin:0;font-family:var(--serif);font-size:20px;line-height:1.2">¿Quieres hacerlo guiado, en 5 días?</p><a tabindex="-1" class="btn btn--light btn--sm" href="/retos/claude-en-5-dias/" ><span class="btn__t">Ver el reto</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+      </aside></div></section></main>
+  </div>
+  <div class="resource-access lead-pop" role="dialog" aria-modal="true" aria-labelledby="access-title">
+    <section class="lead-pop__card" aria-labelledby="access-title">
+      <span class="lead-pop__eyebrow">Guía paso a paso · Gratis</span>
+      <h2 id="access-title">Desbloquea la guía</h2>
+      <p>Déjame tus datos para acceder gratis a la guía <strong>Virality Predictor de Higgsfield + Claude</strong>: cómo conectarlo, los prompts para analizar tus videos y el flujo recomendado para anuncios.</p>
+      <form id="resource-access-form" class="lead-pop__form" method="post" action="/api/resource-lead">
+        <input type="hidden" name="resource" value="virality-predictor-higgsfield">
+        <label>Nombre<input name="nombre" autocomplete="name" required minlength="2" maxlength="120" placeholder="Tu nombre"></label>
+        <label>Email<input name="email" type="email" inputmode="email" autocapitalize="none" spellcheck="false" autocomplete="email" required maxlength="254" placeholder="tu@email.com"></label>
+        <label>Celular<input name="telefono" type="tel" inputmode="tel" autocomplete="tel" required maxlength="30" placeholder="+57 300 000 0000" aria-describedby="phone-help"></label>
+        <small id="phone-help">Incluye el indicativo de tu país.</small>
+        <button class="btn btn--accent" type="submit"><span class="btn__t">Ver la guía gratis</span></button>
+        <p id="access-status" class="resource-access__status" role="status" aria-live="polite"></p>
+        <small>Al enviar tus datos, recibirás recursos e ideas de IA de Luciano Musella. Sin spam. Puedes dejar de recibirlos cuando quieras.</small>
+      </form>
+      <noscript><p>Activa JavaScript en tu navegador para enviar tus datos y abrir la guía.</p></noscript>
+    </section>
+  </div>
+</body>
+</html>
