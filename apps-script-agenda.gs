@@ -28,6 +28,9 @@
  * Requisitos (una sola vez):
  *  - Servicios (+) → Google Calendar API (identificador "Calendar").
  *  - Configuración del proyecto → Propiedades del script → AGENDA_SECRET.
+ *  - Propiedades del script → PANEL_SECRET: el mismo valor que AGENT_INGEST_SECRET en Vercel (proyecto
+ *    del panel getforth). Con ella el script lee los calendarios de getforth; sin ella (o con una
+ *    mala) usa la última copia buena, y los cambios hechos en el panel no llegan a la agenda.
  *  - Implementar como aplicación web: Ejecutar como "Yo" con admin@getforth.ai,
  *    acceso "Cualquier usuario".
  *  - Cada closer distinto de admin@getforth.ai comparte su calendario con
@@ -46,7 +49,8 @@ var AG = {
   diasHabiles: [1, 2, 3, 4, 5, 6], // lunes a sábado; nunca domingos ni festivos de Colombia (festivoCO_)
   // Horarios y closers habilitados se manejan en getforth (Ventas → Configurar calendarios).
   // Los bloques/dias de abajo solo se usan si getforth nunca ha respondido.
-  calendariosPanel: 'https://www.getforth.app/api/ventas/calendars',
+  // El panel pide sesión en todo; esta ruta es la que deja leer los calendarios con la clave PANEL_SECRET.
+  calendariosPanel: 'https://www.getforth.app/api/agenda/calendarios',
   closers: [
     { email: 'admin@getforth.ai', nombre: 'Luciano', bloques: [['11:00', '19:00']] },
     // dias: los días de la semana en que atiende (1 = lunes); sin dias, todos los de AG.diasHabiles.
@@ -389,7 +393,9 @@ function calendariosPanel_() {
   var props = PropertiesService.getScriptProperties();
   var mapa = null;
   try {
-    var respuesta = UrlFetchApp.fetch(AG.calendariosPanel, { muteHttpExceptions: true });
+    var clave = props.getProperty('PANEL_SECRET');
+    if (!clave) throw new Error('Falta PANEL_SECRET en las propiedades del script');
+    var respuesta = UrlFetchApp.fetch(AG.calendariosPanel, { muteHttpExceptions: true, headers: { 'x-ingest-secret': clave } });
     if (respuesta.getResponseCode() !== 200) throw new Error('getforth respondió ' + respuesta.getResponseCode());
     mapa = {};
     (JSON.parse(respuesta.getContentText()).calendars || []).forEach(function (c) {
