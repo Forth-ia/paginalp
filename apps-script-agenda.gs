@@ -393,8 +393,9 @@ function calendariosPanel_() {
   var props = PropertiesService.getScriptProperties();
   var mapa = null;
   try {
-    var clave = props.getProperty('PANEL_SECRET');
-    if (!clave) throw new Error('Falta PANEL_SECRET en las propiedades del script');
+    var clave = props.getProperty('PANEL_SECRET') ||
+      (typeof PANEL_SECRET_ARCHIVO !== 'undefined' ? PANEL_SECRET_ARCHIVO : '');
+    if (!clave) throw new Error('Falta PANEL_SECRET (propiedades del script o Secreto.gs)');
     var respuesta = UrlFetchApp.fetch(AG.calendariosPanel, { muteHttpExceptions: true, headers: { 'x-ingest-secret': clave } });
     if (respuesta.getResponseCode() !== 200) throw new Error('getforth respondió ' + respuesta.getResponseCode());
     mapa = {};
