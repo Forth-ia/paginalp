@@ -469,3 +469,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/virality-predictor-higgsfield/
 
 La distinción depende de la URL enviada.
+
+
+## Cómo crear presentaciones increíbles con Claude + Lovable
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/presentaciones-claude-lovable/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Cómo crear presentaciones increíbles con Claude + Lovable`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/presentaciones-claude-lovable/
+
+La distinción depende de la URL enviada.
