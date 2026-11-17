@@ -33,6 +33,49 @@
  },
  "resources": [
 {
+  "id": "presentaciones-claude-lovable",
+  "slug": "presentaciones-claude-lovable",
+  "title": "Cómo crear presentaciones increíbles con Claude + Lovable",
+  "category": "negocio",
+  "secondary": [
+    "claude",
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Pega el brief de un cliente en Claude y recibe la presentación y el presupuesto con tu marca y tus números. Después conviértelo en una app interna con Lovable.",
+  "what_you_get": [
+    "Cómo medir cuántas horas se van en propuestas y presupuestos",
+    "Un Manual de propuestas con tu marca, precios y propuestas ganadoras",
+    "Un proyecto en Claude que arma presentación y presupuesto desde un brief",
+    "Una app interna en Lovable con el prompt escrito por Claude"
+  ],
+  "ideal_for": [
+    "Empresas y agencias que arman propuestas comerciales cada semana",
+    "Equipos de ventas que quieren presentaciones y presupuestos consistentes"
+  ],
+  "includes": [
+    "7 pasos",
+    "8 prompts copiables",
+    "Instrucciones de proyecto para Claude"
+  ],
+  "tools": [
+    "Claude",
+    "Lovable"
+  ],
+  "words": 1417,
+  "read_min": 7,
+  "related_tutorials": [],
+  "related_resources": [
+    "notebooklm-presentaciones",
+    "small-business-claude"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "virality-predictor-higgsfield",
   "slug": "virality-predictor-higgsfield",
   "title": "Virality Predictor de Higgsfield + Claude",

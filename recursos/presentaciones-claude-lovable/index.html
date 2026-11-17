@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cómo crear presentaciones increíbles con Claude + Lovable | Forth</title><meta name="description" content="Pega el brief de un cliente en Claude y recibe la presentación y el presupuesto con tu marca y tus números. Después conviértelo en una app interna con Lovable."><meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/forth.css">
+</head><body data-lead-popup="off" data-page="resource" data-page-props='{"resource":"presentaciones-claude-lovable","category":"negocio","type":"guia-paso-a-paso"}'>
+<a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="/" aria-label="Forth, inicio">Forth</a>
+    <ul class="nav__links"><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a class="nav__free" href="/biblioteca/">Aprende gratis</a></li></ul>
+    <div class="nav__cta">
+      <a class="btn btn--accent btn--sm" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "nav"}'><span class="btn__t">Agenda tu llamada</span></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio</a><a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a href="/biblioteca/">Aprende gratis</a></div><div class="menu__foot"><a class="btn btn--light" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "menu"}'><span class="btn__t">Agenda tu llamada</span></a></div></nav></div><main id="main"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=negocio">Negocio</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo crear presentaciones increíbles con Claude + Lovable</h1><p class="lead" style="margin-top:20px">Pega el brief de un cliente en Claude y recibe la presentación y el presupuesto con tu marca y tus números. Después conviértelo en una app interna con Lovable.</p><div class="ahead__meta"><span>7 min de lectura</span><span class="dot"></span><span>Claude · Lovable</span><span class="dot"></span><span>8 prompts para copiar</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="presentaciones-claude-lovable"><p>Copia y pega. Cada bloque de código es un prompt listo para usar. Cambia solo lo que está entre [corchetes].</p>
+<div class="callout"><p>💡 <strong>Resultado:</strong> pegas el brief de un cliente en Claude y salen la presentación y el presupuesto, con la misma marca y los mismos números.</p></div>
+<h2 id="paso-1-mide-cuantas-horas-se-van">Paso 1. Mide cuántas horas se van</h2>
+<p>Antes de automatizar, ten el número. Pregúntale esto a quien arma propuestas en tu empresa:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Preguntas para tu equipo</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>1. ¿Cuántas propuestas, presentaciones y presupuestos armaste las últimas 4 semanas?
+2. ¿Cuánto tardó cada uno, de principio a fin?
+3. ¿Qué partes copiaste de una propuesta anterior?
+4. ¿Quién la revisó y cuánto tardó la revisión?</pre></div>
+<div class="callout"><p>💡 Suma: horas por semana x costo por hora de esa persona. Ese es tu punto de partida y lo que vas a recuperar.</p></div>
+<h2 id="paso-2-documenta-tu-empresa-una-sola-vez">Paso 2. Documenta tu empresa una sola vez</h2>
+<p>Necesitas tres cosas juntas en un solo documento:</p>
+<ul><li><strong>Tu marca:</strong> colores, tipografías, tono de voz, cómo se ve una presentación tuya.</li><li><strong>Tus precios:</strong> servicios, tarifas, paquetes, descuentos permitidos, condiciones de pago.</li><li><strong>Las propuestas que sí cerraron:</strong> de 3 a 5 reales, con su presupuesto.</li></ul>
+<p>No lo escribas a mano. Abre un chat nuevo en Claude, adjunta tus propuestas ganadoras, tu lista de precios y tu material de marca, y pega esto:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Vas a ayudarme a crear el "Manual de propuestas" de mi empresa, [nombre de la empresa], que vende [qué vendes] a [tipo de cliente].
+
+Te adjunto propuestas que sí cerraron, mi lista de precios y mi material de marca.
+
+Primero analiza todo y dime qué patrones ves: cómo estructuro las propuestas, qué argumentos repito, cómo presento los precios y qué tono uso.
+
+Después hazme las preguntas que te falten, una por una (máximo 10), para completar lo que no puedas deducir de los archivos.
+
+Al final entrégame el Manual de propuestas con estas secciones:
+1. Quiénes somos y qué vendemos (3 líneas)
+2. Marca: colores, tipografías y tono de voz
+3. Estructura estándar de una presentación (diapositiva por diapositiva)
+4. Catálogo de servicios con precios, paquetes y reglas de descuento
+5. Estructura estándar de un presupuesto (conceptos, cantidades, condiciones de pago, vigencia)
+6. Argumentos y frases que funcionaron en las propuestas ganadoras
+7. Lo que NUNCA debe aparecer en una propuesta nuestra</pre></div>
+<p>Revisa el resultado, corrige lo que esté mal y guárdalo. Ese es tu documento maestro.</p>
+<h2 id="paso-3-crea-un-proyecto-en-claude-con-tu-manual">Paso 3. Crea un proyecto en Claude con tu manual</h2>
+<ol><li>Crea un proyecto nuevo en Claude y llámalo "Propuestas".</li><li>Sube el Manual de propuestas y tus 3 a 5 propuestas ganadoras como archivos del proyecto.</li><li>En las instrucciones del proyecto pega esto:</li></ol>
+<div class="codeblock"><div class="codeblock__bar"><span>Instrucciones del proyecto</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Eres el equipo de propuestas de [nombre de la empresa].
+
+Cada vez que te pegue el brief de un cliente, produces DOS entregables a la vez, con el mismo diseño y los mismos números:
+
+1. La presentación comercial, siguiendo la estructura del Manual de propuestas.
+2. El presupuesto, usando solo los precios, paquetes y reglas de descuento del Manual.
+
+Reglas:
+- Usa solo los precios del Manual. Si el brief pide algo que no está en el catálogo, no inventes un precio: márcalo como "POR DEFINIR" y dime por qué.
+- Los números de la presentación y del presupuesto deben coincidir exactamente.
+- Usa la marca y el tono del Manual.
+- Reutiliza los argumentos de las propuestas ganadoras, pero adaptados al cliente. No copies frases de otro cliente.
+- Antes de entregar, haz una lista corta de supuestos que hiciste y de dudas que debe resolver una persona.
+- Si falta información clave del brief (alcance, plazo, presupuesto del cliente), pregúntame antes de armar nada. Máximo 3 preguntas.</pre></div>
+<h2 id="paso-4-pega-el-brief-y-recibe-todo">Paso 4. Pega el brief y recibe todo</h2>
+<p>Cada vez que entre un cliente, abre un chat dentro del proyecto "Propuestas" y pega:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Brief del cliente:
+
+[pega aquí el brief tal como llegó: correo, mensaje, notas de la llamada]
+
+Cliente: [nombre]
+Contacto: [nombre y cargo]
+Fecha límite para enviar: [fecha]
+
+Arma la presentación y el presupuesto.</pre></div>
+<p>Claude te devuelve la presentación y el presupuesto, más la lista de supuestos y dudas.</p>
+<div class="callout"><p>💡 Si quieres la presentación como archivo, agrégale al final: "Entrégame la presentación como archivo de PowerPoint y el presupuesto como hoja de cálculo."</p></div>
+<h2 id="paso-5-conecta-tus-herramientas">Paso 5. Conecta tus herramientas</h2>
+<p>Para no subir archivos a mano, conecta Claude a donde ya vive tu información (por ejemplo, tu carpeta de documentos o tu CRM) desde la sección de conectores de Claude. Así puede leer propuestas anteriores y guardar el resultado en el mismo lugar.</p>
+<p>Prompt para probarlo, una vez conectado:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Busca en [nombre de la herramienta] las 3 últimas propuestas que enviamos a clientes de [sector]. Dime qué tienen en común y úsalas como referencia para esta propuesta.</pre></div>
+<h2 id="paso-6-que-siga-trabajando-aunque-apagues-el-computador">Paso 6. Que siga trabajando aunque apagues el computador</h2>
+<p>Si tu plan de Claude permite tareas programadas, puedes pedirle que revise cada mañana los briefs nuevos y deje las propuestas en borrador. Pega esto en un chat del proyecto:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero programar una tarea: todos los días laborales a las [hora], revisa [dónde llegan los briefs: carpeta, correo, tablero] y, por cada brief nuevo, prepara la presentación y el presupuesto como borrador y déjalos en [dónde guardarlos]. No envíes nada a ningún cliente.</pre></div>
+<div class="callout"><p>💡 <strong>Importante:</strong> que deje borradores y nunca envíe solo. La revisión humana sigue siendo obligatoria.</p></div>
+<h2 id="paso-7-conviertelo-en-una-app-con-lovable-el-prompt-lo-escribe-claude">Paso 7. Conviértelo en una app con Lovable (el prompt lo escribe Claude)</h2>
+<p>Si no quieres que tu equipo abra Claude cada vez, haz una pantalla simple: pegan el brief, tocan un botón y salen la presentación y el presupuesto. Lovable construye la app. Claude escribe el prompt para Lovable, así no empiezas de cero.</p>
+<h3 id="7-1-pide-a-claude-el-prompt-para-lovable">7.1 Pide a Claude el prompt para Lovable</h3>
+<p>Abre un chat dentro del proyecto "Propuestas" y pega:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Quiero construir en Lovable una app interna para mi equipo, a partir del Manual de propuestas de este proyecto.
+
+Escríbeme UN solo prompt, listo para pegar en Lovable, que describa la app completa:
+
+1. Qué hace: el usuario pega el brief de un cliente, escribe el nombre del cliente y toca un botón. La app genera la presentación y el presupuesto con el mismo diseño y los mismos números.
+2. Pantallas: una para pegar el brief, una para revisar y editar el resultado, una con el historial de propuestas.
+3. Marca: usa los colores, tipografías y tono del manual. Inclúyelos en el prompt como valores concretos (códigos de color y nombres de fuentes).
+4. Precios: el catálogo de servicios y precios del manual va como datos de la app, no escrito dentro del texto de la IA, para poder cambiarlo sin tocar nada más.
+5. Reglas del presupuesto: las del manual (descuentos permitidos, condiciones de pago, vigencia). Si algo no está en el catálogo, la app lo marca "POR DEFINIR" y no inventa un precio.
+6. Revisión humana: nada se envía a un cliente desde la app. Solo se descarga o se copia, después de que una persona apruebe.
+7. Exportar: la presentación como PDF y el presupuesto como PDF o tabla descargable.
+8. Seguridad: la clave de API de la IA se guarda como secreto del proyecto y nunca aparece en el código ni en la pantalla.
+
+Antes de escribirlo, hazme las preguntas que necesites (máximo 5). Entrégamelo en un solo bloque de texto, sin explicaciones alrededor.</pre></div>
+<h3 id="7-2-pega-el-resultado-en-lovable">7.2 Pega el resultado en Lovable</h3>
+<p>Crea un proyecto nuevo en Lovable, pega el prompt que te dio Claude y deja que construya la primera versión.</p>
+<h3 id="7-3-prueba-con-un-brief-real">7.3 Prueba con un brief real</h3>
+<p>Usa el brief de un cliente que ya cerraste y compara con la propuesta que sí enviaste. Si algo está mal, pídele el arreglo a Lovable en una frase. Por ejemplo:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Lovable</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>El presupuesto me salió con un descuento del 20% y el máximo permitido es 10%. Corrige la regla para que nunca supere el 10% y marca en rojo cualquier línea que lo intente.</pre></div>
+<h3 id="7-4-conecta-la-ia">7.4 Conecta la IA</h3>
+<p>Para que la app genere el contenido necesita un modelo de IA detrás. Pídele a Lovable que use la integración de IA que tenga disponible, o tu propia clave de API de Claude guardada como secreto. Verifica en Lovable cuál de las dos opciones tienes en tu plan.</p>
+<h3 id="7-5-mismo-orden-de-siempre">7.5 Mismo orden de siempre</h3>
+<p>La app no cambia la regla del Paso 6: genera borradores y una persona revisa antes de enviar.</p></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a href="#paso-1-mide-cuantas-horas-se-van">Paso 1. Mide cuántas horas se van</a></li><li><a href="#paso-2-documenta-tu-empresa-una-sola-vez">Paso 2. Documenta tu empresa una sola vez</a></li><li><a href="#paso-3-crea-un-proyecto-en-claude-con-tu-manual">Paso 3. Crea un proyecto en Claude con tu manual</a></li><li><a href="#paso-4-pega-el-brief-y-recibe-todo">Paso 4. Pega el brief y recibe todo</a></li><li><a href="#paso-5-conecta-tus-herramientas">Paso 5. Conecta tus herramientas</a></li><li><a href="#paso-6-que-siga-trabajando-aunque-apagues-el-computador">Paso 6. Que siga trabajando aunque apagues el computador</a></li><li><a href="#paso-7-conviertelo-en-una-app-con-lovable-el-prompt-lo-escribe-claude">Paso 7. Conviértelo en una app con Lovable (el prompt lo escribe Claude)</a></li></ul></nav></aside></div></section></main><footer class="f-foot">
+  <div class="f-wrap">
+    <div class="f-foot__top">
+      <div><a class="f-logo" href="/">Forth</a><p>Automatización con IA para empresas y un programa para profesionales. Con Luciano Musella.</p></div>
+      <div><h4>Forth</h4><ul><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/#casos">Casos</a></li><li><a href="/agenda/">Agenda tu llamada</a></li></ul></div>
+      <div><h4>Aprende gratis</h4><ul><li><a href="/biblioteca/">Biblioteca</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li></ul></div>
+      <div><h4>Canales</h4><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="f-foot__legal"><span>&copy; 2026 Forth. <a href="/politica-de-privacidad/">Política de privacidad</a></span><span><b>Think human.</b> Operate AI.</span></div>
+  </div>
+</footer><script src="/assets/js/site.js?v=obscura-access-1" defer></script></body></html>
