@@ -2,6 +2,7 @@
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const { parseUtm } = require('./_lib/lead.js');
 const RESOURCES = new Map([
+  ['jev-analizar-anuncios-competencia', 'Cómo usar Jev para analizar los anuncios de tu competencia'],
   ['presentaciones-claude-lovable', 'Cómo crear presentaciones increíbles con Claude + Lovable'],
   ['virality-predictor-higgsfield', 'Virality Predictor de Higgsfield + Claude'],
   ['gestion-archivos-ia', 'Gestión de archivos con AI'],

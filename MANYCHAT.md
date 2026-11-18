@@ -486,3 +486,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/presentaciones-claude-lovable/
 
 La distinción depende de la URL enviada.
+
+
+## Cómo usar Jev para analizar los anuncios de tu competencia
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/jev-analizar-anuncios-competencia/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Cómo usar Jev para analizar los anuncios de tu competencia`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/jev-analizar-anuncios-competencia/
+
+La distinción depende de la URL enviada.
