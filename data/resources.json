@@ -33,6 +33,51 @@
  },
  "resources": [
 {
+  "id": "jev-analizar-anuncios-competencia",
+  "slug": "jev-analizar-anuncios-competencia",
+  "title": "Cómo usar Jev para analizar los anuncios de tu competencia",
+  "category": "creativo",
+  "secondary": [
+    "claude",
+    "contenido"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Qué es Jev, el clasificador de TypeSafe, y cómo construir con Claude Code una app que lee los anuncios de cualquier marca en la Meta Ad Library y te muestra qué estrategias le funcionan.",
+  "what_you_get": [
+    "Qué es Jev y cómo clasifica cada anuncio",
+    "El prompt maestro para construir Ad Intel con Claude Code, descargable en .md",
+    "Prompts para preparar la app, analizar una marca y comparar dos",
+    "Cómo leer los días activo para ver qué estrategias funcionan"
+  ],
+  "ideal_for": [
+    "Equipos de marketing que estudian a su competencia en Meta",
+    "Creadores y agencias que quieren saber qué anuncios funcionan"
+  ],
+  "includes": [
+    "Prompt maestro en .md",
+    "3 prompts copiables",
+    "Pasos para la Meta Ad Library"
+  ],
+  "tools": [
+    "Claude Code",
+    "Jev",
+    "TypeSafe",
+    "Meta Ad Library"
+  ],
+  "words": 3700,
+  "read_min": 8,
+  "related_tutorials": [],
+  "related_resources": [
+    "virality-predictor-higgsfield",
+    "ugc-arcads-claude-code"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "presentaciones-claude-lovable",
   "slug": "presentaciones-claude-lovable",
   "title": "Cómo crear presentaciones increíbles con Claude + Lovable",

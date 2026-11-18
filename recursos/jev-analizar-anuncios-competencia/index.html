@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cómo usar Jev para analizar los anuncios de tu competencia | Forth</title><meta name="description" content="Qué es Jev, el clasificador de TypeSafe, y cómo construir con Claude Code una app que lee los anuncios de cualquier marca en la Meta Ad Library y te muestra qué estrategias le funcionan."><meta name="robots" content="noindex, nofollow"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/forth.css">
+</head><body data-lead-popup="off" data-page="resource" data-page-props='{"resource":"jev-analizar-anuncios-competencia","category":"creativo","type":"guia-paso-a-paso"}'>
+<a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="/" aria-label="Forth, inicio">Forth</a>
+    <ul class="nav__links"><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a class="nav__free" href="/biblioteca/">Aprende gratis</a></li></ul>
+    <div class="nav__cta">
+      <a class="btn btn--accent btn--sm" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "nav"}'><span class="btn__t">Agenda tu llamada</span></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio</a><a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a href="/biblioteca/">Aprende gratis</a></div><div class="menu__foot"><a class="btn btn--light" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "menu"}'><span class="btn__t">Agenda tu llamada</span></a></div></nav></div><main id="main"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=creativo">Creativo</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo usar Jev para analizar los anuncios de tu competencia</h1><p class="lead" style="margin-top:20px">Qué es Jev, el clasificador de TypeSafe, y cómo construir con Claude Code una app que lee los anuncios de cualquier marca en la Meta Ad Library y te muestra qué estrategias le funcionan.</p><div class="ahead__meta"><span>8 min de lectura</span><span class="dot"></span><span>Claude Code · Jev · Meta Ad Library</span><span class="dot"></span><span>Prompt maestro en .md + 3 prompts</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="jev-analizar-anuncios-competencia"><h2 id="que-es-jev">Qué es Jev</h2>
+<p>Jev es el clasificador de TypeSafe. Le mandas un anuncio (el copy y una imagen) junto con una lista fija de preguntas, y te devuelve una categoría por pregunta con su nivel de confianza. Por ejemplo: qué formato tiene, qué tipo de hook abre el anuncio, qué oferta hace y para qué nivel de consciencia está escrito.</p>
+<p>Es barato: cobra por tokens de entrada (USD 0,042 por millón) y los de salida son gratis. Clasificar 150 anuncios cuesta unos centavos.</p>
+<div class="callout"><p>💡 <strong>Requisitos:</strong> una API key de TypeSafe (se crea en console.typesafe.ai/keys), Node 22 o superior y Claude Code.</p></div>
+<h2 id="que-construimos-ad-intel">Qué construimos: Ad Intel</h2>
+<p>Con Jev creamos <strong>Ad Intel</strong>, una app local que analiza los anuncios de cualquier empresa. Le das una marca, recorre todos sus anuncios en la Meta Ad Library, los clasifica con Jev y los ordena por <strong>días activo</strong>.</p>
+<p>La tesis es simple: nadie sigue pagando un anuncio que no funciona. Cuanto más tiempo lleva corriendo un anuncio, más probable es que sea rentable. Si cruzas los días activo con el tipo de anuncio (formato, hook, oferta, ángulo y nivel de consciencia), ves qué estrategias le funcionan a cada marca. Así puedes estudiar a tu competencia con datos, no con intuición.</p>
+<h2 id="como-funciona">Cómo funciona</h2>
+<ol><li><strong>Scrapear.</strong> Un navegador Chromium sin ventana abre la Ad Library pública de Meta (no hace falta iniciar sesión) y captura los anuncios con sus fechas, el copy y las miniaturas.</li><li><strong>Descargar creativos.</strong> Las miniaturas se guardan en local, porque las URLs de Meta caducan en pocos días.</li><li><strong>Clasificar con Jev.</strong> Se envía cada anuncio (copy + miniatura) a Jev con una lista fija de preguntas. Jev responde con una categoría por pregunta y su nivel de confianza.</li><li><strong>Visualizar.</strong> Una app en React grafica una fila por categoría y un punto por anuncio, ordenados por días activo.</li></ol>
+<h2 id="paso-1-construye-la-app-con-el-prompt-maestro">Paso 1. Construye la app con el prompt maestro</h2>
+<p>Crea una carpeta vacía, abre Claude Code dentro de ella y pega el prompt maestro completo. Describe la app entera: el scraper, el cliente de Jev, las preguntas de clasificación, la interfaz y el orden en que se debe construir y probar.</p>
+<p><a class="btn btn--accent btn--sm" style="color:#fff;text-decoration:none" href="/recursos/jev-analizar-anuncios-competencia/prompt-maestro-ad-intel.md" download="prompt-maestro-ad-intel.md" data-track="resource_download" data-track-props='{"resource": "jev-analizar-anuncios-competencia", "file": "prompt-maestro-ad-intel.md"}'><span class="btn__t">Descargar el prompt maestro (.md)</span><span class="btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M6 10l6 6 6-6M5 20h14"/></svg></span></a></p>
+<p>O cópialo completo desde aquí:</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt maestro para Claude Code</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre style="max-height:460px;overflow:auto"># Prompt maestro · Ad Intel
+
+&gt; Pega todo lo que está debajo de la línea en Claude Code, dentro de una carpeta vacía.
+&gt; Antes de empezar necesitas una API key de TypeSafe (console.typesafe.ai/keys) y Node 22 o superior.
+
+---
+
+Construye **Ad Intel**, una app local en TypeScript que toma todos los anuncios de cualquier marca en la **Meta Ad Library**, los clasifica con **Jev** (el clasificador de TypeSafe) y los grafica por **días activo**.
+
+**La tesis:** nadie sigue pagando un anuncio que no funciona. Cuanto más tiempo lleva corriendo un anuncio, más probable es que sea rentable. Por eso, si cruzas los días activo con el tipo de anuncio (formato, hook, oferta, ángulo, nivel de consciencia), ves qué estrategias le funcionan a cada marca.
+
+Toda la interfaz va en **español**. Los comentarios del código y los nombres de variables van en inglés.
+
+## 1. Stack y estructura
+
+- Node 22+, TypeScript estricto, ESM (`"type": "module"`), ejecutado con `tsx`.
+- Frontend: React 18 + Vite 6 + `@phosphor-icons/react`. Sin librerías de UI ni de gráficos: el gráfico se dibuja en SVG a mano.
+- Scraper: `playwright-core` (Chromium headless). Imágenes: `sharp`.
+- Sin base de datos: todo se guarda en archivos JSON.
+
+```
+pipeline/
+  cli.ts                       comandos scrape / classify / analyze
+  run.ts                       pasos del pipeline que emiten eventos (los usan la CLI y el servidor)
+  server.ts                    plugin de Vite: GET /api/run (SSE) y GET /api/status
+  sources/meta-ad-library.ts   Chromium headless → GraphQL de la Ad Library → RawAd
+  media.ts                     descarga miniaturas (las URLs de Meta caducan) → public/media
+  jev/client.ts                POST a Jev con reintentos
+  jev/taxonomy.ts              LAS PREGUNTAS (sección 4)
+  classify.ts                  una petición por anuncio (copy + miniatura como imagen)
+  types.ts                     tipos compartidos con la UI
+data/raw/&lt;slug&gt;.json           anuncios scrapeados
+public/data/&lt;slug&gt;.json        dataset clasificado que lee la UI
+public/data/index.json         lista de análisis guardados
+public/media/&lt;adId&gt;.jpg        miniaturas locales
+src/
+  App.tsx                      router por estado: launch / mission / explore
+  lib/mission.ts               motor del modo misión
+  lib/dimensions.ts            dimensiones, etiquetas en español, agrupación
+  components/StripChart.tsx    el mapa de rendimiento
+  components/AdDetail.tsx      panel lateral con el detalle de un anuncio
+  components/GroupTable.tsx    tabla por categoría + top 10
+  components/hud/              Launch, MissionView, Scanner, Panels, Explore, TopBar
+  styles.css                   todo el estilo (tokens en :root)
+```
+
+Scripts de `package.json`:
+
+```json
+"scrape":   "tsx pipeline/cli.ts scrape",
+"classify": "tsx pipeline/cli.ts classify",
+"analyze":  "tsx pipeline/cli.ts analyze",
+"dev":      "vite",
+"build":    "tsc --noEmit &amp;&amp; vite build",
+"typecheck":"tsc --noEmit"
+```
+
+Archivo `.env.example`: `TYPESAFE_API_KEY=` y `CHROMIUM_PATH=` (opcional, por si `playwright-core` no encuentra Chromium). Carga el `.env` con `process.loadEnvFile()` dentro de un try/catch, sin usar dotenv. Añade `.env`, `node_modules`, `data/raw` y `public/media` al `.gitignore`.
+
+## 2. Tipos compartidos (`pipeline/types.ts`)
+
+```ts
+type MediaKind = 'video' | 'image' | 'carousel' | 'text' | 'other'
+
+interface RawAd {
+  id: string                 // ad_archive_id
+  pageId: string; pageName: string
+  isActive: boolean
+  startDate: string          // ISO YYYY-MM-DD
+  endDate: string | null     // null si sigue activo
+  daysRunning: number        // max(1, round((fin|hoy − inicio)/día))
+  variants: number           // collation_count: anuncios que Meta agrupa bajo este
+  platforms: string[]
+  displayFormat: string      // etiqueta de Meta: VIDEO, IMAGE, DCO, CAROUSEL…
+  mediaKind: MediaKind
+  body: string; title: string | null; linkDescription: string | null
+  linkUrl: string | null; cta: string | null
+  thumbnailUrl: string | null  // remota, caduca
+  thumbnail: string | null     // /media/&lt;id&gt;.jpg una vez descargada
+  libraryUrl: string           // https://www.facebook.com/ads/library/?id=&lt;id&gt;
+}
+interface ChoiceAnswer { choice: string; confidence: number; probabilities: Record&lt;string, number&gt; }
+interface Classification {
+  format, hook, offer, angle, awareness: ChoiceAnswer
+  hookStrength: { score: number; confidence: number }   // 0–4
+  callsOutViewer: number                                // noul, 0–1
+  inputTokens?: number
+}
+interface AnalyzedAd extends RawAd { hookText: string; copyWords: number; jev: Classification | null }
+interface Dataset {
+  slug, label, source, scrapedAt: string; classifiedAt: string | null; model: string | null
+  inputTokens: number; costUsd: number; ads: AnalyzedAd[]
+}
+interface DatasetIndexEntry { slug: string; label: string; ads: number; scrapedAt: string }
+
+type PipelineEvent =
+  | { type: 'phase'; phase: 'scrape' | 'media' | 'classify'; message: string; total?: number }
+  | { type: 'log'; message: string }
+  | { type: 'found'; ad: RawAd }
+  | { type: 'classified'; ad: AnalyzedAd; done: number; total: number; inputTokens: number; costUsd: number }
+  | { type: 'done'; slug: string; inputTokens: number; costUsd: number; model: string | null; dataset: Dataset }
+  | { type: 'error'; message: string }
+```
+
+## 3. Scraper de la Meta Ad Library (`sources/meta-ad-library.ts`)
+
+Usa la **versión web pública**, que no pide login ni token e incluye a todos los anunciantes del mundo. No uses la API oficial `ads_archive`: solo devuelve anuncios comerciales entregados en la UE y exige una cuenta de desarrollador verificada. Deja esto explicado en un comentario.
+
+**Entrada:** `{ pageId?, q?, url?, country?, activeOnly?, limit? }`. La URL se construye así:
+- Parámetros base: `active_status=all|active`, `ad_type=all`, `country=ALL`, `media_type=all`.
+- Con `pageId`: `view_all_page_id=&lt;id&gt;` y `search_type=page`. Es la opción recomendada.
+- Con `q`: `q="&lt;frase&gt;"` (entre comillas) y `search_type=keyword_exact_phrase`.
+- Con `url`: se usa tal cual.
+
+**Mecánica:**
+1. Lanza Chromium con `executablePath: process.env.CHROMIUM_PATH || undefined` y `--no-sandbox`. Viewport de 1400×1000 y locale `en-US`.
+2. Escucha `page.on('response')`. En cada respuesta de `/api/graphql`, parsea el JSON y toma `data.ad_library_main.search_results_connection`.
+3. Tras `goto` (`domcontentloaded`, timeout de 60 s) espera 5 s. **El primer lote viene incrustado en el HTML, no por GraphQL**, así que hay que extraer cada `"search_results_connection":{…}` del HTML. Para encontrar el cierre del objeto, usa un contador de llaves que respete las cadenas y los escapes `\`.
+4. Haz scroll con `mouse.wheel(0, 8000)` y espera 2,5 s, mientras `has_next_page` sea true, no se haya llegado al `limit` (500 por defecto) y haya menos de 4 scrolls seguidos sin anuncios nuevos.
+5. En cada edge, toma `edge.node.collated_results[0]` como representante del grupo y deduplica por `ad_archive_id`. Llama a `onAd(ad)` en cuanto se vea un anuncio nuevo, para que la UI lo muestre en vivo.
+
+**`normalize(node)`:** `s = node.snapshot`, `card = s.cards[0]`, `video = s.videos[0]`, `image = s.images[0]`.
+- `start_date` y `end_date` vienen en segundos unix. Si `is_active` es true, `endDate` es null.
+- **Anuncios DCO:** el `s.body.text` superior contiene placeholders `{{…}}`. En ese caso, el copy real se toma de `card.body`. Descarta cualquier texto que cumpla `/^\{\{.*\}\}$/`, y aplica la misma limpieza a `title` y `link_description`.
+- Miniatura, en este orden de prioridad: `video.video_preview_image_url`, `image.original_image_url`, `image.resized_image_url`, y después los mismos campos en `card`.
+- `mediaKind`: si `display_format` contiene CAROUSEL, es carousel. Si tiene videos, VIDEO o `card.video_preview_image_url`, es video. Si tiene imágenes, IMAGE o `card.original_image_url`, es image. Si es TEXT, es text. Si no, other.
+- `variants = collation_count ?? 1`, `platforms = publisher_platform ?? []`, `cta = s.cta_text ?? card.cta_text`.
+
+## 4. Jev: cliente y taxonomía
+
+**Cliente (`jev/client.ts`):** `POST https://api.typesafe.ai/v1/systemone` con `Authorization: Bearer &lt;TYPESAFE_API_KEY&gt;`. El body es `{ model: 'jev-latest', state, questions, assets? }`. Cuando se envían imágenes, hay que añadir la cabecera `TypeSafe-Danger-Zone-Images: true`. La respuesta tiene la forma `{ model, answers, usage: { input_tokens, output_tokens } }` y las respuestas llegan con los mismos nombres que las preguntas. Ante un 429, un 529 o cualquier 5xx, reintenta hasta 5 veces respetando `retry-after` o, si no viene, con backoff `1000·2^n` ms. El costo es `USD_PER_INPUT_TOKEN = 0.042 / 1_000_000`; los tokens de salida son gratis.
+
+Tipos de pregunta:
+```ts
+| { type: 'choice'; instructions: string; criteria: Record&lt;string, string&gt; }   // → { choice, confidence, probabilities }
+| { type: 'score';  instructions: string; criteria: string[] }                 // → { score, confidence }
+| { type: 'noul';   instructions: string; criteria?: { true?: string; false?: string } } // → { noul: 0–1 }
+```
+
+**Taxonomía (`jev/taxonomy.ts`).** Cópiala literalmente: es el corazón del producto.
+
+```ts
+export const QUESTIONS = {
+  format: { type: 'choice',
+    instructions: 'What is the creative format of this ad? Judge from the thumbnail image first, then the media type and copy.',
+    criteria: {
+      talking_head: 'One person speaking straight to camera, face clearly visible, usually filmed selfie-style or on a set.',
+      podcast_clip: 'A clip from a podcast or interview: microphones, two or more people, studio setting.',
+      stage_or_event: 'Filmed on stage, at a live event, workshop or seminar, speaking to an audience.',
+      ugc_testimonial: 'A customer or creator (not the brand owner) giving a testimonial or review.',
+      broll_voiceover: 'Footage, screen recordings or stock visuals with narration or captions, no speaker on camera.',
+      text_graphic: 'A designed static graphic: bold text, headline card, quote card or simple design.',
+      screenshot_proof: 'Screenshots of results, messages, tweets, dashboards or reviews used as proof.',
+      product_shot: 'A photo or render of a product, book or physical item.',
+      lifestyle_photo: 'A candid or posed photo of people or a scene, not a designed graphic.',
+      carousel: 'Several cards the viewer swipes through.',
+    } },
+  hook: { type: 'choice',
+    instructions: 'Read the first one or two sentences of the ad copy (and any text visible in the thumbnail). What kind of hook opens the ad?',
+    criteria: {
+      call_out: 'Directly names or addresses the target viewer: "If you run a business doing $1M+…", "Gym owners:".',
+      bold_claim: 'A big, specific promise or claim about a result.',
+      question: 'Opens with a question to the viewer.',
+      contrarian: 'Challenges a common belief or says the opposite of conventional wisdom.',
+      story: 'Opens a personal story or anecdote.',
+      proof_result: 'Leads with a result, number, case study or testimonial.',
+      curiosity: 'Teases a secret, mistake or reveal without giving it away.',
+      pain_point: 'Names a problem, frustration or fear the viewer has.',
+      announcement: 'Announces something new: a launch, event, release or date.',
+      offer_first: 'Leads with the offer itself: free, discount, price, what you get.',
+    } },
+  offer: { type: 'choice',
+    instructions: 'What does the ad ask the viewer to get or do? Use the copy, headline, CTA and link.',
+    criteria: {
+      book_call: 'Book a call, consultation, demo or application.',
+      event: 'Attend or register for an event, workshop, webinar or challenge.',
+      free_content: 'A free resource: guide, book, course, template, video, newsletter, community.',
+      paid_product: 'Buy a product, course, book or program.',
+      free_trial: 'A free trial or freemium sign-up for software or a service.',
+      app_install: 'Install an app.',
+      follow_or_watch: 'Follow, subscribe or watch more content, with no direct offer.',
+    } },
+  angle: { type: 'choice',
+    instructions: 'What is the main persuasion angle of the ad copy?',
+    criteria: {
+      education: 'Teaches something useful; value first.',
+      authority: 'Leans on the author’s credibility, track record or scale.',
+      transformation: 'Before/after: the life or business the viewer will have.',
+      urgency_scarcity: 'Limited seats, deadlines, selling out, price going up.',
+      social_proof: 'Many customers, testimonials, results of others.',
+      enemy_or_villain: 'Blames an outside enemy: bad advice, gurus, the system.',
+      exclusivity: 'Only for a qualified few; disqualifies people.',
+    } },
+  awareness: { type: 'choice',
+    instructions: 'Which stage of customer awareness is this ad written for (Eugene Schwartz)?',
+    criteria: {
+      unaware: 'The viewer does not know they have the problem yet.',
+      problem_aware: 'Knows the problem, not the solutions.',
+      solution_aware: 'Knows solutions exist, not this offer.',
+      product_aware: 'Knows this offer, needs a reason to act.',
+      most_aware: 'Ready to buy; just needs the deal or the link.',
+    } },
+  hookStrength: { type: 'score',
+    instructions: 'How strong is the opening of this ad at stopping a scrolling viewer from the target audience?',
+    criteria: ['Generic, easy to scroll past', 'Somewhat relevant but flat', 'Clear and relevant',
+               'Specific and intriguing', 'Impossible to ignore for the target viewer'] },
+  callsOutViewer: { type: 'noul',
+    instructions: 'Does the ad explicitly call out who it is for (a role, niche, revenue level, situation)?' },
+} satisfies Record&lt;string, Question&gt;
+```
+
+## 5. Miniaturas (`media.ts`)
+
+Las URLs de imagen de la Ad Library están firmadas y caducan en pocos días, así que hay que guardarlas en local. Descárgalas con concurrencia 6 y sáltate las que ya existan. Procésalas con sharp: redimensiona a `inside` 1024×1024 sin agrandar, luego a `outside` 320×320 (**Jev exige un mínimo de 280 px por lado y acepta como máximo 1568**), y guarda en JPEG con calidad 82 en `public/media/&lt;id&gt;.jpg`. Después asigna `ad.thumbnail = /media/&lt;id&gt;.jpg`. Si una descarga falla, regístralo en el log y sigue con las demás.
+
+## 6. Clasificación (`classify.ts`)
+
+- Haz **una petición por anuncio con todas las preguntas** (Jev las responde en paralelo), con concurrencia 8.
+- **Reutiliza** las clasificaciones previas por id, de modo que volver a clasificar solo cobre los anuncios nuevos.
+- Si hay miniatura, envíala como asset `'&lt;&lt;thumbnail&gt;&gt;': { type: 'image', format: 'jpg', data_base64 }` y referénciala desde el state.
+- El state que ve Jev es: `advertiser, media_type, meta_display_format, thumbnail?, ad_copy, headline, link_description, call_to_action, landing_page`. **`daysRunning` no se envía a propósito:** es el resultado contra el que comparamos las categorías y no debe influir en ellas. Deja esto explicado en un comentario.
+- Mapea las respuestas a `Classification`. Si falta alguna, usa `choice: 'unknown'` y 0 como valores por defecto.
+- `hookText`: la primera línea no vacía, cortada en la primera frase (`/^.+?[.!?](\s|$)/`) y truncada a 220 caracteres con "…".
+- `copyWords`: número de palabras del body.
+- `estimateTokens`: 1200 por anuncio, más `body.length/4`, más 800 si tiene imagen. Úsalo para `--estimate`.
+
+## 7. Orquestación (`run.ts`), CLI y servidor
+
+**`scrape(query, emit)`** hace lo siguiente:
+1. Emite `phase:scrape` y luego `found` por cada anuncio (solo hasta `limit`).
+2. Si no se encontró ningún anuncio, lanza un error claro.
+3. Calcula `label` (el que se pasó, o `pageName`, o `q`) y el `slug` (slugify del label).
+4. Emite `phase:media` y descarga las miniaturas.
+5. Guarda `data/raw/&lt;slug&gt;.json`.
+6. **Publica el dataset sin clasificar en ese momento**, para que el gráfico funcione antes de que corra Jev.
+
+**`classify(slug, emit, { estimateOnly })`** carga los datos crudos y las clasificaciones previas, emite `phase:classify` con el número de anuncios pendientes, los tokens y el costo estimado, y se detiene ahí si se pidió solo la estimación. Después clasifica, emitiendo `classified` por cada anuncio terminado. Al final publica y emite `done`.
+
+**`publish`** escribe `public/data/&lt;slug&gt;.json`. Acumula `inputTokens` y `costUsd` con lo del dataset anterior. Actualiza `index.json` poniendo esa entrada primero y sin duplicados.
+
+**CLI (`cli.ts`)** con `node:util parseArgs`:
+```
+npm run scrape   -- --page &lt;id&gt; [--slug x] [--label "X"] [--limit 300] [--active] [--country CO]
+npm run scrape   -- --q "Alex Hormozi"     |  --url "https://www.facebook.com/ads/library/?…"
+npm run classify -- &lt;slug&gt; [--estimate]
+npm run analyze  -- --page &lt;id&gt; --slug x          (scrape + classify)
+```
+Imprime las fases con "…", los logs indentados y, al terminar, `Done: N input tokens, $X (model)`. Si falla, sale con `exit(1)` y un mensaje legible.
+
+**Servidor (`server.ts`):** un plugin de Vite registrado en `vite.config.ts` con `plugins: [react(), liveRuns()]`.
+- `GET /api/status` devuelve `{ running, jevKey: !!TYPESAFE_API_KEY }`.
+- `GET /api/run?page=|url=|q=&amp;limit=150&amp;active=1` transmite cada `PipelineEvent` como SSE (`data: &lt;json&gt;\n\n`) y corre scrape y luego classify. **Solo permite un análisis a la vez.** Si ya hay uno en curso, envía un evento `error` con "Ya hay un análisis en curso. Espera a que termine.".
+
+## 8. Dimensiones y agrupación (`src/lib/dimensions.ts`)
+
+Hay siete dimensiones. Las cinco primeras necesitan Jev: `format` "Formato", `hook` "Hook", `offer` "Oferta", `angle` "Ángulo" y `awareness` "Nivel de consciencia". Las otras dos no: `mediaKind` "Tipo de medio (Meta)" y `cta` "Botón CTA" (con "sin CTA" si no hay botón). Cada dimensión expone `of(ad) → { value, confidence } | null`.
+
+`LABELS` traduce cada clave al español: talking_head "Talking head", podcast_clip "Clip de podcast", stage_or_event "Escenario / evento", ugc_testimonial "UGC / testimonio", broll_voiceover "B-roll + voz en off", text_graphic "Gráfico con texto", screenshot_proof "Capturas como prueba", product_shot "Foto de producto", lifestyle_photo "Foto lifestyle", carousel "Carrusel", call_out "Llama al espectador", bold_claim "Promesa audaz", question "Pregunta", contrarian "Contraintuitivo", story "Historia", proof_result "Resultado / prueba", curiosity "Curiosidad", pain_point "Dolor", announcement "Anuncio / lanzamiento", offer_first "Oferta primero", book_call "Agendar llamada", event "Evento / workshop", free_content "Contenido gratis", paid_product "Producto de pago", free_trial "Prueba gratis", app_install "Instalar app", follow_or_watch "Seguir / ver más", education "Educación", authority "Autoridad", transformation "Transformación", urgency_scarcity "Urgencia / escasez", social_proof "Prueba social", enemy_or_villain "Enemigo común", exclusivity "Exclusividad", unaware "Inconsciente", problem_aware "Consciente del problema", solution_aware "Consciente de la solución", product_aware "Consciente del producto", most_aware "Listo para comprar", video "Video", image "Imagen", text "Solo texto", other "Otro", unclassified "Sin clasificar" y low_confidence "Confianza baja". Para cualquier clave que no esté en la lista, se muestra la clave con `_` reemplazado por espacios.
+
+`groupAds(ads, dim, minConfidence)`: los anuncios sin clasificar van a `unclassified` y los que tienen una confianza menor que el mínimo van a `low_confidence`. Cada grupo lleva `{ value, ads, median, max, active }`. Los grupos se **ordenan por mediana de días activo de mayor a menor**, y en caso de empate por número de anuncios. Así, la fila de arriba es la estrategia que más dura.
+
+## 9. Interfaz
+
+Router por estado en `App.tsx`: `launch | mission(source) | explore(dataset)`. Carga `/data/index.json`, y cada dataset con `?t=Date.now()` para evitar la caché.
+
+### Inicio (`Launch`)
+- Hero con un orbe de anillos SVG giratorios, el eyebrow "Inteligencia publicitaria · Jev", el H1 "La estrategia de cualquier marca, leída anuncio por anuncio" y el lede "Ad Intel recorre la Meta Ad Library, clasifica cada creativo por formato, hook y oferta, y los ordena por días activo. Lo que sigue corriendo es lo que funciona.".
+- Formulario "Nuevo objetivo":
+  - Un solo campo que acepta las tres entradas. Si cumple `/^\d{6,}$/`, se trata como page id. Si es una URL de la Ad Library, se extrae `view_all_page_id`; si no lo tiene, se pasa la URL completa. En cualquier otro caso, si tiene al menos 2 caracteres, se usa como búsqueda por palabra clave. Si no, se muestra un error inline.
+  - Selector de cantidad de anuncios: 50, 150, 300 o 600.
+  - Estimación de costo: `limit · 2200 · 0.042 / 1e6`.
+  - Insignia de estado: "JEV EN LÍNEA", "FALTA TYPESAFE_API_KEY", "OCUPADO" o "SERVIDOR NO DISPONIBLE". El botón "Iniciar análisis" se desactiva si no está en línea.
+- Lista "Análisis guardados" con el label, la cantidad de anuncios y la fecha de cada uno, y los botones **Reproducir** y **Explorar**.
+- Tres pasos explicativos: "Lee la Ad Library completa", "Jev mira cada creativo" y "Los días activo dan el veredicto".
+
+### Modo misión (`MissionView` + `lib/mission.ts`)
+Es la pieza de demo: muestra el análisis mientras ocurre. La vista es un grid a pantalla completa (100vh):
+
+```
+grid-template-columns: 256px minmax(0,1fr) 304px;
+grid-template-rows: auto minmax(0,1fr) minmax(220px,34vh);
+areas: 'top top top' / 'ingest stage tele' / 'ingest chart console';
+```
+
+- **TopBar**: marca "AD·INTEL", el objetivo, las fases (01 Ad Library · 02 Creativos · 03 Jev · 04 Insight), la velocidad (*Cine* / *×1* / *Máx*), los botones de saltar al final y salir, y un reloj en vivo.
+- **Cola de ingesta** (izquierda): miniaturas que esperan su turno. La primera muestra "SIGUIENTE" y, si hay más de 14, se añade "+N en espera".
+- **Escenario** (centro), que cambia según la fase:
+  - Durante el scrape y la descarga: un *muro* con las miniaturas a medida que se encuentran (las últimas 48) y un radar con barrido que cuenta "anuncios detectados".
+  - Durante la clasificación: el **Scanner**. Se remonta en cada anuncio (`key = ad.id`) y todos sus tiempos escalan con la variable CSS `--d` (el tiempo que ese anuncio pasa en pantalla). Muestra la miniatura en un marco con esquinas, cuadrícula, una línea de escaneo, etiquetas "OBJ #001 · VIDEO" e "ID …" y un sello "CLASIFICADO". El hook se va escribiendo palabra por palabra. A la derecha, cinco lecturas (Formato, Hook, Oferta, Ángulo, Consciencia) entran una tras otra, cada una con su confianza y las 3 opciones más probables en barras. Después aparecen la fuerza del hook (5 segmentos), "Llama al espectador" en porcentaje y el veredicto: "N días activo", con "● sigue corriendo" o "○ terminó &lt;fecha&gt;".
+  - Al terminar: el **Debrief**, con "N anuncios descifrados en X s por $Y" y, para formato, hook y oferta, la categoría con mayor mediana entre las que tienen al menos 3 anuncios. Debajo, el botón "Explorar resultados".
+  - Si hay un error: "Análisis detenido", el mensaje y un botón "Volver".
+- **Telemetría** (derecha): un anillo de progreso, los tokens, el costo, el modelo, el ritmo en anuncios por minuto y la distribución de la dimensión activa en barras (top 7).
+- **Registro del sistema**: una consola con hora que hace autoscroll y conserva las últimas 60 líneas. Cada anuncio escribe `#xxxxxx ▸ formato 92% · hook · oferta`.
+- **Mapa de rendimiento** (abajo, compacto): pestañas para las dimensiones de Jev. Se llena punto por punto y el punto más reciente aparece con un pulso.
+
+**Motor (`useMission(source, pace)`):** el source es `{ kind: 'live', params, label }` o `{ kind: 'replay', dataset }`.
+- **Live**: abre un `EventSource('/api/run?…')`. Si la conexión se cae antes de `done`, emite el error "Se perdió la conexión con el servidor local.".
+- **Replay**: no simula nada. Re-emite los anuncios guardados como `found` en sucesión rápida (`step = min(30, 2400/n)` ms) y después encola las respuestas reales de Jev en el mismo orden, con los tokens por anuncio guardados (o el promedio). Sirve para hacer demos sin costo.
+- Los anuncios clasificados esperan en un backlog y pasan por el scanner **de uno en uno**. Los tiempos se calculan así: `duration = 2600ms / speed`. Con *Máx*, speed = 14. Con *×1*, ramp = 1. Con *Cine*, ramp = 1 en los 3 primeros anuncios, 2,4 hasta el décimo y 5 a partir de ahí. Ese ramp se multiplica por un factor de catch-up: ×3 si el backlog supera 60 y ×1,8 si supera 25.
+- Los tokens y el costo se acumulan en pantalla a medida que se presenta cada anuncio, no cuando llegan.
+- `skip()` vacía el backlog directamente en el gráfico y suma su costo.
+
+### Exploración (`Explore`)
+- KPIs: anuncios, siguen activos, mediana de días activo, el más largo y costo Jev (con el modelo debajo).
+- Filtros:
+  - Selector de dimensión (todas; las de Jev se desactivan si el dataset no está clasificado).
+  - Confianza mínima: cualquiera, 50, 70 o 90 %.
+  - "Solo activos" y "Escala log".
+  - Leyenda: ● activo, ○ terminado, tamaño = variantes, línea = mediana.
+- **Insight** en una frase: "Por &lt;dimensión&gt;, lo que más dura es **X**: mediana de N días en M anuncios (máx. K).". Usa el primer grupo con al menos 3 anuncios, excluyendo "Sin clasificar" y "Confianza baja".
+- El mapa completo.
+- Abajo, a la izquierda, la **tabla por categoría** con las columnas Categoría, Anuncios, % del total, Mediana días, Máx días y Activos. A la derecha, **"Los 10 que más llevan corriendo"**, con miniatura, días, formato · hook y el hook.
+- Al hacer clic en un punto o en un anuncio del top 10 se abre **AdDetail**, un panel lateral con:
+  - Una píldora Activo/Terminado, los días, las fechas, las variantes y las plataformas.
+  - El creativo y el hook.
+  - Una fila por dimensión con su barra de confianza; el tooltip muestra la segunda opción con su porcentaje.
+  - La fuerza del hook sobre 4 y el porcentaje de "Llama al espectador".
+  - La oferta (título — descripción, botón, dominio y ruta de la landing).
+  - El copy completo con el conteo de palabras y el enlace "Ver en la Ad Library ↗".
+
+### El mapa (`StripChart`)
+Es un SVG hecho a mano, con **una fila por categoría y un punto por anuncio**, donde x = días activo.
+- Columna de etiquetas de 220 px: el nombre de la categoría (la primera fila resaltada) y debajo "N ads · mediana Xd · máx Yd".
+- Una línea vertical marca la mediana de cada fila.
+- Los puntos rellenos son anuncios activos y los huecos, terminados. El radio es `4 + min(4, log2(variants))`.
+- El jitter vertical es **estable por id** (hash FNV-1a), para que un anuncio siempre aparezca en el mismo sitio.
+- Ticks:
+  - Escala lineal: un paso de 7, 14, 30, 60, 90 o 180 días, el primero que dé 8 ticks o menos.
+  - Escala log: 1, 3, 7, 14, 30, 60, 90, 180, 365 y 730 días.
+  - Etiqueta del eje: "días activo →".
+- Cuando cambia el orden, las filas se deslizan con `transform: translateY`. Los puntos nuevos aparecen con un efecto pop.
+- El tooltip al pasar el ratón muestra la miniatura, los días, el estado, las variantes y el hook.
+- Se adapta al ancho con un `ResizeObserver` (mínimo 480 px). Variante `compact` con filas de 46 px en lugar de 64.
+
+## 10. Dirección visual
+
+Estética **HUD / centro de mando**, solo modo oscuro: la herramienta se usa en pantallas y demos.
+
+- Tokens en `:root`: `--bg #000`, `--panel rgb(79 216 255/.025)`, `--line rgb(79 216 255/.16)`, `--line-strong …/.45`, `--cyan #4fd8ff`, `--cyan-soft …/.12`, `--amber #ffb547`, `--text #e6f4fb`, `--text-2 #9fb6c2`, `--muted #5e7684`, `--warn #ff6b5e`, `--ok #5cf2b4`. Curvas: `--ease cubic-bezier(.22,1,.36,1)` y `--sweep cubic-bezier(.45,.05,.55,.95)`.
+- Tipografía Geist y Geist Mono (Google Fonts). Los números van en mono con `tabular-nums`. Eyebrows y encabezados de panel en mono de 12 px, mayúsculas y `letter-spacing .08em`.
+- Fondo con una retícula de puntos (un SVG inline de 32 px). Paneles con borde de 1 px y radio de 4 px. El botón primario es cian sólido con glow.
+- Animaciones con keyframes: spin para los anillos, scan, stamp, lockin para las lecturas, grow para las barras, pop y pulse para los puntos, y word para el hook. **Respeta `prefers-reduced-motion`.**
+- Favicon SVG propio y `&lt;html lang="es"&gt;`.
+
+## 11. Orden de construcción y criterios de aceptación
+
+Construye y verifica en este orden, sin pasar a la siguiente fase hasta que la anterior funcione:
+
+1. **Scraper.** `npm run scrape -- --page 116482854782233 --slug hormozi --label "Alex Hormozi" --limit 150` debe devolver unos 150 anuncios con fechas, copy y miniaturas en `public/media`. Revisa a mano 3 anuncios DCO para confirmar que el copy no contiene `{{…}}`.
+2. **Jev.** `npm run classify -- hormozi --estimate` muestra el costo sin gastar nada. Después, `npm run classify -- hormozi` debería costar menos de $0,02 por cada 150 anuncios. Volver a correrlo debe indicar "150 reused, 0 to classify".
+3. **Exploración.** `npm run dev` y abrir el dataset: el gráfico, los filtros, la tabla, el top 10 y el detalle deben funcionar. Un dataset sin clasificar también tiene que verse, agrupado por tipo de medio.
+4. **Modo misión.** Primero la reproducción, que no cuesta nada. Después un análisis en vivo desde la pantalla de inicio con otra marca, por ejemplo con la búsqueda "Codie Sanchez".
+5. `npm run typecheck` sin errores.
+
+Incluye un `README.md` en español que cubra el uso, la interfaz, la estructura, cómo cambiar la clasificación (editar `taxonomy.ts`, añadir las etiquetas en `dimensions.ts`, borrar `public/data/&lt;slug&gt;.json` y volver a clasificar) y estos límites:
+- Jev no acepta video, así que los videos se clasifican por su miniatura y su copy, no por el audio.
+- Los días activo de un anuncio terminado son fin − inicio; los de uno activo, hoy − inicio.
+- El scraper depende del HTML y del GraphQL de Meta: si cambian el formato, hay que ajustar `normalize()`.
+- La API oficial solo cubre anuncios entregados en la UE.</pre></div>
+<h2 id="paso-2-lo-unico-manual">Paso 2. Lo único manual</h2>
+<ol><li>Entra a facebook.com/ads/library, busca la marca y abre su página.</li><li>Copia la URL completa de esa página (lleva <code>view_all_page_id=</code>).</li></ol>
+<h2 id="paso-3-prepara-la-herramienta-una-sola-vez">Paso 3. Prepara la herramienta (una sola vez)</h2>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>En esta carpeta está Ad Intel. Déjala lista para usar:
+1. Verifica que Node sea 22 o superior; si no, dime cómo actualizarlo y para.
+2. Corre npm install.
+3. Instala Chromium con npx playwright-core install chromium y anota la ruta del ejecutable.
+4. Crea .env a partir de .env.example y pon esa ruta en CHROMIUM_PATH.
+5. Pídeme mi TYPESAFE_API_KEY (se crea en console.typesafe.ai/keys) y guárdala en .env sin mostrarla ni enviarla a ningún otro sitio.
+6. Corre npm run typecheck y confírmame en una línea que todo quedó listo.</pre></div>
+<h2 id="paso-4-analiza-una-marca-y-mira-las-analiticas">Paso 4. Analiza una marca y mira las analíticas</h2>
+<p>Cambia lo que está entre corchetes y pégalo cada vez que quieras analizar una marca nueva.</p>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Analiza esta marca con Ad Intel: [PEGA AQUÍ LA URL DE LA AD LIBRARY]
+Nombre para mostrar: [NOMBRE DE LA MARCA]
+
+1. Saca el page id de view_all_page_id en la URL y un slug corto sin espacios a partir del nombre.
+2. Corre npm run scrape -- --page &lt;id&gt; --slug &lt;slug&gt; --label "&lt;nombre&gt;" --limit 150.
+3. Corre npm run classify -- &lt;slug&gt; --estimate y, si cuesta menos de $0.10, sigue sin preguntarme.
+4. Corre npm run classify -- &lt;slug&gt;.
+5. Arranca npm run dev en segundo plano y dame el enlace http://localhost:5173.
+6. Lee public/data/&lt;slug&gt;.json y resume en una frase por dimensión (formato, hook, oferta, ángulo y consciencia) qué categoría dura más, con su mediana de días activo y cuántos anuncios tiene; ignora las categorías con menos de 3 anuncios.
+7. Si algo falla, diagnostica la causa, arréglala y vuelve a intentarlo antes de avisarme.</pre></div>
+<h2 id="paso-5-compara-dos-marcas-opcional">Paso 5. Compara dos marcas (opcional)</h2>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt para Claude Code</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre>Compara los análisis de Ad Intel de [SLUG 1] y [SLUG 2] que están en public/data.
+Para formato, hook y oferta, dime en una tabla qué categoría le dura más a cada marca (mediana de días activo, mínimo 3 anuncios) y cierra con una frase sobre la mayor diferencia entre las dos.</pre></div>
+<h2 id="limites">Límites</h2>
+<ul><li>Jev no acepta video, así que los videos se clasifican por su miniatura y su copy, no por el audio.</li><li>Los días activo de un anuncio terminado son fin menos inicio; los de uno activo, hoy menos inicio.</li><li>El scraper depende del HTML y del GraphQL de Meta: si cambian el formato, hay que ajustarlo.</li><li>La API oficial de Meta solo cubre anuncios entregados en la UE. Por eso la app usa la versión web pública de la Ad Library.</li><li>Muchos días activo es una señal, no una prueba de rentabilidad. Úsalo para encontrar patrones, no como verdad absoluta.</li></ul></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a href="#que-es-jev">Qué es Jev</a></li><li><a href="#que-construimos-ad-intel">Qué construimos: Ad Intel</a></li><li><a href="#como-funciona">Cómo funciona</a></li><li><a href="#paso-1-construye-la-app-con-el-prompt-maestro">Paso 1. Construye la app con el prompt maestro</a></li><li><a href="#paso-2-lo-unico-manual">Paso 2. Lo único manual</a></li><li><a href="#paso-3-prepara-la-herramienta-una-sola-vez">Paso 3. Prepara la herramienta (una sola vez)</a></li><li><a href="#paso-4-analiza-una-marca-y-mira-las-analiticas">Paso 4. Analiza una marca y mira las analíticas</a></li><li><a href="#paso-5-compara-dos-marcas-opcional">Paso 5. Compara dos marcas (opcional)</a></li><li><a href="#limites">Límites</a></li></ul></nav></aside></div></section></main><footer class="f-foot">
+  <div class="f-wrap">
+    <div class="f-foot__top">
+      <div><a class="f-logo" href="/">Forth</a><p>Automatización con IA para empresas y un programa para profesionales. Con Luciano Musella.</p></div>
+      <div><h4>Forth</h4><ul><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/#casos">Casos</a></li><li><a href="/agenda/">Agenda tu llamada</a></li></ul></div>
+      <div><h4>Aprende gratis</h4><ul><li><a href="/biblioteca/">Biblioteca</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li></ul></div>
+      <div><h4>Canales</h4><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="f-foot__legal"><span>&copy; 2026 Forth. <a href="/politica-de-privacidad/">Política de privacidad</a></span><span><b>Think human.</b> Operate AI.</span></div>
+  </div>
+</footer><script src="/assets/js/site.js?v=obscura-access-1" defer></script></body></html>
