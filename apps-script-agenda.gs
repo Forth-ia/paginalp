@@ -490,14 +490,11 @@ function avisarCita_(d) {
   return { ok: true };
 }
 
-// Reparto por turnos entre los closers libres en ese horario.
+// A quién va la cita: siempre al closer principal (admin@getforth.ai, Luciano) si está libre en ese
+// horario; a los demás (info@getforth.ai) solo cuando el principal está ocupado o no trabaja a esa hora.
 function elegirCloser_(libres) {
-  var props = PropertiesService.getScriptProperties();
-  var ultimo = props.getProperty('ULTIMO_CLOSER');
   var candidatos = AG.closers.filter(function (c) { return libres.indexOf(c.email) !== -1; });
-  var elegido = candidatos.filter(function (c) { return c.email !== ultimo; })[0] || candidatos[0];
-  props.setProperty('ULTIMO_CLOSER', elegido.email);
-  return elegido;
+  return candidatos.filter(function (c) { return c.email === AG.prioritario; })[0] || candidatos[0];
 }
 
 function citaDe_(lead) {
