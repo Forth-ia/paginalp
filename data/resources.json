@@ -33,6 +33,50 @@
  },
  "resources": [
 {
+  "id": "3-automatizaciones-recuperar-tiempo",
+  "slug": "3-automatizaciones-recuperar-tiempo",
+  "title": "3 automatizaciones para recuperar tiempo",
+  "category": "agentes",
+  "secondary": [
+    "negocio"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Automatiza las respuestas a clientes en WhatsApp, la actualización de tu CRM y la asignación de tareas, con un prompt para cada una y una regla clara de qué pasa por tu aprobación.",
+  "what_you_get": [
+    "Un agente que responde las preguntas frecuentes de tus clientes en WhatsApp",
+    "Un agente que mantiene tu CRM actualizado después de cada conversación",
+    "Un agente que crea y asigna tareas según tus reglas",
+    "Una regla de aprobación para cada automatización y un plan de 3 semanas"
+  ],
+  "ideal_for": [
+    "Dueños de negocio que responden lo mismo todos los días",
+    "Equipos pequeños que pierden tiempo actualizando el CRM y repartiendo tareas"
+  ],
+  "includes": [
+    "3 automatizaciones",
+    "3 prompts copiables",
+    "Plan de implementación en 3 semanas"
+  ],
+  "tools": [
+    "WhatsApp Business",
+    "CRM",
+    "Fathom",
+    "Notion"
+  ],
+  "words": 644,
+  "read_min": 3,
+  "related_tutorials": [],
+  "related_resources": [
+    "atencion-cliente-claude",
+    "houston-agentes-negocio"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "jev-analizar-anuncios-competencia",
   "slug": "jev-analizar-anuncios-competencia",
   "title": "Cómo usar Jev para analizar los anuncios de tu competencia",
