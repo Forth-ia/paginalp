@@ -503,3 +503,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/jev-analizar-anuncios-competencia/
 
 La distinción depende de la URL enviada.
+
+
+## 3 automatizaciones para recuperar tiempo
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/3-automatizaciones-recuperar-tiempo/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · 3 automatizaciones para recuperar tiempo`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/3-automatizaciones-recuperar-tiempo/
+
+La distinción depende de la URL enviada.
