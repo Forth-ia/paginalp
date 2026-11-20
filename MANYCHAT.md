@@ -520,3 +520,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/3-automatizaciones-recuperar-tiempo/
 
 La distinción depende de la URL enviada.
+
+
+## 6 habilidades que hacen de Claude un genio del Marketing
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/skills-marketing-claude/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · 6 habilidades que hacen de Claude un genio del Marketing`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/skills-marketing-claude/
+
+La distinción depende de la URL enviada.
