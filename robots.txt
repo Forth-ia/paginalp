@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /acceso/
+Disallow: /api/
+Disallow: /agendar/
+
+Sitemap: https://www.lucianomusella.com/sitemap.xml

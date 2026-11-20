@@ -67,14 +67,17 @@ page = f'''<!DOCTYPE html>
 <script src="https://api.adpulze.io/api/v1/scripts/ghl.js?location_id=22"></script><script src="https://api.adpulze.io/api/v1/scripts/organic.js?location_id=22"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Biblioteca gratis de IA | Forth</title>
+<title>Biblioteca gratis de IA | Forth · Luciano Musella</title>
 <meta name="description" content="{len(vids)} clases en video, {len(res)} recursos y un reto para aprender a construir con IA. Gratis, de Forth y Luciano Musella.">
-<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/site.css">
 <link rel="stylesheet" href="/assets/css/forth.css">
 <link rel="stylesheet" href="/assets/css/biblioteca.css">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://www.lucianomusella.com/biblioteca/">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/icon-192.png"><link rel="apple-touch-icon" href="/assets/img/brand/icon-192.png">
+<meta property="og:url" content="https://www.lucianomusella.com/biblioteca/"><meta property="og:site_name" content="Luciano Musella · Forth"><meta property="og:locale" content="es_CO"><meta property="og:image" content="https://www.lucianomusella.com/assets/img/brand/og-luciano-musella.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://www.lucianomusella.com/assets/img/brand/og-luciano-musella.jpg">
 </head>
 <body class="forth" data-page="biblioteca">
 <!-- Generado con tools/gen_biblioteca.py desde data/*.json: no editar a mano. -->
