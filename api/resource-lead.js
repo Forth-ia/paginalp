@@ -2,6 +2,7 @@
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const { parseUtm } = require('./_lib/lead.js');
 const RESOURCES = new Map([
+  ['oficina-virtual-claude-code', 'Cómo crear tu propia oficina virtual'],
   ['skills-marketing-claude', '6 habilidades que hacen de Claude un genio del Marketing'],
   ['3-automatizaciones-recuperar-tiempo', '3 automatizaciones para recuperar tiempo'],
   ['jev-analizar-anuncios-competencia', 'Cómo usar Jev para analizar los anuncios de tu competencia'],

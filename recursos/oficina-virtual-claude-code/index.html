@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cómo crear tu propia oficina virtual | Forth · Luciano Musella</title><meta name="description" content="Construye con Claude Code una oficina virtual estilo Habbo donde tu equipo camina, habla por proximidad, se reúne en salas privadas y comparte pantalla, y publícala gratis con Render, Vercel y Metered."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;0,8..60,800;1,8..60,600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/forth.css">
+<link rel="canonical" href="https://www.lucianomusella.com/recursos/oficina-virtual-claude-code/">
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/assets/img/brand/icon-192.png"><link rel="apple-touch-icon" href="/assets/img/brand/icon-192.png">
+<meta property="og:url" content="https://www.lucianomusella.com/recursos/oficina-virtual-claude-code/"><meta property="og:site_name" content="Luciano Musella · Forth"><meta property="og:locale" content="es_CO"><meta property="og:image" content="https://www.lucianomusella.com/assets/img/brand/og-luciano-musella.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://www.lucianomusella.com/assets/img/brand/og-luciano-musella.jpg">
+</head><body data-lead-popup="off" data-page="resource" data-page-props='{"resource":"oficina-virtual-claude-code","category":"claude","type":"guia-paso-a-paso"}'>
+<a class="sr" href="#main">Ir al contenido</a><header class="nav" id="nav">
+  <div class="nav__in">
+    <a class="nav__brand" href="/" aria-label="Forth, inicio">Forth</a>
+    <ul class="nav__links"><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a class="nav__free" href="/biblioteca/">Aprende gratis</a></li></ul>
+    <div class="nav__cta">
+      <a class="btn btn--accent btn--sm" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "nav"}'><span class="btn__t">Agenda tu llamada</span></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="menu" id="menu"><nav class="wrap"><div class="menu__list"><a href="/">Inicio</a><a href="/#servicios">Empresas</a><a href="/programa/">Programa</a><a href="/tutoriales/">Tutoriales</a><a href="/recursos/">Recursos</a><a href="/biblioteca/">Aprende gratis</a></div><div class="menu__foot"><a class="btn btn--light" href="/agenda/" data-track="agenda_click" data-track-props='{"from": "menu"}'><span class="btn__t">Agenda tu llamada</span></a></div></nav></div><main id="main"><div class="progress" aria-hidden="true"></div>
+<section class="ahead sec--cream" data-bg="cream"><div class="wrap"><div class="crumbs"><a href="/recursos/">Recursos</a><span>/</span><a href="/recursos/?c=claude">Claude</a></div><span class="res__type">Guía paso a paso</span><h1 class="display display--l" style="margin-top:14px">Cómo crear tu propia oficina virtual</h1><p class="lead" style="margin-top:20px">Construye con Claude Code una oficina virtual estilo Habbo donde tu equipo camina, habla por proximidad, se reúne en salas privadas y comparte pantalla, y publícala gratis con Render, Vercel y Metered.</p><div class="ahead__meta"><span>12 min de lectura</span><span class="dot"></span><span>Claude Code · Render · Vercel · Metered</span><span class="dot"></span><span>4 prompts para copiar</span></div></div></section><section class="sec sec--paper sec--tight" data-bg="paper"><div class="wrap article"><article class="prose" data-resource="oficina-virtual-claude-code"><p>Trabajar desde casa tiene muchas ventajas, pero también tiene un costo: se pierde la cercanía. Ya no hay pasillos, ni cafés improvisados, ni ese "oye, ¿tienes un minuto?" que resolvía cosas en segundos. Todo pasa por videollamadas agendadas y mensajes que se sienten fríos.</p>
+<p>Este proyecto busca recuperar esa cercanía. Es una <strong>oficina virtual</strong> en la que cada persona aparece como un personaje dentro de un plano de oficina. Puedes caminar hacia un compañero y hablar con él, y cuando te alejas, dejas de escucharlo, igual que en una oficina real. Hay salas de reunión privadas, zona de descanso, chat con globos de texto, reacciones y pantalla compartida.</p>
+<p>Todo se construye con herramientas gratuitas: corre en local con un solo comando y, si quieres, se publica en internet usando planes gratis de Render, Vercel y Metered.</p>
+<div class="callout"><p>💡 <strong>Es un proyecto complejo y se divide en tres componentes:</strong></p><ol><li><strong>Backend</strong> (servidor de conexiones en tiempo real)</li><li><strong>Frontend</strong> (la parte visual)</li><li><strong>Servidor para comunicación por voz</strong> (TURN)</li></ol><p>El backend y el frontend se pueden generar con Claude Code usando los prompts de más abajo. Para llevarlos a producción y conectarlos hay que seguir pasos manuales. La parte del servidor de voz es completamente manual.</p></div>
+<h2 id="parte-1-generar-el-codigo-con-claude-code">Parte 1: Generar el código con Claude Code</h2>
+<p>Ejecuta los prompts en orden, uno por uno. Espera a que Claude Code confirme cada paso antes de pasar al siguiente.</p>
+<h3>Prompts del backend</h3>
+<h4>Prompt 1: Servidor base y sockets</h4>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt 1: Servidor base y sockets</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">Actúa como un Ingeniero de Software Full-Stack Senior especializado en WebSockets, WebRTC e interfaces interactivas en tiempo real.
+
+Vamos a construir el MVP de una plataforma corporativa gamificada tipo "Oficina Virtual" (estilo Habbo Hotel / Gather.town) optimizada para ejecutarse 100% en local (localhost) con cero costo de infraestructura.
+
+OBJETIVO GENERAL DEL MVP (PARTE 1)
+
+Crear una aplicación web ligera de "un solo comando" que permita a múltiples usuarios conectar su micrófono, aparecer como un avatar/nodo en un plano 2D de oficina, moverse en tiempo real y establecer comunicación de voz por proximidad cuando dos avatares estén cerca.
+
+ARQUITECTURA TÉCNICA LOCAL
+
+1. Backend (Node.js + Express + Socket.io):
+   - Gestión de salas/lobbies (Lobby principal por defecto).
+   - Manejo de ciclo de vida de usuarios (conexión, almacenamiento de socket.id, nombre de usuario, estado y coordenadas X, Y).
+   - Eventos de WebSocket a baja latencia para retransmitir movimiento e interpolación de posiciones.
+   - Broker de señalización WebRTC integrado o conexión a servidor de señalización PeerJS local.
+2. Frontend (HTML5 Vanilla + Canvas API + Socket.io Client + PeerJS Client):
+   - Interfaz limpia, responsiva y oscura estilo dashboard/game.
+   - Renderizado en un mapa 2D sobre HTML5 Canvas (sin motores de juego pesados por ahora).
+   - Cálculo de distancia euclidiana entre el avatar local y otros avatares.
+   - Integración de Audio WebRTC (PeerJS): conexión de audio P2P automática si la distancia es menor a 150px, ajustando el nivel de volumen según la proximidad.
+
+ESTRUCTURA DE ARCHIVOS A CREAR
+
+Por favor, inicializa el proyecto creando exactamente la siguiente estructura modular:
+
+virtual-office-mvp/
+├── package.json
+├── server.js               &lt;-- Servidor Node.js (Express + Socket.io + PeerJS Broker)
+├── public/
+│   ├── index.html          &lt;-- Pantalla de Login (Nombre) + Canvas del Mapa + HUD
+│   ├── css/
+│   │   └── styles.css      &lt;-- Estilos de interfaz (Dark Mode elegante)
+│   └── js/
+│       ├── main.js         &lt;-- Inicialización y control de UI
+│       ├── socket-client.js &lt;-- Lógica de WebSockets (Posiciones y Lobby)
+│       ├── audio-peer.js   &lt;-- Lógica WebRTC / PeerJS (Voz y Proximidad)
+│       └── game-canvas.js  &lt;-- Loop de renderizado Canvas 2D (Avatares y Movimiento WASD)
+└── README.md               &lt;-- Instrucciones de ejecución (npm install y npm start)
+
+REGLAS Y SECUENCIA DE EJECUCIÓN DEL PASO 1
+
+Para este primer paso de construcción, debes enfocarte en dejar funcionando el SERVIDOR BASE y la INFRAESTRUCTURA DE SOCKETS:
+
+1. Crea el archivo package.json con las dependencias necesarias (express, socket.io, peer).
+2. Implementa server.js configurando el servidor HTTP en el puerto 3000, los eventos de Socket.io (connection, join-room, move-player, disconnect) y la escucha de estado en memoria.
+3. Crea la estructura de carpetas en /public con archivos plantilla funcionales para el cliente.
+4. Asegúrate de que al ejecutar npm start, el servidor levante sin errores y responda en http://localhost:3000.
+
+Ejecuta la creación de la estructura y el código del servidor base. Confírmame cuando esté listo para probar el inicio del servidor.</pre></div>
+<h4>Prompt 2: Oficina, salas privadas y presencia</h4>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt 2: Oficina, salas privadas y presencia</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">OBJETIVOS DEL PASO 2
+
+1. Mejora del Canvas y mapa de oficina (visuales y zonas):
+   - Rediseña el Canvas de 1200x700 para representar una oficina corporativa real estructurada con las siguientes áreas delimitadas visualmente:
+     - Recepción / Lobby Principal (zona de spawn inicial).
+     - Espacio Abierto de Escritorios (Open Workspace).
+     - 2 Salas de Reunión Privadas (Meeting Room A y Meeting Room B).
+     - Zona de Descanso / Cafetería (Breakroom).
+   - Dibuja divisiones claras, paredes, mesas/escritorios y etiquetas que identifiquen cada área dentro del Canvas.
+2. Mecánica de zonas privadas (muting/aislamiento por sala):
+   - Implementa la lógica de "Áreas Privadas": si 2 o más avatares entran dentro del perímetro delimitado por la "Sala de Reunión A", sus canales de audio se aíslan en una sub-sala.
+   - Los usuarios fuera de la sala privada no deben escuchar el audio de los usuarios que están dentro (independientemente de qué tan cerca estén físicamente en el mapa).
+   - Muestra un indicador visual en el Canvas (ej. "🔒 En reunión privada") sobre los avatares que estén dentro de estas salas.
+3. Estados de presencia y avatares:
+   - Permite que el usuario cambie su estado de presencia desde la interfaz (HUD) entre 3 opciones:
+     - 🟢 Disponible (verde, audio por proximidad activo).
+     - 🟡 En Llamada / Ocupado (amarillo, audio de proximidad pausado/silenciado).
+     - 🔴 No Molestar (rojo, silencio total + indicador visual en su avatar).
+   - Renderiza los avatares como círculos estilizados con las iniciales del usuario, un indicador direccional hacia donde se mueven y un halo de color reflejando su estado de presencia.
+4. Feedback visual y UX de audio en tiempo real:
+   - Dibuja un radio/círculo tenue alrededor del avatar local que represente visualmente su "Rango de Audición" (150px).
+   - Agrega un indicador animado de nivel de voz (onda o anillo que palpita) alrededor del avatar cuando su micrófono esté capturando audio activo.
+   - Muestra una lista/sidebar en la interfaz con los usuarios conectados actualmente en el lobby y su estado.
+
+REGLAS TÉCNICAS Y ENTREGABLES
+
+1. Mantén la arquitectura de un solo comando (npm start) corriendo todo en local.
+2. Modifica public/js/game-canvas.js para renderizar el mapa detallado, zonas de reunión y halos de audio/presencia.
+3. Actualiza public/js/socket-client.js y public/js/audio-peer.js para gestionar los eventos de entrada/salida de salas privadas y cambio de estado de presencia.
+4. Actualiza server.js para sincronizar los estados de presencia de los jugadores entre todos los clientes.
+
+Ejecuta estas mejoras. Confírmame cuando el servidor esté actualizado y el cliente refleje la oficina rediseñada, las salas privadas y los estados de presencia.</pre></div>
+<h4>Prompt 3: Chat, emotes, sillas y pantalla compartida</h4>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt 3: Chat, emotes, sillas y pantalla compartida</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">OBJETIVOS DEL PASO 3
+
+1. Chat de texto y emotes flotantes (estilo Habbo / Club Penguin):
+   - Sistema de chat flotante: agrega un input de chat rápido en el HUD. Cuando un usuario envía un mensaje, este debe aparecer como una burbuja de texto flotante sobre la cabeza de su avatar durante 5 segundos (además de guardarse en un historial lateral expandible).
+   - Menú de emotes/reacciones: permite enviar reacciones rápidas (👋, ❤️, 🔥, 😂, 👏, 💡, ❓). Al seleccionar una, el icono flota y escala sobre el avatar del jugador con un efecto de animación.
+2. Mobiliario interactivo y posición "sentado":
+   - Colisión / acomodamiento en sillas: cuando un avatar camine hacia una silla o escritorio (dibujados en las salas o cafetería), debe "encajarse" o sentarse automáticamente, cambiando la orientación del avatar hacia la mesa.
+   - Estado visual "🪑 Sentado" en la etiqueta del personaje para que los demás sepan que está instalado trabajando.
+3. Pantalla compartida y componentes de sala (oficina útil):
+   - Integración de WebRTC Screen Share: en las 2 salas de reunión (Meeting Room A y B) agrega un objeto visual tipo "Pantalla/TV de Presentación".
+   - Si un usuario entra a la sala y presiona "Compartir Pantalla" en el HUD, utiliza la API navigator.mediaDevices.getDisplayMedia() para retransmitir su pantalla a todos los integrantes que estén dentro de esa misma sala privada.
+   - Al compartir pantalla, debe abrirse un modal/visor flotante en los clientes dentro de la sala para ver la presentación.
+4. Anillo de voz global y control de audio mejorado:
+   - Sincroniza la detección del volumen del micrófono a través de WebSocket para que el ANILLO DE VOZ PULSANTE se dibuje sobre el avatar de CUALQUIER usuario que esté hablando en ese momento, no solo en el cliente local.
+   - Controles rápidos en el Sidebar: agrega un botón de "Mute individual" al lado de cada usuario en la lista para que puedas silenciar a alguien localmente si tiene ruido de fondo.
+
+REGLAS TÉCNICAS Y ENTREGABLES
+
+1. Mantén la ejecución 100% local con cero costo (npm start).
+2. Actualiza server.js para retransmitir los eventos de chat, emotes, compartir pantalla (señalización de video para screen share) e intensidad de voz por avatar.
+3. Actualiza public/js/game-canvas.js para renderizar las burbujas de chat flotantes, emotes animados, avatares sentados y el visor de pantalla compartida.
+4. Actualiza public/js/audio-peer.js para integrar el flujo de video/screen share vía WebRTC dentro de las salas privadas.
+
+Ejecuta estas mejoras. Confírmame cuando el servidor y los scripts estén listos para probar la magia del chat flotante, los emotes y la pantalla compartida.</pre></div>
+<h3>Prompt del frontend</h3>
+<h4>Prompt 4: UI / Pixel Art estilo Habbo</h4>
+<div class="codeblock"><div class="codeblock__bar"><span>Prompt 4: UI / Pixel Art estilo Habbo</span><button class="copy" type="button" aria-label="Copiar comando o prompt">Copiar</button></div><pre style="white-space:pre-wrap;overflow-wrap:anywhere">¡El comportamiento del Paso 3 es excelente! Ahora vamos a ejecutar el PASO 4 para transformar la interfaz visual en una experiencia retro cautivadora al estilo HABBO HOTEL / CLUB PENGUIN.
+
+OBJETIVOS DEL PASO 4 (UI / PIXEL ART ESTILO HABBO)
+
+1. Avatares en Pixel Art ("los muñequitos"):
+   - Sustituye los círculos planos de los avatares por personajes/sprites de Pixel Art estilo Habbo.
+   - Genera/dibuja de forma procedimental (o usando spritesheet canvas 2D) los muñequitos con:
+     - Cabeza, cuerpo, piernas y tono de ropa configurable/variado por usuario.
+     - Animaciones de caminata de 4 direcciones (frente, espalda, izquierda, derecha) según el vector de movimiento WASD.
+     - Estado "Sentado": cuando el muñequito se sienta en una silla, debe cambiar a su cuadro/pose de estar sentado con las piernas dobladas.
+     - Insignia/halo de estado (🟢, 🟡, 🔴) estilizado sobre su cabeza.
+2. Rediseño del mapa y mobiliario estilo hotel retro:
+   - Aplica un estilo retro de píxel art a las texturas del mapa:
+     - Suelos con patrones de azulejos, alfombras de oficina y parqué de madera.
+     - Paredes de ladrillo/cristal oscuro con bordes marcados tipo Pixel Art.
+     - Mobiliario (escritorios, plantas, sillones, máquinas de café, pantallas de TV) dibujados con estética isométrica/2D de Hotel.
+3. Interfaz y globos de chat Habbo:
+   - Rediseña las burbujas de texto sobre el personaje para que imiten los míticos globos de diálogo de Habbo:
+     - Globo blanco/amarillento con picos de borde retro, tipografía pixel/bold limpia y una "cola" que apunta exactamente a la cabeza del muñequito.
+     - Desplazamiento vertical suave de los mensajes si un usuario envía varias líneas seguidas.
+   - Rediseña la barra inferior (HUD) al estilo "Habbo Toolbar":
+     - Botón de consola de chat, selector de emotes con barra deslizante y selector de estado de presencia integrado.
+4. Feedback sonoro y pulido de UX:
+   - Efectos de sonido con Web Audio API (retro 8-bit / chimes suavecitos):
+     - Sonido pop al enviar/recibir mensaje de chat.
+     - Sonido click retro al sentarse en una silla o cambiar de estado.
+     - Sonido beep sutil cuando alguien entra a tu misma sala privada.
+
+REGLAS TÉCNICAS Y ENTREGABLES
+
+1. Mantén la ejecución 100% local (npm start) y ligera, sin dependencias de compiladores pesados.
+2. Todo el renderizado de los avatares en Pixel Art debe realizarse mediante sprites/canvas nativo en public/js/game-canvas.js.
+3. Conserva intacta toda la lógica funcional del Paso 3 (salas privadas, WebRTC screen share, mute individual y audio por proximidad).
+
+Ejecuta estas mejoras estéticas. Confírmame cuando el servidor esté actualizado y el cliente luzca como una auténtica Oficina Virtual estilo Habbo Hotel.</pre></div>
+<h2 id="parte-2-publicar-en-internet">Parte 2: Publicar en internet</h2>
+<p>En este punto ya tienes una versión que funciona perfectamente de manera local, y se pueden conectar las personas que estén en la misma red de internet. Para hostearla en la red, haz lo siguiente.</p>
+<h3>Preparación</h3>
+<ul><li>Sube el código a un repositorio de GitHub.</li><li>Ten clara la arquitectura: la web (la parte visual) y el servidor (conexiones en tiempo real) van en lugares distintos, porque Vercel no admite conexiones permanentes.</li></ul>
+<h3>Paso A: Publicar el servidor (backend) en Render, plan gratis</h3>
+<ol><li>Crea una cuenta en Render y conecta el repositorio de GitHub.</li><li>Crea un servicio web de Node con el plan <strong>Free</strong>.</li><li>Define las variables del servidor:<ul><li><code>NO_HTTPS=1</code> (Render ya pone el HTTPS).</li><li><code>CORS_ORIGIN</code> con la dirección de la web en Vercel (se completa más abajo).</li></ul></li><li>Espera a que termine el despliegue y copia la dirección del servidor.</li><li>Comprueba que funciona abriendo <code>https://&lt;servidor&gt;/health</code>.</li></ol>
+<h3>Paso B: Publicar la web (frontend) en Vercel</h3>
+<ol><li>Crea una cuenta en Vercel e importa el mismo repositorio.</li><li>Verifica que Vercel lo trate como <strong>sitio estático</strong> y que use <strong>Node 24.x</strong>.</li><li>Agrega la variable <code>BACKEND_URL</code> con la dirección del servidor de Render y despliega.</li><li>Vuelve a Render, pon en <code>CORS_ORIGIN</code> la dirección final de Vercel y deja que redespliegue.</li><li>Si <code>BACKEND_URL</code> cambia en el futuro, hay que volver a desplegar la web.</li><li>Prueba la dirección de Vercel desde dos dispositivos distintos.</li></ol>
+<h3>Problemas que ya aparecieron</h3>
+<ul><li>Vercel detectaba Express y fallaba: se arregló forzando "sitio estático".</li><li>Error de versión de Node: se arregló fijando Node 24.x.</li><li>El despliegue no salía con la cuenta correcta: se arregló haciendo un redeploy desde la cuenta correcta de Vercel.</li></ul>
+<div class="callout"><p>⚠️ <strong>Cosas a tener en cuenta del plan gratis de Render:</strong></p><ul><li>El servidor se duerme tras unos minutos sin uso, así que la primera conexión tarda entre 30 y 60 segundos.</li><li>El estado vive en memoria. Si el servidor se reinicia, se pierde quién está dentro de la oficina.</li><li>Para evitar la espera, se puede pasar a un plan de pago o usar un servicio que lo "despierte" cada cierto tiempo.</li></ul></div>
+<h2 id="parte-3-conectarlo-con-el-servidor-de-voz-turn">Parte 3: Conectarlo con el servidor de voz (TURN)</h2>
+<h3>Entender el problema</h3>
+<ul><li>La voz y la pantalla compartida van directo de persona a persona. En la misma red funciona sin nada extra, pero entre redes distintas casi siempre falla.</li><li>La solución es un <strong>servidor TURN</strong>, que hace de puente y retransmite el audio y el video cuando la conexión directa no es posible.</li></ul>
+<h3>Crear la cuenta en Metered</h3>
+<ol><li>Entra a Metered.ca y crea una cuenta.</li><li>Crea una app y copia el dominio (ej. <code>miapp.metered.live</code>).</li><li>Copia la clave API desde el panel.</li></ol>
+<h3>Conectarlo al backend</h3>
+<ol><li>En Render, abre el servicio y entra a <strong>Environment</strong>.</li><li>Agrega <code>METERED_DOMAIN</code> con el dominio de Metered.</li><li>Agrega <code>METERED_API_KEY</code> con la clave API.</li><li>Guarda. Render redespliega solo y no hace falta tocar Vercel.</li><li>Comprueba que <code>https://&lt;servidor&gt;/ice-servers</code> devuelva la lista de servidores. El frontend la consulta solo al conectarse.</li></ol></article><aside class="aside"><nav class="aside__box" aria-label="Contenido de la guía"><h5>En esta guía</h5><ul class="aside__list"><li><a href="#parte-1-generar-el-codigo-con-claude-code">Parte 1: Generar el código con Claude Code</a></li><li><a href="#parte-2-publicar-en-internet">Parte 2: Publicar en internet</a></li><li><a href="#parte-3-conectarlo-con-el-servidor-de-voz-turn">Parte 3: Conectarlo con el servidor de voz (TURN)</a></li></ul></nav></aside></div></section></main><footer class="f-foot">
+  <div class="f-wrap">
+    <div class="f-foot__top">
+      <div><a class="f-logo" href="/">Forth</a><p>Automatización con IA para empresas y un programa para profesionales. Con Luciano Musella.</p></div>
+      <div><h4>Forth</h4><ul><li><a href="/#servicios">Empresas</a></li><li><a href="/programa/">Programa</a></li><li><a href="/#casos">Casos</a></li><li><a href="/agenda/">Agenda tu llamada</a></li></ul></div>
+      <div><h4>Aprende gratis</h4><ul><li><a href="/biblioteca/">Biblioteca</a></li><li><a href="/tutoriales/">Tutoriales</a></li><li><a href="/recursos/">Recursos</a></li><li><a href="/retos/">Retos</a></li></ul></div>
+      <div><h4>Canales</h4><ul><li><a href="https://www.youtube.com/@LucianoMusellaa" target="_blank" rel="noopener">YouTube</a></li><li><a href="https://www.linkedin.com/in/luciano-parra-m" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.instagram.com/lucianomusellaa/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="f-foot__legal"><span>&copy; 2026 Forth. <a href="/politica-de-privacidad/">Política de privacidad</a></span><span><b>Think human.</b> Operate AI.</span></div>
+  </div>
+</footer><script src="/assets/js/site.js?v=obscura-access-1" defer></script></body></html>

@@ -33,6 +33,51 @@
  },
  "resources": [
 {
+  "id": "oficina-virtual-claude-code",
+  "slug": "oficina-virtual-claude-code",
+  "title": "Cómo crear tu propia oficina virtual",
+  "category": "claude",
+  "secondary": [
+    "negocio"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Construye con Claude Code una oficina virtual estilo Habbo donde tu equipo camina, habla por proximidad, se reúne en salas privadas y comparte pantalla, y publícala gratis con Render, Vercel y Metered.",
+  "what_you_get": [
+    "4 prompts para generar el backend y el frontend con Claude Code",
+    "Audio por proximidad, salas privadas, chat con globos, reacciones y pantalla compartida",
+    "Avatares y mapa en pixel art estilo hotel retro",
+    "Los pasos para publicarla en internet con planes gratis"
+  ],
+  "ideal_for": [
+    "Equipos remotos que extrañan la cercanía de la oficina",
+    "Quienes quieren construir un proyecto completo con Claude Code"
+  ],
+  "includes": [
+    "4 prompts copiables",
+    "Guía de despliegue en Render y Vercel",
+    "Configuración del servidor de voz TURN con Metered"
+  ],
+  "tools": [
+    "Claude Code",
+    "Node.js",
+    "Render",
+    "Vercel",
+    "Metered"
+  ],
+  "words": 2532,
+  "read_min": 12,
+  "related_tutorials": [],
+  "related_resources": [
+    "jarvis-claude-code",
+    "github-primer-repo"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "3-automatizaciones-recuperar-tiempo",
   "slug": "3-automatizaciones-recuperar-tiempo",
   "title": "3 automatizaciones para recuperar tiempo",

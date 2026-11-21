@@ -537,3 +537,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/skills-marketing-claude/
 
 La distinción depende de la URL enviada.
+
+
+## Cómo crear tu propia oficina virtual
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/oficina-virtual-claude-code/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Cómo crear tu propia oficina virtual`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/oficina-virtual-claude-code/
+
+La distinción depende de la URL enviada.
