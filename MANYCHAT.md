@@ -554,3 +554,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/oficina-virtual-claude-code/
 
 La distinción depende de la URL enviada.
+
+
+## Diseño Web con Claude: Los 3 Recursos que Eliminan los Resultados Genéricos
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/diseno-web-claude/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Diseño Web con Claude: Los 3 Recursos que Eliminan los Resultados Genéricos`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/diseno-web-claude/
+
+La distinción depende de la URL enviada.
