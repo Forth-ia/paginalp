@@ -2,6 +2,7 @@
 // Apps Script de agenda (apps-script-agenda.gs). URL y clave solo en Vercel.
 const { parseUtm } = require('./_lib/lead.js');
 const RESOURCES = new Map([
+  ['small-business-claude', 'Small Business: El plugin de Claude que gestiona tu negocio completo'],
   ['diseno-web-claude', 'Diseño Web con Claude: Los 3 Recursos que Eliminan los Resultados Genéricos'],
   ['oficina-virtual-claude-code', 'Cómo crear tu propia oficina virtual'],
   ['skills-marketing-claude', '6 habilidades que hacen de Claude un genio del Marketing'],

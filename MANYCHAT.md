@@ -571,3 +571,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/diseno-web-claude/
 
 La distinción depende de la URL enviada.
+
+
+## Small Business: El plugin de Claude que gestiona tu negocio completo
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/small-business-claude/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Small Business: El plugin de Claude que gestiona tu negocio completo`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/small-business-claude/
+
+La distinción depende de la URL enviada.
