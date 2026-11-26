@@ -588,3 +588,20 @@ Acceso público del catálogo, sin formulario ni popup opcional:
 https://www.lucianomusella.com/recursos/small-business-claude/
 
 La distinción depende de la URL enviada.
+
+
+## Los 3 sistemas de IA que tienes que construir
+
+Enlace para ManyChat:
+
+https://www.lucianomusella.com/acceso/3-sistemas-ia-contenido/
+
+Exige nombre, correo y celular en cada visita. Muestra la guía de fondo sin permitir
+interactuar con ella ni cerrar el formulario. Solo redirige después de confirmar el
+guardado, con fuente `ManyChat · Los 3 sistemas de IA que tienes que construir`.
+
+Acceso público del catálogo, sin formulario ni popup opcional:
+
+https://www.lucianomusella.com/recursos/3-sistemas-ia-contenido/
+
+La distinción depende de la URL enviada.

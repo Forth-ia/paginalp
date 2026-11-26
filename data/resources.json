@@ -33,6 +33,50 @@
  },
  "resources": [
 {
+  "id": "3-sistemas-ia-contenido",
+  "slug": "3-sistemas-ia-contenido",
+  "title": "Los 3 sistemas de IA que tienes que construir",
+  "category": "contenido",
+  "secondary": [
+    "negocio",
+    "agentes"
+  ],
+  "type": "guia-paso-a-paso",
+  "type_label": "Guía paso a paso",
+  "summary": "Producción, lectura de data y métrica del negocio: los tres sistemas con agentes de IA para publicar con consistencia, saber qué funcionó y medir tu contenido por leads y llamadas agendadas.",
+  "what_you_get": [
+    "Los 3 sistemas: producción, lectura de data y métrica del negocio",
+    "Cómo montar un agente por etapa del video: research, hooks y lock-in zone",
+    "Qué métricas mirar cada semana y qué mide cada una",
+    "Cómo atar cada video a los leads y llamadas que trajo"
+  ],
+  "ideal_for": [
+    "Creadores y dueños de negocio que publican contenido para vender",
+    "Equipos pequeños que quieren publicar con consistencia"
+  ],
+  "includes": [
+    "5 prompts copiables",
+    "Plan para empezar esta semana",
+    "Columnas del dashboard de contenido contra negocio"
+  ],
+  "tools": [
+    "Claude",
+    "Agentes de IA",
+    "Hoja de cálculo o CRM"
+  ],
+  "words": 1231,
+  "read_min": 6,
+  "related_tutorials": [],
+  "related_resources": [
+    "contenido-linkedin",
+    "claude-maquina-de-leads"
+  ],
+  "collection": null,
+  "featured": false,
+  "notion_url": null,
+  "status": "preview"
+},
+{
   "id": "oficina-virtual-claude-code",
   "slug": "oficina-virtual-claude-code",
   "title": "Cómo crear tu propia oficina virtual",
