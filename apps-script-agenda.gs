@@ -19,9 +19,11 @@
  *     salen de getforth (Ventas → Configurar calendarios) y lo ocupado, de sus Google Calendar.
  *  3. Agenda la llamada (Google Meet) en el calendario del closer, invita al
  *     lead y avisa por correo al closer y al lead.
- *  4. Manda recordatorios por correo 24 h y 1 h antes (función activarRecordatorios) y,
- *     en el mismo disparador, mantiene las citas al día con el calendario del closer
- *     (cancelada → vuelve a "Página - No agendados"; cambiada de hora → se actualiza).
+ *  4. Mantiene las citas al día con el calendario del closer, cada 15 minutos (función
+ *     activarRecordatorios): cancelada → vuelve a "Página - No agendados"; cambiada de hora → se actualiza.
+ *     Los correos al lead (confirmación y recordatorios de 24 h y 1 h) los manda desde nov 2026 otro
+ *     script, en la cuenta recordatorios@getforth.ai (apps-script-recordatorios.gs), para que admin@
+ *     no envíe correos automáticos a los leads. AG.correosAlLead = true los vuelve a mandar desde aquí.
  *
  * importarHistoricos() copia una vez los leads de los Sheets anteriores.
  *
@@ -61,6 +63,8 @@ var AG = {
   prioritario: 'admin@getforth.ai',
   colorEvento: '11', // rojo ("Tomate") en Google Calendar
   remitente: 'Luciano Musella',
+  // false: la confirmación y los recordatorios al lead los manda recordatorios@getforth.ai (apps-script-recordatorios.gs).
+  correosAlLead: false,
   whatsappComunidad: 'https://chat.whatsapp.com/FJwqTceWj4gBKpYKBAWEWW'
 };
 
@@ -486,7 +490,7 @@ function avisarCita_(d) {
   var lead = leerFila_(HOJA_MAESTRO, COLUMNAS_MAESTRO, d.email);
   if (!lead || lead.estado !== 'Agendado') return { ok: false, error: 'sin_cita' };
   var closer = AG.closers.filter(function (c) { return c.email === lead.closer; })[0];
-  try { if (closer) avisarCloser_(closer, lead); avisarLead_(lead, closer); } catch (err) { console.error('correo cita', err); }
+  try { if (closer) avisarCloser_(closer, lead); if (AG.correosAlLead) avisarLead_(lead, closer); } catch (err) { console.error('correo cita', err); }
   return { ok: true };
 }
 
@@ -557,6 +561,7 @@ function avisarLead_(lead, closer) {
 // calendario y manda el recordatorio 24 h y 1 h antes.
 function enviarRecordatorios() {
   try { sincronizarCitas_(); } catch (err) { console.error('sincronizar citas', err); }
+  if (!AG.correosAlLead) return; // los manda recordatorios@getforth.ai
   var hoja = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA_MAESTRO);
   if (!hoja || hoja.getLastRow() < 2) return;
   var valores = hoja.getDataRange().getValues();
